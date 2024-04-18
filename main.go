@@ -2,8 +2,11 @@ package main
 
 import (
    "fmt"
+   "github.com/otaleghani/swms/internal/repl"
 )
 
 func main() {
-   fmt.Println("Anvedi come balla nando") 
+  repl.StartRepl()
+  
+  fmt.Println("Anvedi come balla nando") 
 }
