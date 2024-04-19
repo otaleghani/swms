@@ -4,52 +4,45 @@ import (
   "bufio"
   "os"
   "fmt"
-  "github.com/otaleghani/swms/internal/repl/utils"
-  "github.com/otaleghani/swms/internal/repl/formatter"
 )
 
-//func StartRepl(cfg *config) {
-func StartRepl() {
+// is this the configuration used for 
+// the database connection? maybe yes
+// I mean this repl will be the entry
+// point of the application so I thi-
+// -nk is a goos thing.
+
+type Config struct {
+  DbPath string
+}
+
+func StartRepl(cfg *Config) {
   reader := bufio.NewScanner(os.Stdin)
 
   for {
-    fmt.Print(formatter.FormatError(""))
+    fmt.Print(formatPrompt())
     reader.Scan()
-    //input := cleanInput(reader.Text())
     if reader.Text() == "" {
       continue
     }
-
-    
-
-    // fmt.Print(reader.Text())
-    cmdName, cmdPar, err := utils.ParseCmd(reader.Text())
-
-
-    // command parsing
+    cmdName, cmdPar, err := parseCmd(reader.Text())
 
     if err != nil {
-      fmt.Println(err)
+      fmt.Print(formatError(err.Error()))
       continue
     }
     
-    fmt.Println(cmdName)
-    fmt.Println(cmdPar)
-    // fmt.Sprintf("Command found. The command name is %s\n", cmdName)
-    // fmt.Println("Now I will do a magic trick and print all of the params")
-    // for key, value := range cmdPar {
-    //   fmt.Sprintf("%s: %s\n", key, value)
-    // }
+    command, exists := getCommands()[cmdName]
+    if !exists {
+      fmt.Print(formatError("Unknown command. Try \"help\" to view all the commands."))
+      continue
+    }
 
-
-    // HOW TO DO THIS
-    // You pass to the function a map of map[parameter]value
-
-    // cmd_name = input[0]
-    // cmd, exists := getCommand()[cmd_name]
-    // if exists {
-    //   err := command.callback(cfg)
-    // }
+    err = command.callback(cfg, cmdPar)
+    if err != nil {
+      fmt.Print(formatError(err.Error()))
+      continue
+    }
   }
 }
 

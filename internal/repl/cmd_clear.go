@@ -1,13 +1,13 @@
-package commands
+package repl
 
 import (
-  "fmt"
+  // "fmt"
   "os"
   "os/exec"
   "runtime"
 )
 
-func clearScreen() {
+func cmdClear(cfg *Config, cmdPar map[string]string) error {
   var cmd *exec.Cmd
   switch runtime.GOOS {
   case "windows":
@@ -18,4 +18,6 @@ func clearScreen() {
 
   cmd.Stdout = os.Stdout
   cmd.Run()
+
+  return nil
 }
