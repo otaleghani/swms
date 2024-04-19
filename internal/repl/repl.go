@@ -6,12 +6,6 @@ import (
   "fmt"
 )
 
-// is this the configuration used for 
-// the database connection? maybe yes
-// I mean this repl will be the entry
-// point of the application so I thi-
-// -nk is a goos thing.
-
 type Config struct {
   DbPath string
 }

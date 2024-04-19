@@ -39,6 +39,15 @@ func getCommands() map[string]cmd {
         "-c": "Specifies the command that you want to understand more",
       },
     },
+    "exit": {
+      name: "exit",
+      short: "Exits the program",
+      long: `long description`,
+      callback: cmdClear,
+      parameters: map[string]string{
+        "-c": "Specifies the command that you want to understand more",
+      },
+    },
   }
 }
 
