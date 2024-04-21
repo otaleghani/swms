@@ -1,5 +1,7 @@
 package repl
 
+import()
+
 type cmd struct {
   name string
   short string
@@ -34,7 +36,7 @@ func getCommands() map[string]cmd {
       long: `Use this command to start the program. This starts the
       http server, the database and starts to log every single cmd 
       in a specified log file. `,
-      callback: cmdClear,
+      callback: cmdStart,
       parameters: map[string]string{
         "-c": "Specifies the command that you want to understand more",
       },
