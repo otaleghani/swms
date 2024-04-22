@@ -6,7 +6,7 @@ import (
   "runtime"
 )
 
-func cmdClear(cfg *Config, cmdPar map[string]string) error {
+func cmdClear(cfg *Configuration, cmdPar map[string]string) error {
   var cmd *exec.Cmd
   switch runtime.GOOS {
   case "windows":

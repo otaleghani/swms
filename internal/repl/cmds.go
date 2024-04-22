@@ -6,7 +6,7 @@ type cmd struct {
   name string
   short string
   long string
-  callback func(cfg *Config, cmdPar map[string]string) error
+  callback func(cfg *Configuration, cmdPar map[string]string) error
   parameters map[string]string
 }
 

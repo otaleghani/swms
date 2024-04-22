@@ -5,7 +5,7 @@ import (
   "errors"
 )
 
-func cmdHelp(cfg *Config, cmdPar map[string]string) error {
+func cmdHelp(cfg *Configuration, cmdPar map[string]string) error {
   if len(cmdPar) == 0 {
     printDefault()
     return nil

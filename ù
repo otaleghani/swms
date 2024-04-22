@@ -1,0 +1,26 @@
+package server
+
+import (
+  // "encoding/json"
+  "fmt"
+)
+
+type People struct {
+  Id int
+  Firstname string
+  Lastname string
+}
+
+func (db *Database) GetAll() {
+  db.Mux.Lock()
+  defer db.Mux.Unlock()
+
+  statement, _ := db.Connection.Prepare(`
+    SELECT * FROM people
+  `)
+
+  Result, _ := statement.Exec()
+
+  fmt.Println(Result)
+  return
+}

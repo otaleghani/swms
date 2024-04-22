@@ -6,11 +6,11 @@ import (
   "fmt"
 )
 
-type Config struct {
-  DbPath string
+type Configuration struct {
+  DatabasePath string
 }
 
-func StartRepl(cfg *Config) {
+func StartRepl(cfg *Configuration) {
   reader := bufio.NewScanner(os.Stdin)
 
   for {
