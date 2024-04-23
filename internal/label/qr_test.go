@@ -5,7 +5,7 @@ import (
 )
 
 func TestCreateLabel(t *testing.T) {
-  err := CreateLabel("google.com", "")
+  err := CreateLabel("anvedicomeballanandoinquestolunghissimoqrcodes", "")
   if err != nil {
     t.Errorf(err.Error())
   }
