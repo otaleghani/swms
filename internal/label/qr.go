@@ -16,10 +16,11 @@ func CreateLabel(url string, name string) error {
     return err
   }
   qr.DisableBorder = true
-  qrImage := qr.Image(128)
+  // 56 in pt, so it's 
+  qrImage := qr.Image(100)
 
-  offset := 10
-  imgWidth := qrImage.Bounds().Dx()*3 + offset
+  offset := 0
+  imgWidth := (qrImage.Bounds().Dx()/2)*7 + offset
   imgHeight := qrImage.Bounds().Dy() + offset
 
   newImg := image.NewRGBA(image.Rect(0, 0, imgWidth, imgHeight))
