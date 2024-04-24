@@ -21,10 +21,15 @@ func CreateDatabase(path string) (*Database, error) {
   // Database.Init will be something like create table etc. etc.
 
   statement, statementErr := database.Prepare(`
-    CREATE TABLE IF NOT EXISTS dogs (
+    CREATE TABLE IF NOT EXISTS products (
+      id INTEGER PRIMARY KEY,
+      name TEXT,
+      lastname TEXT,
+    );
+    CREATE TABLE IF NOT EXISTS USERS (
       id INTEGER PRIMARY KEY,
       firstname TEXT,
-      lastname TEXT
+      lastname TEXT,
     );
   `)
   if statementErr != nil {

@@ -51,7 +51,7 @@ func wrapText(s string, maxWidth int, face font.Face) []string {
 }
 
 func loadFont() *truetype.Font {
-  fontBytes, err := os.ReadFile("Inter.ttf")
+  fontBytes, err := os.ReadFile("fonts/RobotoMono-Regular.ttf")
   if err != nil {
     panic(err)
   }
