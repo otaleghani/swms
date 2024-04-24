@@ -5,12 +5,11 @@ import (
   "github.com/golang/freetype"
   "github.com/golang/freetype/truetype"
   "golang.org/x/image/font"
-  "fmt"
 )
 
 func drawLabel(img *image.RGBA, label string, x, y int) {
   fontSize := 20.0
-  fontDPI := 72.0
+  fontDPI := 200.0
 
   c := freetype.NewContext()
   c.SetDPI(fontDPI)
@@ -26,10 +25,11 @@ func drawLabel(img *image.RGBA, label string, x, y int) {
     Hinting: font.HintingFull,
   })
 
-  wrappedText := wrapText(label, 230, fontFace)
+  textBoxWidth := (img.Bounds().Dx()/14)*9
+
+  wrappedText := wrapText(label, textBoxWidth, fontFace)
   for index, string := range wrappedText {
-    fmt.Println(string)
-    pt := freetype.Pt(x, y + (index * int(fontSize)))
+    pt := freetype.Pt(x, y+((index+1) * int(fontDPI / fontSize * 5)))
     _, err := c.DrawString(string, pt)
     if err != nil {
       panic(err)
