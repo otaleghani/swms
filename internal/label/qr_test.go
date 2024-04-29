@@ -2,20 +2,27 @@ package label
 
 import (
   "testing"
+  "fmt"
 )
 
 func TestCreateLabel(t *testing.T) {
-  err := CreateLabel("anvedicomeballanandoinquestolunghissimoqrcodes", "Anvedi come balla nando incredibile questo sandro ")
+  err := CreateLabel("https://aficleaning.com", "Ugello rotante rotatorio del cazzo")
   if err != nil {
     t.Errorf(err.Error())
   }
 }
 
 func TestPrintLabels(t *testing.T) {
-  var strings []string
+  numItems := 39
+  strings := []string{}
 
-  strings, err := PrintLabels(strings)
+  for i := 0; i < numItems; i++ {
+    strings = append(strings, "out/test.png")
+  }
+
+  string, err := GeneratePdfLabels(strings)
   if err != nil {
     t.Errorf(err.Error())
   }
+  fmt.Println(string)
 }
