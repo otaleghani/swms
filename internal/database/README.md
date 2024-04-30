@@ -168,7 +168,6 @@ products.
 
   SELECT name FROM ticket_state WHERE tickets.product = product
 
-
 - owner
 
 #### image
