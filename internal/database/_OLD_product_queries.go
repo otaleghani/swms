@@ -1,8 +1,8 @@
 package database
 
 import (
-  // "encoding/json"
-  "fmt"
+  "database/sql"
+  _ "github.com/mattn/go-sqlite3"
 )
 
 type People struct {
@@ -11,12 +11,15 @@ type People struct {
   Lastname string `json:"lastname"`
 }
 
-func (db *Database) GetAll() []People {
-  db.Mux.Lock()
-  defer db.Mux.Unlock()
+func GetAll(path string) ([]People, error) {
+  dbConnection, conErr := sql.Open("sqlite3", path)
+  if conErr != nil {
+    return nil, conErr
+  } 
+  defer dbConnection.Close()
 
-  rows, _ := db.Connection.Query(`
-    SELECT * FROM people
+  rows, _ := dbConnection.Query(`
+    SELECT * FROM products
   `)
   defer rows.Close()
 
@@ -31,12 +34,11 @@ func (db *Database) GetAll() []People {
     err := rows.Scan(&id, &firstname, &lastname)
 
     if err != nil { 
-      fmt.Println("something kaboom")
+      return nil, err
     }
 
     Result = append(Result, People{Id: id, Firstname: firstname, Lastname: lastname})
-    // fmt.Printf("ID: %d \n firstname: %s \n lastname: %s\n", id, firstname, lastname)
   }
 
-  return Result
+  return Result, nil
 }
