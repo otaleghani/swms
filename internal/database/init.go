@@ -40,7 +40,7 @@ import (
 type tableStruct interface{}
 
 func CreateDatabase(path string) error {
-  err := createTable(path, Product{})
+  err := createTable(path, Item{})
   if err != nil {
     return err
   }

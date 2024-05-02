@@ -21,3 +21,13 @@ func TestCreateDatabase(t *testing.T) {
   }
 }
 
+func TestAddItem(t *testing.T) {
+  err := AddItem(path, Item{Id:1,Name:"Alberto"})
+  if err != nil {
+    fmt.Println(err)
+  }
+}
+
+// func TestGetItems(t *testing.T) {
+//   
+// }

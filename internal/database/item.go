@@ -28,13 +28,37 @@ import (
 //  "log"
 //  "reflect"
 //  "strings"
-//  "database/sql"
-//  _ "github.com/mattn/go-sqlite3"
+  "database/sql"
+  _ "github.com/mattn/go-sqlite3"
 )
 
-type Product struct {
+type Item struct {
   Id int `json:"id"`
   Name string `json:"name"`
+}
+
+func AddItem(path string, item Item) error {
+  dbConnection, conErr := sql.Open("sqlite3", path)
+  if conErr != nil {
+    return conErr
+  } 
+  defer dbConnection.Close()
+
+  statement, statementErr := dbConnection.Prepare(`
+    INSERT INTO item (id, name) 
+    VALUES (?,?)
+  `)
+  if statementErr != nil {
+    return statementErr
+  }
+  defer statement.Close()
+
+  _, execErr := statement.Exec(item.Id, item.Name)
+  if execErr != nil {
+    return execErr
+  }
+
+  return nil
 }
 
 // func AddProduct(path string, prod product) error {}
