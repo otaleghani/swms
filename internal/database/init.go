@@ -30,9 +30,6 @@ Changelog
 package database
 
 import (
-  // "log"
-  // "reflect"
-  // "strings"
   "os"
   "database/sql"
   _ "github.com/mattn/go-sqlite3"

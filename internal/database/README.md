@@ -15,6 +15,7 @@ true.
 - position          reference position
 - archive           bool
 - category          reference category
+- sub-category      reference sub-category
 
 #### Composite
 What about "ikea items"? Like items that are the union of more items.

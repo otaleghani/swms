@@ -37,8 +37,8 @@ type Item struct {
   Description       string    `json:"description"`
   Archived          bool      `json:"archived"`
   Position_id       string    `json:"position_id"`
-  Category_id       string    `json:category_id`
-  SubCategory_id    string    `json:subcategory_id`
+  Category_id       string    `json:"category_id"`
+  SubCategory_id    string    `json:"subcategory_id"`
 }
 
 const createTableItem = `
@@ -49,14 +49,11 @@ const createTableItem = `
     archived        INTEGER,
     position_id     TEXT,
     category_id     TEXT,
-    subcategory_id  TEXT,
-
-    FOREIGN KEY(category_id) REFERENCES category(id)
+    subcategory_id  TEXT
   );  
 `
 
-
-
+    // FOREIGN KEY(category_id) REFERENCES category(id)
 func AddItem(path string, item Item) error {
   dbConnection, conErr := sql.Open("sqlite3", path)
   if conErr != nil {
@@ -64,10 +61,10 @@ func AddItem(path string, item Item) error {
   } 
   defer dbConnection.Close()
   // Opens database connection
-
+  
   statement, statementErr := dbConnection.Prepare(`
-    INSERT INTO item (id, name) 
-    VALUES (?,?)
+    INSERT INTO item (id, name, description, archived, position_id, category_id, subcategory_id) 
+    VALUES (?,?,?,?,?,?,?)
   `)
   if statementErr != nil {
     return statementErr
@@ -75,7 +72,7 @@ func AddItem(path string, item Item) error {
   defer statement.Close()
   // Prepares the statement and defers the closing of the statement
 
-  _, execErr := statement.Exec(item.Id, item.Name)
+  _, execErr := statement.Exec(item.Id, item.Name, item.Description, item.Archived, item.Position_id, item.Category_id, item.SubCategory_id)
   if execErr != nil {
     return execErr
   }
@@ -134,8 +131,8 @@ func GetItemsList(path string) error {
       Description:      checkString(description),
       Archived:         checkBool(archived),
       Position_id:      checkString(position_id),
-      Category_id:      checkString(position_id),
-      SubCategory_id:   checkString(position_id),
+      Category_id:      checkString(category_id),
+      SubCategory_id:   checkString(subcategory_id),
     })
     // Append the result to returning array
   }
@@ -145,7 +142,6 @@ func GetItemsList(path string) error {
 }
 
 func GetItemSingle(path string, idItem string) error {
-
   dbConnection, conErr := sql.Open("sqlite3", path)
   if conErr != nil {
     return conErr
@@ -189,12 +185,56 @@ func GetItemSingle(path string, idItem string) error {
     Description:      checkString(description),
     Archived:         checkBool(archived),
     Position_id:      checkString(position_id),
-    Category_id:      checkString(position_id),
-    SubCategory_id:   checkString(position_id),
+    Category_id:      checkString(category_id),
+    SubCategory_id:   checkString(subcategory_id),
   }
   log.Println(Result)
   return nil
 }
 
-// func UpdateProduct
-// func DeleteProduct
+func UpdateItem(path string, item Item) error {
+  dbConnection, conErr := sql.Open("sqlite3", path)
+  if conErr != nil {
+    return conErr
+  } 
+  defer dbConnection.Close()
+  // Opens database
+
+  query := "UPDATE item\nSET"
+  if item.Name != "" {
+    query = fmt.Sprintf("%s name = \"%s\",", query, item.Name)
+  } 
+  if item.Description != "" {
+    query = fmt.Sprintf("%s description = \"%s\",", query, item.Description)
+  } 
+  if item.Archived != false {
+    query = fmt.Sprintf("%s archived = \"%v\",", query, item.Archived)
+  } 
+  if item.Position_id != "" {
+    query = fmt.Sprintf("%s position_id = \"%s\",", query, item.Position_id)
+  } 
+  if item.Category_id != "" {
+    query = fmt.Sprintf("%s category_id = \"%s\",", query, item.Category_id)
+  } 
+  if item.SubCategory_id != "" {
+    query = fmt.Sprintf("%s subcategory_id = \"%s\",", query, item.SubCategory_id)
+  } 
+  query = query[:len(query)-1]
+  query = fmt.Sprintf("%s\nWHERE id = \"%s\";", query, item.Id)
+
+  fmt.Println(query)
+  statement, statementErr := dbConnection.Prepare(query)
+  defer statement.Close()
+  if statementErr != nil {
+    return statementErr
+  }
+
+  _, execErr := statement.Exec()
+  if execErr != nil {
+    return execErr
+  }
+  
+  return nil
+}
+
+func DeleteProduct(path string, id string)
