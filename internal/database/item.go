@@ -25,9 +25,8 @@ Changelog
 package database
 
 import (
-  "log"
   "fmt"
-  "database/sql"
+  // "database/sql"
   _ "github.com/mattn/go-sqlite3"
 )
 
@@ -53,153 +52,69 @@ const createTableItem = `
   );  
 `
 
-    // FOREIGN KEY(category_id) REFERENCES category(id)
-func AddItem(path string, item Item) error {
-  dbConnection, conErr := sql.Open("sqlite3", path)
-  if conErr != nil {
-    return conErr
-  } 
-  defer dbConnection.Close()
-  // Opens database connection
-  
-  statement, statementErr := dbConnection.Prepare(`
-    INSERT INTO item (id, name, description, archived, position_id, category_id, subcategory_id) 
-    VALUES (?,?,?,?,?,?,?)
-  `)
-  if statementErr != nil {
-    return statementErr
-  }
-  defer statement.Close()
-  // Prepares the statement and defers the closing of the statement
-
-  _, execErr := statement.Exec(item.Id, item.Name, item.Description, item.Archived, item.Position_id, item.Category_id, item.SubCategory_id)
-  if execErr != nil {
-    return execErr
-  }
-  // Executes the statement
-
-  return nil
-}
-
-func GetItemsList(path string) error {
-  dbConnection, conErr := sql.Open("sqlite3", path)
-  if conErr != nil {
-    return conErr
-  } 
-  defer dbConnection.Close()
-  // Opens database
-
-  rows, statementErr := dbConnection.Query(`
-    SELECT * FROM item
-  `)
-  defer rows.Close()
-  if statementErr != nil {
-    return statementErr
-  }
-  // Queries database, defers closing of rows
-
-  var (
-    Result          []Item
-    id              string
-    name            sql.NullString
-    description     sql.NullString
-    archived        sql.NullBool
-    position_id     sql.NullString
-    category_id     sql.NullString
-    subcategory_id  sql.NullString
+func PostItem(path string, item Item) error {
+  query := fmt.Sprintf(`
+    INSERT INTO item(id, name, description, archived, position_id, category_id, subcategory_id) 
+    VALUES("%v", "%v", "%v", %t, "%v", "%v", "%v")
+    `, 
+    sanitizeInput(item.Id), 
+    sanitizeInput(item.Name), 
+    sanitizeInput(item.Description),
+    item.Archived,
+    sanitizeInput(item.Position_id),
+    sanitizeInput(item.Category_id),
+    sanitizeInput(item.SubCategory_id),
   )
-  // Declare the returning array and every field of the table
 
-  for rows.Next() {
-    err := rows.Scan(
-      &id,
-      &name,
-      &description,
-      &archived,
-      &position_id,
-      &category_id,
-      &subcategory_id,
-    )
-    if err != nil {
-      return err
-    }
-    // Scan each row and append the result into the declared vals
-
-    Result = append(Result, Item{
-      Id:               id,
-      Name:             checkString(name),
-      Description:      checkString(description),
-      Archived:         checkBool(archived),
-      Position_id:      checkString(position_id),
-      Category_id:      checkString(category_id),
-      SubCategory_id:   checkString(subcategory_id),
-    })
-    // Append the result to returning array
-  }
-  
-  log.Println(Result)
-  return nil
-}
-
-func GetItemSingle(path string, idItem string) error {
-  dbConnection, conErr := sql.Open("sqlite3", path)
-  if conErr != nil {
-    return conErr
-  } 
-  defer dbConnection.Close()
-  // Opens database
-
-  query := fmt.Sprintf("SELECT * FROM item WHERE id = %s", idItem)
-
-  rows, statementErr := dbConnection.Query(query)
-  defer rows.Close()
-  if statementErr != nil {
-    return statementErr
-  }
-  var (
-    id              string
-    name            sql.NullString
-    description     sql.NullString
-    archived        sql.NullBool
-    position_id     sql.NullString
-    category_id     sql.NullString
-    subcategory_id  sql.NullString
-  )
-  rows.Next() 
-  err := rows.Scan(
-    &id,
-    &name,
-    &description,
-    &archived,
-    &position_id,
-    &category_id,
-    &subcategory_id,
-  )
+  err := queryExec(query, path)
   if err != nil {
     return err
   }
-
-  Result := Item{
-    Id:               id,
-    Name:             checkString(name),
-    Description:      checkString(description),
-    Archived:         checkBool(archived),
-    Position_id:      checkString(position_id),
-    Category_id:      checkString(category_id),
-    SubCategory_id:   checkString(subcategory_id),
-  }
-  log.Println(Result)
+  
   return nil
 }
 
-func UpdateItem(path string, item Item) error {
-  dbConnection, conErr := sql.Open("sqlite3", path)
-  if conErr != nil {
-    return conErr
-  } 
-  defer dbConnection.Close()
-  // Opens database
+func GetItems(path string) ([]Item, error) {
+  query := "SELECT * FROM item"
 
+  result, err := queryItems(query, path)
+  if err != nil {
+    return []Item{}, err
+  }
+  trueResult, _ := parseItem(result)
+  
+  var newTrueResult []Item
+
+  for _, v := range trueResult {
+    if k, ok := v.(Item); ok {
+      newTrueResult = append(newTrueResult, k)
+    } else {
+      return []Item{}, nil
+    }
+  }
+
+  fmt.Println(newTrueResult)
+
+
+  return newTrueResult, nil
+}
+
+func GetItemById(path string, idItem string) (Item, error) {
+  query := fmt.Sprintf("SELECT * FROM item WHERE id = %s", idItem)
+
+  result, err := queryItems(query, path)
+  if err != nil {
+    return Item{}, err
+  }
+  trueResult, _ := parseItem(result)
+
+  value, _ := trueResult[0].(Item)
+
+  return value, nil
+
+}
+
+func PutItem(path string, item Item) error {
   query := "UPDATE item\nSET"
   if item.Name != "" {
     query = fmt.Sprintf("%s name = \"%s\",", query, item.Name)
@@ -222,19 +137,19 @@ func UpdateItem(path string, item Item) error {
   query = query[:len(query)-1]
   query = fmt.Sprintf("%s\nWHERE id = \"%s\";", query, item.Id)
 
-  fmt.Println(query)
-  statement, statementErr := dbConnection.Prepare(query)
-  defer statement.Close()
-  if statementErr != nil {
-    return statementErr
+  err := queryExec(query, path)
+  if err != nil {
+    return err
   }
-
-  _, execErr := statement.Exec()
-  if execErr != nil {
-    return execErr
-  }
-  
   return nil
 }
 
-func DeleteProduct(path string, id string)
+func DeleteItem(path string, id string) error {
+  query := fmt.Sprintf("DELETE FROM items WEHERE id = %s", id)
+
+  err := queryExec(query, path)
+  if err != nil {
+    return err
+  }
+  return nil 
+}

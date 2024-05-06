@@ -21,7 +21,7 @@ func TestCreateDatabase(t *testing.T) {
 }
 
 func TestAddItem(t *testing.T) {
-  err := AddItem(path, Item{
+  err := PostItem(path, Item{
     Id:"1",
     Name:"Alberto",
     Description:"Something", 
@@ -34,7 +34,7 @@ func TestAddItem(t *testing.T) {
     t.Fatal(err)
   }
 
-  err = AddItem(path, Item{
+  err = PostItem(path, Item{
     Id:"2",
     Name:"Angela",
     Description:"Something", 
@@ -49,14 +49,14 @@ func TestAddItem(t *testing.T) {
 }
 
 func TestGetItems(t *testing.T) {
-  err := GetItemsList(path)
+  _, err := GetItems(path)
   if err != nil {
     t.Fatal(err)
   }
 }
 
 func TestGetSingleItem(t *testing.T) {
-  err := GetItemSingle(path, "1")
+  _, err := GetItemById(path, "1")
   if err != nil {
     t.Fatal(err)
   }
@@ -72,15 +72,16 @@ func TestUpdateItem(t *testing.T) {
     //Category_id:"category",
     SubCategory_id:"subcat",
   }
-  err := UpdateItem(path, item)
+  err := PutItem(path, item)
   if err != nil {
     t.Fatal(err)
   }
 }
 
 func TestGetSingleItem2(t *testing.T) {
-  err := GetItemSingle(path, "1")
+  _, err := GetItemById(path, "1")
   if err != nil {
     t.Fatal(err)
   }
 }
+
