@@ -40,18 +40,6 @@ type Item struct {
   SubCategory_id    string    `json:"subcategory_id"`
 }
 
-const createTableItem = `
-  CREATE TABLE IF NOT EXISTS item (
-    id              TEXT PRIMARY KEY,
-    name            TEXT,
-    description     TEXT,
-    archived        INTEGER,
-    position_id     TEXT,
-    category_id     TEXT,
-    subcategory_id  TEXT
-  );  
-`
-
 func PostItem(path string, item Item) error {
   query := fmt.Sprintf(`
     INSERT INTO item(id, name, description, archived, position_id, category_id, subcategory_id) 
@@ -81,22 +69,9 @@ func GetItems(path string) ([]Item, error) {
   if err != nil {
     return []Item{}, err
   }
-  trueResult, _ := parseItem(result)
+  parsedResult, _ := parseItem(result)
   
-  var newTrueResult []Item
-
-  for _, v := range trueResult {
-    if k, ok := v.(Item); ok {
-      newTrueResult = append(newTrueResult, k)
-    } else {
-      return []Item{}, nil
-    }
-  }
-
-  fmt.Println(newTrueResult)
-
-
-  return newTrueResult, nil
+  return parsedResult, nil
 }
 
 func GetItemById(path string, idItem string) (Item, error) {
@@ -108,10 +83,7 @@ func GetItemById(path string, idItem string) (Item, error) {
   }
   trueResult, _ := parseItem(result)
 
-  value, _ := trueResult[0].(Item)
-
-  return value, nil
-
+  return trueResult[0], nil
 }
 
 func PutItem(path string, item Item) error {

@@ -21,7 +21,32 @@ func TestCreateDatabase(t *testing.T) {
 }
 
 func TestAddItem(t *testing.T) {
-  err := PostItem(path, Item{
+  //err := PostItem(path, Item{
+  //  Id:"1",
+  //  Name:"Alberto",
+  //  Description:"Something", 
+  //  Archived: false,
+  //  Position_id: "69",
+  //  Category_id: "spicy content",
+  //  SubCategory_id: "some other spicyness",
+  //})
+  //if err != nil {
+  //  t.Fatal(err)
+  //}
+
+  //err = PostItem(path, Item{
+  //  Id:"2",
+  //  Name:"Angela",
+  //  Description:"Something", 
+  //  Archived: false,
+  //  Position_id: "69",
+  //  Category_id: "spicy content",
+  //  SubCategory_id: "some other spicyness",
+  //})
+  //if err != nil {
+  //  t.Fatal(err)
+  //}
+  item := Item{
     Id:"1",
     Name:"Alberto",
     Description:"Something", 
@@ -29,20 +54,9 @@ func TestAddItem(t *testing.T) {
     Position_id: "69",
     Category_id: "spicy content",
     SubCategory_id: "some other spicyness",
-  })
-  if err != nil {
-    t.Fatal(err)
   }
 
-  err = PostItem(path, Item{
-    Id:"2",
-    Name:"Angela",
-    Description:"Something", 
-    Archived: false,
-    Position_id: "69",
-    Category_id: "spicy content",
-    SubCategory_id: "some other spicyness",
-  })
+  err := add(item, path)
   if err != nil {
     t.Fatal(err)
   }
@@ -85,3 +99,19 @@ func TestGetSingleItem2(t *testing.T) {
   }
 }
 
+func TestAddFunction(t *testing.T) {
+  item := Item{
+    Id: "2",
+    Name:"69",
+    Description:"sandro",
+    Archived: true,
+    Position_id:"position",
+    Category_id:"category",
+    SubCategory_id:"subcat",
+  }
+
+  err := add(item, path)
+  if err != nil {
+    t.Fatal(err)
+  }
+}

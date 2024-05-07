@@ -1,4 +1,4 @@
-/********************************************************************
+/**********************************************************************
 
 Author      Oliviero Taleghani
 Date        2024-05-02
@@ -36,10 +36,16 @@ import (
 )
 
 func CreateDatabase(path string) error {
-  err := createTable(path, createTableItem)
+  // err := createTable(path, createTableItem)
+  itemQuery, err := create(Item{})
   if err != nil {
     return err
   }
+  err = queryExec(itemQuery, path) 
+  if err != nil {
+    return err
+  }
+
   // Takes the path and an Interface of a struct. Will create the
   // table inside of the database in the specified path.
 
