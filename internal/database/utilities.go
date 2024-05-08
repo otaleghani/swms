@@ -21,7 +21,10 @@ func queryExec(query string, path string) error {
   Executs the given query to the db at the given path. Used for
   database modification that do not yield a rows result.
 
-func queryItems(query string, path string) (t [][]interface{}, err error)
+func queryItems(
+  query string,
+  path string
+) (t [][]interface{}, err error)
   Executs the given query to the db at the given path. Used for
   database modification that do yield a rows result. This result
   should be parsed with the respective parser for the correct
