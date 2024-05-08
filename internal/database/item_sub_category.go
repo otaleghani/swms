@@ -1,16 +1,16 @@
 package database
 
 import (
-//  "log"
-//  "database/sql"
-//  _ "github.com/mattn/go-sqlite3"
+// "log"
+// "database/sql"
+// _ "github.com/mattn/go-sqlite3"
 )
 
 type SubCategory struct {
-  Id            string    `json:"id"`
-  Name          string    `json:"name"`
-  Description   string    `json:"description"`
-  Category_id   string    `json:"category_id"`
+	Id          string `json:"id"`
+	Name        string `json:"name"`
+	Description string `json:"description"`
+	Category_id string `json:"category_id"`
 }
 
 const createTableSubCategory = `
