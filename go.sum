@@ -6,6 +6,12 @@ github.com/otaleghani/sorm v0.0.3 h1:sWfC/I7DM4P34cBSUE/LuV4eiNBkOC3z5V95FrC4rAc
 github.com/otaleghani/sorm v0.0.3/go.mod h1:/ARPaDBJ3fwwoG2by1ZzkF3boe/ZJ86F9C5Rn7GTZEs=
 github.com/otaleghani/sorm v0.0.4 h1:Fg6CFdp2gnr80QAShjsMv1Zln42kGP8NiZvzSksJurM=
 github.com/otaleghani/sorm v0.0.4/go.mod h1:/ARPaDBJ3fwwoG2by1ZzkF3boe/ZJ86F9C5Rn7GTZEs=
+github.com/otaleghani/sorm v0.0.5 h1:e1KVgmj330trqD05B0Og6Tthbeqj+O2wsHckX3hxPao=
+github.com/otaleghani/sorm v0.0.5/go.mod h1:/ARPaDBJ3fwwoG2by1ZzkF3boe/ZJ86F9C5Rn7GTZEs=
+github.com/otaleghani/sorm v0.0.6 h1:aE1TJiuaqALbeCo8j0XZCHhhJxOBH3SyLaOlpo8Heo4=
+github.com/otaleghani/sorm v0.0.6/go.mod h1:/ARPaDBJ3fwwoG2by1ZzkF3boe/ZJ86F9C5Rn7GTZEs=
+github.com/otaleghani/sorm v0.0.7 h1:j/LOjNUQwc3AQhKpz09TbBcaXGoZppKWNiHd5TvIYuE=
+github.com/otaleghani/sorm v0.0.7/go.mod h1:/ARPaDBJ3fwwoG2by1ZzkF3boe/ZJ86F9C5Rn7GTZEs=
 github.com/otaleghani/spg v0.1.1 h1:n9oa1yHd0yEY10Ft/5zv+6ABftH+812Z6DYgGlOyKc8=
 github.com/otaleghani/spg v0.1.1/go.mod h1:wBmB8DXBAgVxSe8qSf11KzrKhrI6V5qqwA5cG+zzxz0=
 github.com/otaleghani/spg v0.1.2 h1:sDd8SzGJ2N9Nl2jgV0m319KujlkR7DrRsyzyj/aKhG4=

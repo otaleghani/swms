@@ -1,9 +1,5 @@
 package database
 
-import (
-  "github.com/otaleghani/sorm"
-)
-
 type Item struct {
   Id string
   Name string
@@ -11,37 +7,28 @@ type Item struct {
   Archive bool
   Position_id string
   Category_id string
-  SubCategory_id string
+  Subcategory_id string
 }
 
-type ItemSlice []Item
-
-// I could do something general? 
-func Insert(i Interface{}) {
-  err = sorm.InsertInto(i)
+// Select an item based on the condition and the args
+func (db *Database) SelectItem(condition string, args ...interface{}) ([]Item, error) {
+  list := []Item{}
+  err := db.Sorm.Select(&list, condition, args...)
   if err != nil {
-      fatal(err)
+    return nil, err
   }
+  return list, nil
 }
 
-func (items ItemSlice) Insert() error {
-  for item, _ := range items {
-    err := sorm.InsertInto(item)
-    if err != nil {
-      return err
-    }
+// Select a single item based on the id
+func (db *Database) SelectItemById(id string) (Item, error) {
+  list := []Item{}
+  err := db.Sorm.Select(&list, "Id = ?", id)
+  if err != nil {
+    return Item{}, err
   }
-  return nil
+  return list[0], nil
 }
-
-// func (i *ItemSlice) Select(condition string, args ...interface{}) error {
-//   items := []Item{}
-//   err := sorm.Select(items, condition, args...)
-//   if err != nil {
-//     return err
-//   }
-//   return nil
-// }
 
 // POST, GET, PUT, DELETE
 // INSERT, SELECT, UPDATE, DELETE
