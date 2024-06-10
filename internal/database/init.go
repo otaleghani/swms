@@ -30,6 +30,10 @@ func Init(path string) (Database, error) {
   if err != nil {
     return Database{}, err
   }
+  err = db.Sorm.CreateTable(User{})
+  if err != nil {
+    return Database{}, err
+  }
   return db, nil
 }
 

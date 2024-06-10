@@ -1,13 +1,13 @@
 package database
 
 type Item struct {
-  Id string
-  Name string
-  Description string
-  Archive bool
-  Position_id string
-  Category_id string
-  Subcategory_id string
+  Id string                 `json:"id"`
+  Name string               `json:"name"`
+  Description string        `json:"description"`
+  Archive bool              `json:"archive"`
+  Position_id string        `json:"position"`
+  Category_id string        `json:"category"`
+  Subcategory_id string     `json:"subcategory"`
 }
 
 // Select an item based on the condition and the args

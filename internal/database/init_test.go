@@ -23,7 +23,7 @@ func TestInit(t *testing.T) {
     Archive: true,
     Position_id: "asd",
     Category_id: "asd",
-    SubCategory_id: "asd",
+    Subcategory_id: "asd",
   })
   i = append(i, Item{
     Id: "asd2",
@@ -32,7 +32,7 @@ func TestInit(t *testing.T) {
     Archive: true,
     Position_id: "asd",
     Category_id: "asd",
-    SubCategory_id: "asd",
+    Subcategory_id: "asd",
   })
 
   err = db.Insert(i...)
