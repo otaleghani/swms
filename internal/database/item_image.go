@@ -3,8 +3,8 @@ package database
 type Item_image struct {
   Id string
   Uri string
-  Item_Id string
-  Variant_Id string
+  Item_id string
+  Variant_id string
 }
 
 // From a given id gets all the images

@@ -14,6 +14,16 @@ github.com/otaleghani/sorm v0.0.6 h1:aE1TJiuaqALbeCo8j0XZCHhhJxOBH3SyLaOlpo8Heo4
 github.com/otaleghani/sorm v0.0.6/go.mod h1:/ARPaDBJ3fwwoG2by1ZzkF3boe/ZJ86F9C5Rn7GTZEs=
 github.com/otaleghani/sorm v0.0.7 h1:j/LOjNUQwc3AQhKpz09TbBcaXGoZppKWNiHd5TvIYuE=
 github.com/otaleghani/sorm v0.0.7/go.mod h1:/ARPaDBJ3fwwoG2by1ZzkF3boe/ZJ86F9C5Rn7GTZEs=
+github.com/otaleghani/sorm v0.0.8 h1:mSt8F+NKG/LBd/1In2NXoFNcSAdhfWg+fqLgi4TsDD8=
+github.com/otaleghani/sorm v0.0.8/go.mod h1:/ARPaDBJ3fwwoG2by1ZzkF3boe/ZJ86F9C5Rn7GTZEs=
+github.com/otaleghani/sorm v0.0.9 h1:A5c94GVuZojgmhtrP36LovjJOWBx+MBdxij/0XHL+P4=
+github.com/otaleghani/sorm v0.0.9/go.mod h1:/ARPaDBJ3fwwoG2by1ZzkF3boe/ZJ86F9C5Rn7GTZEs=
+github.com/otaleghani/sorm v0.0.10 h1:JI20tjD3mjbXHu1LqmheVMP8gYPYRc1oF0qVyKbuWUo=
+github.com/otaleghani/sorm v0.0.10/go.mod h1:/ARPaDBJ3fwwoG2by1ZzkF3boe/ZJ86F9C5Rn7GTZEs=
+github.com/otaleghani/sorm v0.0.11 h1:cDjREFDuzsw//qJ58ylCVXFfxBDeI2mfTH5AvmWbfog=
+github.com/otaleghani/sorm v0.0.11/go.mod h1:/ARPaDBJ3fwwoG2by1ZzkF3boe/ZJ86F9C5Rn7GTZEs=
+github.com/otaleghani/sorm v0.0.12 h1:NLRI/nyQLxQmiHSJB493npUgGPG+JMai8iI0F8OYSyA=
+github.com/otaleghani/sorm v0.0.12/go.mod h1:/ARPaDBJ3fwwoG2by1ZzkF3boe/ZJ86F9C5Rn7GTZEs=
 github.com/otaleghani/spg v0.1.1 h1:n9oa1yHd0yEY10Ft/5zv+6ABftH+812Z6DYgGlOyKc8=
 github.com/otaleghani/spg v0.1.1/go.mod h1:wBmB8DXBAgVxSe8qSf11KzrKhrI6V5qqwA5cG+zzxz0=
 github.com/otaleghani/spg v0.1.2 h1:sDd8SzGJ2N9Nl2jgV0m319KujlkR7DrRsyzyj/aKhG4=
@@ -28,5 +38,7 @@ github.com/signintech/gopdf v0.25.0 h1:w+C1RWe89yHqrdU9WZwMoUvmUeeQhNxrmJWfN2h6p
 github.com/signintech/gopdf v0.25.0/go.mod h1:d23eO35GpEliSrF22eJ4bsM3wVeQJTjXTHq5x5qGKjA=
 github.com/skip2/go-qrcode v0.0.0-20200617195104-da1b6568686e h1:MRM5ITcdelLK2j1vwZ3Je0FKVCfqOLp5zO6trqMLYs0=
 github.com/skip2/go-qrcode v0.0.0-20200617195104-da1b6568686e/go.mod h1:XV66xRDqSt+GTGFMVlhk3ULuV0y9ZmzeVGR4mloJI3M=
+golang.org/x/crypto v0.24.0 h1:mnl8DM0o513X8fdIkmyFE/5hTYxbwYOjDS/+rK6qpRI=
+golang.org/x/crypto v0.24.0/go.mod h1:Z1PMYSOR5nyMcyAVAIQSKCDwalqy85Aqn1x3Ws4L5DM=
 golang.org/x/image v0.15.0 h1:kOELfmgrmJlw4Cdb7g/QGuB3CvDrXbqEIww/pNtNBm8=
 golang.org/x/image v0.15.0/go.mod h1:HUYqC05R2ZcZ3ejNQsIHQDQiwWM4JBqmm6MKANTp4LE=

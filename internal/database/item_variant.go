@@ -7,9 +7,10 @@ type Variant struct {
   Name string
   Description string
   Quantity int64
-  Internal_Id string
+  InternalId string
   Lenght float64
   Width float64
   Height float64
   Default_Variant bool
+  Item_id string
 }

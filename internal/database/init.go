@@ -10,7 +10,7 @@ type Database struct {
 
 // Initializes the database, creates file if not present
 func Init(path string) (Database, error) {
-  sorm, err := sorm.CreateDatabase(path)
+  sorm, err := sorm.CreateDatabase(path, true)
   if err != nil {
     return Database{}, err    
   }

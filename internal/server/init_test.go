@@ -29,5 +29,5 @@ func TestServe(t *testing.T) {
 	//   t.Fatal(err)
 	// }
 	// log.Println(item)
-	Serve("test.db", "8080")
+	Serve(path, "8080")
 }

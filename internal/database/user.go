@@ -1,6 +1,8 @@
 package database
 
 import (
+  "errors"
+  "golang.org/x/crypto/bcrypt"
 )
 
 type User struct {
@@ -28,4 +30,39 @@ func (db *Database) SelectUserById(id string) (User, error) {
     return User{}, err
   }
   return list[0], nil
+}
+
+func (db *Database) InsertUser(user User) error {
+  hash, err := bcrypt.GenerateFromPassword([]byte(user.Password), 5)
+  if err != nil {
+    return err
+  }
+  user.Password = string(hash)
+
+  err = db.Sorm.InsertInto(user)
+  if err != nil {
+    return err
+  }
+  return nil
+}
+
+// Check if user is valid
+func (db *Database) CheckUser(email, password string) error {
+  list, err := db.SelectUser("") 
+  if err != nil {
+    return err
+  }
+  
+  for _, user := range(list) {
+    if user.Email == email {
+      err = bcrypt.CompareHashAndPassword(
+        []byte(user.Password), 
+        []byte(password))
+      if err != nil {
+        return err
+      }
+      return nil
+    }
+  }
+  return errors.New("no user found")
 }

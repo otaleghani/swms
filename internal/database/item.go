@@ -20,9 +20,9 @@ func (db *Database) SelectItem(condition string, args ...interface{}) ([]Item, e
   return list, nil
 }
 
-// Select a single item based on the id
 func (db *Database) SelectItemById(id string) (Item, error) {
   list := []Item{}
+// Select a single item based on the id
   err := db.Sorm.Select(&list, "Id = ?", id)
   if err != nil {
     return Item{}, err

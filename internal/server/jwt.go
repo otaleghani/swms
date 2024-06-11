@@ -10,7 +10,7 @@ import (
   "github.com/golang-jwt/jwt/v5"
 )
 
-func generateSecret(length int) (error) {
+func generateJwtSecret(length int) (error) {
   // Calculate the number of random bytes needed
   n := (length * 3) / 4
 

@@ -17,6 +17,12 @@ func Serve(path, port string) {
 		return
 	}
 
+  err = generateJwtSecret(20)
+  if err != nil {
+    log.Println("ERROR: ", err)
+    return
+  }
+
 	mux := http.NewServeMux()
 
 	mux.HandleFunc("GET /api/v1/items/{$}", getItems(&dbConn))
@@ -30,6 +36,8 @@ func Serve(path, port string) {
   mux.HandleFunc("GET /api/v1/users/{id}", getUserById(&dbConn))
   mux.HandleFunc("PUT /api/v1/users/{id}", putUser(&dbConn))
   mux.HandleFunc("DELETE /api/v1/users/{id}", deleteUser(&dbConn))
+
+  mux.HandleFunc("POST /api/v1/login/{$}", login(&dbConn))
 
 	corsMux := middlewareCors(mux)
 	srv := &http.Server{

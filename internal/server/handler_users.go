@@ -70,7 +70,14 @@ func postUsers(db *database.Database) http.HandlerFunc {
 			return
 		}
 
-    err = db.Insert(data)
+    rows, _ := db.SelectUser("Email = ?", data.Email)
+    if len(rows) != 0 {
+      http.Error(w, fmt.Sprintf("404:  Not found"), 404)
+      logRequest(r.Method, r.URL.Path, r.RemoteAddr, 404)
+			return
+    }
+    // Check if user already exist
+    err = db.InsertUser(data)
     if err != nil {
 			http.Error(w, fmt.Sprintf("error: %v", err), http.StatusBadRequest)
       logRequest(r.Method, r.URL.Path, r.RemoteAddr, http.StatusBadRequest)
@@ -94,7 +101,7 @@ func deleteUser(db *database.Database) http.HandlerFunc {
 			return
 		}
 
-    err := db.Delete(itemArray[0], "Id = ?", path)
+    err := db.Delete(itemArray[0], "Id = ?", id)
     if err != nil {
 			http.Error(w, "403 - Error deleting item. Try again.", 403)
       logRequest(r.Method, r.URL.Path, r.RemoteAddr, 404)
@@ -139,5 +146,3 @@ func putUser(db *database.Database) http.HandlerFunc {
     logRequest(r.Method, r.URL.Path, r.RemoteAddr, 200)
   }
 }
-
-// JWT
