@@ -32,7 +32,7 @@ func (db *Database) SelectItemById(id string) (Item, error) {
 
 func (db *Database) InsertItem(i Item) error {
   // There is no "nil" 
-
+  
   
   err := db.Sorm.InsertInto(row...)
   if err != nil {
