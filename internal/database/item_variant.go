@@ -1,7 +1,5 @@
 package database
 
-import ()
-
 type Variant struct {
   Id string
   Name string
@@ -11,6 +9,6 @@ type Variant struct {
   Lenght float64
   Width float64
   Height float64
-  Default_Variant bool
+  DefaultVariant bool
   Item_id string
 }

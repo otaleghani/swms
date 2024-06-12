@@ -30,5 +30,16 @@ func (db *Database) SelectItemById(id string) (Item, error) {
   return list[0], nil
 }
 
+func (db *Database) InsertItem(i Item) error {
+  // There is no "nil" 
+
+  
+  err := db.Sorm.InsertInto(row...)
+  if err != nil {
+    return err
+  }
+  return nil
+}
+
 // POST, GET, PUT, DELETE
 // INSERT, SELECT, UPDATE, DELETE

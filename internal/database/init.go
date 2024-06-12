@@ -34,6 +34,34 @@ func Init(path string) (Database, error) {
   if err != nil {
     return Database{}, err
   }
+  err = db.Sorm.CreateTable(Category{})
+  if err != nil {
+    return Database{}, err
+  }
+  err = db.Sorm.CreateTable(Subcategory{})
+  if err != nil {
+    return Database{}, err
+  }
+  err = db.Sorm.CreateTable(Zone{})
+  if err != nil {
+    return Database{}, err
+  }
+  err = db.Sorm.CreateTable(Aisle{})
+  if err != nil {
+    return Database{}, err
+  }
+  err = db.Sorm.CreateTable(Rack{})
+  if err != nil {
+    return Database{}, err
+  }
+  err = db.Sorm.CreateTable(Shelf{})
+  if err != nil {
+    return Database{}, err
+  }
+  err = db.Sorm.CreateTable(Position{})
+  if err != nil {
+    return Database{}, err
+  }
   return db, nil
 }
 

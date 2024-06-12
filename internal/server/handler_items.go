@@ -1,6 +1,7 @@
 package server
 
 import (
+  "fmt"
 	"encoding/json"
 	"net/http"
 
@@ -36,15 +37,17 @@ func postItems(db *database.Database) http.HandlerFunc {
 	  var data database.Item
 		err := json.NewDecoder(r.Body).Decode(&data)
 		if err != nil {
-			http.Error(w, "Bad request", http.StatusBadRequest)
-      logRequest(r.Method,r.URL.Path, r.RemoteAddr, http.StatusBadRequest)
+      status := http.StatusBadRequest
+      http.Error(w, fmt.Sprintf("%v: %v", status, err), status)
+      logRequest(r.Method,r.URL.Path, r.RemoteAddr, status)
 			return
 		}
 
     err = db.Insert(data)
     if err != nil {
-			http.Error(w, "Bad request", http.StatusBadRequest)
-      logRequest(r.Method,r.URL.Path, r.RemoteAddr, http.StatusBadRequest)
+      status := http.StatusBadRequest
+      http.Error(w, fmt.Sprintf("%v: %v", status, err), status)
+      logRequest(r.Method,r.URL.Path, r.RemoteAddr, status)
 			return
     }
 
@@ -57,22 +60,28 @@ func postItems(db *database.Database) http.HandlerFunc {
 
 func getItems(db *database.Database) http.HandlerFunc {
   return func(w http.ResponseWriter, r *http.Request) {
-		itemArray, _ := db.SelectItem("")
-
-    resp := []database.Item{}
-    for _, item := range itemArray {
-		  resp = append(resp, database.Item{
-		  	Id:          item.Id,
-		  	Name:        item.Name,
-		  	Description: item.Description,
-		  	Archive:     item.Archive,
-		  	Position_id: item.Position_id,
-		  	Category_id: item.Category_id,
-		  	Subcategory_id: item.Subcategory_id,
-		  })
+		itemArray, err := db.SelectItem("")
+    if err != nil {
+      status := http.StatusBadRequest
+      http.Error(w, fmt.Sprintf("%v: %v", status, err), status)
+      logRequest(r.Method,r.URL.Path, r.RemoteAddr, status)
+			return
     }
 
-		encodedResp, err := json.Marshal(resp)
+    // resp := []database.Item{}
+    // for _, item := range itemArray {
+		//   resp = append(resp, database.Item{
+		//   	Id:          item.Id,
+		//   	Name:        item.Name,
+		//   	Description: item.Description,
+		//   	Archive:     item.Archive,
+		//   	Position_id: item.Position_id,
+		//   	Category_id: item.Category_id,
+		//   	Subcategory_id: item.Subcategory_id,
+		//   })
+    // }
+
+		encodedResp, err := json.Marshal(itemArray)
 		if err != nil {
 			w.WriteHeader(404)
 		}
@@ -96,17 +105,17 @@ func getItemById(db *database.Database) http.HandlerFunc {
 		}
 
 		item := itemArray[0]
-		resp := database.Item{
-			Id:          item.Id,
-			Name:        item.Name,
-			Description: item.Description,
-			Archive:     item.Archive,
-			Position_id: item.Position_id,
-			Category_id: item.Category_id,
-			Subcategory_id: item.Subcategory_id,
-		}
+		// resp := database.Item{
+		// 	Id:          item.Id,
+		// 	Name:        item.Name,
+		// 	Description: item.Description,
+		// 	Archive:     item.Archive,
+		// 	Position_id: item.Position_id,
+		// 	Category_id: item.Category_id,
+		// 	Subcategory_id: item.Subcategory_id,
+		// }
 
-		encodedResp, err := json.Marshal(resp)
+		encodedResp, err := json.Marshal(item)
 		if err != nil {
 			w.WriteHeader(404)
 		}
