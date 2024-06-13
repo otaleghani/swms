@@ -13,50 +13,21 @@ func getUserById(db *database.Database) http.HandlerFunc {
     id := r.PathValue("id")
     rows, _ := db.SelectUser("Id = ?", id)
     if len(rows) == 0 {
-      http.Error(w, fmt.Sprintf("404:  Not found"), 404)
-      logRequest(r.Method, r.URL.Path, r.RemoteAddr, 404)
+      ErrorResponse{Message: "Not found"}.r404(w, r)
 			return
     }
-
-    encodedResp, err := json.Marshal(rows[0])
-    if err != nil {
-      http.Error(w, fmt.Sprintf("500: %v", err), 500)
-      logRequest(r.Method, r.URL.Path, r.RemoteAddr, 500)
-			return
-    }
-
-    w.Header().Set("Content-Type", "application/json")
-		w.Write(encodedResp)
-		w.WriteHeader(200)
-    logRequest(r.Method, r.URL.Path, r.RemoteAddr, 200)
+    SuccessResponse{Data: rows[0]}.r200(w, r)
   }
 }
 
 func getUsers(db *database.Database) http.HandlerFunc {
   return func(w http.ResponseWriter, r *http.Request) {
-    itemsArray, _ := db.SelectUser("")
-
-    resp := []database.User{}
-    for _, item := range itemsArray {
-      resp = append(resp, database.User{
-        Id: item.Id,
-        Name: item.Name,
-        Surname: item.Surname,
-        Email: item.Email,
-        Password: item.Password,
-      })
-    }
-
-    encodedResp, err := json.Marshal(resp)
+    rows, err := db.SelectUser("")
     if err != nil {
-      w.WriteHeader(403)
+      ErrorResponse{Message: err.Error()}.r500(w, r)
       return
     }
-
-    w.Header().Set("Content-Type", "application/json")
-    w.Write(encodedResp)
-    w.WriteHeader(200)
-    logRequest(r.Method, r.URL.Path, r.RemoteAddr, 200)
+    SuccessResponse{Data: rows}.r200(w, r)
   }
 }
 
@@ -65,84 +36,72 @@ func postUsers(db *database.Database) http.HandlerFunc {
 	  var data database.User
 		err := json.NewDecoder(r.Body).Decode(&data)
 		if err != nil {
-      http.Error(w, fmt.Sprintf("error: %v", err), http.StatusBadRequest)
-      logRequest(r.Method, r.URL.Path, r.RemoteAddr, http.StatusBadRequest)
+      ErrorResponse{Message: err.Error()}.r400(w, r)
 			return
 		}
-
-    rows, _ := db.SelectUser("Email = ?", data.Email)
+    rows, err := db.SelectUser("Email = ?", data.Email) // Checks if user already exists
+		if err != nil {
+      ErrorResponse{Message: err.Error()}.r500(w, r)
+			return
+		}
     if len(rows) != 0 {
-      http.Error(w, fmt.Sprintf("404:  Not found"), 404)
-      logRequest(r.Method, r.URL.Path, r.RemoteAddr, 404)
+      ErrorResponse{Message: "Email already in use"}.r400(w, r)
 			return
     }
-    // Check if user already exist
     err = db.InsertUser(data)
     if err != nil {
-			http.Error(w, fmt.Sprintf("error: %v", err), http.StatusBadRequest)
-      logRequest(r.Method, r.URL.Path, r.RemoteAddr, http.StatusBadRequest)
+      ErrorResponse{Message: err.Error()}.r500(w, r)
 			return
     }
-
-		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(201)
-		w.Write([]byte("Item added"))
-    logRequest(r.Method, r.URL.Path, r.RemoteAddr, 200)
+    SuccessResponse{Message: "Item added"}.r201(w, r)
   }
 }
 
 func deleteUser(db *database.Database) http.HandlerFunc {
   return func(w http.ResponseWriter, r *http.Request) {
 		id := r.PathValue("id")
-		itemArray, _ := db.SelectUser("Id = ?", id)
+		rows, err := db.SelectUser("Id = ?", id)
+    if err != nil {
+      ErrorResponse{Message: err.Error()}.r500(w, r)
+      return
+    }
 		if len(itemArray) == 0 {
-      http.Error(w, "404 - Not found", 404)
-      logRequest(r.Method, r.URL.Path, r.RemoteAddr, 404)
+      ErrorResponse{Message: "Not found"}.r404(w, r)
 			return
 		}
 
     err := db.Delete(itemArray[0], "Id = ?", id)
     if err != nil {
-			http.Error(w, "403 - Error deleting item. Try again.", 403)
-      logRequest(r.Method, r.URL.Path, r.RemoteAddr, 404)
+      ErrorResponse{Message: err.Error()}.r500(w, r)
       return
     }
-
-		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(201)
-		w.Write([]byte("User deleted"))
-    logRequest(r.Method, r.URL.Path, r.RemoteAddr, 200)
+    SuccessResponse{Message: "Item deleted"}.r200(w, r)
   }
 }
 
 func putUser(db *database.Database) http.HandlerFunc {
   return func(w http.ResponseWriter, r *http.Request) {
     id := r.PathValue("id")
-    rows, _ := db.SelectUser("Id = ?", id)
+    rows, err := db.SelectUser("Id = ?", id)
+    if err != nil {
+      ErrorResponse{Message: err.Error()}.r500(w, r)
+      return
+    }
 		if len(rows) == 0 {
-      http.Error(w, "404: Not found", 404)
-      logRequest(r.Method, r.URL.Path, r.RemoteAddr, 404)
+      ErrorResponse{Message: "Not found"}.r404(w, r)
 			return
 		}
-
 	  var data database.User
 		err := json.NewDecoder(r.Body).Decode(&data)
 		if err != nil {
-      http.Error(w, fmt.Sprintf("400: %v", err), 400)
-      logRequest(r.Method, r.URL.Path, r.RemoteAddr, 400)
+      ErrorResponse{Message: err.Error()}.r400(w, r)
 			return
 		}
-
     err = db.Update(data, "Id = ?", id)
     if err != nil {
-      http.Error(w, fmt.Sprintf("500: %v", err), 500)
-      logRequest(r.Method, r.URL.Path, r.RemoteAddr, 500)
+      ErrorResponse{Message: err.Error()}.r500(w, r)
 			return
     }
-
-		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(200)
-		w.Write([]byte("User updated"))
-    logRequest(r.Method, r.URL.Path, r.RemoteAddr, 200)
+    SuccessResponse{Message: "Item updated"}.r200(w, r)
   }
 }

@@ -11,7 +11,7 @@ import (
 
 func Serve(path, port string) {
 	// opens db
-	dbConn, err := database.Init(path)
+	dbConn, err := database.Open(path)
 	if err != nil {
 		log.Println("ERROR: ", err)
 		return
@@ -28,7 +28,7 @@ func Serve(path, port string) {
 	mux.HandleFunc("GET /api/v1/items/{$}", getItems(&dbConn))
 	mux.HandleFunc("POST /api/v1/items/{$}", postItems(&dbConn))
 	mux.HandleFunc("GET /api/v1/items/{id}", getItemById(&dbConn))
-	mux.HandleFunc("PUT /api/v1/items/{id}", handleTest)
+	mux.HandleFunc("PUT /api/v1/items/{id}", putItem(&dbConn))
 	mux.HandleFunc("DELETE /api/v1/items/{id}", deleteItem(&dbConn))
 
   mux.HandleFunc("GET /api/v1/users/{$}", getUsers(&dbConn))

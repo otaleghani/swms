@@ -26,6 +26,8 @@ github.com/otaleghani/sorm v0.0.12 h1:NLRI/nyQLxQmiHSJB493npUgGPG+JMai8iI0F8OYSy
 github.com/otaleghani/sorm v0.0.12/go.mod h1:/ARPaDBJ3fwwoG2by1ZzkF3boe/ZJ86F9C5Rn7GTZEs=
 github.com/otaleghani/sorm v0.0.13 h1:hXcQv5fNo7w0XUwAFPuFjk4LRNXDbcZqHN7ZquRknqY=
 github.com/otaleghani/sorm v0.0.13/go.mod h1:/ARPaDBJ3fwwoG2by1ZzkF3boe/ZJ86F9C5Rn7GTZEs=
+github.com/otaleghani/sorm v0.0.14 h1:1fp3VCjfwTL0dwPf9QTb3gFpRlcMukqsaYRgRCRV5qc=
+github.com/otaleghani/sorm v0.0.14/go.mod h1:/ARPaDBJ3fwwoG2by1ZzkF3boe/ZJ86F9C5Rn7GTZEs=
 github.com/otaleghani/spg v0.1.1 h1:n9oa1yHd0yEY10Ft/5zv+6ABftH+812Z6DYgGlOyKc8=
 github.com/otaleghani/spg v0.1.1/go.mod h1:wBmB8DXBAgVxSe8qSf11KzrKhrI6V5qqwA5cG+zzxz0=
 github.com/otaleghani/spg v0.1.2 h1:sDd8SzGJ2N9Nl2jgV0m319KujlkR7DrRsyzyj/aKhG4=
