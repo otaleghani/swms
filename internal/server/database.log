@@ -677,3 +677,764 @@
 2024/06/14 12:26:24 [32msorm.SUCCESS:[0m   Items inserted
 2024/06/14 12:28:57 [35msorm.NOTICE:[0m    Selecting from Item with condition 
 2024/06/14 12:28:57 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/14 12:31:38 [35msorm.NOTICE:[0m    Opening database connection at test.db
+2024/06/14 12:31:38 sorm.LOG:       Database opened
+2024/06/14 12:31:38 sorm.LOG:       Activating foreign keys
+2024/06/14 12:31:38 [32msorm.SUCCESS:[0m   Database opened
+2024/06/14 12:31:41 [35msorm.NOTICE:[0m    Selecting from Item with condition 
+2024/06/14 12:31:41 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/14 12:32:00 [35msorm.NOTICE:[0m    Selecting from Item with condition 
+2024/06/14 12:32:00 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/14 12:44:35 [35msorm.NOTICE:[0m    Opening database connection at test.db
+2024/06/14 12:44:35 sorm.LOG:       Database opened
+2024/06/14 12:44:35 sorm.LOG:       Activating foreign keys
+2024/06/14 12:44:35 [32msorm.SUCCESS:[0m   Database opened
+2024/06/14 12:44:58 [35msorm.NOTICE:[0m    Selecting from RefreshToken with condition Token = ?
+2024/06/14 12:44:58 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/14 12:45:13 [35msorm.NOTICE:[0m    Selecting from RefreshToken with condition Token = ?
+2024/06/14 12:45:13 [31msorm.ERROR:[0m     rows.Scan: sql: Scan error on column index 2, name "Time": unsupported Scan, storing driver.Value type string into type *time.Time
+2024/06/14 14:57:12 [35msorm.NOTICE:[0m    Opening database connection at test.db
+2024/06/14 14:57:12 sorm.LOG:       Database opened
+2024/06/14 14:57:12 sorm.LOG:       Activating foreign keys
+2024/06/14 14:57:12 [32msorm.SUCCESS:[0m   Database opened
+2024/06/14 14:58:33 [35msorm.NOTICE:[0m    Opening database connection at test.db
+2024/06/14 14:58:33 sorm.LOG:       Database opened
+2024/06/14 14:58:33 sorm.LOG:       Activating foreign keys
+2024/06/14 14:58:33 [32msorm.SUCCESS:[0m   Database opened
+2024/06/14 14:58:47 [35msorm.NOTICE:[0m    Opening database connection at test.db
+2024/06/14 14:58:47 sorm.LOG:       Database opened
+2024/06/14 14:58:47 sorm.LOG:       Activating foreign keys
+2024/06/14 14:58:47 [32msorm.SUCCESS:[0m   Database opened
+2024/06/14 14:58:47 [35msorm.NOTICE:[0m    Creating table: User
+2024/06/14 14:58:47 sorm.LOG:       	Name TEXT
+2024/06/14 14:58:47 sorm.LOG:       	Surname TEXT
+2024/06/14 14:58:47 sorm.LOG:       	Email TEXT
+2024/06/14 14:58:47 sorm.LOG:       	Password TEXT
+2024/06/14 14:58:47 sorm.LOG:       Executing query on database test.db
+2024/06/14 14:58:47 [32msorm.SUCCESS:[0m   Table User created
+2024/06/14 14:58:47 sorm.LOG:       Inserting default nil value into User
+2024/06/14 14:58:47 [32msorm.SUCCESS:[0m   Nil value inserted into User
+2024/06/14 14:58:47 [35msorm.NOTICE:[0m    Creating table: Zone
+2024/06/14 14:58:47 sorm.LOG:       	Name TEXT
+2024/06/14 14:58:47 sorm.LOG:       Executing query on database test.db
+2024/06/14 14:58:47 [32msorm.SUCCESS:[0m   Table Zone created
+2024/06/14 14:58:47 sorm.LOG:       Inserting default nil value into Zone
+2024/06/14 14:58:47 [32msorm.SUCCESS:[0m   Nil value inserted into Zone
+2024/06/14 14:58:47 [35msorm.NOTICE:[0m    Creating table: Aisle
+2024/06/14 14:58:47 sorm.LOG:       	Name TEXT
+2024/06/14 14:58:47 sorm.LOG:       	Zone_id TEXT
+2024/06/14 14:58:47 sorm.LOG:       Executing query on database test.db
+2024/06/14 14:58:47 [32msorm.SUCCESS:[0m   Table Aisle created
+2024/06/14 14:58:47 sorm.LOG:       Inserting default nil value into Aisle
+2024/06/14 14:58:47 [32msorm.SUCCESS:[0m   Nil value inserted into Aisle
+2024/06/14 14:58:47 [35msorm.NOTICE:[0m    Creating table: Rack
+2024/06/14 14:58:47 sorm.LOG:       	Name TEXT
+2024/06/14 14:58:47 sorm.LOG:       	Aisle_id TEXT
+2024/06/14 14:58:47 sorm.LOG:       Executing query on database test.db
+2024/06/14 14:58:47 [32msorm.SUCCESS:[0m   Table Rack created
+2024/06/14 14:58:47 sorm.LOG:       Inserting default nil value into Rack
+2024/06/14 14:58:47 [32msorm.SUCCESS:[0m   Nil value inserted into Rack
+2024/06/14 14:58:47 [35msorm.NOTICE:[0m    Creating table: Shelf
+2024/06/14 14:58:47 sorm.LOG:       	Name TEXT
+2024/06/14 14:58:47 sorm.LOG:       	Rack_id TEXT
+2024/06/14 14:58:47 sorm.LOG:       Executing query on database test.db
+2024/06/14 14:58:47 [32msorm.SUCCESS:[0m   Table Shelf created
+2024/06/14 14:58:47 sorm.LOG:       Inserting default nil value into Shelf
+2024/06/14 14:58:47 [32msorm.SUCCESS:[0m   Nil value inserted into Shelf
+2024/06/14 14:58:47 [35msorm.NOTICE:[0m    Creating table: Position
+2024/06/14 14:58:47 sorm.LOG:       	Zone_id TEXT
+2024/06/14 14:58:47 sorm.LOG:       	Aisle_id TEXT
+2024/06/14 14:58:47 sorm.LOG:       	Rack_id TEXT
+2024/06/14 14:58:47 sorm.LOG:       	Shelf_id TEXT
+2024/06/14 14:58:47 sorm.LOG:       Executing query on database test.db
+2024/06/14 14:58:47 [32msorm.SUCCESS:[0m   Table Position created
+2024/06/14 14:58:47 sorm.LOG:       Inserting default nil value into Position
+2024/06/14 14:58:47 [32msorm.SUCCESS:[0m   Nil value inserted into Position
+2024/06/14 14:58:47 [35msorm.NOTICE:[0m    Creating table: Category
+2024/06/14 14:58:47 sorm.LOG:       	Name TEXT
+2024/06/14 14:58:47 sorm.LOG:       	Description TEXT
+2024/06/14 14:58:47 sorm.LOG:       Executing query on database test.db
+2024/06/14 14:58:47 [32msorm.SUCCESS:[0m   Table Category created
+2024/06/14 14:58:47 sorm.LOG:       Inserting default nil value into Category
+2024/06/14 14:58:47 [32msorm.SUCCESS:[0m   Nil value inserted into Category
+2024/06/14 14:58:47 [35msorm.NOTICE:[0m    Creating table: Subcategory
+2024/06/14 14:58:47 sorm.LOG:       	Name TEXT
+2024/06/14 14:58:47 sorm.LOG:       	Description TEXT
+2024/06/14 14:58:47 sorm.LOG:       	Category_id TEXT
+2024/06/14 14:58:47 sorm.LOG:       Executing query on database test.db
+2024/06/14 14:58:47 [32msorm.SUCCESS:[0m   Table Subcategory created
+2024/06/14 14:58:47 sorm.LOG:       Inserting default nil value into Subcategory
+2024/06/14 14:58:47 [32msorm.SUCCESS:[0m   Nil value inserted into Subcategory
+2024/06/14 14:58:47 [35msorm.NOTICE:[0m    Creating table: Item
+2024/06/14 14:58:47 sorm.LOG:       	Name TEXT
+2024/06/14 14:58:47 sorm.LOG:       	Description TEXT
+2024/06/14 14:58:47 sorm.LOG:       	Archive BOOLEAN
+2024/06/14 14:58:47 sorm.LOG:       	Position_id TEXT
+2024/06/14 14:58:47 sorm.LOG:       	Category_id TEXT
+2024/06/14 14:58:47 sorm.LOG:       	Subcategory_id TEXT
+2024/06/14 14:58:47 sorm.LOG:       Executing query on database test.db
+2024/06/14 14:58:47 [32msorm.SUCCESS:[0m   Table Item created
+2024/06/14 14:58:47 sorm.LOG:       Inserting default nil value into Item
+2024/06/14 14:58:47 [32msorm.SUCCESS:[0m   Nil value inserted into Item
+2024/06/14 14:58:47 [35msorm.NOTICE:[0m    Creating table: Variant
+2024/06/14 14:58:47 sorm.LOG:       	Name TEXT
+2024/06/14 14:58:47 sorm.LOG:       	Description TEXT
+2024/06/14 14:58:47 sorm.LOG:       	Quantity INTEGER
+2024/06/14 14:58:47 sorm.LOG:       	InternalId TEXT
+2024/06/14 14:58:47 sorm.LOG:       	Length REAL
+2024/06/14 14:58:47 sorm.LOG:       	Width REAL
+2024/06/14 14:58:47 sorm.LOG:       	Height REAL
+2024/06/14 14:58:47 sorm.LOG:       	DefaultVariant BOOLEAN
+2024/06/14 14:58:47 sorm.LOG:       	Item_id TEXT
+2024/06/14 14:58:47 sorm.LOG:       Executing query on database test.db
+2024/06/14 14:58:47 [32msorm.SUCCESS:[0m   Table Variant created
+2024/06/14 14:58:47 sorm.LOG:       Inserting default nil value into Variant
+2024/06/14 14:58:47 [32msorm.SUCCESS:[0m   Nil value inserted into Variant
+2024/06/14 14:58:47 [35msorm.NOTICE:[0m    Creating table: Item_image
+2024/06/14 14:58:47 sorm.LOG:       	Uri TEXT
+2024/06/14 14:58:47 sorm.LOG:       	Item_id TEXT
+2024/06/14 14:58:47 sorm.LOG:       	Variant_id TEXT
+2024/06/14 14:58:47 sorm.LOG:       Executing query on database test.db
+2024/06/14 14:58:47 [32msorm.SUCCESS:[0m   Table Item_image created
+2024/06/14 14:58:47 sorm.LOG:       Inserting default nil value into Item_image
+2024/06/14 14:58:47 [32msorm.SUCCESS:[0m   Nil value inserted into Item_image
+2024/06/14 14:58:47 [35msorm.NOTICE:[0m    Creating table: RefreshToken
+2024/06/14 14:58:47 sorm.LOG:       	Token TEXT
+2024/06/14 14:58:47 sorm.LOG:       	Revoked BOOLEAN
+2024/06/14 14:58:47 sorm.LOG:       Executing query on database test.db
+2024/06/14 14:58:47 [32msorm.SUCCESS:[0m   Table RefreshToken created
+2024/06/14 14:58:47 sorm.LOG:       Inserting default nil value into RefreshToken
+2024/06/14 14:58:47 [32msorm.SUCCESS:[0m   Nil value inserted into RefreshToken
+2024/06/14 14:58:47 [35msorm.NOTICE:[0m    Opening database connection at test.db
+2024/06/14 14:58:47 sorm.LOG:       Database opened
+2024/06/14 14:58:47 sorm.LOG:       Activating foreign keys
+2024/06/14 14:58:47 [32msorm.SUCCESS:[0m   Database opened
+2024/06/14 14:59:00 [35msorm.NOTICE:[0m    Selecting from User with condition 
+2024/06/14 14:59:00 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/14 14:59:36 [35msorm.NOTICE:[0m    Selecting from User with condition Email = ?
+2024/06/14 14:59:36 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/14 14:59:36 [35msorm.NOTICE:[0m    Starting insert transaction
+2024/06/14 14:59:36 sorm.LOG:       Inserting into User
+2024/06/14 14:59:36 [32msorm.SUCCESS:[0m   Items inserted
+2024/06/14 14:59:48 [35msorm.NOTICE:[0m    Selecting from User with condition 
+2024/06/14 14:59:48 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/14 14:59:48 [35msorm.NOTICE:[0m    Starting insert transaction
+2024/06/14 14:59:48 sorm.LOG:       Inserting into RefreshToken
+2024/06/14 14:59:48 [32msorm.SUCCESS:[0m   Items inserted
+2024/06/14 15:01:39 [35msorm.NOTICE:[0m    Opening database connection at test.db
+2024/06/14 15:01:39 sorm.LOG:       Database opened
+2024/06/14 15:01:39 sorm.LOG:       Activating foreign keys
+2024/06/14 15:01:39 [32msorm.SUCCESS:[0m   Database opened
+2024/06/14 15:02:40 [35msorm.NOTICE:[0m    Opening database connection at test.db
+2024/06/14 15:02:40 sorm.LOG:       Database opened
+2024/06/14 15:02:40 sorm.LOG:       Activating foreign keys
+2024/06/14 15:02:40 [32msorm.SUCCESS:[0m   Database opened
+2024/06/14 15:02:40 [35msorm.NOTICE:[0m    Creating table: User
+2024/06/14 15:02:40 sorm.LOG:       	Name TEXT
+2024/06/14 15:02:40 sorm.LOG:       	Surname TEXT
+2024/06/14 15:02:40 sorm.LOG:       	Email TEXT
+2024/06/14 15:02:40 sorm.LOG:       	Password TEXT
+2024/06/14 15:02:40 sorm.LOG:       Executing query on database test.db
+2024/06/14 15:02:40 [32msorm.SUCCESS:[0m   Table User created
+2024/06/14 15:02:40 sorm.LOG:       Inserting default nil value into User
+2024/06/14 15:02:40 [32msorm.SUCCESS:[0m   Nil value inserted into User
+2024/06/14 15:02:40 [35msorm.NOTICE:[0m    Creating table: Zone
+2024/06/14 15:02:40 sorm.LOG:       	Name TEXT
+2024/06/14 15:02:40 sorm.LOG:       Executing query on database test.db
+2024/06/14 15:02:40 [32msorm.SUCCESS:[0m   Table Zone created
+2024/06/14 15:02:40 sorm.LOG:       Inserting default nil value into Zone
+2024/06/14 15:02:40 [32msorm.SUCCESS:[0m   Nil value inserted into Zone
+2024/06/14 15:02:40 [35msorm.NOTICE:[0m    Creating table: Aisle
+2024/06/14 15:02:40 sorm.LOG:       	Name TEXT
+2024/06/14 15:02:40 sorm.LOG:       	Zone_id TEXT
+2024/06/14 15:02:40 sorm.LOG:       Executing query on database test.db
+2024/06/14 15:02:40 [32msorm.SUCCESS:[0m   Table Aisle created
+2024/06/14 15:02:40 sorm.LOG:       Inserting default nil value into Aisle
+2024/06/14 15:02:40 [32msorm.SUCCESS:[0m   Nil value inserted into Aisle
+2024/06/14 15:02:40 [35msorm.NOTICE:[0m    Creating table: Rack
+2024/06/14 15:02:40 sorm.LOG:       	Name TEXT
+2024/06/14 15:02:40 sorm.LOG:       	Aisle_id TEXT
+2024/06/14 15:02:40 sorm.LOG:       Executing query on database test.db
+2024/06/14 15:02:40 [32msorm.SUCCESS:[0m   Table Rack created
+2024/06/14 15:02:40 sorm.LOG:       Inserting default nil value into Rack
+2024/06/14 15:02:40 [32msorm.SUCCESS:[0m   Nil value inserted into Rack
+2024/06/14 15:02:40 [35msorm.NOTICE:[0m    Creating table: Shelf
+2024/06/14 15:02:40 sorm.LOG:       	Name TEXT
+2024/06/14 15:02:40 sorm.LOG:       	Rack_id TEXT
+2024/06/14 15:02:40 sorm.LOG:       Executing query on database test.db
+2024/06/14 15:02:40 [32msorm.SUCCESS:[0m   Table Shelf created
+2024/06/14 15:02:40 sorm.LOG:       Inserting default nil value into Shelf
+2024/06/14 15:02:40 [32msorm.SUCCESS:[0m   Nil value inserted into Shelf
+2024/06/14 15:02:40 [35msorm.NOTICE:[0m    Creating table: Position
+2024/06/14 15:02:40 sorm.LOG:       	Zone_id TEXT
+2024/06/14 15:02:40 sorm.LOG:       	Aisle_id TEXT
+2024/06/14 15:02:40 sorm.LOG:       	Rack_id TEXT
+2024/06/14 15:02:40 sorm.LOG:       	Shelf_id TEXT
+2024/06/14 15:02:40 sorm.LOG:       Executing query on database test.db
+2024/06/14 15:02:40 [32msorm.SUCCESS:[0m   Table Position created
+2024/06/14 15:02:40 sorm.LOG:       Inserting default nil value into Position
+2024/06/14 15:02:40 [32msorm.SUCCESS:[0m   Nil value inserted into Position
+2024/06/14 15:02:40 [35msorm.NOTICE:[0m    Creating table: Category
+2024/06/14 15:02:40 sorm.LOG:       	Name TEXT
+2024/06/14 15:02:40 sorm.LOG:       	Description TEXT
+2024/06/14 15:02:40 sorm.LOG:       Executing query on database test.db
+2024/06/14 15:02:40 [32msorm.SUCCESS:[0m   Table Category created
+2024/06/14 15:02:40 sorm.LOG:       Inserting default nil value into Category
+2024/06/14 15:02:40 [32msorm.SUCCESS:[0m   Nil value inserted into Category
+2024/06/14 15:02:40 [35msorm.NOTICE:[0m    Creating table: Subcategory
+2024/06/14 15:02:40 sorm.LOG:       	Name TEXT
+2024/06/14 15:02:40 sorm.LOG:       	Description TEXT
+2024/06/14 15:02:40 sorm.LOG:       	Category_id TEXT
+2024/06/14 15:02:40 sorm.LOG:       Executing query on database test.db
+2024/06/14 15:02:40 [32msorm.SUCCESS:[0m   Table Subcategory created
+2024/06/14 15:02:40 sorm.LOG:       Inserting default nil value into Subcategory
+2024/06/14 15:02:40 [32msorm.SUCCESS:[0m   Nil value inserted into Subcategory
+2024/06/14 15:02:40 [35msorm.NOTICE:[0m    Creating table: Item
+2024/06/14 15:02:40 sorm.LOG:       	Name TEXT
+2024/06/14 15:02:40 sorm.LOG:       	Description TEXT
+2024/06/14 15:02:40 sorm.LOG:       	Archive BOOLEAN
+2024/06/14 15:02:40 sorm.LOG:       	Position_id TEXT
+2024/06/14 15:02:40 sorm.LOG:       	Category_id TEXT
+2024/06/14 15:02:40 sorm.LOG:       	Subcategory_id TEXT
+2024/06/14 15:02:40 sorm.LOG:       Executing query on database test.db
+2024/06/14 15:02:40 [32msorm.SUCCESS:[0m   Table Item created
+2024/06/14 15:02:40 sorm.LOG:       Inserting default nil value into Item
+2024/06/14 15:02:40 [32msorm.SUCCESS:[0m   Nil value inserted into Item
+2024/06/14 15:02:40 [35msorm.NOTICE:[0m    Creating table: Variant
+2024/06/14 15:02:40 sorm.LOG:       	Name TEXT
+2024/06/14 15:02:40 sorm.LOG:       	Description TEXT
+2024/06/14 15:02:40 sorm.LOG:       	Quantity INTEGER
+2024/06/14 15:02:40 sorm.LOG:       	InternalId TEXT
+2024/06/14 15:02:40 sorm.LOG:       	Length REAL
+2024/06/14 15:02:40 sorm.LOG:       	Width REAL
+2024/06/14 15:02:40 sorm.LOG:       	Height REAL
+2024/06/14 15:02:40 sorm.LOG:       	DefaultVariant BOOLEAN
+2024/06/14 15:02:40 sorm.LOG:       	Item_id TEXT
+2024/06/14 15:02:40 sorm.LOG:       Executing query on database test.db
+2024/06/14 15:02:40 [32msorm.SUCCESS:[0m   Table Variant created
+2024/06/14 15:02:40 sorm.LOG:       Inserting default nil value into Variant
+2024/06/14 15:02:40 [32msorm.SUCCESS:[0m   Nil value inserted into Variant
+2024/06/14 15:02:40 [35msorm.NOTICE:[0m    Creating table: Item_image
+2024/06/14 15:02:40 sorm.LOG:       	Uri TEXT
+2024/06/14 15:02:40 sorm.LOG:       	Item_id TEXT
+2024/06/14 15:02:40 sorm.LOG:       	Variant_id TEXT
+2024/06/14 15:02:40 sorm.LOG:       Executing query on database test.db
+2024/06/14 15:02:40 [32msorm.SUCCESS:[0m   Table Item_image created
+2024/06/14 15:02:40 sorm.LOG:       Inserting default nil value into Item_image
+2024/06/14 15:02:40 [32msorm.SUCCESS:[0m   Nil value inserted into Item_image
+2024/06/14 15:02:40 [35msorm.NOTICE:[0m    Creating table: RefreshToken
+2024/06/14 15:02:40 sorm.LOG:       	Token TEXT
+2024/06/14 15:02:40 sorm.LOG:       	Revoked BOOLEAN
+2024/06/14 15:02:40 sorm.LOG:       Executing query on database test.db
+2024/06/14 15:02:40 [32msorm.SUCCESS:[0m   Table RefreshToken created
+2024/06/14 15:02:40 sorm.LOG:       Inserting default nil value into RefreshToken
+2024/06/14 15:02:40 [32msorm.SUCCESS:[0m   Nil value inserted into RefreshToken
+2024/06/14 15:02:40 [35msorm.NOTICE:[0m    Opening database connection at test.db
+2024/06/14 15:02:40 sorm.LOG:       Database opened
+2024/06/14 15:02:40 sorm.LOG:       Activating foreign keys
+2024/06/14 15:02:40 [32msorm.SUCCESS:[0m   Database opened
+2024/06/14 15:02:49 [35msorm.NOTICE:[0m    Selecting from User with condition Email = ?
+2024/06/14 15:02:49 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/14 15:02:49 [35msorm.NOTICE:[0m    Starting insert transaction
+2024/06/14 15:02:49 sorm.LOG:       Inserting into User
+2024/06/14 15:02:49 [32msorm.SUCCESS:[0m   Items inserted
+2024/06/14 15:02:58 [35msorm.NOTICE:[0m    Selecting from User with condition 
+2024/06/14 15:02:58 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/14 15:02:58 [35msorm.NOTICE:[0m    Starting insert transaction
+2024/06/14 15:02:58 sorm.LOG:       Inserting into RefreshToken
+2024/06/14 15:02:58 [32msorm.SUCCESS:[0m   Items inserted
+2024/06/14 15:03:31 [35msorm.NOTICE:[0m    Selecting from RefreshToken with condition Token = ?
+2024/06/14 15:03:31 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/14 15:03:31 [35msorm.NOTICE:[0m    Updating in table RefreshToken
+2024/06/14 15:03:31 [32msorm.SUCCESS:[0m   Update successful. Rows affected: 1
+2024/06/14 15:10:49 [35msorm.NOTICE:[0m    Opening database connection at test.db
+2024/06/14 15:10:49 sorm.LOG:       Database opened
+2024/06/14 15:10:49 sorm.LOG:       Activating foreign keys
+2024/06/14 15:10:49 [32msorm.SUCCESS:[0m   Database opened
+2024/06/14 15:17:05 [35msorm.NOTICE:[0m    Opening database connection at test.db
+2024/06/14 15:17:05 sorm.LOG:       Database opened
+2024/06/14 15:17:05 sorm.LOG:       Activating foreign keys
+2024/06/14 15:17:05 [32msorm.SUCCESS:[0m   Database opened
+2024/06/14 15:17:37 [35msorm.NOTICE:[0m    Selecting from User with condition 
+2024/06/14 15:17:37 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/14 15:18:09 [35msorm.NOTICE:[0m    Selecting from User with condition 
+2024/06/14 15:18:09 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/14 15:18:09 [35msorm.NOTICE:[0m    Starting insert transaction
+2024/06/14 15:18:09 sorm.LOG:       Inserting into RefreshToken
+2024/06/14 15:18:09 [32msorm.SUCCESS:[0m   Items inserted
+2024/06/14 15:22:04 [35msorm.NOTICE:[0m    Opening database connection at test.db
+2024/06/14 15:22:04 sorm.LOG:       Database opened
+2024/06/14 15:22:04 sorm.LOG:       Activating foreign keys
+2024/06/14 15:22:04 [32msorm.SUCCESS:[0m   Database opened
+2024/06/14 15:22:26 [35msorm.NOTICE:[0m    Opening database connection at test.db
+2024/06/14 15:22:26 sorm.LOG:       Database opened
+2024/06/14 15:22:26 sorm.LOG:       Activating foreign keys
+2024/06/14 15:22:26 [32msorm.SUCCESS:[0m   Database opened
+2024/06/14 15:22:29 [35msorm.NOTICE:[0m    Selecting from RefreshToken with condition Token = ?
+2024/06/14 15:22:29 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/14 15:28:23 [35msorm.NOTICE:[0m    Selecting from RefreshToken with condition Token = ?
+2024/06/14 15:28:23 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/14 15:28:23 [35msorm.NOTICE:[0m    Updating in table RefreshToken
+2024/06/14 15:28:23 [32msorm.SUCCESS:[0m   Update successful. Rows affected: 1
+2024/06/14 15:28:27 [35msorm.NOTICE:[0m    Selecting from RefreshToken with condition Token = ?
+2024/06/14 15:28:27 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/14 15:43:39 [35msorm.NOTICE:[0m    Opening database connection at test.db
+2024/06/14 15:43:39 sorm.LOG:       Database opened
+2024/06/14 15:43:39 sorm.LOG:       Activating foreign keys
+2024/06/14 15:43:39 [32msorm.SUCCESS:[0m   Database opened
+2024/06/14 15:43:39 [35msorm.NOTICE:[0m    Starting insert transaction
+2024/06/14 15:43:39 sorm.LOG:       Inserting into Metadata
+2024/06/14 15:43:39 [31msorm.ERROR:[0m     tx.Prepare: no such table: Metadata
+2024/06/14 15:43:48 [35msorm.NOTICE:[0m    Opening database connection at test.db
+2024/06/14 15:43:48 sorm.LOG:       Database opened
+2024/06/14 15:43:48 sorm.LOG:       Activating foreign keys
+2024/06/14 15:43:48 [32msorm.SUCCESS:[0m   Database opened
+2024/06/14 15:43:48 [35msorm.NOTICE:[0m    Creating table: Metadata
+2024/06/14 15:43:48 sorm.LOG:       	Secret TEXT
+2024/06/14 15:43:48 sorm.LOG:       Executing query on database test.db
+2024/06/14 15:43:48 [32msorm.SUCCESS:[0m   Table Metadata created
+2024/06/14 15:43:48 sorm.LOG:       Inserting default nil value into Metadata
+2024/06/14 15:43:48 [32msorm.SUCCESS:[0m   Nil value inserted into Metadata
+2024/06/14 15:43:48 [35msorm.NOTICE:[0m    Creating table: User
+2024/06/14 15:43:48 sorm.LOG:       	Name TEXT
+2024/06/14 15:43:48 sorm.LOG:       	Surname TEXT
+2024/06/14 15:43:48 sorm.LOG:       	Email TEXT
+2024/06/14 15:43:48 sorm.LOG:       	Password TEXT
+2024/06/14 15:43:48 sorm.LOG:       Executing query on database test.db
+2024/06/14 15:43:48 [32msorm.SUCCESS:[0m   Table User created
+2024/06/14 15:43:48 sorm.LOG:       Inserting default nil value into User
+2024/06/14 15:43:48 [32msorm.SUCCESS:[0m   Nil value inserted into User
+2024/06/14 15:43:48 [35msorm.NOTICE:[0m    Creating table: Zone
+2024/06/14 15:43:48 sorm.LOG:       	Name TEXT
+2024/06/14 15:43:48 sorm.LOG:       Executing query on database test.db
+2024/06/14 15:43:48 [32msorm.SUCCESS:[0m   Table Zone created
+2024/06/14 15:43:48 sorm.LOG:       Inserting default nil value into Zone
+2024/06/14 15:43:48 [32msorm.SUCCESS:[0m   Nil value inserted into Zone
+2024/06/14 15:43:48 [35msorm.NOTICE:[0m    Creating table: Aisle
+2024/06/14 15:43:48 sorm.LOG:       	Name TEXT
+2024/06/14 15:43:48 sorm.LOG:       	Zone_id TEXT
+2024/06/14 15:43:48 sorm.LOG:       Executing query on database test.db
+2024/06/14 15:43:48 [32msorm.SUCCESS:[0m   Table Aisle created
+2024/06/14 15:43:48 sorm.LOG:       Inserting default nil value into Aisle
+2024/06/14 15:43:48 [32msorm.SUCCESS:[0m   Nil value inserted into Aisle
+2024/06/14 15:43:48 [35msorm.NOTICE:[0m    Creating table: Rack
+2024/06/14 15:43:48 sorm.LOG:       	Name TEXT
+2024/06/14 15:43:48 sorm.LOG:       	Aisle_id TEXT
+2024/06/14 15:43:48 sorm.LOG:       Executing query on database test.db
+2024/06/14 15:43:48 [32msorm.SUCCESS:[0m   Table Rack created
+2024/06/14 15:43:48 sorm.LOG:       Inserting default nil value into Rack
+2024/06/14 15:43:48 [32msorm.SUCCESS:[0m   Nil value inserted into Rack
+2024/06/14 15:43:48 [35msorm.NOTICE:[0m    Creating table: Shelf
+2024/06/14 15:43:48 sorm.LOG:       	Name TEXT
+2024/06/14 15:43:48 sorm.LOG:       	Rack_id TEXT
+2024/06/14 15:43:48 sorm.LOG:       Executing query on database test.db
+2024/06/14 15:43:48 [32msorm.SUCCESS:[0m   Table Shelf created
+2024/06/14 15:43:48 sorm.LOG:       Inserting default nil value into Shelf
+2024/06/14 15:43:48 [32msorm.SUCCESS:[0m   Nil value inserted into Shelf
+2024/06/14 15:43:48 [35msorm.NOTICE:[0m    Creating table: Position
+2024/06/14 15:43:48 sorm.LOG:       	Zone_id TEXT
+2024/06/14 15:43:48 sorm.LOG:       	Aisle_id TEXT
+2024/06/14 15:43:48 sorm.LOG:       	Rack_id TEXT
+2024/06/14 15:43:48 sorm.LOG:       	Shelf_id TEXT
+2024/06/14 15:43:48 sorm.LOG:       Executing query on database test.db
+2024/06/14 15:43:48 [32msorm.SUCCESS:[0m   Table Position created
+2024/06/14 15:43:48 sorm.LOG:       Inserting default nil value into Position
+2024/06/14 15:43:48 [32msorm.SUCCESS:[0m   Nil value inserted into Position
+2024/06/14 15:43:48 [35msorm.NOTICE:[0m    Creating table: Category
+2024/06/14 15:43:48 sorm.LOG:       	Name TEXT
+2024/06/14 15:43:48 sorm.LOG:       	Description TEXT
+2024/06/14 15:43:48 sorm.LOG:       Executing query on database test.db
+2024/06/14 15:43:48 [32msorm.SUCCESS:[0m   Table Category created
+2024/06/14 15:43:48 sorm.LOG:       Inserting default nil value into Category
+2024/06/14 15:43:48 [32msorm.SUCCESS:[0m   Nil value inserted into Category
+2024/06/14 15:43:48 [35msorm.NOTICE:[0m    Creating table: Subcategory
+2024/06/14 15:43:48 sorm.LOG:       	Name TEXT
+2024/06/14 15:43:48 sorm.LOG:       	Description TEXT
+2024/06/14 15:43:48 sorm.LOG:       	Category_id TEXT
+2024/06/14 15:43:48 sorm.LOG:       Executing query on database test.db
+2024/06/14 15:43:48 [32msorm.SUCCESS:[0m   Table Subcategory created
+2024/06/14 15:43:48 sorm.LOG:       Inserting default nil value into Subcategory
+2024/06/14 15:43:48 [32msorm.SUCCESS:[0m   Nil value inserted into Subcategory
+2024/06/14 15:43:48 [35msorm.NOTICE:[0m    Creating table: Item
+2024/06/14 15:43:48 sorm.LOG:       	Name TEXT
+2024/06/14 15:43:48 sorm.LOG:       	Description TEXT
+2024/06/14 15:43:48 sorm.LOG:       	Archive BOOLEAN
+2024/06/14 15:43:48 sorm.LOG:       	Position_id TEXT
+2024/06/14 15:43:48 sorm.LOG:       	Category_id TEXT
+2024/06/14 15:43:48 sorm.LOG:       	Subcategory_id TEXT
+2024/06/14 15:43:48 sorm.LOG:       Executing query on database test.db
+2024/06/14 15:43:48 [32msorm.SUCCESS:[0m   Table Item created
+2024/06/14 15:43:48 sorm.LOG:       Inserting default nil value into Item
+2024/06/14 15:43:48 [32msorm.SUCCESS:[0m   Nil value inserted into Item
+2024/06/14 15:43:48 [35msorm.NOTICE:[0m    Creating table: Variant
+2024/06/14 15:43:48 sorm.LOG:       	Name TEXT
+2024/06/14 15:43:48 sorm.LOG:       	Description TEXT
+2024/06/14 15:43:48 sorm.LOG:       	Quantity INTEGER
+2024/06/14 15:43:48 sorm.LOG:       	InternalId TEXT
+2024/06/14 15:43:48 sorm.LOG:       	Length REAL
+2024/06/14 15:43:48 sorm.LOG:       	Width REAL
+2024/06/14 15:43:48 sorm.LOG:       	Height REAL
+2024/06/14 15:43:48 sorm.LOG:       	DefaultVariant BOOLEAN
+2024/06/14 15:43:48 sorm.LOG:       	Item_id TEXT
+2024/06/14 15:43:48 sorm.LOG:       Executing query on database test.db
+2024/06/14 15:43:48 [32msorm.SUCCESS:[0m   Table Variant created
+2024/06/14 15:43:48 sorm.LOG:       Inserting default nil value into Variant
+2024/06/14 15:43:48 [32msorm.SUCCESS:[0m   Nil value inserted into Variant
+2024/06/14 15:43:48 [35msorm.NOTICE:[0m    Creating table: Item_image
+2024/06/14 15:43:48 sorm.LOG:       	Uri TEXT
+2024/06/14 15:43:48 sorm.LOG:       	Item_id TEXT
+2024/06/14 15:43:48 sorm.LOG:       	Variant_id TEXT
+2024/06/14 15:43:48 sorm.LOG:       Executing query on database test.db
+2024/06/14 15:43:48 [32msorm.SUCCESS:[0m   Table Item_image created
+2024/06/14 15:43:48 sorm.LOG:       Inserting default nil value into Item_image
+2024/06/14 15:43:48 [32msorm.SUCCESS:[0m   Nil value inserted into Item_image
+2024/06/14 15:43:48 [35msorm.NOTICE:[0m    Creating table: RefreshToken
+2024/06/14 15:43:48 sorm.LOG:       	Token TEXT
+2024/06/14 15:43:48 sorm.LOG:       	Revoked BOOLEAN
+2024/06/14 15:43:48 sorm.LOG:       Executing query on database test.db
+2024/06/14 15:43:48 [32msorm.SUCCESS:[0m   Table RefreshToken created
+2024/06/14 15:43:48 sorm.LOG:       Inserting default nil value into RefreshToken
+2024/06/14 15:43:48 [32msorm.SUCCESS:[0m   Nil value inserted into RefreshToken
+2024/06/14 15:43:48 [35msorm.NOTICE:[0m    Opening database connection at test.db
+2024/06/14 15:43:48 sorm.LOG:       Database opened
+2024/06/14 15:43:48 sorm.LOG:       Activating foreign keys
+2024/06/14 15:43:48 [32msorm.SUCCESS:[0m   Database opened
+2024/06/14 15:43:48 [35msorm.NOTICE:[0m    Starting insert transaction
+2024/06/14 15:43:48 sorm.LOG:       Inserting into Metadata
+2024/06/14 15:43:48 [32msorm.SUCCESS:[0m   Items inserted
+2024/06/14 15:44:44 [35msorm.NOTICE:[0m    Selecting from User with condition Email = ?
+2024/06/14 15:44:44 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/14 15:44:44 [35msorm.NOTICE:[0m    Starting insert transaction
+2024/06/14 15:44:44 sorm.LOG:       Inserting into User
+2024/06/14 15:44:44 [32msorm.SUCCESS:[0m   Items inserted
+2024/06/14 15:44:48 [35msorm.NOTICE:[0m    Selecting from User with condition 
+2024/06/14 15:44:48 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/14 15:45:01 [35msorm.NOTICE:[0m    Selecting from User with condition 
+2024/06/14 15:45:01 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/14 15:45:53 [35msorm.NOTICE:[0m    Selecting from User with condition 
+2024/06/14 15:45:53 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/14 15:46:37 [35msorm.NOTICE:[0m    Opening database connection at test.db
+2024/06/14 15:46:37 sorm.LOG:       Database opened
+2024/06/14 15:46:37 sorm.LOG:       Activating foreign keys
+2024/06/14 15:46:37 [32msorm.SUCCESS:[0m   Database opened
+2024/06/14 15:46:37 [35msorm.NOTICE:[0m    Starting insert transaction
+2024/06/14 15:46:37 sorm.LOG:       Inserting into Metadata
+2024/06/14 15:46:37 [32msorm.SUCCESS:[0m   Items inserted
+2024/06/14 15:46:38 [35msorm.NOTICE:[0m    Selecting from User with condition 
+2024/06/14 15:46:38 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/14 15:47:39 [35msorm.NOTICE:[0m    Opening database connection at test.db
+2024/06/14 15:47:39 sorm.LOG:       Database opened
+2024/06/14 15:47:39 sorm.LOG:       Activating foreign keys
+2024/06/14 15:47:39 [32msorm.SUCCESS:[0m   Database opened
+2024/06/14 15:47:39 [35msorm.NOTICE:[0m    Starting insert transaction
+2024/06/14 15:47:39 sorm.LOG:       Inserting into Metadata
+2024/06/14 15:47:39 [32msorm.SUCCESS:[0m   Items inserted
+2024/06/14 15:47:40 [35msorm.NOTICE:[0m    Selecting from User with condition 
+2024/06/14 15:47:40 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/14 15:47:40 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/14 15:47:40 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/14 15:47:40 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/14 15:47:40 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/14 15:47:40 [35msorm.NOTICE:[0m    Starting insert transaction
+2024/06/14 15:47:40 sorm.LOG:       Inserting into RefreshToken
+2024/06/14 15:47:40 [32msorm.SUCCESS:[0m   Items inserted
+2024/06/14 15:51:10 [35msorm.NOTICE:[0m    Opening database connection at test.db
+2024/06/14 15:51:10 sorm.LOG:       Database opened
+2024/06/14 15:51:10 sorm.LOG:       Activating foreign keys
+2024/06/14 15:51:10 [32msorm.SUCCESS:[0m   Database opened
+2024/06/14 15:51:10 [35msorm.NOTICE:[0m    Creating table: Metadata
+2024/06/14 15:51:10 sorm.LOG:       	Secret TEXT
+2024/06/14 15:51:10 sorm.LOG:       Executing query on database test.db
+2024/06/14 15:51:10 [32msorm.SUCCESS:[0m   Table Metadata created
+2024/06/14 15:51:10 sorm.LOG:       Inserting default nil value into Metadata
+2024/06/14 15:51:10 [32msorm.SUCCESS:[0m   Nil value inserted into Metadata
+2024/06/14 15:51:10 [35msorm.NOTICE:[0m    Creating table: User
+2024/06/14 15:51:10 sorm.LOG:       	Name TEXT
+2024/06/14 15:51:10 sorm.LOG:       	Surname TEXT
+2024/06/14 15:51:10 sorm.LOG:       	Email TEXT
+2024/06/14 15:51:10 sorm.LOG:       	Password TEXT
+2024/06/14 15:51:10 sorm.LOG:       Executing query on database test.db
+2024/06/14 15:51:10 [32msorm.SUCCESS:[0m   Table User created
+2024/06/14 15:51:10 sorm.LOG:       Inserting default nil value into User
+2024/06/14 15:51:10 [32msorm.SUCCESS:[0m   Nil value inserted into User
+2024/06/14 15:51:10 [35msorm.NOTICE:[0m    Creating table: Zone
+2024/06/14 15:51:10 sorm.LOG:       	Name TEXT
+2024/06/14 15:51:10 sorm.LOG:       Executing query on database test.db
+2024/06/14 15:51:10 [32msorm.SUCCESS:[0m   Table Zone created
+2024/06/14 15:51:10 sorm.LOG:       Inserting default nil value into Zone
+2024/06/14 15:51:10 [32msorm.SUCCESS:[0m   Nil value inserted into Zone
+2024/06/14 15:51:10 [35msorm.NOTICE:[0m    Creating table: Aisle
+2024/06/14 15:51:10 sorm.LOG:       	Name TEXT
+2024/06/14 15:51:10 sorm.LOG:       	Zone_id TEXT
+2024/06/14 15:51:10 sorm.LOG:       Executing query on database test.db
+2024/06/14 15:51:10 [32msorm.SUCCESS:[0m   Table Aisle created
+2024/06/14 15:51:10 sorm.LOG:       Inserting default nil value into Aisle
+2024/06/14 15:51:10 [32msorm.SUCCESS:[0m   Nil value inserted into Aisle
+2024/06/14 15:51:10 [35msorm.NOTICE:[0m    Creating table: Rack
+2024/06/14 15:51:10 sorm.LOG:       	Name TEXT
+2024/06/14 15:51:10 sorm.LOG:       	Aisle_id TEXT
+2024/06/14 15:51:10 sorm.LOG:       Executing query on database test.db
+2024/06/14 15:51:10 [32msorm.SUCCESS:[0m   Table Rack created
+2024/06/14 15:51:10 sorm.LOG:       Inserting default nil value into Rack
+2024/06/14 15:51:10 [32msorm.SUCCESS:[0m   Nil value inserted into Rack
+2024/06/14 15:51:10 [35msorm.NOTICE:[0m    Creating table: Shelf
+2024/06/14 15:51:10 sorm.LOG:       	Name TEXT
+2024/06/14 15:51:10 sorm.LOG:       	Rack_id TEXT
+2024/06/14 15:51:10 sorm.LOG:       Executing query on database test.db
+2024/06/14 15:51:10 [32msorm.SUCCESS:[0m   Table Shelf created
+2024/06/14 15:51:10 sorm.LOG:       Inserting default nil value into Shelf
+2024/06/14 15:51:10 [32msorm.SUCCESS:[0m   Nil value inserted into Shelf
+2024/06/14 15:51:10 [35msorm.NOTICE:[0m    Creating table: Position
+2024/06/14 15:51:10 sorm.LOG:       	Zone_id TEXT
+2024/06/14 15:51:10 sorm.LOG:       	Aisle_id TEXT
+2024/06/14 15:51:10 sorm.LOG:       	Rack_id TEXT
+2024/06/14 15:51:10 sorm.LOG:       	Shelf_id TEXT
+2024/06/14 15:51:10 sorm.LOG:       Executing query on database test.db
+2024/06/14 15:51:10 [32msorm.SUCCESS:[0m   Table Position created
+2024/06/14 15:51:10 sorm.LOG:       Inserting default nil value into Position
+2024/06/14 15:51:10 [32msorm.SUCCESS:[0m   Nil value inserted into Position
+2024/06/14 15:51:10 [35msorm.NOTICE:[0m    Creating table: Category
+2024/06/14 15:51:10 sorm.LOG:       	Name TEXT
+2024/06/14 15:51:10 sorm.LOG:       	Description TEXT
+2024/06/14 15:51:10 sorm.LOG:       Executing query on database test.db
+2024/06/14 15:51:10 [32msorm.SUCCESS:[0m   Table Category created
+2024/06/14 15:51:10 sorm.LOG:       Inserting default nil value into Category
+2024/06/14 15:51:10 [32msorm.SUCCESS:[0m   Nil value inserted into Category
+2024/06/14 15:51:10 [35msorm.NOTICE:[0m    Creating table: Subcategory
+2024/06/14 15:51:10 sorm.LOG:       	Name TEXT
+2024/06/14 15:51:10 sorm.LOG:       	Description TEXT
+2024/06/14 15:51:10 sorm.LOG:       	Category_id TEXT
+2024/06/14 15:51:10 sorm.LOG:       Executing query on database test.db
+2024/06/14 15:51:10 [32msorm.SUCCESS:[0m   Table Subcategory created
+2024/06/14 15:51:10 sorm.LOG:       Inserting default nil value into Subcategory
+2024/06/14 15:51:10 [32msorm.SUCCESS:[0m   Nil value inserted into Subcategory
+2024/06/14 15:51:10 [35msorm.NOTICE:[0m    Creating table: Item
+2024/06/14 15:51:10 sorm.LOG:       	Name TEXT
+2024/06/14 15:51:10 sorm.LOG:       	Description TEXT
+2024/06/14 15:51:10 sorm.LOG:       	Archive BOOLEAN
+2024/06/14 15:51:10 sorm.LOG:       	Position_id TEXT
+2024/06/14 15:51:10 sorm.LOG:       	Category_id TEXT
+2024/06/14 15:51:10 sorm.LOG:       	Subcategory_id TEXT
+2024/06/14 15:51:10 sorm.LOG:       Executing query on database test.db
+2024/06/14 15:51:10 [32msorm.SUCCESS:[0m   Table Item created
+2024/06/14 15:51:10 sorm.LOG:       Inserting default nil value into Item
+2024/06/14 15:51:10 [32msorm.SUCCESS:[0m   Nil value inserted into Item
+2024/06/14 15:51:10 [35msorm.NOTICE:[0m    Creating table: Variant
+2024/06/14 15:51:10 sorm.LOG:       	Name TEXT
+2024/06/14 15:51:10 sorm.LOG:       	Description TEXT
+2024/06/14 15:51:10 sorm.LOG:       	Quantity INTEGER
+2024/06/14 15:51:10 sorm.LOG:       	InternalId TEXT
+2024/06/14 15:51:10 sorm.LOG:       	Length REAL
+2024/06/14 15:51:10 sorm.LOG:       	Width REAL
+2024/06/14 15:51:10 sorm.LOG:       	Height REAL
+2024/06/14 15:51:10 sorm.LOG:       	DefaultVariant BOOLEAN
+2024/06/14 15:51:10 sorm.LOG:       	Item_id TEXT
+2024/06/14 15:51:10 sorm.LOG:       Executing query on database test.db
+2024/06/14 15:51:10 [32msorm.SUCCESS:[0m   Table Variant created
+2024/06/14 15:51:10 sorm.LOG:       Inserting default nil value into Variant
+2024/06/14 15:51:10 [32msorm.SUCCESS:[0m   Nil value inserted into Variant
+2024/06/14 15:51:10 [35msorm.NOTICE:[0m    Creating table: Item_image
+2024/06/14 15:51:10 sorm.LOG:       	Uri TEXT
+2024/06/14 15:51:10 sorm.LOG:       	Item_id TEXT
+2024/06/14 15:51:10 sorm.LOG:       	Variant_id TEXT
+2024/06/14 15:51:10 sorm.LOG:       Executing query on database test.db
+2024/06/14 15:51:10 [32msorm.SUCCESS:[0m   Table Item_image created
+2024/06/14 15:51:10 sorm.LOG:       Inserting default nil value into Item_image
+2024/06/14 15:51:10 [32msorm.SUCCESS:[0m   Nil value inserted into Item_image
+2024/06/14 15:51:10 [35msorm.NOTICE:[0m    Creating table: RefreshToken
+2024/06/14 15:51:10 sorm.LOG:       	Token TEXT
+2024/06/14 15:51:10 sorm.LOG:       	Revoked BOOLEAN
+2024/06/14 15:51:10 sorm.LOG:       Executing query on database test.db
+2024/06/14 15:51:10 [32msorm.SUCCESS:[0m   Table RefreshToken created
+2024/06/14 15:51:10 sorm.LOG:       Inserting default nil value into RefreshToken
+2024/06/14 15:51:10 [32msorm.SUCCESS:[0m   Nil value inserted into RefreshToken
+2024/06/14 15:51:10 [35msorm.NOTICE:[0m    Starting insert transaction
+2024/06/14 15:51:10 sorm.LOG:       Inserting into Metadata
+2024/06/14 15:51:10 [32msorm.SUCCESS:[0m   Items inserted
+2024/06/14 15:51:13 [35msorm.NOTICE:[0m    Opening database connection at test.db
+2024/06/14 15:51:13 sorm.LOG:       Database opened
+2024/06/14 15:51:13 sorm.LOG:       Activating foreign keys
+2024/06/14 15:51:13 [32msorm.SUCCESS:[0m   Database opened
+2024/06/14 15:51:22 [35msorm.NOTICE:[0m    Opening database connection at test.db
+2024/06/14 15:51:22 sorm.LOG:       Database opened
+2024/06/14 15:51:22 sorm.LOG:       Activating foreign keys
+2024/06/14 15:51:22 [32msorm.SUCCESS:[0m   Database opened
+2024/06/14 15:51:26 [35msorm.NOTICE:[0m    Opening database connection at test.db
+2024/06/14 15:51:26 sorm.LOG:       Database opened
+2024/06/14 15:51:26 sorm.LOG:       Activating foreign keys
+2024/06/14 15:51:26 [32msorm.SUCCESS:[0m   Database opened
+2024/06/14 15:51:26 [35msorm.NOTICE:[0m    Creating table: Metadata
+2024/06/14 15:51:26 sorm.LOG:       	Secret TEXT
+2024/06/14 15:51:26 sorm.LOG:       Executing query on database test.db
+2024/06/14 15:51:26 [32msorm.SUCCESS:[0m   Table Metadata created
+2024/06/14 15:51:26 sorm.LOG:       Inserting default nil value into Metadata
+2024/06/14 15:51:26 [32msorm.SUCCESS:[0m   Nil value inserted into Metadata
+2024/06/14 15:51:26 [35msorm.NOTICE:[0m    Creating table: User
+2024/06/14 15:51:26 sorm.LOG:       	Name TEXT
+2024/06/14 15:51:26 sorm.LOG:       	Surname TEXT
+2024/06/14 15:51:26 sorm.LOG:       	Email TEXT
+2024/06/14 15:51:26 sorm.LOG:       	Password TEXT
+2024/06/14 15:51:26 sorm.LOG:       Executing query on database test.db
+2024/06/14 15:51:26 [32msorm.SUCCESS:[0m   Table User created
+2024/06/14 15:51:26 sorm.LOG:       Inserting default nil value into User
+2024/06/14 15:51:26 [32msorm.SUCCESS:[0m   Nil value inserted into User
+2024/06/14 15:51:26 [35msorm.NOTICE:[0m    Creating table: Zone
+2024/06/14 15:51:26 sorm.LOG:       	Name TEXT
+2024/06/14 15:51:26 sorm.LOG:       Executing query on database test.db
+2024/06/14 15:51:26 [32msorm.SUCCESS:[0m   Table Zone created
+2024/06/14 15:51:26 sorm.LOG:       Inserting default nil value into Zone
+2024/06/14 15:51:26 [32msorm.SUCCESS:[0m   Nil value inserted into Zone
+2024/06/14 15:51:26 [35msorm.NOTICE:[0m    Creating table: Aisle
+2024/06/14 15:51:26 sorm.LOG:       	Name TEXT
+2024/06/14 15:51:26 sorm.LOG:       	Zone_id TEXT
+2024/06/14 15:51:26 sorm.LOG:       Executing query on database test.db
+2024/06/14 15:51:26 [32msorm.SUCCESS:[0m   Table Aisle created
+2024/06/14 15:51:26 sorm.LOG:       Inserting default nil value into Aisle
+2024/06/14 15:51:26 [32msorm.SUCCESS:[0m   Nil value inserted into Aisle
+2024/06/14 15:51:26 [35msorm.NOTICE:[0m    Creating table: Rack
+2024/06/14 15:51:26 sorm.LOG:       	Name TEXT
+2024/06/14 15:51:26 sorm.LOG:       	Aisle_id TEXT
+2024/06/14 15:51:26 sorm.LOG:       Executing query on database test.db
+2024/06/14 15:51:26 [32msorm.SUCCESS:[0m   Table Rack created
+2024/06/14 15:51:26 sorm.LOG:       Inserting default nil value into Rack
+2024/06/14 15:51:26 [32msorm.SUCCESS:[0m   Nil value inserted into Rack
+2024/06/14 15:51:26 [35msorm.NOTICE:[0m    Creating table: Shelf
+2024/06/14 15:51:26 sorm.LOG:       	Name TEXT
+2024/06/14 15:51:26 sorm.LOG:       	Rack_id TEXT
+2024/06/14 15:51:26 sorm.LOG:       Executing query on database test.db
+2024/06/14 15:51:26 [32msorm.SUCCESS:[0m   Table Shelf created
+2024/06/14 15:51:26 sorm.LOG:       Inserting default nil value into Shelf
+2024/06/14 15:51:26 [32msorm.SUCCESS:[0m   Nil value inserted into Shelf
+2024/06/14 15:51:26 [35msorm.NOTICE:[0m    Creating table: Position
+2024/06/14 15:51:26 sorm.LOG:       	Zone_id TEXT
+2024/06/14 15:51:26 sorm.LOG:       	Aisle_id TEXT
+2024/06/14 15:51:26 sorm.LOG:       	Rack_id TEXT
+2024/06/14 15:51:26 sorm.LOG:       	Shelf_id TEXT
+2024/06/14 15:51:26 sorm.LOG:       Executing query on database test.db
+2024/06/14 15:51:26 [32msorm.SUCCESS:[0m   Table Position created
+2024/06/14 15:51:26 sorm.LOG:       Inserting default nil value into Position
+2024/06/14 15:51:26 [32msorm.SUCCESS:[0m   Nil value inserted into Position
+2024/06/14 15:51:26 [35msorm.NOTICE:[0m    Creating table: Category
+2024/06/14 15:51:26 sorm.LOG:       	Name TEXT
+2024/06/14 15:51:26 sorm.LOG:       	Description TEXT
+2024/06/14 15:51:26 sorm.LOG:       Executing query on database test.db
+2024/06/14 15:51:26 [32msorm.SUCCESS:[0m   Table Category created
+2024/06/14 15:51:26 sorm.LOG:       Inserting default nil value into Category
+2024/06/14 15:51:27 [32msorm.SUCCESS:[0m   Nil value inserted into Category
+2024/06/14 15:51:27 [35msorm.NOTICE:[0m    Creating table: Subcategory
+2024/06/14 15:51:27 sorm.LOG:       	Name TEXT
+2024/06/14 15:51:27 sorm.LOG:       	Description TEXT
+2024/06/14 15:51:27 sorm.LOG:       	Category_id TEXT
+2024/06/14 15:51:27 sorm.LOG:       Executing query on database test.db
+2024/06/14 15:51:27 [32msorm.SUCCESS:[0m   Table Subcategory created
+2024/06/14 15:51:27 sorm.LOG:       Inserting default nil value into Subcategory
+2024/06/14 15:51:27 [32msorm.SUCCESS:[0m   Nil value inserted into Subcategory
+2024/06/14 15:51:27 [35msorm.NOTICE:[0m    Creating table: Item
+2024/06/14 15:51:27 sorm.LOG:       	Name TEXT
+2024/06/14 15:51:27 sorm.LOG:       	Description TEXT
+2024/06/14 15:51:27 sorm.LOG:       	Archive BOOLEAN
+2024/06/14 15:51:27 sorm.LOG:       	Position_id TEXT
+2024/06/14 15:51:27 sorm.LOG:       	Category_id TEXT
+2024/06/14 15:51:27 sorm.LOG:       	Subcategory_id TEXT
+2024/06/14 15:51:27 sorm.LOG:       Executing query on database test.db
+2024/06/14 15:51:27 [32msorm.SUCCESS:[0m   Table Item created
+2024/06/14 15:51:27 sorm.LOG:       Inserting default nil value into Item
+2024/06/14 15:51:27 [32msorm.SUCCESS:[0m   Nil value inserted into Item
+2024/06/14 15:51:27 [35msorm.NOTICE:[0m    Creating table: Variant
+2024/06/14 15:51:27 sorm.LOG:       	Name TEXT
+2024/06/14 15:51:27 sorm.LOG:       	Description TEXT
+2024/06/14 15:51:27 sorm.LOG:       	Quantity INTEGER
+2024/06/14 15:51:27 sorm.LOG:       	InternalId TEXT
+2024/06/14 15:51:27 sorm.LOG:       	Length REAL
+2024/06/14 15:51:27 sorm.LOG:       	Width REAL
+2024/06/14 15:51:27 sorm.LOG:       	Height REAL
+2024/06/14 15:51:27 sorm.LOG:       	DefaultVariant BOOLEAN
+2024/06/14 15:51:27 sorm.LOG:       	Item_id TEXT
+2024/06/14 15:51:27 sorm.LOG:       Executing query on database test.db
+2024/06/14 15:51:27 [32msorm.SUCCESS:[0m   Table Variant created
+2024/06/14 15:51:27 sorm.LOG:       Inserting default nil value into Variant
+2024/06/14 15:51:27 [32msorm.SUCCESS:[0m   Nil value inserted into Variant
+2024/06/14 15:51:27 [35msorm.NOTICE:[0m    Creating table: Item_image
+2024/06/14 15:51:27 sorm.LOG:       	Uri TEXT
+2024/06/14 15:51:27 sorm.LOG:       	Item_id TEXT
+2024/06/14 15:51:27 sorm.LOG:       	Variant_id TEXT
+2024/06/14 15:51:27 sorm.LOG:       Executing query on database test.db
+2024/06/14 15:51:27 [32msorm.SUCCESS:[0m   Table Item_image created
+2024/06/14 15:51:27 sorm.LOG:       Inserting default nil value into Item_image
+2024/06/14 15:51:27 [32msorm.SUCCESS:[0m   Nil value inserted into Item_image
+2024/06/14 15:51:27 [35msorm.NOTICE:[0m    Creating table: RefreshToken
+2024/06/14 15:51:27 sorm.LOG:       	Token TEXT
+2024/06/14 15:51:27 sorm.LOG:       	Revoked BOOLEAN
+2024/06/14 15:51:27 sorm.LOG:       Executing query on database test.db
+2024/06/14 15:51:27 [32msorm.SUCCESS:[0m   Table RefreshToken created
+2024/06/14 15:51:27 sorm.LOG:       Inserting default nil value into RefreshToken
+2024/06/14 15:51:27 [32msorm.SUCCESS:[0m   Nil value inserted into RefreshToken
+2024/06/14 15:51:27 [35msorm.NOTICE:[0m    Starting insert transaction
+2024/06/14 15:51:27 sorm.LOG:       Inserting into Metadata
+2024/06/14 15:51:27 [32msorm.SUCCESS:[0m   Items inserted
+2024/06/14 15:52:01 [35msorm.NOTICE:[0m    Selecting from User with condition Email = ?
+2024/06/14 15:52:01 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/14 15:52:01 [35msorm.NOTICE:[0m    Starting insert transaction
+2024/06/14 15:52:01 sorm.LOG:       Inserting into User
+2024/06/14 15:52:01 [32msorm.SUCCESS:[0m   Items inserted
+2024/06/14 15:52:04 [35msorm.NOTICE:[0m    Selecting from User with condition 
+2024/06/14 15:52:04 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/14 15:52:04 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/14 15:52:04 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/14 15:52:04 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/14 15:52:04 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/14 15:52:04 [35msorm.NOTICE:[0m    Starting insert transaction
+2024/06/14 15:52:04 sorm.LOG:       Inserting into RefreshToken
+2024/06/14 15:52:04 [32msorm.SUCCESS:[0m   Items inserted
+2024/06/14 15:53:31 [35msorm.NOTICE:[0m    Opening database connection at test.db
+2024/06/14 15:53:31 sorm.LOG:       Database opened
+2024/06/14 15:53:31 sorm.LOG:       Activating foreign keys
+2024/06/14 15:53:31 [32msorm.SUCCESS:[0m   Database opened
+2024/06/14 15:53:33 [35msorm.NOTICE:[0m    Selecting from User with condition 
+2024/06/14 15:53:33 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/14 15:53:33 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/14 15:53:33 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/14 15:53:33 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/14 15:53:33 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/14 15:53:33 [35msorm.NOTICE:[0m    Starting insert transaction
+2024/06/14 15:53:33 sorm.LOG:       Inserting into RefreshToken
+2024/06/14 15:53:33 [32msorm.SUCCESS:[0m   Items inserted
+2024/06/14 15:55:35 [35msorm.NOTICE:[0m    Opening database connection at test.db
+2024/06/14 15:55:35 sorm.LOG:       Database opened
+2024/06/14 15:55:35 sorm.LOG:       Activating foreign keys
+2024/06/14 15:55:35 [32msorm.SUCCESS:[0m   Database opened
+2024/06/14 15:55:37 [35msorm.NOTICE:[0m    Selecting from User with condition 
+2024/06/14 15:55:37 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/14 15:55:37 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/14 15:55:37 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/14 15:55:37 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/14 15:55:37 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/14 15:55:37 [35msorm.NOTICE:[0m    Starting insert transaction
+2024/06/14 15:55:37 sorm.LOG:       Inserting into RefreshToken
+2024/06/14 15:55:37 [32msorm.SUCCESS:[0m   Items inserted
+2024/06/14 15:55:53 [35msorm.NOTICE:[0m    Opening database connection at test.db
+2024/06/14 15:55:53 sorm.LOG:       Database opened
+2024/06/14 15:55:53 sorm.LOG:       Activating foreign keys
+2024/06/14 15:55:53 [32msorm.SUCCESS:[0m   Database opened
+2024/06/14 15:55:55 [35msorm.NOTICE:[0m    Selecting from User with condition 
+2024/06/14 15:55:55 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/14 15:55:55 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/14 15:55:55 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/14 15:55:55 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/14 15:55:55 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/14 15:55:55 [35msorm.NOTICE:[0m    Starting insert transaction
+2024/06/14 15:55:55 sorm.LOG:       Inserting into RefreshToken
+2024/06/14 15:55:55 [32msorm.SUCCESS:[0m   Items inserted
+2024/06/14 15:58:50 [35msorm.NOTICE:[0m    Opening database connection at test.db
+2024/06/14 15:58:50 sorm.LOG:       Database opened
+2024/06/14 15:58:50 sorm.LOG:       Activating foreign keys
+2024/06/14 15:58:50 [32msorm.SUCCESS:[0m   Database opened
+2024/06/14 15:58:54 [35msorm.NOTICE:[0m    Selecting from User with condition 
+2024/06/14 15:58:54 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/14 15:58:54 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/14 15:58:54 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/14 15:58:54 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/14 15:58:54 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/14 15:58:54 [35msorm.NOTICE:[0m    Starting insert transaction
+2024/06/14 15:58:54 sorm.LOG:       Inserting into RefreshToken
+2024/06/14 15:58:54 [32msorm.SUCCESS:[0m   Items inserted

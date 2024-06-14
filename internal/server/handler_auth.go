@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"time"
+	// "time"
 
 	"github.com/google/uuid"
 	"github.com/otaleghani/swms/internal/database"
@@ -24,6 +24,11 @@ type Revoke struct {
 	RefreshToken string `json:"refreshToken"`
 }
 
+type Refresh struct {
+	RefreshToken string `json:"refreshToken,omitempty"`
+	AccessToken  string `json:"accessToken,omitempty"`
+}
+
 func login(db *database.Database) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		body := Login{}
@@ -41,13 +46,13 @@ func login(db *database.Database) http.HandlerFunc {
 			return
 		}
 
-		accessToken, err := getAccessToken(body.Email)
+		accessToken, err := getAccessToken(body.Email, db)
 		if err != nil {
 			http.Error(w, fmt.Sprintf("500: %v", err), 500)
 			logRequest(r.Method, r.URL.Path, r.RemoteAddr, 500)
 			return
 		}
-		refreshToken, err := getRefreshToken(body.Email)
+		refreshToken, err := getRefreshToken(body.Email, db)
 		if err != nil {
 			http.Error(w, fmt.Sprintf("500: %v", err), 500)
 			logRequest(r.Method, r.URL.Path, r.RemoteAddr, 500)
@@ -55,9 +60,9 @@ func login(db *database.Database) http.HandlerFunc {
 		}
 
 		err = db.Insert(database.RefreshToken{
-			Id:      uuid.NewString(),
-			Token:   refreshToken,
-			Time:    time.Now(),
+			Id:    uuid.NewString(),
+			Token: refreshToken,
+			// Time:    time.Now(),
 			Revoked: false,
 		})
 		if err != nil {
@@ -101,9 +106,21 @@ func revokeHandler(db *database.Database) http.HandlerFunc {
 
 func refreshHandler(db *database.Database) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-	  if err := db.CheckRevokedToken(""); err != nil {
-      // error
-	  	return 
-	  }
+		body := Refresh{}
+		err := json.NewDecoder(r.Body).Decode(&body)
+		if err != nil {
+			ErrorResponse{Message: err.Error()}.r400(w, r)
+			return
+		}
+		if err := checkRefreshToken(body.RefreshToken, db); err != nil {
+			ErrorResponse{Message: err.Error()}.r400(w, r)
+			return
+		}
+		accessToken, err := refreshAccessToken(body.RefreshToken, db)
+		if err != nil {
+			ErrorResponse{Message: err.Error()}.r400(w, r)
+			return
+		}
+		SuccessResponse{Message: "Token refreshed", Data: Refresh{AccessToken: accessToken}}.r200(w, r)
 	}
 }

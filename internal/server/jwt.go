@@ -7,11 +7,11 @@ import (
 	"os"
 	"time"
 
-	// "github.com/otaleghani/swms/internal/database"
 	"github.com/golang-jwt/jwt/v5"
+	"github.com/otaleghani/swms/internal/database"
 )
 
-func generateJwtSecret(length int) error {
+func generateJwtSecret(length int, db *database.Database) error {
 	// Calculate the number of random bytes needed
 	n := (length * 3) / 4
 
@@ -27,19 +27,21 @@ func generateJwtSecret(length int) error {
 	// Encode the random bytes to a base64 string
 	randomString := base64.URLEncoding.EncodeToString(randomBytes)
 
-	err = os.Setenv("JWT_SECRET_2", randomString[:length])
-	err = os.Setenv("JWT_SECRET", "sandro")
+	err = db.Sorm.InsertInto(database.Metadata{Secret: randomString[:length]})
 	if err != nil {
 		return err
 	}
-
-	// Return the string truncated to the desired length
 	return nil
 }
 
 // Gets the JWT access token
-func getAccessToken(id string) (string, error) {
-	jwtSecret := os.Getenv("JWT_SECRET")
+func getAccessToken(id string, db *database.Database) (string, error) {
+	// jwtSecret := os.Getenv("JWT_SECRET")
+	metadata := []database.Metadata{}
+	err := db.Sorm.Select(&metadata, "")
+	if err != nil {
+		return "", err
+	}
 
 	claims := jwt.RegisteredClaims{
 		ExpiresAt: jwt.NewNumericDate(time.Now().Add(1 * time.Hour)),
@@ -49,7 +51,7 @@ func getAccessToken(id string) (string, error) {
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	ss, err := token.SignedString([]byte(jwtSecret))
+	ss, err := token.SignedString([]byte(metadata[1].Secret))
 	if err != nil {
 		return "", err
 	}
@@ -58,8 +60,13 @@ func getAccessToken(id string) (string, error) {
 }
 
 // Get the JWT refresh token
-func getRefreshToken(id string) (string, error) {
-	jwtSecret := os.Getenv("JWT_SECRET")
+func getRefreshToken(id string, db *database.Database) (string, error) {
+	// jwtSecret := os.Getenv("JWT_SECRET")
+	metadata := []database.Metadata{}
+	err := db.Sorm.Select(&metadata, "")
+	if err != nil {
+		return "", err
+	}
 
 	claims := jwt.RegisteredClaims{
 		ExpiresAt: jwt.NewNumericDate(time.Now().Add(1440 * time.Hour)),
@@ -69,7 +76,7 @@ func getRefreshToken(id string) (string, error) {
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	ss, err := token.SignedString([]byte(jwtSecret))
+	ss, err := token.SignedString([]byte(metadata[1].Secret))
 	if err != nil {
 		return "", err
 	}
@@ -98,7 +105,7 @@ func checkAccessToken(tokenStr string) error {
 	return nil
 }
 
-func checkRefreshToken(tokenStr string) (bool, error) {
+func checkRefreshToken(tokenStr string, db *database.Database) error {
 	jwtSecret := os.Getenv("JWT_SECRET")
 	var claims jwt.RegisteredClaims
 	token, err := jwt.ParseWithClaims(tokenStr, &claims,
@@ -107,19 +114,22 @@ func checkRefreshToken(tokenStr string) (bool, error) {
 		},
 	)
 	if err != nil {
-		return false, err
+		return err
 	}
 	if !token.Valid {
-		return false, errors.New("jwt token invalid")
+		return errors.New("jwt token invalid")
 	}
-	if claims.Issuer != "swms-refresh" {
-		return false, errors.New("jwt token issuer does not match")
+	if claims.Issuer != "swms_refresh" {
+		return errors.New("jwt token issuer does not match")
+	}
+	if err := db.CheckRevokedToken(tokenStr); err != nil {
+		return err
 	}
 
-	return true, nil
+	return nil
 }
 
-func refreshAccessToken(tokenStr string) (string, error) {
+func refreshAccessToken(tokenStr string, db *database.Database) (string, error) {
 	jwtSecret := os.Getenv("JWT_SECRET")
 	var claims jwt.RegisteredClaims
 	token, err := jwt.ParseWithClaims(tokenStr, &claims,
@@ -133,11 +143,11 @@ func refreshAccessToken(tokenStr string) (string, error) {
 	if !token.Valid {
 		return "", errors.New("jwt token invalid")
 	}
-	if claims.Issuer != "swms-refresh" {
+	if claims.Issuer != "swms_refresh" {
 		return "", errors.New("jwt token issuer does not match")
 	}
 
-	accessTok, err := getAccessToken(claims.Subject)
+	accessTok, err := getAccessToken(claims.Subject, db)
 	if err != nil {
 		return "", err
 	}

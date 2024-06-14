@@ -3,7 +3,7 @@ package server
 import (
 	"encoding/json"
 	"net/http"
-  "strings"
+	"strings"
 
 	"github.com/google/uuid"
 	"github.com/otaleghani/swms/internal/database"
@@ -50,11 +50,11 @@ func postItems(db *database.Database) http.HandlerFunc {
 
 func getItems(db *database.Database) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-    token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
-    if err := checkAccessToken(token); err != nil {
+		token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
+		if err := checkAccessToken(token); err != nil {
 			ErrorResponse{Message: err.Error()}.r401(w, r)
-      return
-    }
+			return
+		}
 
 		rows, err := db.SelectItem("")
 		if err != nil {

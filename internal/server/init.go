@@ -11,26 +11,25 @@ import (
 )
 
 func Serve(path, port string) {
+	dbConn := database.Database{}
 	_, err := os.Stat(path)
 	if os.IsNotExist(err) {
-		_, err := database.Init(path)
+		dbConn, err = database.Init(path)
 		if err != nil {
 			log.Println("ERROR: ", err)
 			return
 		}
-	}
-
-	// opens db
-	dbConn, err := database.Open(path)
-	if err != nil {
-		log.Println("ERROR: ", err)
-		return
-	}
-
-	err = generateJwtSecret(20)
-	if err != nil {
-		log.Println("ERROR: ", err)
-		return
+		err = generateJwtSecret(20, &dbConn)
+		if err != nil {
+			log.Println("ERROR: ", err)
+			return
+		}
+	} else {
+		dbConn, err = database.Open(path)
+		if err != nil {
+			log.Println("ERROR: ", err)
+			return
+		}
 	}
 
 	mux := http.NewServeMux()
@@ -50,7 +49,6 @@ func Serve(path, port string) {
 	mux.HandleFunc("POST /api/v1/login/{$}", login(&dbConn))
 	mux.HandleFunc("POST /api/v1/revoke/{$}", revokeHandler(&dbConn))
 	mux.HandleFunc("POST /api/v1/refresh/{$}", refreshHandler(&dbConn))
-
 
 	corsMux := middlewareCors(mux)
 	srv := &http.Server{
