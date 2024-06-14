@@ -8,13 +8,16 @@ type Database struct {
   Sorm *sorm.Database
 }
 
+type Metadata struct {
+  Secret string
+}
+
 func Open(path string) (Database, error) {
   sorm, err := sorm.CreateDatabase(path, true)
   if err != nil {
     return Database{}, err    
   }
   db := Database{Sorm:sorm}
-
   return db, nil
 }
 
@@ -25,13 +28,15 @@ func Init(path string) (Database, error) {
     return Database{}, err    
   }
   db := Database{Sorm:sorm}
-
   // Create different tables
+  err = db.Sorm.CreateTable(Metadata{})
+  if err != nil {
+    return Database{}, err
+  }
   err = db.Sorm.CreateTable(User{})
   if err != nil {
     return Database{}, err
   }
-
   err = db.Sorm.CreateTable(Zone{})
   if err != nil {
     return Database{}, err
@@ -74,12 +79,18 @@ func Init(path string) (Database, error) {
   if err != nil {
     return Database{}, err
   }
+  err = db.Sorm.CreateTable(RefreshToken{})
+  if err != nil {
+    return Database{}, err
+  }
+
   return db, nil
+
 }
 
 // General query for every table
-func (db Database) Insert(row ...interface{}) error {
-  err := db.Sorm.InsertInto(row...)
+func (db Database) Insert(rows ...interface{}) error {
+  err := db.Sorm.InsertInto(rows...)
   if err != nil {
     return err
   }

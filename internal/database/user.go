@@ -1,5 +1,4 @@
 package database
-
 import (
   "errors"
   "golang.org/x/crypto/bcrypt"
@@ -12,6 +11,7 @@ type User struct {
   Email string `json:"email"`
   Password string `json:"password"`
 }
+
 
 func (db *Database) SelectUser(condition string, args ...interface{}) ([]User, error) {
   list := []User{}

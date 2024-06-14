@@ -20,9 +20,9 @@ func (db *Database) SelectItem(condition string, args ...interface{}) ([]Item, e
   return list, nil
 }
 
+// Select a single item based on the id
 func (db *Database) SelectItemById(id string) (Item, error) {
   list := []Item{}
-// Select a single item based on the id
   err := db.Sorm.Select(&list, "Id = ?", id)
   if err != nil {
     return Item{}, err
@@ -30,16 +30,20 @@ func (db *Database) SelectItemById(id string) (Item, error) {
   return list[0], nil
 }
 
-// func (db *Database) InsertItem(i Item) error {
-//   // There is no "nil" 
-//   
-//   
-//   err := db.Sorm.InsertInto(row...)
-//   if err != nil {
-//     return err
-//   }
-//   return nil
-// }
+func (db *Database) SelectItemsByCategoryId(id string) ([]Item, error) {
+  list := []Item{}
+  err := db.Sorm.Select(&list, "Category_id = ?", id)
+  if err != nil {
+    return nil, err
+  }
+  return list, nil
+}
 
-// POST, GET, PUT, DELETE
-// INSERT, SELECT, UPDATE, DELETE
+func (db *Database) SelectItemsBySubcategoryId(id string) ([]Item, error) {
+  list := []Item{}
+  err := db.Sorm.Select(&list, "Subcategory_id = ?", id)
+  if err != nil {
+    return nil, err
+  }
+  return list, nil
+}
