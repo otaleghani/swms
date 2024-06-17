@@ -1,14 +1,9 @@
 #!/usr/bin/env nix-shell
 #! nix-shell -i bash --pure
-#! nix-shell -p bash httpie jq go
+#! nix-shell -p bash httpie jq
 #! nix-shell -I nixpkgs=https://github.com/NixOS/nixpkgs/archive/ecbc30d5ed9f75449233b17d4a4cdeab53af793f.tar.gz
 
 # Run this script in the ./server 
-
-rm test.db
-go test -v &
-export GO_PID=$!
-echo $GO_PID
 
 USERS_PATH="localhost:8080/api/v1/users/"
 LOGIN_PATH="localhost:8080/api/v1/login/"

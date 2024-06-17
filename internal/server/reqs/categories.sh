@@ -5,52 +5,52 @@
 
 source ./reqs/login.sh
 
-ITEMS_PATH="localhost:8080/api/v1/items/"
+API_PATH="localhost:8080/api/v1/categories/"
 
-NAME="item"
-NEW_NAME="item 2"
-DESC="some"
+NAME="Category"
+NEW_NAME="Category 2"
+DESC="some description"
 
 echo "LOG: $ACCESS_TOKEN"
 
-NEW_ITEM_ID=$(
-  http -A bearer -a $ACCESS_TOKEN GET $ITEMS_PATH |
+NEW_ID=$(
+  http -A bearer -a $ACCESS_TOKEN GET $API_PATH |
     jq -r ".data[] | select(.name == \"$NAME\") | .id")
 
-if [ -n "$NEW_ITEM_ID" ]; then
+if [ -n "$NEW_ID" ]; then
   echo "LOG: Dummy item present, deleting it"
   DELETE_ID=$(
-    http -A bearer -a $ACCESS_TOKEN DELETE $ITEMS_PATH$NEW_ITEM_ID |
+    http -A bearer -a $ACCESS_TOKEN DELETE $API_PATH$NEW_CATEGORY_ID |
       jq -r '.code')
 fi
 
 POST=$(
-  http -A bearer -a $ACCESS_TOKEN POST $ITEMS_PATH \
+  http -A bearer -a $ACCESS_TOKEN POST $API_PATH \
   name="$NAME" \
   description="$DESC" |
     jq -r '.code') 
 
-NEW_ITEM_ID=$(
-  http -A bearer -a $ACCESS_TOKEN GET $ITEMS_PATH |
+NEW_ID=$(
+  http -A bearer -a $ACCESS_TOKEN GET $API_PATH |
     jq -r ".data[] | select(.name == \"$NAME\") | .id")
 
-echo $NEW_ITEM_ID
+echo "LOG: $NEW_ID"
 
 UPDATE=$(
-  http -A bearer -a $ACCESS_TOKEN PUT $ITEMS_PATH$NEW_ITEM_ID \
+  http -A bearer -a $ACCESS_TOKEN PUT $API_PATH$NEW_ID \
   name="$NEW_NAME" |
     jq -r '.code')
 
 GET=$(
-  http -A bearer -a $ACCESS_TOKEN GET $ITEMS_PATH |
+  http -A bearer -a $ACCESS_TOKEN GET $API_PATH |
     jq -r '.code')
 
 GET_ID=$(
-  http -A bearer -a $ACCESS_TOKEN GET $ITEMS_PATH$NEW_ITEM_ID |
+  http -A bearer -a $ACCESS_TOKEN GET $API_PATH$NEW_ID |
     jq -r '.code')
 
 DELETE_ID=$(
-  http -A bearer -a $ACCESS_TOKEN DELETE $ITEMS_PATH$NEW_ITEM_ID |
+  http -A bearer -a $ACCESS_TOKEN DELETE $API_PATH$NEW_ID |
     jq -r '.code')
 
 echo "POST ./items/ $POST"

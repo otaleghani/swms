@@ -1,10 +1,10 @@
 package database
 
 type Item_image struct {
-  Id string
-  Uri string
-  Item_id string
-  Variant_id string
+  Id string `json:"id"`
+  Uri string `json:"uri"`
+  Item_id string `json:"item_id"`
+  Variant_id string `json:"variant_id"`
 }
 
 func (db *Database) SelectItemImages(condition string, args ...interface{}) ([]Item_image, error) {
@@ -34,5 +34,3 @@ func (db Database) SelectItemImagesByItemId(id string) ([]Item_image, error) {
   }
   return list, nil
 }
-
-

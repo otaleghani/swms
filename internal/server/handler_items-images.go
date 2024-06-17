@@ -9,14 +9,14 @@ import (
 	"github.com/otaleghani/swms/internal/database"
 )
 
-func getItems(db *database.Database) http.HandlerFunc {
+func getItemImages(db *database.Database) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
 		if err := checkAccessToken(token, db); err != nil {
 			ErrorResponse{Message: err.Error()}.r401(w, r)
 			return
 		}
-		rows, err := db.SelectItem("")
+		rows, err := db.SelectItemImages("")
 		if err != nil {
 			ErrorResponse{Message: err.Error()}.r500(w, r)
 			return
@@ -25,7 +25,7 @@ func getItems(db *database.Database) http.HandlerFunc {
 	}
 }
 
-func getItemById(db *database.Database) http.HandlerFunc {
+func getItemImageById(db *database.Database) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
 		if err := checkAccessToken(token, db); err != nil {
@@ -33,7 +33,7 @@ func getItemById(db *database.Database) http.HandlerFunc {
 			return
 		}
 		path := r.PathValue("id")
-		rows, _ := db.SelectItem("Id = ?", path)
+		rows, _ := db.SelectItemImages("Id = ?", path)
 		if len(rows) == 0 {
 			ErrorResponse{Message: "Not found"}.r404(w, r)
 			return
@@ -42,14 +42,14 @@ func getItemById(db *database.Database) http.HandlerFunc {
 	}
 }
 
-func postItems(db *database.Database) http.HandlerFunc {
+func postItemImages(db *database.Database) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
 		if err := checkAccessToken(token, db); err != nil {
 			ErrorResponse{Message: err.Error()}.r401(w, r)
 			return
 		}
-		var data database.Item
+		var data database.Item_image
 		err := json.NewDecoder(r.Body).Decode(&data)
 		if err != nil {
 			ErrorResponse{Message: err.Error()}.r400(w, r)
@@ -65,7 +65,7 @@ func postItems(db *database.Database) http.HandlerFunc {
 	}
 }
 
-func putItem(db *database.Database) http.HandlerFunc {
+func putItemImage(db *database.Database) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
 		if err := checkAccessToken(token, db); err != nil {
@@ -73,7 +73,7 @@ func putItem(db *database.Database) http.HandlerFunc {
 			return
 		}
 		id := r.PathValue("id")
-		rows, err := db.SelectItem("Id = ?", id)
+		rows, err := db.SelectItemImages("Id = ?", id)
 		if err != nil {
 			ErrorResponse{Message: err.Error()}.r500(w, r)
 			return
@@ -82,7 +82,7 @@ func putItem(db *database.Database) http.HandlerFunc {
 			ErrorResponse{Message: "Not found"}.r404(w, r)
 			return
 		}
-		var data database.Item
+		var data database.Item_image
 		err = json.NewDecoder(r.Body).Decode(&data)
 		if err != nil {
 			ErrorResponse{Message: err.Error()}.r400(w, r)
@@ -96,7 +96,8 @@ func putItem(db *database.Database) http.HandlerFunc {
 		SuccessResponse{Message: "Row updated"}.r200(w, r)
 	}
 }
-func deleteItem(db *database.Database) http.HandlerFunc {
+
+func deleteItemImage(db *database.Database) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
 		if err := checkAccessToken(token, db); err != nil {
@@ -104,7 +105,7 @@ func deleteItem(db *database.Database) http.HandlerFunc {
 			return
 		}
 		path := r.PathValue("id")
-		rows, err := db.SelectItem("Id = ?", path)
+		rows, err := db.SelectItemImages("Id = ?", path)
 		if err != nil {
 			ErrorResponse{Message: "Not found"}.r500(w, r)
 			return
