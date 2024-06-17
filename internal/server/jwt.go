@@ -4,7 +4,6 @@ import (
 	"crypto/rand"
 	"encoding/base64"
 	"errors"
-	"os"
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
@@ -84,12 +83,16 @@ func getRefreshToken(id string, db *database.Database) (string, error) {
 	return ss, nil
 }
 
-func checkAccessToken(tokenStr string) error {
-	jwtSecret := os.Getenv("JWT_SECRET")
+func checkAccessToken(tokenStr string, db *database.Database) error {
+	metadata := []database.Metadata{}
+	err := db.Sorm.Select(&metadata, "")
+	if err != nil {
+		return err
+	}
 	var claims jwt.RegisteredClaims
 	token, err := jwt.ParseWithClaims(tokenStr, &claims,
 		func(token *jwt.Token) (interface{}, error) {
-			return []byte(jwtSecret), nil
+			return []byte(metadata[1].Secret), nil
 		},
 	)
 	if err != nil {
@@ -106,11 +109,15 @@ func checkAccessToken(tokenStr string) error {
 }
 
 func checkRefreshToken(tokenStr string, db *database.Database) error {
-	jwtSecret := os.Getenv("JWT_SECRET")
+	metadata := []database.Metadata{}
+	err := db.Sorm.Select(&metadata, "")
+	if err != nil {
+		return err
+	}
 	var claims jwt.RegisteredClaims
 	token, err := jwt.ParseWithClaims(tokenStr, &claims,
 		func(token *jwt.Token) (interface{}, error) {
-			return []byte(jwtSecret), nil
+			return []byte(metadata[1].Secret), nil
 		},
 	)
 	if err != nil {
@@ -130,11 +137,15 @@ func checkRefreshToken(tokenStr string, db *database.Database) error {
 }
 
 func refreshAccessToken(tokenStr string, db *database.Database) (string, error) {
-	jwtSecret := os.Getenv("JWT_SECRET")
+	metadata := []database.Metadata{}
+	err := db.Sorm.Select(&metadata, "")
+	if err != nil {
+		return "", err
+	}
 	var claims jwt.RegisteredClaims
 	token, err := jwt.ParseWithClaims(tokenStr, &claims,
 		func(token *jwt.Token) (interface{}, error) {
-			return []byte(jwtSecret), nil
+			return []byte(metadata[1].Secret), nil
 		},
 	)
 	if err != nil {

@@ -11,6 +11,11 @@ import (
 
 func deleteItem(db *database.Database) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
+		token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
+		if err := checkAccessToken(token, db); err != nil {
+			ErrorResponse{Message: err.Error()}.r401(w, r)
+			return
+		}
 		path := r.PathValue("id")
 		rows, err := db.SelectItem("Id = ?", path)
 		if err != nil {
@@ -32,6 +37,11 @@ func deleteItem(db *database.Database) http.HandlerFunc {
 
 func postItems(db *database.Database) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
+		token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
+		if err := checkAccessToken(token, db); err != nil {
+			ErrorResponse{Message: err.Error()}.r401(w, r)
+			return
+		}
 		var data database.Item
 		err := json.NewDecoder(r.Body).Decode(&data)
 		if err != nil {
@@ -51,7 +61,7 @@ func postItems(db *database.Database) http.HandlerFunc {
 func getItems(db *database.Database) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
-		if err := checkAccessToken(token); err != nil {
+		if err := checkAccessToken(token, db); err != nil {
 			ErrorResponse{Message: err.Error()}.r401(w, r)
 			return
 		}
@@ -67,6 +77,11 @@ func getItems(db *database.Database) http.HandlerFunc {
 
 func getItemById(db *database.Database) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
+		token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
+		if err := checkAccessToken(token, db); err != nil {
+			ErrorResponse{Message: err.Error()}.r401(w, r)
+			return
+		}
 		path := r.PathValue("id")
 		rows, _ := db.SelectItem("Id = ?", path)
 		if len(rows) == 0 {
@@ -79,6 +94,11 @@ func getItemById(db *database.Database) http.HandlerFunc {
 
 func putItem(db *database.Database) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
+		token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
+		if err := checkAccessToken(token, db); err != nil {
+			ErrorResponse{Message: err.Error()}.r401(w, r)
+			return
+		}
 		id := r.PathValue("id")
 		rows, err := db.SelectItem("Id = ?", id)
 		if err != nil {
