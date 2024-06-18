@@ -65,6 +65,52 @@ func Serve(path, port string) {
 	mux.HandleFunc("DELETE /api/v1/item-images/{id}", deleteItemImage(&dbConn))
 	// mux.HandleFunc("GET /api/v1/item-images/item/{id}", getItemImageById(&dbConn))
 
+  
+	mux.HandleFunc("GET /api/v1/zones/{$}", getZones(&dbConn))
+	mux.HandleFunc("POST /api/v1/zones/{$}", postZones(&dbConn))
+	mux.HandleFunc("GET /api/v1/zones/{id}", getZoneById(&dbConn))
+	mux.HandleFunc("PUT /api/v1/zones/{id}", putZone(&dbConn))
+	mux.HandleFunc("DELETE /api/v1/zones/{id}", deleteZone(&dbConn))
+
+	mux.HandleFunc("GET /api/v1/aisles/{$}", getAisles(&dbConn))
+	mux.HandleFunc("POST /api/v1/aisles/{$}", postAisles(&dbConn))
+	mux.HandleFunc("GET /api/v1/aisles/{id}", getAisleById(&dbConn))
+	mux.HandleFunc("PUT /api/v1/aisles/{id}", putAisle(&dbConn))
+	mux.HandleFunc("DELETE /api/v1/aisles/{id}", deleteAisle(&dbConn))
+
+	mux.HandleFunc("GET /api/v1/racks/{$}", getRacks(&dbConn))
+	mux.HandleFunc("POST /api/v1/racks/{$}", postRacks(&dbConn))
+	mux.HandleFunc("GET /api/v1/racks/{id}", getRackById(&dbConn))
+	mux.HandleFunc("PUT /api/v1/racks/{id}", putRack(&dbConn))
+	mux.HandleFunc("DELETE /api/v1/racks/{id}", deleteRack(&dbConn))
+
+	mux.HandleFunc("GET /api/v1/shelfs/{$}", getShelfs(&dbConn))
+	mux.HandleFunc("POST /api/v1/shelfs/{$}", postShelfs(&dbConn))
+	mux.HandleFunc("GET /api/v1/shelfs/{id}", getShelfById(&dbConn))
+	mux.HandleFunc("PUT /api/v1/shelfs/{id}", putShelf(&dbConn))
+	mux.HandleFunc("DELETE /api/v1/shelfs/{id}", deleteShelf(&dbConn))
+
+	mux.HandleFunc("GET /api/v1/variants/{$}", getVariants(&dbConn))
+	mux.HandleFunc("POST /api/v1/variants/{$}", postVariants(&dbConn))
+	mux.HandleFunc("GET /api/v1/variants/{id}", getVariantById(&dbConn))
+	mux.HandleFunc("PUT /api/v1/variants/{id}", putVariant(&dbConn))
+	mux.HandleFunc("DELETE /api/v1/variants/{id}", deleteVariant(&dbConn))
+
+	mux.HandleFunc("GET /api/v1/suppliers/{$}", getSuppliers(&dbConn))
+	mux.HandleFunc("POST /api/v1/suppliers/{$}", postSuppliers(&dbConn))
+	mux.HandleFunc("GET /api/v1/suppliers/{id}", getSupplierById(&dbConn))
+	mux.HandleFunc("PUT /api/v1/suppliers/{id}", putSupplier(&dbConn))
+	mux.HandleFunc("DELETE /api/v1/suppliers/{id}", deleteSupplier(&dbConn))
+
+	mux.HandleFunc("GET /api/v1/supplier-codes/{$}", getSupplierCodes(&dbConn))
+	mux.HandleFunc("POST /api/v1/supplier-codes/{$}", postSupplierCodes(&dbConn))
+	mux.HandleFunc("GET /api/v1/supplier-codes/{id}", getSupplierCodeById(&dbConn))
+	mux.HandleFunc("PUT /api/v1/supplier-codes/{id}", putSupplierCode(&dbConn))
+	mux.HandleFunc("DELETE /api/v1/supplier-codes/{id}", deleteSupplierCode(&dbConn))
+
+  // Missing: Position
+  // Missing: Variant
+
 	mux.HandleFunc("POST /api/v1/login/{$}", login(&dbConn))
 	mux.HandleFunc("POST /api/v1/revoke/{$}", revokeHandler(&dbConn))
 	mux.HandleFunc("POST /api/v1/refresh/{$}", refreshHandler(&dbConn))

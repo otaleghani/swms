@@ -96,6 +96,7 @@ func putItem(db *database.Database) http.HandlerFunc {
 		SuccessResponse{Message: "Row updated"}.r200(w, r)
 	}
 }
+
 func deleteItem(db *database.Database) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")

@@ -2,8 +2,6 @@ package server
 
 import (
 	"testing"
-	// "github.com/otaleghani/swms/internal/database"
-	// "log"
 )
 
 var path = "test.db"
@@ -29,6 +27,7 @@ func TestServe(t *testing.T) {
 	//   t.Fatal(err)
 	// }
 	// log.Println(item)
+
 	Serve(path, "8080")
 }
 

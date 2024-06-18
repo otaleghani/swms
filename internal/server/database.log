@@ -7877,3 +7877,1240 @@
 2024/06/17 15:14:10 [35msorm.NOTICE:[0m    Deleting from table Item_image with condition Id = ?
 2024/06/17 15:14:10 sorm.LOG:       Executing query on database test.db
 2024/06/17 15:14:10 [32msorm.SUCCESS:[0m   Item deleted
+2024/06/18 09:12:56 [35msorm.NOTICE:[0m    Opening database connection at test.db
+2024/06/18 09:12:56 sorm.LOG:       Database opened
+2024/06/18 09:12:56 sorm.LOG:       Activating foreign keys
+2024/06/18 09:12:56 [32msorm.SUCCESS:[0m   Database opened
+2024/06/18 09:13:01 [35msorm.NOTICE:[0m    Selecting from User with condition Email = ?
+2024/06/18 09:13:01 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:13:01 [35msorm.NOTICE:[0m    Selecting from User with condition 
+2024/06/18 09:13:01 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:13:01 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 09:13:01 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:13:01 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 09:13:01 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:13:01 [35msorm.NOTICE:[0m    Starting insert transaction
+2024/06/18 09:13:01 sorm.LOG:       Inserting into RefreshToken
+2024/06/18 09:13:01 [32msorm.SUCCESS:[0m   Items inserted
+2024/06/18 09:13:02 [35msorm.NOTICE:[0m    Selecting from User with condition 
+2024/06/18 09:13:02 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:13:02 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 09:13:02 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:13:02 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 09:13:02 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:13:02 [35msorm.NOTICE:[0m    Starting insert transaction
+2024/06/18 09:13:02 sorm.LOG:       Inserting into RefreshToken
+2024/06/18 09:13:02 [32msorm.SUCCESS:[0m   Items inserted
+2024/06/18 09:13:02 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 09:13:02 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:13:02 [35msorm.NOTICE:[0m    Selecting from Category with condition 
+2024/06/18 09:13:02 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:13:03 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 09:13:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:13:03 [35msorm.NOTICE:[0m    Selecting from Category with condition 
+2024/06/18 09:13:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:13:03 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 09:13:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:13:03 [35msorm.NOTICE:[0m    Selecting from Category with condition 
+2024/06/18 09:13:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:13:04 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 09:13:04 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:13:04 [35msorm.NOTICE:[0m    Selecting from Category with condition 
+2024/06/18 09:13:04 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:13:04 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 09:13:04 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:13:04 [35msorm.NOTICE:[0m    Selecting from Category with condition Id = ?
+2024/06/18 09:13:04 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:14:03 [35msorm.NOTICE:[0m    Selecting from User with condition Email = ?
+2024/06/18 09:14:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:14:03 [35msorm.NOTICE:[0m    Selecting from User with condition 
+2024/06/18 09:14:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:14:03 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 09:14:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:14:03 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 09:14:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:14:03 [35msorm.NOTICE:[0m    Starting insert transaction
+2024/06/18 09:14:03 sorm.LOG:       Inserting into RefreshToken
+2024/06/18 09:14:03 [32msorm.SUCCESS:[0m   Items inserted
+2024/06/18 09:14:03 [35msorm.NOTICE:[0m    Selecting from User with condition 
+2024/06/18 09:14:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:14:03 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 09:14:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:14:03 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 09:14:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:14:03 [35msorm.NOTICE:[0m    Starting insert transaction
+2024/06/18 09:14:03 sorm.LOG:       Inserting into RefreshToken
+2024/06/18 09:14:03 [32msorm.SUCCESS:[0m   Items inserted
+2024/06/18 09:14:37 [35msorm.NOTICE:[0m    Selecting from User with condition Email = ?
+2024/06/18 09:14:37 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:14:38 [35msorm.NOTICE:[0m    Selecting from User with condition 
+2024/06/18 09:14:38 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:14:38 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 09:14:38 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:14:38 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 09:14:38 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:14:38 [35msorm.NOTICE:[0m    Starting insert transaction
+2024/06/18 09:14:38 sorm.LOG:       Inserting into RefreshToken
+2024/06/18 09:14:38 [32msorm.SUCCESS:[0m   Items inserted
+2024/06/18 09:14:38 [35msorm.NOTICE:[0m    Selecting from User with condition 
+2024/06/18 09:14:38 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:14:38 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 09:14:38 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:14:38 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 09:14:38 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:14:38 [35msorm.NOTICE:[0m    Starting insert transaction
+2024/06/18 09:14:38 sorm.LOG:       Inserting into RefreshToken
+2024/06/18 09:14:38 [32msorm.SUCCESS:[0m   Items inserted
+2024/06/18 09:17:56 [35msorm.NOTICE:[0m    Selecting from User with condition Email = ?
+2024/06/18 09:17:56 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:17:57 [35msorm.NOTICE:[0m    Selecting from User with condition 
+2024/06/18 09:17:57 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:17:57 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 09:17:57 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:17:57 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 09:17:57 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:17:57 [35msorm.NOTICE:[0m    Starting insert transaction
+2024/06/18 09:17:57 sorm.LOG:       Inserting into RefreshToken
+2024/06/18 09:17:57 [32msorm.SUCCESS:[0m   Items inserted
+2024/06/18 09:17:57 [35msorm.NOTICE:[0m    Selecting from User with condition 
+2024/06/18 09:17:57 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:17:57 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 09:17:57 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:17:57 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 09:17:57 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:17:57 [35msorm.NOTICE:[0m    Starting insert transaction
+2024/06/18 09:17:57 sorm.LOG:       Inserting into RefreshToken
+2024/06/18 09:17:57 [32msorm.SUCCESS:[0m   Items inserted
+2024/06/18 09:19:44 [35msorm.NOTICE:[0m    Selecting from User with condition Email = ?
+2024/06/18 09:19:44 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:19:45 [35msorm.NOTICE:[0m    Selecting from User with condition 
+2024/06/18 09:19:45 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:19:45 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 09:19:45 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:19:45 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 09:19:45 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:19:45 [35msorm.NOTICE:[0m    Starting insert transaction
+2024/06/18 09:19:45 sorm.LOG:       Inserting into RefreshToken
+2024/06/18 09:19:45 [32msorm.SUCCESS:[0m   Items inserted
+2024/06/18 09:19:45 [35msorm.NOTICE:[0m    Selecting from User with condition 
+2024/06/18 09:19:45 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:19:45 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 09:19:45 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:19:45 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 09:19:45 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:19:45 [35msorm.NOTICE:[0m    Starting insert transaction
+2024/06/18 09:19:45 sorm.LOG:       Inserting into RefreshToken
+2024/06/18 09:19:45 [32msorm.SUCCESS:[0m   Items inserted
+2024/06/18 09:19:45 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 09:19:45 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:19:45 [35msorm.NOTICE:[0m    Selecting from Category with condition 
+2024/06/18 09:19:45 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:19:46 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 09:19:46 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:19:46 [35msorm.NOTICE:[0m    Starting insert transaction
+2024/06/18 09:19:46 sorm.LOG:       Inserting into Category
+2024/06/18 09:19:46 [32msorm.SUCCESS:[0m   Items inserted
+2024/06/18 09:19:46 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 09:19:46 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:19:46 [35msorm.NOTICE:[0m    Selecting from Category with condition 
+2024/06/18 09:19:46 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:19:47 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 09:19:47 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:19:47 [35msorm.NOTICE:[0m    Selecting from Category with condition Id = ?
+2024/06/18 09:19:47 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:19:47 [35msorm.NOTICE:[0m    Updating in table Category
+2024/06/18 09:19:47 [32msorm.SUCCESS:[0m   Update successful. Rows affected: 1
+2024/06/18 09:19:47 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 09:19:47 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:19:47 [35msorm.NOTICE:[0m    Selecting from Category with condition 
+2024/06/18 09:19:47 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:19:47 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 09:19:47 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:19:47 [35msorm.NOTICE:[0m    Selecting from Category with condition Id = ?
+2024/06/18 09:19:47 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:19:48 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 09:19:48 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:19:48 [35msorm.NOTICE:[0m    Selecting from Category with condition Id = ?
+2024/06/18 09:19:48 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:19:48 [35msorm.NOTICE:[0m    Deleting from table Category with condition Id = ?
+2024/06/18 09:19:48 sorm.LOG:       Executing query on database test.db
+2024/06/18 09:19:48 [32msorm.SUCCESS:[0m   Item deleted
+2024/06/18 09:21:16 [35msorm.NOTICE:[0m    Opening database connection at test.db
+2024/06/18 09:21:16 sorm.LOG:       Database opened
+2024/06/18 09:21:16 sorm.LOG:       Activating foreign keys
+2024/06/18 09:21:16 [32msorm.SUCCESS:[0m   Database opened
+2024/06/18 09:21:19 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 09:21:19 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:21:19 [35msorm.NOTICE:[0m    Selecting from Zone with condition 
+2024/06/18 09:21:19 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:21:26 [35msorm.NOTICE:[0m    Selecting from User with condition Email = ?
+2024/06/18 09:21:26 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:21:27 [35msorm.NOTICE:[0m    Selecting from User with condition 
+2024/06/18 09:21:27 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:21:27 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 09:21:27 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:21:27 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 09:21:27 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:21:27 [35msorm.NOTICE:[0m    Starting insert transaction
+2024/06/18 09:21:27 sorm.LOG:       Inserting into RefreshToken
+2024/06/18 09:21:27 [32msorm.SUCCESS:[0m   Items inserted
+2024/06/18 09:21:28 [35msorm.NOTICE:[0m    Selecting from User with condition 
+2024/06/18 09:21:28 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:21:28 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 09:21:28 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:21:28 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 09:21:28 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:21:28 [35msorm.NOTICE:[0m    Starting insert transaction
+2024/06/18 09:21:28 sorm.LOG:       Inserting into RefreshToken
+2024/06/18 09:21:28 [32msorm.SUCCESS:[0m   Items inserted
+2024/06/18 09:21:29 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 09:21:29 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:21:29 [35msorm.NOTICE:[0m    Selecting from Zone with condition 
+2024/06/18 09:21:29 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:21:29 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 09:21:29 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:21:29 [35msorm.NOTICE:[0m    Selecting from Zone with condition 
+2024/06/18 09:21:29 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:21:30 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 09:21:30 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:21:30 [35msorm.NOTICE:[0m    Selecting from Zone with condition 
+2024/06/18 09:21:30 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:21:31 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 09:21:31 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:21:31 [35msorm.NOTICE:[0m    Selecting from Zone with condition 
+2024/06/18 09:21:31 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:21:31 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 09:21:31 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:21:31 [35msorm.NOTICE:[0m    Selecting from Zone with condition Id = ?
+2024/06/18 09:21:31 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:26:11 [35msorm.NOTICE:[0m    Opening database connection at test.db
+2024/06/18 09:26:11 sorm.LOG:       Database opened
+2024/06/18 09:26:11 sorm.LOG:       Activating foreign keys
+2024/06/18 09:26:11 [32msorm.SUCCESS:[0m   Database opened
+2024/06/18 09:26:45 [35msorm.NOTICE:[0m    Opening database connection at test.db
+2024/06/18 09:26:45 sorm.LOG:       Database opened
+2024/06/18 09:26:45 sorm.LOG:       Activating foreign keys
+2024/06/18 09:26:45 [32msorm.SUCCESS:[0m   Database opened
+2024/06/18 09:30:07 [35msorm.NOTICE:[0m    Opening database connection at test.db
+2024/06/18 09:30:07 sorm.LOG:       Database opened
+2024/06/18 09:30:07 sorm.LOG:       Activating foreign keys
+2024/06/18 09:30:07 [32msorm.SUCCESS:[0m   Database opened
+2024/06/18 09:37:08 [35msorm.NOTICE:[0m    Selecting from User with condition Email = ?
+2024/06/18 09:37:08 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:37:08 [35msorm.NOTICE:[0m    Selecting from User with condition 
+2024/06/18 09:37:08 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:37:08 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 09:37:08 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:37:08 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 09:37:08 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:37:08 [35msorm.NOTICE:[0m    Starting insert transaction
+2024/06/18 09:37:08 sorm.LOG:       Inserting into RefreshToken
+2024/06/18 09:37:08 [32msorm.SUCCESS:[0m   Items inserted
+2024/06/18 09:37:09 [35msorm.NOTICE:[0m    Selecting from User with condition 
+2024/06/18 09:37:09 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:37:09 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 09:37:09 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:37:09 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 09:37:09 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:37:09 [35msorm.NOTICE:[0m    Starting insert transaction
+2024/06/18 09:37:09 sorm.LOG:       Inserting into RefreshToken
+2024/06/18 09:37:09 [32msorm.SUCCESS:[0m   Items inserted
+2024/06/18 09:37:09 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 09:37:09 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:37:09 [35msorm.NOTICE:[0m    Selecting from Zone with condition 
+2024/06/18 09:37:09 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:37:09 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 09:37:09 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:37:09 [35msorm.NOTICE:[0m    Starting insert transaction
+2024/06/18 09:37:09 sorm.LOG:       Inserting into Zone
+2024/06/18 09:37:09 [32msorm.SUCCESS:[0m   Items inserted
+2024/06/18 09:37:10 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 09:37:10 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:37:10 [35msorm.NOTICE:[0m    Selecting from Zone with condition 
+2024/06/18 09:37:10 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:37:10 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 09:37:10 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:37:10 [35msorm.NOTICE:[0m    Selecting from Zone with condition Id = ?
+2024/06/18 09:37:10 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:37:10 [35msorm.NOTICE:[0m    Updating in table Zone
+2024/06/18 09:37:10 [32msorm.SUCCESS:[0m   Update successful. Rows affected: 1
+2024/06/18 09:37:10 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 09:37:10 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:37:10 [35msorm.NOTICE:[0m    Selecting from Zone with condition 
+2024/06/18 09:37:10 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:37:11 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 09:37:11 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:37:11 [35msorm.NOTICE:[0m    Selecting from Zone with condition Id = ?
+2024/06/18 09:37:11 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:37:11 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 09:37:11 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:37:11 [35msorm.NOTICE:[0m    Selecting from Zone with condition Id = ?
+2024/06/18 09:37:11 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:37:11 [35msorm.NOTICE:[0m    Deleting from table Zone with condition Id = ?
+2024/06/18 09:37:11 sorm.LOG:       Executing query on database test.db
+2024/06/18 09:37:11 [32msorm.SUCCESS:[0m   Item deleted
+2024/06/18 09:42:01 [35msorm.NOTICE:[0m    Opening database connection at test.db
+2024/06/18 09:42:01 sorm.LOG:       Database opened
+2024/06/18 09:42:01 sorm.LOG:       Activating foreign keys
+2024/06/18 09:42:01 [32msorm.SUCCESS:[0m   Database opened
+2024/06/18 09:42:18 [35msorm.NOTICE:[0m    Selecting from User with condition Email = ?
+2024/06/18 09:42:18 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:42:19 [35msorm.NOTICE:[0m    Selecting from User with condition 
+2024/06/18 09:42:19 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:42:19 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 09:42:19 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:42:19 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 09:42:19 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:42:19 [35msorm.NOTICE:[0m    Starting insert transaction
+2024/06/18 09:42:19 sorm.LOG:       Inserting into RefreshToken
+2024/06/18 09:42:19 [32msorm.SUCCESS:[0m   Items inserted
+2024/06/18 09:42:19 [35msorm.NOTICE:[0m    Selecting from User with condition 
+2024/06/18 09:42:19 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:42:19 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 09:42:19 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:42:19 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 09:42:19 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:42:19 [35msorm.NOTICE:[0m    Starting insert transaction
+2024/06/18 09:42:19 sorm.LOG:       Inserting into RefreshToken
+2024/06/18 09:42:19 [32msorm.SUCCESS:[0m   Items inserted
+2024/06/18 09:42:20 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 09:42:20 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:42:20 [35msorm.NOTICE:[0m    Selecting from Aisle with condition 
+2024/06/18 09:42:20 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:42:20 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 09:42:20 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:42:20 [35msorm.NOTICE:[0m    Starting insert transaction
+2024/06/18 09:42:20 sorm.LOG:       Inserting into Aisle
+2024/06/18 09:42:20 [32msorm.SUCCESS:[0m   Items inserted
+2024/06/18 09:42:20 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 09:42:20 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:42:20 [35msorm.NOTICE:[0m    Selecting from Aisle with condition 
+2024/06/18 09:42:20 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:42:21 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 09:42:21 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:42:21 [35msorm.NOTICE:[0m    Selecting from Aisle with condition Id = ?
+2024/06/18 09:42:21 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:42:21 [35msorm.NOTICE:[0m    Updating in table Aisle
+2024/06/18 09:42:21 [32msorm.SUCCESS:[0m   Update successful. Rows affected: 1
+2024/06/18 09:42:21 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 09:42:21 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:42:21 [35msorm.NOTICE:[0m    Selecting from Aisle with condition 
+2024/06/18 09:42:21 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:42:21 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 09:42:21 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:42:21 [35msorm.NOTICE:[0m    Selecting from Aisle with condition Id = ?
+2024/06/18 09:42:21 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:42:22 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 09:42:22 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:42:22 [35msorm.NOTICE:[0m    Selecting from Aisle with condition Id = ?
+2024/06/18 09:42:22 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:42:22 [35msorm.NOTICE:[0m    Deleting from table Aisle with condition Id = ?
+2024/06/18 09:42:22 sorm.LOG:       Executing query on database test.db
+2024/06/18 09:42:22 [32msorm.SUCCESS:[0m   Item deleted
+2024/06/18 09:47:50 [35msorm.NOTICE:[0m    Opening database connection at test.db
+2024/06/18 09:47:50 sorm.LOG:       Database opened
+2024/06/18 09:47:50 sorm.LOG:       Activating foreign keys
+2024/06/18 09:47:50 [32msorm.SUCCESS:[0m   Database opened
+2024/06/18 09:48:00 [35msorm.NOTICE:[0m    Selecting from User with condition Email = ?
+2024/06/18 09:48:00 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:48:01 [35msorm.NOTICE:[0m    Selecting from User with condition 
+2024/06/18 09:48:01 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:48:01 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 09:48:01 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:48:01 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 09:48:01 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:48:01 [35msorm.NOTICE:[0m    Starting insert transaction
+2024/06/18 09:48:01 sorm.LOG:       Inserting into RefreshToken
+2024/06/18 09:48:01 [32msorm.SUCCESS:[0m   Items inserted
+2024/06/18 09:48:01 [35msorm.NOTICE:[0m    Selecting from User with condition 
+2024/06/18 09:48:01 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:48:01 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 09:48:01 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:48:01 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 09:48:01 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:48:01 [35msorm.NOTICE:[0m    Starting insert transaction
+2024/06/18 09:48:01 sorm.LOG:       Inserting into RefreshToken
+2024/06/18 09:48:01 [32msorm.SUCCESS:[0m   Items inserted
+2024/06/18 09:48:01 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 09:48:01 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:48:01 [35msorm.NOTICE:[0m    Selecting from Rack with condition 
+2024/06/18 09:48:01 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:48:02 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 09:48:02 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:48:02 [35msorm.NOTICE:[0m    Starting insert transaction
+2024/06/18 09:48:02 sorm.LOG:       Inserting into Rack
+2024/06/18 09:48:02 [32msorm.SUCCESS:[0m   Items inserted
+2024/06/18 09:48:02 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 09:48:02 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:48:02 [35msorm.NOTICE:[0m    Selecting from Rack with condition 
+2024/06/18 09:48:02 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:48:03 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 09:48:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:48:03 [35msorm.NOTICE:[0m    Selecting from Rack with condition Id = ?
+2024/06/18 09:48:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:48:03 [35msorm.NOTICE:[0m    Updating in table Rack
+2024/06/18 09:48:03 [32msorm.SUCCESS:[0m   Update successful. Rows affected: 1
+2024/06/18 09:48:03 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 09:48:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:48:03 [35msorm.NOTICE:[0m    Selecting from Rack with condition 
+2024/06/18 09:48:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:48:03 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 09:48:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:48:03 [35msorm.NOTICE:[0m    Selecting from Rack with condition Id = ?
+2024/06/18 09:48:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:48:04 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 09:48:04 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:48:04 [35msorm.NOTICE:[0m    Selecting from Rack with condition Id = ?
+2024/06/18 09:48:04 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 09:48:04 [35msorm.NOTICE:[0m    Deleting from table Rack with condition Id = ?
+2024/06/18 09:48:04 sorm.LOG:       Executing query on database test.db
+2024/06/18 09:48:04 [32msorm.SUCCESS:[0m   Item deleted
+2024/06/18 10:37:03 [35msorm.NOTICE:[0m    Opening database connection at test.db
+2024/06/18 10:37:03 sorm.LOG:       Database opened
+2024/06/18 10:37:03 sorm.LOG:       Activating foreign keys
+2024/06/18 10:37:03 [32msorm.SUCCESS:[0m   Database opened
+2024/06/18 10:37:26 [35msorm.NOTICE:[0m    Selecting from User with condition Email = ?
+2024/06/18 10:37:26 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 10:37:26 [35msorm.NOTICE:[0m    Selecting from User with condition 
+2024/06/18 10:37:26 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 10:37:26 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 10:37:26 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 10:37:26 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 10:37:26 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 10:37:26 [35msorm.NOTICE:[0m    Starting insert transaction
+2024/06/18 10:37:26 sorm.LOG:       Inserting into RefreshToken
+2024/06/18 10:37:26 [32msorm.SUCCESS:[0m   Items inserted
+2024/06/18 10:37:26 [35msorm.NOTICE:[0m    Selecting from User with condition 
+2024/06/18 10:37:26 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 10:37:26 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 10:37:26 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 10:37:26 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 10:37:26 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 10:37:26 [35msorm.NOTICE:[0m    Starting insert transaction
+2024/06/18 10:37:26 sorm.LOG:       Inserting into RefreshToken
+2024/06/18 10:37:26 [32msorm.SUCCESS:[0m   Items inserted
+2024/06/18 10:37:42 [35msorm.NOTICE:[0m    Selecting from User with condition Email = ?
+2024/06/18 10:37:42 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 10:37:42 [35msorm.NOTICE:[0m    Selecting from User with condition 
+2024/06/18 10:37:42 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 10:37:42 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 10:37:42 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 10:37:42 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 10:37:42 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 10:37:42 [35msorm.NOTICE:[0m    Starting insert transaction
+2024/06/18 10:37:42 sorm.LOG:       Inserting into RefreshToken
+2024/06/18 10:37:42 [32msorm.SUCCESS:[0m   Items inserted
+2024/06/18 10:37:43 [35msorm.NOTICE:[0m    Selecting from User with condition 
+2024/06/18 10:37:43 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 10:37:43 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 10:37:43 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 10:37:43 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 10:37:43 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 10:37:43 [35msorm.NOTICE:[0m    Starting insert transaction
+2024/06/18 10:37:43 sorm.LOG:       Inserting into RefreshToken
+2024/06/18 10:37:43 [32msorm.SUCCESS:[0m   Items inserted
+2024/06/18 10:37:43 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 10:37:43 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 10:37:43 [35msorm.NOTICE:[0m    Selecting from Shelf with condition 
+2024/06/18 10:37:43 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 10:37:43 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 10:37:43 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 10:37:43 [35msorm.NOTICE:[0m    Starting insert transaction
+2024/06/18 10:37:43 sorm.LOG:       Inserting into Shelf
+2024/06/18 10:37:43 [32msorm.SUCCESS:[0m   Items inserted
+2024/06/18 10:37:44 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 10:37:44 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 10:37:44 [35msorm.NOTICE:[0m    Selecting from Shelf with condition 
+2024/06/18 10:37:44 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 10:37:44 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 10:37:44 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 10:37:44 [35msorm.NOTICE:[0m    Selecting from Shelf with condition Id = ?
+2024/06/18 10:37:44 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 10:37:44 [35msorm.NOTICE:[0m    Updating in table Shelf
+2024/06/18 10:37:44 [32msorm.SUCCESS:[0m   Update successful. Rows affected: 1
+2024/06/18 10:37:45 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 10:37:45 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 10:37:45 [35msorm.NOTICE:[0m    Selecting from Shelf with condition 
+2024/06/18 10:37:45 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 10:37:45 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 10:37:45 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 10:37:45 [35msorm.NOTICE:[0m    Selecting from Shelf with condition Id = ?
+2024/06/18 10:37:45 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 10:37:45 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 10:37:45 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 10:37:45 [35msorm.NOTICE:[0m    Selecting from Shelf with condition Id = ?
+2024/06/18 10:37:45 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 10:37:45 [35msorm.NOTICE:[0m    Deleting from table Shelf with condition Id = ?
+2024/06/18 10:37:45 sorm.LOG:       Executing query on database test.db
+2024/06/18 10:37:45 [32msorm.SUCCESS:[0m   Item deleted
+2024/06/18 10:43:33 [35msorm.NOTICE:[0m    Opening database connection at test.db
+2024/06/18 10:43:33 sorm.LOG:       Database opened
+2024/06/18 10:43:33 sorm.LOG:       Activating foreign keys
+2024/06/18 10:43:33 [32msorm.SUCCESS:[0m   Database opened
+2024/06/18 10:43:53 [35msorm.NOTICE:[0m    Selecting from User with condition Email = ?
+2024/06/18 10:43:53 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 10:43:54 [35msorm.NOTICE:[0m    Selecting from User with condition 
+2024/06/18 10:43:54 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 10:43:54 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 10:43:54 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 10:43:54 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 10:43:54 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 10:43:54 [35msorm.NOTICE:[0m    Starting insert transaction
+2024/06/18 10:43:54 sorm.LOG:       Inserting into RefreshToken
+2024/06/18 10:43:54 [32msorm.SUCCESS:[0m   Items inserted
+2024/06/18 10:43:54 [35msorm.NOTICE:[0m    Selecting from User with condition 
+2024/06/18 10:43:54 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 10:43:54 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 10:43:54 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 10:43:54 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 10:43:54 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 10:43:54 [35msorm.NOTICE:[0m    Starting insert transaction
+2024/06/18 10:43:54 sorm.LOG:       Inserting into RefreshToken
+2024/06/18 10:43:54 [32msorm.SUCCESS:[0m   Items inserted
+2024/06/18 10:43:54 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 10:43:54 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 10:43:54 [35msorm.NOTICE:[0m    Selecting from Variant with condition 
+2024/06/18 10:43:54 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 10:43:55 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 10:43:55 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 10:43:55 [35msorm.NOTICE:[0m    Starting insert transaction
+2024/06/18 10:43:55 sorm.LOG:       Inserting into Variant
+2024/06/18 10:43:55 [32msorm.SUCCESS:[0m   Items inserted
+2024/06/18 10:43:55 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 10:43:55 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 10:43:55 [35msorm.NOTICE:[0m    Selecting from Variant with condition 
+2024/06/18 10:43:55 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 10:43:56 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 10:43:56 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 10:43:56 [35msorm.NOTICE:[0m    Selecting from Variant with condition Id = ?
+2024/06/18 10:43:56 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 10:43:56 [35msorm.NOTICE:[0m    Updating in table Variant
+2024/06/18 10:43:56 [32msorm.SUCCESS:[0m   Update successful. Rows affected: 1
+2024/06/18 10:43:56 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 10:43:56 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 10:43:56 [35msorm.NOTICE:[0m    Selecting from Variant with condition 
+2024/06/18 10:43:56 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 10:44:01 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 10:44:01 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 10:44:01 [35msorm.NOTICE:[0m    Selecting from Variant with condition Id = ?
+2024/06/18 10:44:01 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 10:44:02 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 10:44:02 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 10:44:02 [35msorm.NOTICE:[0m    Selecting from Variant with condition Id = ?
+2024/06/18 10:44:02 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 10:44:02 [35msorm.NOTICE:[0m    Deleting from table Variant with condition Id = ?
+2024/06/18 10:44:02 sorm.LOG:       Executing query on database test.db
+2024/06/18 10:44:02 [32msorm.SUCCESS:[0m   Item deleted
+2024/06/18 11:23:13 [35msorm.NOTICE:[0m    Opening database connection at test.db
+2024/06/18 11:23:13 sorm.LOG:       Database opened
+2024/06/18 11:23:13 sorm.LOG:       Activating foreign keys
+2024/06/18 11:23:13 [32msorm.SUCCESS:[0m   Database opened
+2024/06/18 11:23:25 [35msorm.NOTICE:[0m    Selecting from User with condition Email = ?
+2024/06/18 11:23:25 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:23:25 [35msorm.NOTICE:[0m    Selecting from User with condition 
+2024/06/18 11:23:25 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:23:25 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 11:23:25 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:23:25 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 11:23:25 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:23:25 [35msorm.NOTICE:[0m    Starting insert transaction
+2024/06/18 11:23:25 sorm.LOG:       Inserting into RefreshToken
+2024/06/18 11:23:25 [32msorm.SUCCESS:[0m   Items inserted
+2024/06/18 11:23:26 [35msorm.NOTICE:[0m    Selecting from User with condition 
+2024/06/18 11:23:26 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:23:26 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 11:23:26 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:23:26 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 11:23:26 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:23:26 [35msorm.NOTICE:[0m    Starting insert transaction
+2024/06/18 11:23:26 sorm.LOG:       Inserting into RefreshToken
+2024/06/18 11:23:26 [32msorm.SUCCESS:[0m   Items inserted
+2024/06/18 11:23:26 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 11:23:26 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:23:26 [35msorm.NOTICE:[0m    Selecting from Supplier with condition 
+2024/06/18 11:23:26 [31msorm.ERROR:[0m     db.Connection.Prepare: no such table: Supplier
+2024/06/18 11:23:27 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 11:23:27 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:23:27 [35msorm.NOTICE:[0m    Starting insert transaction
+2024/06/18 11:23:27 sorm.LOG:       Inserting into Supplier
+2024/06/18 11:23:27 [31msorm.ERROR:[0m     tx.Prepare: no such table: Supplier
+2024/06/18 11:23:27 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 11:23:27 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:23:27 [35msorm.NOTICE:[0m    Selecting from Supplier with condition 
+2024/06/18 11:23:27 [31msorm.ERROR:[0m     db.Connection.Prepare: no such table: Supplier
+2024/06/18 11:23:27 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 11:23:27 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:23:27 [35msorm.NOTICE:[0m    Selecting from Supplier with condition 
+2024/06/18 11:23:27 [31msorm.ERROR:[0m     db.Connection.Prepare: no such table: Supplier
+2024/06/18 11:23:28 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 11:23:28 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:23:28 [35msorm.NOTICE:[0m    Selecting from Supplier with condition 
+2024/06/18 11:23:28 [31msorm.ERROR:[0m     db.Connection.Prepare: no such table: Supplier
+2024/06/18 11:24:14 [35msorm.NOTICE:[0m    Opening database connection at test.db
+2024/06/18 11:24:14 sorm.LOG:       Database opened
+2024/06/18 11:24:14 sorm.LOG:       Activating foreign keys
+2024/06/18 11:24:14 [32msorm.SUCCESS:[0m   Database opened
+2024/06/18 11:24:14 [35msorm.NOTICE:[0m    Creating table: Metadata
+2024/06/18 11:24:14 sorm.LOG:       	Secret TEXT
+2024/06/18 11:24:14 sorm.LOG:       Executing query on database test.db
+2024/06/18 11:24:14 [32msorm.SUCCESS:[0m   Table Metadata created
+2024/06/18 11:24:14 sorm.LOG:       Inserting default nil value into Metadata
+2024/06/18 11:24:14 [32msorm.SUCCESS:[0m   Nil value inserted into Metadata
+2024/06/18 11:24:14 [35msorm.NOTICE:[0m    Creating table: User
+2024/06/18 11:24:14 sorm.LOG:       	Name TEXT
+2024/06/18 11:24:14 sorm.LOG:       	Surname TEXT
+2024/06/18 11:24:14 sorm.LOG:       	Email TEXT
+2024/06/18 11:24:14 sorm.LOG:       	Password TEXT
+2024/06/18 11:24:14 sorm.LOG:       Executing query on database test.db
+2024/06/18 11:24:14 [32msorm.SUCCESS:[0m   Table User created
+2024/06/18 11:24:14 sorm.LOG:       Inserting default nil value into User
+2024/06/18 11:24:14 [32msorm.SUCCESS:[0m   Nil value inserted into User
+2024/06/18 11:24:14 [35msorm.NOTICE:[0m    Creating table: Zone
+2024/06/18 11:24:14 sorm.LOG:       	Name TEXT
+2024/06/18 11:24:14 sorm.LOG:       Executing query on database test.db
+2024/06/18 11:24:14 [32msorm.SUCCESS:[0m   Table Zone created
+2024/06/18 11:24:14 sorm.LOG:       Inserting default nil value into Zone
+2024/06/18 11:24:14 [32msorm.SUCCESS:[0m   Nil value inserted into Zone
+2024/06/18 11:24:14 [35msorm.NOTICE:[0m    Creating table: Aisle
+2024/06/18 11:24:14 sorm.LOG:       	Name TEXT
+2024/06/18 11:24:14 sorm.LOG:       	Zone_id TEXT
+2024/06/18 11:24:14 sorm.LOG:       Executing query on database test.db
+2024/06/18 11:24:14 [32msorm.SUCCESS:[0m   Table Aisle created
+2024/06/18 11:24:14 sorm.LOG:       Inserting default nil value into Aisle
+2024/06/18 11:24:14 [32msorm.SUCCESS:[0m   Nil value inserted into Aisle
+2024/06/18 11:24:14 [35msorm.NOTICE:[0m    Creating table: Rack
+2024/06/18 11:24:14 sorm.LOG:       	Name TEXT
+2024/06/18 11:24:14 sorm.LOG:       	Aisle_id TEXT
+2024/06/18 11:24:14 sorm.LOG:       Executing query on database test.db
+2024/06/18 11:24:14 [32msorm.SUCCESS:[0m   Table Rack created
+2024/06/18 11:24:14 sorm.LOG:       Inserting default nil value into Rack
+2024/06/18 11:24:14 [32msorm.SUCCESS:[0m   Nil value inserted into Rack
+2024/06/18 11:24:14 [35msorm.NOTICE:[0m    Creating table: Shelf
+2024/06/18 11:24:14 sorm.LOG:       	Name TEXT
+2024/06/18 11:24:14 sorm.LOG:       	Rack_id TEXT
+2024/06/18 11:24:14 sorm.LOG:       Executing query on database test.db
+2024/06/18 11:24:14 [32msorm.SUCCESS:[0m   Table Shelf created
+2024/06/18 11:24:14 sorm.LOG:       Inserting default nil value into Shelf
+2024/06/18 11:24:14 [32msorm.SUCCESS:[0m   Nil value inserted into Shelf
+2024/06/18 11:24:14 [35msorm.NOTICE:[0m    Creating table: Position
+2024/06/18 11:24:14 sorm.LOG:       	Name TEXT
+2024/06/18 11:24:14 sorm.LOG:       	Zone_id TEXT
+2024/06/18 11:24:14 sorm.LOG:       	Aisle_id TEXT
+2024/06/18 11:24:14 sorm.LOG:       	Rack_id TEXT
+2024/06/18 11:24:14 sorm.LOG:       	Shelf_id TEXT
+2024/06/18 11:24:14 sorm.LOG:       Executing query on database test.db
+2024/06/18 11:24:14 [32msorm.SUCCESS:[0m   Table Position created
+2024/06/18 11:24:14 sorm.LOG:       Inserting default nil value into Position
+2024/06/18 11:24:14 [32msorm.SUCCESS:[0m   Nil value inserted into Position
+2024/06/18 11:24:14 [35msorm.NOTICE:[0m    Creating table: Category
+2024/06/18 11:24:14 sorm.LOG:       	Name TEXT
+2024/06/18 11:24:14 sorm.LOG:       	Description TEXT
+2024/06/18 11:24:14 sorm.LOG:       Executing query on database test.db
+2024/06/18 11:24:14 [32msorm.SUCCESS:[0m   Table Category created
+2024/06/18 11:24:14 sorm.LOG:       Inserting default nil value into Category
+2024/06/18 11:24:14 [32msorm.SUCCESS:[0m   Nil value inserted into Category
+2024/06/18 11:24:14 [35msorm.NOTICE:[0m    Creating table: Subcategory
+2024/06/18 11:24:14 sorm.LOG:       	Name TEXT
+2024/06/18 11:24:14 sorm.LOG:       	Description TEXT
+2024/06/18 11:24:14 sorm.LOG:       	Category_id TEXT
+2024/06/18 11:24:14 sorm.LOG:       Executing query on database test.db
+2024/06/18 11:24:14 [32msorm.SUCCESS:[0m   Table Subcategory created
+2024/06/18 11:24:14 sorm.LOG:       Inserting default nil value into Subcategory
+2024/06/18 11:24:14 [32msorm.SUCCESS:[0m   Nil value inserted into Subcategory
+2024/06/18 11:24:14 [35msorm.NOTICE:[0m    Creating table: Item
+2024/06/18 11:24:14 sorm.LOG:       	Name TEXT
+2024/06/18 11:24:14 sorm.LOG:       	Description TEXT
+2024/06/18 11:24:14 sorm.LOG:       	Archive BOOLEAN
+2024/06/18 11:24:14 sorm.LOG:       	Position_id TEXT
+2024/06/18 11:24:14 sorm.LOG:       	Category_id TEXT
+2024/06/18 11:24:14 sorm.LOG:       	Subcategory_id TEXT
+2024/06/18 11:24:14 sorm.LOG:       Executing query on database test.db
+2024/06/18 11:24:14 [32msorm.SUCCESS:[0m   Table Item created
+2024/06/18 11:24:14 sorm.LOG:       Inserting default nil value into Item
+2024/06/18 11:24:14 [32msorm.SUCCESS:[0m   Nil value inserted into Item
+2024/06/18 11:24:14 [35msorm.NOTICE:[0m    Creating table: Variant
+2024/06/18 11:24:14 sorm.LOG:       	Name TEXT
+2024/06/18 11:24:14 sorm.LOG:       	Description TEXT
+2024/06/18 11:24:14 sorm.LOG:       	Quantity INTEGER
+2024/06/18 11:24:14 sorm.LOG:       	InternalId TEXT
+2024/06/18 11:24:14 sorm.LOG:       	Length REAL
+2024/06/18 11:24:14 sorm.LOG:       	Width REAL
+2024/06/18 11:24:14 sorm.LOG:       	Height REAL
+2024/06/18 11:24:14 sorm.LOG:       	DefaultVariant BOOLEAN
+2024/06/18 11:24:14 sorm.LOG:       	Item_id TEXT
+2024/06/18 11:24:14 sorm.LOG:       Executing query on database test.db
+2024/06/18 11:24:14 [32msorm.SUCCESS:[0m   Table Variant created
+2024/06/18 11:24:14 sorm.LOG:       Inserting default nil value into Variant
+2024/06/18 11:24:14 [32msorm.SUCCESS:[0m   Nil value inserted into Variant
+2024/06/18 11:24:14 [35msorm.NOTICE:[0m    Creating table: Item_image
+2024/06/18 11:24:14 sorm.LOG:       	Uri TEXT
+2024/06/18 11:24:14 sorm.LOG:       	Item_id TEXT
+2024/06/18 11:24:14 sorm.LOG:       	Variant_id TEXT
+2024/06/18 11:24:14 sorm.LOG:       Executing query on database test.db
+2024/06/18 11:24:14 [32msorm.SUCCESS:[0m   Table Item_image created
+2024/06/18 11:24:14 sorm.LOG:       Inserting default nil value into Item_image
+2024/06/18 11:24:14 [32msorm.SUCCESS:[0m   Nil value inserted into Item_image
+2024/06/18 11:24:14 [35msorm.NOTICE:[0m    Creating table: RefreshToken
+2024/06/18 11:24:14 sorm.LOG:       	Token TEXT
+2024/06/18 11:24:14 sorm.LOG:       	Revoked BOOLEAN
+2024/06/18 11:24:14 sorm.LOG:       Executing query on database test.db
+2024/06/18 11:24:14 [32msorm.SUCCESS:[0m   Table RefreshToken created
+2024/06/18 11:24:14 sorm.LOG:       Inserting default nil value into RefreshToken
+2024/06/18 11:24:14 [32msorm.SUCCESS:[0m   Nil value inserted into RefreshToken
+2024/06/18 11:24:14 [35msorm.NOTICE:[0m    Creating table: Supplier
+2024/06/18 11:24:14 sorm.LOG:       	Name TEXT
+2024/06/18 11:24:14 sorm.LOG:       	Description TEXT
+2024/06/18 11:24:14 sorm.LOG:       Executing query on database test.db
+2024/06/18 11:24:14 [32msorm.SUCCESS:[0m   Table Supplier created
+2024/06/18 11:24:14 sorm.LOG:       Inserting default nil value into Supplier
+2024/06/18 11:24:14 [32msorm.SUCCESS:[0m   Nil value inserted into Supplier
+2024/06/18 11:24:14 [35msorm.NOTICE:[0m    Creating table: SupplierCode
+2024/06/18 11:24:14 sorm.LOG:       	Code TEXT
+2024/06/18 11:24:14 sorm.LOG:       	Supplier_id TEXT
+2024/06/18 11:24:14 sorm.LOG:       	Variant_id TEXT
+2024/06/18 11:24:14 sorm.LOG:       Executing query on database test.db
+2024/06/18 11:24:14 [32msorm.SUCCESS:[0m   Table SupplierCode created
+2024/06/18 11:24:14 sorm.LOG:       Inserting default nil value into SupplierCode
+2024/06/18 11:24:14 [32msorm.SUCCESS:[0m   Nil value inserted into SupplierCode
+2024/06/18 11:24:14 [35msorm.NOTICE:[0m    Starting insert transaction
+2024/06/18 11:24:14 sorm.LOG:       Inserting into Metadata
+2024/06/18 11:24:14 [32msorm.SUCCESS:[0m   Items inserted
+2024/06/18 11:24:19 [35msorm.NOTICE:[0m    Selecting from User with condition Email = ?
+2024/06/18 11:24:19 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:24:19 [35msorm.NOTICE:[0m    Starting insert transaction
+2024/06/18 11:24:19 sorm.LOG:       Inserting into User
+2024/06/18 11:24:19 [32msorm.SUCCESS:[0m   Items inserted
+2024/06/18 11:24:19 [35msorm.NOTICE:[0m    Selecting from User with condition 
+2024/06/18 11:24:19 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:24:19 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 11:24:19 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:24:19 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 11:24:19 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:24:19 [35msorm.NOTICE:[0m    Starting insert transaction
+2024/06/18 11:24:19 sorm.LOG:       Inserting into RefreshToken
+2024/06/18 11:24:19 [32msorm.SUCCESS:[0m   Items inserted
+2024/06/18 11:24:20 [35msorm.NOTICE:[0m    Selecting from User with condition 
+2024/06/18 11:24:20 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:24:20 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 11:24:20 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:24:20 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 11:24:20 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:24:20 [35msorm.NOTICE:[0m    Starting insert transaction
+2024/06/18 11:24:20 sorm.LOG:       Inserting into RefreshToken
+2024/06/18 11:24:20 [32msorm.SUCCESS:[0m   Items inserted
+2024/06/18 11:24:20 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 11:24:20 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:24:20 [35msorm.NOTICE:[0m    Selecting from Supplier with condition 
+2024/06/18 11:24:20 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:24:20 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 11:24:20 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:24:20 [35msorm.NOTICE:[0m    Starting insert transaction
+2024/06/18 11:24:20 sorm.LOG:       Inserting into Supplier
+2024/06/18 11:24:20 [32msorm.SUCCESS:[0m   Items inserted
+2024/06/18 11:24:21 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 11:24:21 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:24:21 [35msorm.NOTICE:[0m    Selecting from Supplier with condition 
+2024/06/18 11:24:21 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:24:21 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 11:24:21 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:24:21 [35msorm.NOTICE:[0m    Selecting from Supplier with condition Id = ?
+2024/06/18 11:24:21 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:24:21 [35msorm.NOTICE:[0m    Updating in table Supplier
+2024/06/18 11:24:21 [32msorm.SUCCESS:[0m   Update successful. Rows affected: 1
+2024/06/18 11:24:22 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 11:24:22 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:24:22 [35msorm.NOTICE:[0m    Selecting from Supplier with condition 
+2024/06/18 11:24:22 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:24:22 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 11:24:22 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:24:22 [35msorm.NOTICE:[0m    Selecting from Supplier with condition Id = ?
+2024/06/18 11:24:22 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:24:22 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 11:24:22 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:24:22 [35msorm.NOTICE:[0m    Selecting from Supplier with condition Id = ?
+2024/06/18 11:24:22 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:24:22 [35msorm.NOTICE:[0m    Deleting from table Supplier with condition Id = ?
+2024/06/18 11:24:22 sorm.LOG:       Executing query on database test.db
+2024/06/18 11:24:22 [32msorm.SUCCESS:[0m   Item deleted
+2024/06/18 11:28:28 [35msorm.NOTICE:[0m    Opening database connection at test.db
+2024/06/18 11:28:28 sorm.LOG:       Database opened
+2024/06/18 11:28:28 sorm.LOG:       Activating foreign keys
+2024/06/18 11:28:28 [32msorm.SUCCESS:[0m   Database opened
+2024/06/18 11:28:42 [35msorm.NOTICE:[0m    Selecting from User with condition Email = ?
+2024/06/18 11:28:42 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:28:42 [35msorm.NOTICE:[0m    Selecting from User with condition 
+2024/06/18 11:28:42 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:28:42 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 11:28:42 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:28:42 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 11:28:42 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:28:42 [35msorm.NOTICE:[0m    Starting insert transaction
+2024/06/18 11:28:42 sorm.LOG:       Inserting into RefreshToken
+2024/06/18 11:28:42 [32msorm.SUCCESS:[0m   Items inserted
+2024/06/18 11:28:42 [35msorm.NOTICE:[0m    Selecting from User with condition 
+2024/06/18 11:28:42 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:28:42 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 11:28:42 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:28:42 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 11:28:42 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:28:42 [35msorm.NOTICE:[0m    Starting insert transaction
+2024/06/18 11:28:42 sorm.LOG:       Inserting into RefreshToken
+2024/06/18 11:28:42 [32msorm.SUCCESS:[0m   Items inserted
+2024/06/18 11:28:43 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 11:28:43 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:28:43 [35msorm.NOTICE:[0m    Selecting from SupplierCode with condition 
+2024/06/18 11:28:43 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:28:43 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 11:28:43 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:28:43 [35msorm.NOTICE:[0m    Starting insert transaction
+2024/06/18 11:28:43 sorm.LOG:       Inserting into SupplierCode
+2024/06/18 11:28:43 [32msorm.SUCCESS:[0m   Items inserted
+2024/06/18 11:28:43 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 11:28:43 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:28:43 [35msorm.NOTICE:[0m    Selecting from SupplierCode with condition 
+2024/06/18 11:28:43 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:28:44 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 11:28:44 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:28:44 [35msorm.NOTICE:[0m    Selecting from SupplierCode with condition 
+2024/06/18 11:28:44 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:28:44 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 11:28:44 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:28:44 [35msorm.NOTICE:[0m    Selecting from SupplierCode with condition 
+2024/06/18 11:28:44 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:30:16 [35msorm.NOTICE:[0m    Selecting from User with condition Email = ?
+2024/06/18 11:30:16 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:30:16 [35msorm.NOTICE:[0m    Selecting from User with condition 
+2024/06/18 11:30:16 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:30:16 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 11:30:16 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:30:16 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 11:30:16 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:30:16 [35msorm.NOTICE:[0m    Starting insert transaction
+2024/06/18 11:30:16 sorm.LOG:       Inserting into RefreshToken
+2024/06/18 11:30:16 [32msorm.SUCCESS:[0m   Items inserted
+2024/06/18 11:30:17 [35msorm.NOTICE:[0m    Selecting from User with condition 
+2024/06/18 11:30:17 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:30:17 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 11:30:17 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:30:17 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 11:30:17 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:30:17 [35msorm.NOTICE:[0m    Starting insert transaction
+2024/06/18 11:30:17 sorm.LOG:       Inserting into RefreshToken
+2024/06/18 11:30:17 [32msorm.SUCCESS:[0m   Items inserted
+2024/06/18 11:30:17 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 11:30:17 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:30:17 [35msorm.NOTICE:[0m    Selecting from SupplierCode with condition 
+2024/06/18 11:30:17 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:30:18 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 11:30:18 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:30:18 [35msorm.NOTICE:[0m    Starting insert transaction
+2024/06/18 11:30:18 sorm.LOG:       Inserting into SupplierCode
+2024/06/18 11:30:18 [32msorm.SUCCESS:[0m   Items inserted
+2024/06/18 11:30:18 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 11:30:18 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:30:18 [35msorm.NOTICE:[0m    Selecting from SupplierCode with condition 
+2024/06/18 11:30:18 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:30:19 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 11:30:19 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:30:19 [35msorm.NOTICE:[0m    Selecting from SupplierCode with condition 
+2024/06/18 11:30:19 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:30:41 [35msorm.NOTICE:[0m    Opening database connection at test.db
+2024/06/18 11:30:41 sorm.LOG:       Database opened
+2024/06/18 11:30:41 sorm.LOG:       Activating foreign keys
+2024/06/18 11:30:41 [32msorm.SUCCESS:[0m   Database opened
+2024/06/18 11:30:41 [35msorm.NOTICE:[0m    Creating table: Metadata
+2024/06/18 11:30:41 sorm.LOG:       	Secret TEXT
+2024/06/18 11:30:41 sorm.LOG:       Executing query on database test.db
+2024/06/18 11:30:41 [32msorm.SUCCESS:[0m   Table Metadata created
+2024/06/18 11:30:41 sorm.LOG:       Inserting default nil value into Metadata
+2024/06/18 11:30:41 [32msorm.SUCCESS:[0m   Nil value inserted into Metadata
+2024/06/18 11:30:41 [35msorm.NOTICE:[0m    Creating table: User
+2024/06/18 11:30:41 sorm.LOG:       	Name TEXT
+2024/06/18 11:30:41 sorm.LOG:       	Surname TEXT
+2024/06/18 11:30:41 sorm.LOG:       	Email TEXT
+2024/06/18 11:30:41 sorm.LOG:       	Password TEXT
+2024/06/18 11:30:41 sorm.LOG:       Executing query on database test.db
+2024/06/18 11:30:41 [32msorm.SUCCESS:[0m   Table User created
+2024/06/18 11:30:41 sorm.LOG:       Inserting default nil value into User
+2024/06/18 11:30:41 [32msorm.SUCCESS:[0m   Nil value inserted into User
+2024/06/18 11:30:41 [35msorm.NOTICE:[0m    Creating table: Zone
+2024/06/18 11:30:41 sorm.LOG:       	Name TEXT
+2024/06/18 11:30:41 sorm.LOG:       Executing query on database test.db
+2024/06/18 11:30:41 [32msorm.SUCCESS:[0m   Table Zone created
+2024/06/18 11:30:41 sorm.LOG:       Inserting default nil value into Zone
+2024/06/18 11:30:41 [32msorm.SUCCESS:[0m   Nil value inserted into Zone
+2024/06/18 11:30:41 [35msorm.NOTICE:[0m    Creating table: Aisle
+2024/06/18 11:30:41 sorm.LOG:       	Name TEXT
+2024/06/18 11:30:41 sorm.LOG:       	Zone_id TEXT
+2024/06/18 11:30:41 sorm.LOG:       Executing query on database test.db
+2024/06/18 11:30:41 [32msorm.SUCCESS:[0m   Table Aisle created
+2024/06/18 11:30:41 sorm.LOG:       Inserting default nil value into Aisle
+2024/06/18 11:30:41 [32msorm.SUCCESS:[0m   Nil value inserted into Aisle
+2024/06/18 11:30:41 [35msorm.NOTICE:[0m    Creating table: Rack
+2024/06/18 11:30:41 sorm.LOG:       	Name TEXT
+2024/06/18 11:30:41 sorm.LOG:       	Aisle_id TEXT
+2024/06/18 11:30:41 sorm.LOG:       Executing query on database test.db
+2024/06/18 11:30:41 [32msorm.SUCCESS:[0m   Table Rack created
+2024/06/18 11:30:41 sorm.LOG:       Inserting default nil value into Rack
+2024/06/18 11:30:41 [32msorm.SUCCESS:[0m   Nil value inserted into Rack
+2024/06/18 11:30:41 [35msorm.NOTICE:[0m    Creating table: Shelf
+2024/06/18 11:30:41 sorm.LOG:       	Name TEXT
+2024/06/18 11:30:41 sorm.LOG:       	Rack_id TEXT
+2024/06/18 11:30:41 sorm.LOG:       Executing query on database test.db
+2024/06/18 11:30:41 [32msorm.SUCCESS:[0m   Table Shelf created
+2024/06/18 11:30:41 sorm.LOG:       Inserting default nil value into Shelf
+2024/06/18 11:30:41 [32msorm.SUCCESS:[0m   Nil value inserted into Shelf
+2024/06/18 11:30:41 [35msorm.NOTICE:[0m    Creating table: Position
+2024/06/18 11:30:41 sorm.LOG:       	Name TEXT
+2024/06/18 11:30:41 sorm.LOG:       	Zone_id TEXT
+2024/06/18 11:30:41 sorm.LOG:       	Aisle_id TEXT
+2024/06/18 11:30:41 sorm.LOG:       	Rack_id TEXT
+2024/06/18 11:30:41 sorm.LOG:       	Shelf_id TEXT
+2024/06/18 11:30:41 sorm.LOG:       Executing query on database test.db
+2024/06/18 11:30:41 [32msorm.SUCCESS:[0m   Table Position created
+2024/06/18 11:30:41 sorm.LOG:       Inserting default nil value into Position
+2024/06/18 11:30:41 [32msorm.SUCCESS:[0m   Nil value inserted into Position
+2024/06/18 11:30:41 [35msorm.NOTICE:[0m    Creating table: Category
+2024/06/18 11:30:41 sorm.LOG:       	Name TEXT
+2024/06/18 11:30:41 sorm.LOG:       	Description TEXT
+2024/06/18 11:30:41 sorm.LOG:       Executing query on database test.db
+2024/06/18 11:30:41 [32msorm.SUCCESS:[0m   Table Category created
+2024/06/18 11:30:41 sorm.LOG:       Inserting default nil value into Category
+2024/06/18 11:30:41 [32msorm.SUCCESS:[0m   Nil value inserted into Category
+2024/06/18 11:30:41 [35msorm.NOTICE:[0m    Creating table: Subcategory
+2024/06/18 11:30:41 sorm.LOG:       	Name TEXT
+2024/06/18 11:30:41 sorm.LOG:       	Description TEXT
+2024/06/18 11:30:41 sorm.LOG:       	Category_id TEXT
+2024/06/18 11:30:41 sorm.LOG:       Executing query on database test.db
+2024/06/18 11:30:41 [32msorm.SUCCESS:[0m   Table Subcategory created
+2024/06/18 11:30:41 sorm.LOG:       Inserting default nil value into Subcategory
+2024/06/18 11:30:42 [32msorm.SUCCESS:[0m   Nil value inserted into Subcategory
+2024/06/18 11:30:42 [35msorm.NOTICE:[0m    Creating table: Item
+2024/06/18 11:30:42 sorm.LOG:       	Name TEXT
+2024/06/18 11:30:42 sorm.LOG:       	Description TEXT
+2024/06/18 11:30:42 sorm.LOG:       	Archive BOOLEAN
+2024/06/18 11:30:42 sorm.LOG:       	Position_id TEXT
+2024/06/18 11:30:42 sorm.LOG:       	Category_id TEXT
+2024/06/18 11:30:42 sorm.LOG:       	Subcategory_id TEXT
+2024/06/18 11:30:42 sorm.LOG:       Executing query on database test.db
+2024/06/18 11:30:42 [32msorm.SUCCESS:[0m   Table Item created
+2024/06/18 11:30:42 sorm.LOG:       Inserting default nil value into Item
+2024/06/18 11:30:42 [32msorm.SUCCESS:[0m   Nil value inserted into Item
+2024/06/18 11:30:42 [35msorm.NOTICE:[0m    Creating table: Variant
+2024/06/18 11:30:42 sorm.LOG:       	Name TEXT
+2024/06/18 11:30:42 sorm.LOG:       	Description TEXT
+2024/06/18 11:30:42 sorm.LOG:       	Quantity INTEGER
+2024/06/18 11:30:42 sorm.LOG:       	InternalId TEXT
+2024/06/18 11:30:42 sorm.LOG:       	Length REAL
+2024/06/18 11:30:42 sorm.LOG:       	Width REAL
+2024/06/18 11:30:42 sorm.LOG:       	Height REAL
+2024/06/18 11:30:42 sorm.LOG:       	DefaultVariant BOOLEAN
+2024/06/18 11:30:42 sorm.LOG:       	Item_id TEXT
+2024/06/18 11:30:42 sorm.LOG:       Executing query on database test.db
+2024/06/18 11:30:42 [32msorm.SUCCESS:[0m   Table Variant created
+2024/06/18 11:30:42 sorm.LOG:       Inserting default nil value into Variant
+2024/06/18 11:30:42 [32msorm.SUCCESS:[0m   Nil value inserted into Variant
+2024/06/18 11:30:42 [35msorm.NOTICE:[0m    Creating table: Item_image
+2024/06/18 11:30:42 sorm.LOG:       	Uri TEXT
+2024/06/18 11:30:42 sorm.LOG:       	Item_id TEXT
+2024/06/18 11:30:42 sorm.LOG:       	Variant_id TEXT
+2024/06/18 11:30:42 sorm.LOG:       Executing query on database test.db
+2024/06/18 11:30:42 [32msorm.SUCCESS:[0m   Table Item_image created
+2024/06/18 11:30:42 sorm.LOG:       Inserting default nil value into Item_image
+2024/06/18 11:30:42 [32msorm.SUCCESS:[0m   Nil value inserted into Item_image
+2024/06/18 11:30:42 [35msorm.NOTICE:[0m    Creating table: RefreshToken
+2024/06/18 11:30:42 sorm.LOG:       	Token TEXT
+2024/06/18 11:30:42 sorm.LOG:       	Revoked BOOLEAN
+2024/06/18 11:30:42 sorm.LOG:       Executing query on database test.db
+2024/06/18 11:30:42 [32msorm.SUCCESS:[0m   Table RefreshToken created
+2024/06/18 11:30:42 sorm.LOG:       Inserting default nil value into RefreshToken
+2024/06/18 11:30:42 [32msorm.SUCCESS:[0m   Nil value inserted into RefreshToken
+2024/06/18 11:30:42 [35msorm.NOTICE:[0m    Creating table: Supplier
+2024/06/18 11:30:42 sorm.LOG:       	Name TEXT
+2024/06/18 11:30:42 sorm.LOG:       	Description TEXT
+2024/06/18 11:30:42 sorm.LOG:       Executing query on database test.db
+2024/06/18 11:30:42 [32msorm.SUCCESS:[0m   Table Supplier created
+2024/06/18 11:30:42 sorm.LOG:       Inserting default nil value into Supplier
+2024/06/18 11:30:42 [32msorm.SUCCESS:[0m   Nil value inserted into Supplier
+2024/06/18 11:30:42 [35msorm.NOTICE:[0m    Creating table: SupplierCode
+2024/06/18 11:30:42 sorm.LOG:       	Code TEXT
+2024/06/18 11:30:42 sorm.LOG:       	Supplier_id TEXT
+2024/06/18 11:30:42 sorm.LOG:       	Variant_id TEXT
+2024/06/18 11:30:42 sorm.LOG:       Executing query on database test.db
+2024/06/18 11:30:42 [32msorm.SUCCESS:[0m   Table SupplierCode created
+2024/06/18 11:30:42 sorm.LOG:       Inserting default nil value into SupplierCode
+2024/06/18 11:30:42 [32msorm.SUCCESS:[0m   Nil value inserted into SupplierCode
+2024/06/18 11:30:42 [35msorm.NOTICE:[0m    Starting insert transaction
+2024/06/18 11:30:42 sorm.LOG:       Inserting into Metadata
+2024/06/18 11:30:42 [32msorm.SUCCESS:[0m   Items inserted
+2024/06/18 11:30:46 [35msorm.NOTICE:[0m    Selecting from User with condition Email = ?
+2024/06/18 11:30:46 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:30:46 [35msorm.NOTICE:[0m    Starting insert transaction
+2024/06/18 11:30:46 sorm.LOG:       Inserting into User
+2024/06/18 11:30:46 [32msorm.SUCCESS:[0m   Items inserted
+2024/06/18 11:30:46 [35msorm.NOTICE:[0m    Selecting from User with condition 
+2024/06/18 11:30:46 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:30:46 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 11:30:46 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:30:46 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 11:30:46 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:30:46 [35msorm.NOTICE:[0m    Starting insert transaction
+2024/06/18 11:30:46 sorm.LOG:       Inserting into RefreshToken
+2024/06/18 11:30:46 [32msorm.SUCCESS:[0m   Items inserted
+2024/06/18 11:30:47 [35msorm.NOTICE:[0m    Selecting from User with condition 
+2024/06/18 11:30:47 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:30:47 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 11:30:47 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:30:47 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 11:30:47 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:30:47 [35msorm.NOTICE:[0m    Starting insert transaction
+2024/06/18 11:30:47 sorm.LOG:       Inserting into RefreshToken
+2024/06/18 11:30:47 [32msorm.SUCCESS:[0m   Items inserted
+2024/06/18 11:30:47 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 11:30:47 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:30:47 [35msorm.NOTICE:[0m    Selecting from SupplierCode with condition 
+2024/06/18 11:30:47 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:30:48 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 11:30:48 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:30:48 [35msorm.NOTICE:[0m    Starting insert transaction
+2024/06/18 11:30:48 sorm.LOG:       Inserting into SupplierCode
+2024/06/18 11:30:48 [32msorm.SUCCESS:[0m   Items inserted
+2024/06/18 11:30:48 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 11:30:48 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:30:48 [35msorm.NOTICE:[0m    Selecting from SupplierCode with condition 
+2024/06/18 11:30:48 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:30:49 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 11:30:49 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:30:49 [35msorm.NOTICE:[0m    Selecting from SupplierCode with condition 
+2024/06/18 11:30:49 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:30:49 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 11:30:49 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:30:49 [35msorm.NOTICE:[0m    Selecting from SupplierCode with condition Id = ?
+2024/06/18 11:30:49 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:36:18 [35msorm.NOTICE:[0m    Opening database connection at test.db
+2024/06/18 11:36:18 sorm.LOG:       Database opened
+2024/06/18 11:36:18 sorm.LOG:       Activating foreign keys
+2024/06/18 11:36:18 [32msorm.SUCCESS:[0m   Database opened
+2024/06/18 11:36:23 [35msorm.NOTICE:[0m    Selecting from User with condition Email = ?
+2024/06/18 11:36:23 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:36:24 [35msorm.NOTICE:[0m    Selecting from User with condition 
+2024/06/18 11:36:24 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:36:24 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 11:36:24 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:36:24 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 11:36:24 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:36:24 [35msorm.NOTICE:[0m    Starting insert transaction
+2024/06/18 11:36:24 sorm.LOG:       Inserting into RefreshToken
+2024/06/18 11:36:24 [32msorm.SUCCESS:[0m   Items inserted
+2024/06/18 11:36:24 [35msorm.NOTICE:[0m    Selecting from User with condition 
+2024/06/18 11:36:24 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:36:24 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 11:36:24 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:36:24 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 11:36:24 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:36:24 [35msorm.NOTICE:[0m    Starting insert transaction
+2024/06/18 11:36:24 sorm.LOG:       Inserting into RefreshToken
+2024/06/18 11:36:24 [32msorm.SUCCESS:[0m   Items inserted
+2024/06/18 11:36:24 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 11:36:24 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:36:24 [35msorm.NOTICE:[0m    Selecting from SupplierCode with condition 
+2024/06/18 11:36:24 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:36:25 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 11:36:25 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:36:25 [35msorm.NOTICE:[0m    Starting insert transaction
+2024/06/18 11:36:25 sorm.LOG:       Inserting into SupplierCode
+2024/06/18 11:36:25 [32msorm.SUCCESS:[0m   Items inserted
+2024/06/18 11:36:25 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 11:36:25 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:36:25 [35msorm.NOTICE:[0m    Selecting from SupplierCode with condition 
+2024/06/18 11:36:25 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:36:26 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 11:36:26 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:36:26 [35msorm.NOTICE:[0m    Selecting from SupplierCode with condition 
+2024/06/18 11:36:26 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:36:31 [35msorm.NOTICE:[0m    Opening database connection at test.db
+2024/06/18 11:36:31 sorm.LOG:       Database opened
+2024/06/18 11:36:31 sorm.LOG:       Activating foreign keys
+2024/06/18 11:36:31 [32msorm.SUCCESS:[0m   Database opened
+2024/06/18 11:36:31 [35msorm.NOTICE:[0m    Creating table: Metadata
+2024/06/18 11:36:31 sorm.LOG:       	Secret TEXT
+2024/06/18 11:36:31 sorm.LOG:       Executing query on database test.db
+2024/06/18 11:36:31 [32msorm.SUCCESS:[0m   Table Metadata created
+2024/06/18 11:36:31 sorm.LOG:       Inserting default nil value into Metadata
+2024/06/18 11:36:31 [32msorm.SUCCESS:[0m   Nil value inserted into Metadata
+2024/06/18 11:36:31 [35msorm.NOTICE:[0m    Creating table: User
+2024/06/18 11:36:31 sorm.LOG:       	Name TEXT
+2024/06/18 11:36:31 sorm.LOG:       	Surname TEXT
+2024/06/18 11:36:31 sorm.LOG:       	Email TEXT
+2024/06/18 11:36:31 sorm.LOG:       	Password TEXT
+2024/06/18 11:36:31 sorm.LOG:       Executing query on database test.db
+2024/06/18 11:36:31 [32msorm.SUCCESS:[0m   Table User created
+2024/06/18 11:36:31 sorm.LOG:       Inserting default nil value into User
+2024/06/18 11:36:31 [32msorm.SUCCESS:[0m   Nil value inserted into User
+2024/06/18 11:36:31 [35msorm.NOTICE:[0m    Creating table: Zone
+2024/06/18 11:36:31 sorm.LOG:       	Name TEXT
+2024/06/18 11:36:31 sorm.LOG:       Executing query on database test.db
+2024/06/18 11:36:31 [32msorm.SUCCESS:[0m   Table Zone created
+2024/06/18 11:36:31 sorm.LOG:       Inserting default nil value into Zone
+2024/06/18 11:36:31 [32msorm.SUCCESS:[0m   Nil value inserted into Zone
+2024/06/18 11:36:31 [35msorm.NOTICE:[0m    Creating table: Aisle
+2024/06/18 11:36:31 sorm.LOG:       	Name TEXT
+2024/06/18 11:36:31 sorm.LOG:       	Zone_id TEXT
+2024/06/18 11:36:31 sorm.LOG:       Executing query on database test.db
+2024/06/18 11:36:31 [32msorm.SUCCESS:[0m   Table Aisle created
+2024/06/18 11:36:31 sorm.LOG:       Inserting default nil value into Aisle
+2024/06/18 11:36:31 [32msorm.SUCCESS:[0m   Nil value inserted into Aisle
+2024/06/18 11:36:31 [35msorm.NOTICE:[0m    Creating table: Rack
+2024/06/18 11:36:31 sorm.LOG:       	Name TEXT
+2024/06/18 11:36:31 sorm.LOG:       	Aisle_id TEXT
+2024/06/18 11:36:31 sorm.LOG:       Executing query on database test.db
+2024/06/18 11:36:31 [32msorm.SUCCESS:[0m   Table Rack created
+2024/06/18 11:36:31 sorm.LOG:       Inserting default nil value into Rack
+2024/06/18 11:36:31 [32msorm.SUCCESS:[0m   Nil value inserted into Rack
+2024/06/18 11:36:31 [35msorm.NOTICE:[0m    Creating table: Shelf
+2024/06/18 11:36:31 sorm.LOG:       	Name TEXT
+2024/06/18 11:36:31 sorm.LOG:       	Rack_id TEXT
+2024/06/18 11:36:31 sorm.LOG:       Executing query on database test.db
+2024/06/18 11:36:31 [32msorm.SUCCESS:[0m   Table Shelf created
+2024/06/18 11:36:31 sorm.LOG:       Inserting default nil value into Shelf
+2024/06/18 11:36:31 [32msorm.SUCCESS:[0m   Nil value inserted into Shelf
+2024/06/18 11:36:31 [35msorm.NOTICE:[0m    Creating table: Position
+2024/06/18 11:36:31 sorm.LOG:       	Name TEXT
+2024/06/18 11:36:31 sorm.LOG:       	Zone_id TEXT
+2024/06/18 11:36:31 sorm.LOG:       	Aisle_id TEXT
+2024/06/18 11:36:31 sorm.LOG:       	Rack_id TEXT
+2024/06/18 11:36:31 sorm.LOG:       	Shelf_id TEXT
+2024/06/18 11:36:31 sorm.LOG:       Executing query on database test.db
+2024/06/18 11:36:31 [32msorm.SUCCESS:[0m   Table Position created
+2024/06/18 11:36:31 sorm.LOG:       Inserting default nil value into Position
+2024/06/18 11:36:31 [32msorm.SUCCESS:[0m   Nil value inserted into Position
+2024/06/18 11:36:31 [35msorm.NOTICE:[0m    Creating table: Category
+2024/06/18 11:36:31 sorm.LOG:       	Name TEXT
+2024/06/18 11:36:31 sorm.LOG:       	Description TEXT
+2024/06/18 11:36:31 sorm.LOG:       Executing query on database test.db
+2024/06/18 11:36:31 [32msorm.SUCCESS:[0m   Table Category created
+2024/06/18 11:36:31 sorm.LOG:       Inserting default nil value into Category
+2024/06/18 11:36:31 [32msorm.SUCCESS:[0m   Nil value inserted into Category
+2024/06/18 11:36:31 [35msorm.NOTICE:[0m    Creating table: Subcategory
+2024/06/18 11:36:31 sorm.LOG:       	Name TEXT
+2024/06/18 11:36:31 sorm.LOG:       	Description TEXT
+2024/06/18 11:36:31 sorm.LOG:       	Category_id TEXT
+2024/06/18 11:36:31 sorm.LOG:       Executing query on database test.db
+2024/06/18 11:36:31 [32msorm.SUCCESS:[0m   Table Subcategory created
+2024/06/18 11:36:31 sorm.LOG:       Inserting default nil value into Subcategory
+2024/06/18 11:36:31 [32msorm.SUCCESS:[0m   Nil value inserted into Subcategory
+2024/06/18 11:36:31 [35msorm.NOTICE:[0m    Creating table: Item
+2024/06/18 11:36:31 sorm.LOG:       	Name TEXT
+2024/06/18 11:36:31 sorm.LOG:       	Description TEXT
+2024/06/18 11:36:31 sorm.LOG:       	Archive BOOLEAN
+2024/06/18 11:36:31 sorm.LOG:       	Position_id TEXT
+2024/06/18 11:36:31 sorm.LOG:       	Category_id TEXT
+2024/06/18 11:36:31 sorm.LOG:       	Subcategory_id TEXT
+2024/06/18 11:36:31 sorm.LOG:       Executing query on database test.db
+2024/06/18 11:36:31 [32msorm.SUCCESS:[0m   Table Item created
+2024/06/18 11:36:31 sorm.LOG:       Inserting default nil value into Item
+2024/06/18 11:36:31 [32msorm.SUCCESS:[0m   Nil value inserted into Item
+2024/06/18 11:36:31 [35msorm.NOTICE:[0m    Creating table: Variant
+2024/06/18 11:36:31 sorm.LOG:       	Name TEXT
+2024/06/18 11:36:31 sorm.LOG:       	Description TEXT
+2024/06/18 11:36:31 sorm.LOG:       	Quantity INTEGER
+2024/06/18 11:36:31 sorm.LOG:       	InternalId TEXT
+2024/06/18 11:36:31 sorm.LOG:       	Length REAL
+2024/06/18 11:36:31 sorm.LOG:       	Width REAL
+2024/06/18 11:36:31 sorm.LOG:       	Height REAL
+2024/06/18 11:36:31 sorm.LOG:       	DefaultVariant BOOLEAN
+2024/06/18 11:36:31 sorm.LOG:       	Item_id TEXT
+2024/06/18 11:36:31 sorm.LOG:       Executing query on database test.db
+2024/06/18 11:36:31 [32msorm.SUCCESS:[0m   Table Variant created
+2024/06/18 11:36:31 sorm.LOG:       Inserting default nil value into Variant
+2024/06/18 11:36:31 [32msorm.SUCCESS:[0m   Nil value inserted into Variant
+2024/06/18 11:36:31 [35msorm.NOTICE:[0m    Creating table: Item_image
+2024/06/18 11:36:31 sorm.LOG:       	Uri TEXT
+2024/06/18 11:36:31 sorm.LOG:       	Item_id TEXT
+2024/06/18 11:36:31 sorm.LOG:       	Variant_id TEXT
+2024/06/18 11:36:31 sorm.LOG:       Executing query on database test.db
+2024/06/18 11:36:31 [32msorm.SUCCESS:[0m   Table Item_image created
+2024/06/18 11:36:31 sorm.LOG:       Inserting default nil value into Item_image
+2024/06/18 11:36:31 [32msorm.SUCCESS:[0m   Nil value inserted into Item_image
+2024/06/18 11:36:31 [35msorm.NOTICE:[0m    Creating table: RefreshToken
+2024/06/18 11:36:31 sorm.LOG:       	Token TEXT
+2024/06/18 11:36:31 sorm.LOG:       	Revoked BOOLEAN
+2024/06/18 11:36:31 sorm.LOG:       Executing query on database test.db
+2024/06/18 11:36:31 [32msorm.SUCCESS:[0m   Table RefreshToken created
+2024/06/18 11:36:31 sorm.LOG:       Inserting default nil value into RefreshToken
+2024/06/18 11:36:31 [32msorm.SUCCESS:[0m   Nil value inserted into RefreshToken
+2024/06/18 11:36:31 [35msorm.NOTICE:[0m    Creating table: Supplier
+2024/06/18 11:36:31 sorm.LOG:       	Name TEXT
+2024/06/18 11:36:31 sorm.LOG:       	Description TEXT
+2024/06/18 11:36:31 sorm.LOG:       Executing query on database test.db
+2024/06/18 11:36:31 [32msorm.SUCCESS:[0m   Table Supplier created
+2024/06/18 11:36:31 sorm.LOG:       Inserting default nil value into Supplier
+2024/06/18 11:36:31 [32msorm.SUCCESS:[0m   Nil value inserted into Supplier
+2024/06/18 11:36:31 [35msorm.NOTICE:[0m    Creating table: SupplierCode
+2024/06/18 11:36:31 sorm.LOG:       	Code TEXT
+2024/06/18 11:36:31 sorm.LOG:       	Supplier_id TEXT
+2024/06/18 11:36:31 sorm.LOG:       	Variant_id TEXT
+2024/06/18 11:36:31 sorm.LOG:       Executing query on database test.db
+2024/06/18 11:36:31 [32msorm.SUCCESS:[0m   Table SupplierCode created
+2024/06/18 11:36:31 sorm.LOG:       Inserting default nil value into SupplierCode
+2024/06/18 11:36:31 [32msorm.SUCCESS:[0m   Nil value inserted into SupplierCode
+2024/06/18 11:36:31 [35msorm.NOTICE:[0m    Starting insert transaction
+2024/06/18 11:36:31 sorm.LOG:       Inserting into Metadata
+2024/06/18 11:36:31 [32msorm.SUCCESS:[0m   Items inserted
+2024/06/18 11:36:35 [35msorm.NOTICE:[0m    Selecting from User with condition Email = ?
+2024/06/18 11:36:35 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:36:35 [35msorm.NOTICE:[0m    Starting insert transaction
+2024/06/18 11:36:35 sorm.LOG:       Inserting into User
+2024/06/18 11:36:35 [32msorm.SUCCESS:[0m   Items inserted
+2024/06/18 11:36:35 [35msorm.NOTICE:[0m    Selecting from User with condition 
+2024/06/18 11:36:35 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:36:35 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 11:36:35 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:36:35 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 11:36:35 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:36:35 [35msorm.NOTICE:[0m    Starting insert transaction
+2024/06/18 11:36:35 sorm.LOG:       Inserting into RefreshToken
+2024/06/18 11:36:35 [32msorm.SUCCESS:[0m   Items inserted
+2024/06/18 11:36:35 [35msorm.NOTICE:[0m    Selecting from User with condition 
+2024/06/18 11:36:35 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:36:35 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 11:36:35 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:36:35 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 11:36:35 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:36:35 [35msorm.NOTICE:[0m    Starting insert transaction
+2024/06/18 11:36:35 sorm.LOG:       Inserting into RefreshToken
+2024/06/18 11:36:35 [32msorm.SUCCESS:[0m   Items inserted
+2024/06/18 11:36:36 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 11:36:36 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:36:36 [35msorm.NOTICE:[0m    Selecting from SupplierCode with condition 
+2024/06/18 11:36:36 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:36:36 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 11:36:36 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:36:36 [35msorm.NOTICE:[0m    Starting insert transaction
+2024/06/18 11:36:36 sorm.LOG:       Inserting into SupplierCode
+2024/06/18 11:36:36 [32msorm.SUCCESS:[0m   Items inserted
+2024/06/18 11:36:36 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 11:36:36 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:36:36 [35msorm.NOTICE:[0m    Selecting from SupplierCode with condition 
+2024/06/18 11:36:36 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:36:37 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 11:36:37 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:36:37 [35msorm.NOTICE:[0m    Selecting from SupplierCode with condition Id = ?
+2024/06/18 11:36:37 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:36:37 [35msorm.NOTICE:[0m    Updating in table SupplierCode
+2024/06/18 11:36:37 [32msorm.SUCCESS:[0m   Update successful. Rows affected: 1
+2024/06/18 11:36:37 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 11:36:37 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:36:37 [35msorm.NOTICE:[0m    Selecting from SupplierCode with condition 
+2024/06/18 11:36:37 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:36:38 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 11:36:38 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:36:38 [35msorm.NOTICE:[0m    Selecting from SupplierCode with condition Id = ?
+2024/06/18 11:36:38 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:36:38 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/06/18 11:36:38 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:36:38 [35msorm.NOTICE:[0m    Selecting from SupplierCode with condition Id = ?
+2024/06/18 11:36:38 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/06/18 11:36:38 [35msorm.NOTICE:[0m    Deleting from table SupplierCode with condition Id = ?
+2024/06/18 11:36:38 sorm.LOG:       Executing query on database test.db
+2024/06/18 11:36:38 [32msorm.SUCCESS:[0m   Item deleted
