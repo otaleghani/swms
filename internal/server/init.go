@@ -108,6 +108,47 @@ func Serve(path, port string) {
 	mux.HandleFunc("PUT /api/v1/supplier-codes/{id}", putSupplierCode(&dbConn))
 	mux.HandleFunc("DELETE /api/v1/supplier-codes/{id}", deleteSupplierCode(&dbConn))
 
+	mux.HandleFunc("GET /api/v1/transitions/{$}", getTransitions(&dbConn))
+	mux.HandleFunc("POST /api/v1/transitions/{$}", postTransitions(&dbConn))
+	mux.HandleFunc("GET /api/v1/transitions/{id}", getTransitionById(&dbConn))
+	mux.HandleFunc("PUT /api/v1/transitions/{id}", putTransition(&dbConn))
+	mux.HandleFunc("DELETE /api/v1/transitions/{id}", deleteTransition(&dbConn))
+
+	mux.HandleFunc("GET /api/v1/products/{$}", getProducts(&dbConn))
+	mux.HandleFunc("POST /api/v1/products/{$}", postProducts(&dbConn))
+	mux.HandleFunc("GET /api/v1/products/{id}", getProductById(&dbConn))
+	mux.HandleFunc("PUT /api/v1/products/{id}", putProduct(&dbConn))
+	mux.HandleFunc("DELETE /api/v1/products/{id}", deleteProduct(&dbConn))
+
+	mux.HandleFunc("GET /api/v1/product-images/{$}", getProductImages(&dbConn))
+	mux.HandleFunc("POST /api/v1/product-images/{$}", postProductImages(&dbConn))
+	mux.HandleFunc("GET /api/v1/product-images/{id}", getProductImageById(&dbConn))
+	mux.HandleFunc("PUT /api/v1/product-images/{id}", putProductImage(&dbConn))
+	mux.HandleFunc("DELETE /api/v1/product-images/{id}", deleteProductImage(&dbConn))
+
+	mux.HandleFunc("GET /api/v1/clients/{$}", getClients(&dbConn))
+	mux.HandleFunc("POST /api/v1/clients/{$}", postClients(&dbConn))
+	mux.HandleFunc("GET /api/v1/clients/{id}", getClientById(&dbConn))
+	mux.HandleFunc("PUT /api/v1/clients/{id}", putClient(&dbConn))
+	mux.HandleFunc("DELETE /api/v1/clients/{id}", deleteClient(&dbConn))
+
+	mux.HandleFunc("GET /api/v1/ticket-states/{$}", getTicketStates(&dbConn))
+	mux.HandleFunc("POST /api/v1/ticket-states/{$}", postTicketStates(&dbConn))
+	mux.HandleFunc("GET /api/v1/ticket-states/{id}", getTicketStateById(&dbConn))
+	mux.HandleFunc("PUT /api/v1/ticket-states/{id}", putTicketState(&dbConn))
+	mux.HandleFunc("DELETE /api/v1/ticket-states/{id}", deleteTicketState(&dbConn))
+
+	mux.HandleFunc("GET /api/v1/ticket-types/{$}", getTicketTypes(&dbConn))
+	mux.HandleFunc("POST /api/v1/ticket-types/{$}", postTicketTypes(&dbConn))
+	mux.HandleFunc("GET /api/v1/ticket-types/{id}", getTicketTypeById(&dbConn))
+	mux.HandleFunc("PUT /api/v1/ticket-types/{id}", putTicketType(&dbConn))
+	mux.HandleFunc("DELETE /api/v1/ticket-types/{id}", deleteTicketType(&dbConn))
+
+	mux.HandleFunc("GET /api/v1/tickets/{$}", getTickets(&dbConn))
+	mux.HandleFunc("POST /api/v1/tickets/{$}", postTickets(&dbConn))
+	mux.HandleFunc("GET /api/v1/tickets/{id}", getTicketById(&dbConn))
+	mux.HandleFunc("PUT /api/v1/tickets/{id}", putTicket(&dbConn))
+	mux.HandleFunc("DELETE /api/v1/tickets/{id}", deleteTicket(&dbConn))
   // Missing: Position
   // Missing: Variant
 
