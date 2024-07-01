@@ -13,7 +13,7 @@ type SupplierCode struct {
   Variant_id string `json:"variant"`
 }
 
-func (db *Database) SelectSupplier(condition string, args ...interface{}) ([]Supplier, error) {
+func (db *Database) SelectSuppliers(condition string, args ...interface{}) ([]Supplier, error) {
   list := []Supplier{}
   err := db.Sorm.Select(&list, condition, args...)
   if err != nil {
@@ -31,7 +31,7 @@ func (db *Database) SelectSupplierById(id string) ([]Supplier, error) {
   return list, nil
 }
 
-func (db *Database) SelectSupplierCode(condition string, args ...interface{}) ([]SupplierCode, error) {
+func (db *Database) SelectSupplierCodes(condition string, args ...interface{}) ([]SupplierCode, error) {
   list := []SupplierCode{}
   err := db.Sorm.Select(&list, condition, args...)
   if err != nil {

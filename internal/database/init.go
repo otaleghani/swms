@@ -84,8 +84,44 @@ func Init(path string) (Database, error) {
     return Database{}, err
   }
 
-  return db, nil
+  err = db.Sorm.CreateTable(Supplier{})
+  if err != nil {
+    return Database{}, err
+  }
+  err = db.Sorm.CreateTable(SupplierCode{})
+  if err != nil {
+    return Database{}, err
+  }
+  err = db.Sorm.CreateTable(Transition{})
+  if err != nil {
+    return Database{}, err
+  }
+  err = db.Sorm.CreateTable(Product{})
+  if err != nil {
+    return Database{}, err
+  }
+  err = db.Sorm.CreateTable(ProductImage{})
+  if err != nil {
+    return Database{}, err
+  }
+  err = db.Sorm.CreateTable(Client{})
+  if err != nil {
+    return Database{}, err
+  }
+  err = db.Sorm.CreateTable(TicketState{})
+  if err != nil {
+    return Database{}, err
+  }
+  err = db.Sorm.CreateTable(TicketType{})
+  if err != nil {
+    return Database{}, err
+  }
+  err = db.Sorm.CreateTable(Ticket{})
+  if err != nil {
+    return Database{}, err
+  }
 
+  return db, nil
 }
 
 // General query for every table
