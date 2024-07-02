@@ -6,8 +6,7 @@ import (
 
 func main() {
   cfg := repl.Configuration{
-    DatabasePath: "something",
+    DatabasePath: "test.db",
   }
-
   repl.StartRepl(&cfg)
 }

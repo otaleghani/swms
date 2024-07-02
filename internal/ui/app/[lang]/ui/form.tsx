@@ -15,12 +15,15 @@ export function MainForm(props: {items: string[]}) {
     setIsModalOpen(false);
     setSelected(name)
   };
+  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelected(event.target.value);
+  };
   
   return (
     <div>
       <form className='flex flex-col' action={createItem} id='item'>
         <label htmlFor="select">Choose an option:</label>
-        <select id="select" name="select" value={selected} className='p-4'>
+        <select id="select" name="select" onChange={handleChange} value={selected} className='p-4'>
           {selectOptions.map((option, index) => (
             <option key={index} value={option}>
               {option}

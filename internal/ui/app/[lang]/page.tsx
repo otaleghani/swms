@@ -1,11 +1,12 @@
-import { MainForm } from "@/components/form";
+import Image from "next/image";
+import { MainForm } from "@/app/[lang]/ui/form";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
+} from "@/components/select"
 import { getItemsName } from '@/lib/reqs';
 
 export default async function Home() {
@@ -26,6 +27,7 @@ export default async function Home() {
         </SelectContent>
       </Select>
       <MainForm items={parsedData}/>
+      <Image src={"assets/next.svg"} width={50} height={50} alt=""/>
     </main>
   );
 }
