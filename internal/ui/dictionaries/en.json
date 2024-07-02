@@ -1,0 +1,25 @@
+{
+  "home": {
+    "title": "Home"
+  },
+  "login": {
+    "title": "Login",
+    "description": "Use your email and password to login",
+    "footer": "Don't have an account?",
+    "register": "Sign in here.",
+    "form": {
+      "email": "Email address",
+      "password": "Password"
+    }
+  },
+  "register": {
+    "title": "Register",
+    "description": "Choose your best email and a strong password",
+    "footer": "Already have an account?",
+    "register": "Log in here.",
+    "form": {
+      "email": "Email address",
+      "password": "Password"
+    }
+  }
+}

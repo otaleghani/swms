@@ -2,10 +2,10 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { headers } from "next/headers";
 
+const languages = ["it", "en", "es"];
 
 export function middleware(request: NextRequest) {
   const locales = headers().get('accept-language');
-  const languages = ["it", "en"];
   const { pathname } = request.nextUrl;
   if (pathname.startsWith('/assets')) {
     return 

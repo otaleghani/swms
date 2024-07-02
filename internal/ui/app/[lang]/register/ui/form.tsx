@@ -2,17 +2,17 @@
 
 import { Button } from "@/components/button";
 import { Input } from "@/components/input"
-import { Login } from "@/lib/login";
+import { Register } from "@/lib/login";
 
 interface LoginFormProps {
   email_placeholder: string;
   password_placeholder: string;
 }
 
-export default function LoginForm({ email_placeholder, password_placeholder }: LoginFormProps) {
+export default function RegisterForm({ email_placeholder, password_placeholder }: LoginFormProps) {
   return (
     <>
-      <form action={Login} className="flex flex-col gap-2 items-start" id="login-form">
+      <form action={Register} className="flex flex-col gap-2 items-start" id="login-form">
         <Input type="email" placeholder={email_placeholder} />
         <Input type="password" placeholder={password_placeholder} />
         <Button className="mt-2" type="submit" form="login-form">Login</Button>

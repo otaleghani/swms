@@ -8,14 +8,23 @@ import {
   SelectValue,
 } from "@/components/select"
 import { getItemsName } from '@/lib/reqs';
+import { getDictionary, Locale } from "@/lib/dictionaries";
 
-export default async function Home() {
+interface HomeProps {
+  params: {
+    lang: string;
+  }
+}
+
+export default async function Home({ params }: HomeProps ) {
+  const dict = await getDictionary(params.lang as Locale);
+
   const data = getItemsName()
   const [parsedData] = await Promise.all([data])
 
   return (
     <main className="px-96 py-40">
-      <h1 className="text-2xl">Test for the thing</h1>
+      <h1 className="text-2xl">{dict.home.title}</h1>
       <Select>
         <SelectTrigger className="w-[180px]">
           <SelectValue placeholder="Theme" />
