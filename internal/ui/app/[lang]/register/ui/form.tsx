@@ -13,8 +13,15 @@ export default function RegisterForm({ email_placeholder, password_placeholder }
   return (
     <>
       <form action={Register} className="flex flex-col gap-2 items-start" id="login-form">
-        <Input type="email" placeholder={email_placeholder} />
-        <Input type="password" placeholder={password_placeholder} />
+
+        <Input 
+          name="email"
+          type="email" 
+          placeholder={email_placeholder} />
+        <Input 
+          name="password"
+          type="password" 
+          placeholder={password_placeholder} />
         <Button className="mt-2" type="submit" form="login-form">Login</Button>
       </form>
     </>
