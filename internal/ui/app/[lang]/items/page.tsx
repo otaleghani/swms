@@ -1,7 +1,9 @@
+import TestButtons from "../ui/test-buttons";
+
 export default function Page() {
   return (
     <>
-      <h1>items</h1>
+      <TestButtons />
     </>
   )
 }

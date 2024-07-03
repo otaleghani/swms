@@ -36,7 +36,7 @@ export default async function Home({ params }: HomeProps ) {
         </SelectContent>
       </Select>
       <MainForm items={parsedData}/>
-      <Image src={"assets/next.svg"} width={50} height={50} alt=""/>
+      <Image src={"/assets/next.svg"} width={50} height={50} alt=""/>
     </main>
   );
 }

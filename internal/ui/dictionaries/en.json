@@ -1,4 +1,5 @@
 {
+  "navbar": ["Home", "Items", "Tickets", "Account", "Organization", "Settings"],
   "home": {
     "title": "Home"
   },
