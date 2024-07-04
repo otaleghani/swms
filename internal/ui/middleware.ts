@@ -16,7 +16,11 @@ export function middleware(request: NextRequest) {
 
   const pathnameHasLocale = languages.some((locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`)
  
-  if (pathnameHasLocale) return
+  if (pathnameHasLocale) {
+    const headers = new Headers(request.headers);
+    headers.set("x-current-path", request.nextUrl.pathname);
+    return NextResponse.next({ headers });
+  }
 
   if (typeof locales === "string") {
     const pattern = /;q=\d\.\d/g;
@@ -24,7 +28,11 @@ export function middleware(request: NextRequest) {
     const cleanedLocales = cleanedLocalesString.split(",")
     const matchingLocale = findFirstMatchingLanguage(languages, cleanedLocales);
     request.nextUrl.pathname = `/${matchingLocale}${pathname}`
-    return NextResponse.redirect(request.nextUrl)
+
+    const response = NextResponse.redirect(request.nextUrl)
+    response.headers.set('x-current-path', request.nextUrl.pathname)
+    console.log("from middleware", response.headers.get('x-current-path'))
+    return response
   } 
 }
 
