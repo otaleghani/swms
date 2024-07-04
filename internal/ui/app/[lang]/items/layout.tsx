@@ -1,11 +1,18 @@
-interface LayoutProps {
-  children: React.ReactNode;
+interface ItemsProps {
+  list: React.ReactNode;
+  single: React.ReactNode;
 }
 
-export default function Layout({ children }: LayoutProps) {
+export default function ItemsLayout({ list, single }: ItemsProps) {
+
   return (
-    <div className="w-full flex">
-      {children}
+    <div className="grid xl:grid-cols-2">
+      <div className="">
+        {list}
+      </div>
+      <div className="">
+        {single}
+      </div>
     </div>
   )
 }

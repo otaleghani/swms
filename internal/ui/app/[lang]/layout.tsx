@@ -32,13 +32,8 @@ export default async function RootLayout({ params, children }: LayoutProps) {
             enableSystem
             disableTransitionOnChange
           >
-            <div className="grid grid-cols-[minmax(50px,_65px)_1fr]">
-            </div>
-              {
-                //<Navbar linksTooltip={dict.navbar}/>
-              }
-
-              {children}
+            <Navbar />
+            <div className="xl:ml-[57px]">{children}</div>
           </ThemeProvider>
         </div>
       </body>
