@@ -1,33 +1,16 @@
-import { columns } from "@/app/ui/items/columns"
-import { Item, items} from "@/app/ui/items/data/example"
-import { DataTable } from "@/app/ui/items/data-table"
-import { Suspense } from "react";
-import { headers } from "next/headers";
 
-async function getData(): Promise<Item[]> {
-  return items
-}
-
-export default async function ListItemsDefaultPage() {
+//import { columns } from "@/app/ui/items/columns"
+//import { Item, items} from "@/app/ui/items/data/example"
+//import { DataTable } from "@/app/ui/items/data-table"
+//import { columns } from "@/app/ui/items/columns"
+//import { Item, items} from "@/app/ui/items/data/example"
+//import { DataTable } from "@/app/ui/items/data-table"
   //const pathname = headers().get('x-current-path') as string;
   //const pathnameNoLocale: string = pathname.slice(4);
-  const data = await getData()
 
-  return (
-    <>
       {
       //<div className={"items" === pathnameNoLocale ? "p-2 h-screen overflow-scroll w-full" : "p-2 xl:block h-screen overflow-scroll w-full"}>
       }
-      <div className="xl:col-start-auto xl:row-start-auto row-start-1 row-end-1">
-        <Suspense>
-          <DataTable columns={columns} data={data} />
-        </Suspense>
-      </div>
-    </>
-  )
-}
-
-
 // <div className="h-[2000px]">
 //   List item here DEFAULT
 //   <Link href="/items/123">123</Link>
