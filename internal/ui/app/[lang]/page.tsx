@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { MainForm } from "@/app/[lang]/ui/form";
+import { MainForm } from "@/app/ui/form";
 import {
   Select,
   SelectContent,

@@ -3,7 +3,7 @@ import { GeistSans } from 'geist/font/sans';
 import "@/app/globals.css";
 import { getDictionary, Locale } from "@/lib/dictionaries";
 import { ThemeProvider } from "@/app/[lang]/theme";
-import Navbar from "./ui/navbar";
+import Navbar from "@/app/ui/navbar";
 
 export const metadata: Metadata = {
   title: "swms",
@@ -33,7 +33,7 @@ export default async function RootLayout({ params, children }: LayoutProps) {
             disableTransitionOnChange
           >
             <Navbar />
-            <div className="xl:ml-[57px]">{children}</div>
+            <div className="xl:ml-[57px] mb-[57px]">{children}</div>
           </ThemeProvider>
         </div>
       </body>

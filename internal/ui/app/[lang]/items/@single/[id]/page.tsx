@@ -15,7 +15,7 @@ export default async function SingleItemIdPage({ params }: SingleItemProps) {
   })
   return (
     <>
-      <div className="h-screen w-full bg-blue-300">{data}</div>
+      <div className="xl:col-start-auto xl:row-start-auto col-start-1 col-end-1 row-start-1 h-screen w-full bg-blue-300">{data}</div>
     </>
   )
 }
