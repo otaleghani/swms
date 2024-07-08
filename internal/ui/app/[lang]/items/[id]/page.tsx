@@ -1,10 +1,21 @@
-interface ItemsSinglePage {
-  params: {
-    id: string,
-  },
+import SingleItem from "@/app/ui/items/item-single";
+import ComponentList from "@/app/ui/items/items-list";
+import { Suspense } from "react";
+
+async function getData(ms: number) {
+  return new Promise(resolve => setTimeout(resolve, ms));
 }
-export default function ItemsSinglePage({ params }: ItemsSinglePage) {
+
+export default function Page({ params }: { params: { id: string } }) {
+  
   return (
-    <div className="">{params.id}</div>
+    <div className="grid xl:grid-cols-2">
+      <div className="hidden xl:block">
+        <Suspense fallback="LOADING IN [id]">
+          <ComponentList />
+        </Suspense>
+      </div>
+      <SingleItem />
+    </div>
   )
 }

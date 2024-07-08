@@ -5,13 +5,14 @@ import Image from "next/image";
 import { Button } from "@/components/button"
 import { Mail, House, Warehouse, Tag, CircleUserRound, CirclePlus, UserCircle } from "lucide-react"
 import { usePathname } from "next/navigation";
+import { ModeToggle } from "./toggle_mode";
 
 export default function Navbar() {
   const pathname = usePathname();
   let pathnameNoLocale: string = pathname.slice(4);
 
   return (
-    <nav className="fixed py-2 flex xl:flex-col xl:top-0 bottom-0 left-0 right-0 xl:right-auto justify-between xl:justify-start xl:gap-1 xl:border-r xl:border-t-0 border-t z-10">
+    <nav className="bg-background fixed py-2 flex xl:flex-col xl:top-0 bottom-0 left-0 right-0 xl:right-auto justify-between xl:justify-start xl:gap-1 xl:border-r xl:border-t-0 border-t z-10">
       <div className="pb-0 mb-0 xl:pb-2 xl:mb-1 border-b-0 xl:border-b">
         <Button 
           key="Home"

@@ -33,7 +33,7 @@ export default async function RootLayout({ params, children }: LayoutProps) {
             disableTransitionOnChange
           >
             <Navbar />
-            <div className="xl:ml-[57px] mb-[57px]">{children}</div>
+            <div className="xl:ml-[57px]">{children}</div>
           </ThemeProvider>
         </div>
       </body>
