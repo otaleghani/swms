@@ -1,5 +1,5 @@
+import ItemList from "@/app/ui/items/items-list";
 import SingleItem from "@/app/ui/items/item-single";
-import ComponentList from "@/app/ui/items/items-list";
 import { Suspense } from "react";
 
 async function getData(ms: number) {
@@ -12,7 +12,7 @@ export default function Page({ params }: { params: { id: string } }) {
     <div className="grid xl:grid-cols-2">
       <div className="hidden xl:block">
         <Suspense fallback="LOADING IN [id]">
-          <ComponentList />
+          <ItemList />
         </Suspense>
       </div>
       <SingleItem />

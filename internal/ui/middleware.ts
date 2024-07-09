@@ -31,7 +31,6 @@ export function middleware(request: NextRequest) {
 
     const response = NextResponse.redirect(request.nextUrl)
     response.headers.set('x-current-path', request.nextUrl.pathname)
-    console.log("from middleware", response.headers.get('x-current-path'))
     return response
   } 
 }

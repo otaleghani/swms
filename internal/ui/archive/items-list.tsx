@@ -1,16 +1,35 @@
+import Link from "next/link"
+import CardList from "@/app/ui/items/card";
 import { ItemsDataTable } from "@/app/ui/items/table/data-table";
 import { columns } from "@/app/ui/items/table/columns";
 import { items } from "@/app/ui/items/table/data";
 
-// Here I will pass the things from the page
-// here I would do the filtering by http
+async function getData(ms: number) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 
-export default async function ItemList() {
+const someData = ["1", "2", "3", "4"]
+
+export default async function ComponentList() {
   const otherData = await getData2()
+
+  // const data = getData(1000).then(() => {
+  //   return someData
+  // })
+  // const [theData] = await Promise.all([data])
 
   return (
     <div className="xl:border-r">
+      {
+      // <CardList />
+      }
       <ItemsDataTable columns={columns} data={items} />
+      {
+        // {otherData.map((data: any) => (
+        //   <Link className="p-2" href={"/test/"+data.id}>{data.name}</Link>
+        // ))}
+        //   <Link className="p-2" href="/test/">Turn back</Link>
+      }
     </div>
   )
 }

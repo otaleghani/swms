@@ -1,4 +1,4 @@
-import ComponentList from "@/app/ui/items/items-list";
+import ItemList from "@/app/ui/items/items-list";
 import { Suspense } from "react";
 import { revalidateTag } from "next/cache";
 
@@ -19,9 +19,9 @@ export default function Page({ searchParams }: ItemsPageProps) {
   return (
     <div className="grid xl:grid-cols-2">
       <Suspense fallback="LOADING">
-        <ComponentList />
+        <ItemList />
       </Suspense>
-      <div>The skellington {query} {currentPage}</div>
+      <div className="hidden xl:block">The skellington {query} {currentPage}</div>
     </div>
   )
 }

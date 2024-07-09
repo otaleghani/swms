@@ -31,13 +31,15 @@ import {
 import { Eye } from "lucide-react"
 import { Input } from "@/components/input"
 import { ScrollArea } from "@/components/scroll-area"
+import SearchItems from "./search"
+import ItemsPagination from "./pagination"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
 }
 
-export function DataTable<TData, TValue>({
+export function ItemsDataTable<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
@@ -91,9 +93,7 @@ export function DataTable<TData, TValue>({
           </DropdownMenuContent>
         </DropdownMenu>
        </header>
-       <div className="p-4 border-b">
-         <Input type="text" placeholder="Search..." />
-       </div>
+       <SearchItems />
        <ScrollArea className="xl:h-[calc(100vh_-_130px)] h-[calc(100vh_-_187px)] " type="always">
         <Table className="">
           <TableBody className="">
@@ -118,8 +118,9 @@ export function DataTable<TData, TValue>({
               </TableRow>
             )}
           </TableBody>
-        </Table>
 
+        </Table>
+        <ItemsPagination totalPages={10}/>
        </ScrollArea>
       </div>
   )
