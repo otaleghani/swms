@@ -1,4 +1,5 @@
 'use client'; 
+
 import { createCategory, createItem } from '@/lib/actions';
 import React, { useState } from 'react';
 import { getItemsName } from '@/lib/reqs';
@@ -33,7 +34,6 @@ export function MainForm(props: {items: string[]}) {
         <button type="button" onClick={() => setIsModalOpen(!isModalOpen)} className='p-4 bg-blue-100'>+ Option</button>
         <button type="submit" className='p-4 bg-yellow-100' form='item'>Send!</button>
       </form>
-      {isModalOpen && (<SecondForm onAddOption={handleAddOption} />)}
       {isModalOpen && (<SecondForm onAddOption={handleAddOption} />)}
     </div>
   );

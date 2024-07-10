@@ -16,7 +16,7 @@ export default async function ItemList() {
 }
 
 async function getData2() {
-  const jwt = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzd21zIiwic3ViIjoic29tZUB0aGluZy5jb20iLCJleHAiOjE3MjA1MTI1OTcsImlhdCI6MTcyMDUwODk5N30.pSqWAxNNoVskWTRtRuDfQEs-mVM1sS_-WAh8W83dVhE';
+  const jwt = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzd21zIiwic3ViIjoic29tZUB0aGluZy5jb20iLCJleHAiOjE3MjA1OTg4MTgsImlhdCI6MTcyMDU5NTIxOH0.Gwr528inqGNmCBllkgVmycAtmRfkVBdji4rwgKF3J5s';
   const res = await fetch('http://localhost:8080/api/v1/items', { 
     method: 'GET',
     headers: {

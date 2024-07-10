@@ -7,6 +7,9 @@ import { Progress } from "@/components/progress"
 import { Badge } from "@/components/badge"
 import { Separator } from "@/components/separator"
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/avatar"
+import TransactionsPagination from "./transactions-pagination"
+import { VariantPicker } from "./variant-picker"
+import { AddNewTransaction } from "./add-new-transaction"
 
 export default async function SingleItem() {
   return (
@@ -17,6 +20,7 @@ export default async function SingleItem() {
         <ImageSlider />
         <Stats />
         <Data />
+        <Variants />
         <Transactions />
       </ScrollArea>
     </div>
@@ -40,9 +44,13 @@ function Actions() {
           <QrCode className="h-4 w-4" />
         </Button>
       </div>
-      <Button variant="outline" size="sm">
-        <Plus className="h-4 w-4 mr-2" /> New Variant
-      </Button>
+      <AddNewTransaction />
+      
+      {
+      // <Button variant="outline" size="sm">
+      //   <Plus className="h-4 w-4 mr-2" /> New Variant
+      // </Button>
+      }
     </header>
   )
 }
@@ -234,7 +242,7 @@ function Transactions() {
               <div className="font-semibold">-1</div>
             </div>
           </div>
-            <Separator className="my-4" />
+          <Separator className="my-4" />
           <div>
             <div className="flex justify-between text-sm items-center">
               <div className="flex gap-4">
@@ -252,8 +260,26 @@ function Transactions() {
             </div>
           </div>
 
+          <Separator className="my-4" />
+          <TransactionsPagination totalPages={40}/>
         </CardContent>
       </Card>
     </div>
+  )
+}
+
+function Variants() {
+  return (
+    <Card className="mb-4">
+      <CardHeader className="">
+        <CardTitle>Variants</CardTitle>
+        <VariantPicker />
+      </CardHeader>
+      <CardContent>
+        <div>
+           
+        </div>
+      </CardContent>
+    </Card>
   )
 }

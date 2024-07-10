@@ -5,19 +5,19 @@ import { ChevronsLeft, ChevronLeft, ChevronsRight, ChevronRight } from "lucide-r
 import { usePathname, useSearchParams } from 'next/navigation';
 import { Button } from "@/components/button";
 
-export default function ItemsPagination({ totalPages }: { totalPages: number }) {
+export default function TransactionsPagination({ totalPages }: { totalPages: number }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const currentPage = Number(searchParams.get('page')) || 1;
+  const currentPage = Number(searchParams.get('transactions-page')) || 1;
 
   const createPageURL = (pageNumber: number | string) => {
     const params = new URLSearchParams(searchParams);
-    params.set('page', pageNumber.toString());
+    params.set('transactions-page', pageNumber.toString());
     return `${pathname}?${params.toString()}`;
   };
 
   return (
-    <nav className="flex gap-2 p-4 justify-end items-center">
+    <nav className="flex gap-2 justify-end items-center">
       <div className="text-sm font-semibold pr-4">Page {currentPage} of {totalPages}</div>
       <Button disabled={currentPage === 1 ? true : false} size="icon" variant="outline">
         <Link href={createPageURL(1)}>

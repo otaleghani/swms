@@ -26,3 +26,10 @@ export async function createCategory(formData: FormData) {
 
   return rawFormData.name as string;
 }
+
+export async function createTransaction(formData: FormData) {
+  const rawFormData = {
+    quantity: formData.get('quantity'),
+  }
+  console.log(rawFormData.quantity)
+}
