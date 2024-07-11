@@ -1,5 +1,28 @@
 {
-  "products": {
-    "cart": "Add to Cart"
+  "navbar": ["Home", "Items", "Tickets", "Account", "Organization", "Settings"],
+  "home": {
+    "title": "Home"
+  },
+  "login": {
+    "title": "Accedi",
+    "description": "Usa la email e password per accedere",
+    "footer": "Non hai un account?",
+    "register": "Registrati qui",
+    "form": {
+      "email": "Indirizzo email",
+      "password": "Password",
+      "button": "Accedi"
+    }
+  },
+  "register": {
+    "title": "Registrati",
+    "description": "Scegli la tua migliore email e un password forte",
+    "footer": "Hai già un account?",
+    "register": "Accedi qui",
+    "form": {
+      "email": "Indirizzo email",
+      "password": "Password",
+      "button": "Registrati"
+    }
   }
 }

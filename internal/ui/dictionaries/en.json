@@ -10,7 +10,8 @@
     "register": "Sign in here.",
     "form": {
       "email": "Email address",
-      "password": "Password"
+      "password": "Password",
+      "button": "Sign in"
     }
   },
   "register": {
@@ -20,7 +21,8 @@
     "register": "Log in here.",
     "form": {
       "email": "Email address",
-      "password": "Password"
+      "password": "Password",
+      "button": "Sign up"
     }
   }
 }

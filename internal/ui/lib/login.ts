@@ -43,5 +43,4 @@ export async function Register(formData: FormData) {
     body: JSON.stringify({email: rawFormData.email, password: rawFormData.password}),
   });
   console.log(res)
-
 }

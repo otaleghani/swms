@@ -1,5 +1,4 @@
-import LoginForm from "./ui/form";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/card";
+import LoginForm from "@/app/ui/login/form";
 import { getDictionary, Locale } from "@/lib/dictionaries";
 import Link from "next/link";
 
@@ -13,20 +12,14 @@ export default async function Page({ params }: LoginProps) {
   const dict = await getDictionary(params.lang as Locale);
 
   return (
-    <section className="grid items-center w-full min-h-screen">
-      <div className="max-w-4xl">
-        <Card>
-          <CardHeader>
-            <CardTitle>{dict.login.title}</CardTitle>
-            <CardDescription>{dict.login.description}</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <LoginForm email_placeholder={dict.login.form.email} password_placeholder={dict.login.form.password} />
-          </CardContent>
-          <CardFooter>
-            <p>{dict.login.footer} <Link className="underline" href="register">{dict.login.register}</Link></p>
-          </CardFooter>
-        </Card>
+    <section className="grid place-items-center w-full min-h-screen">
+      <div className="xl:min-w-96 min-w-full text-center p-4">
+        <div className="">
+          <h1 className="text-2xl font-semibold tracking-tight">{dict.login.title}</h1>
+          <p className="pb-4 text-sm">{dict.login.description}</p>
+        </div>
+            <LoginForm label={dict.login.form} />
+            <p className="text-sm pt-4">{dict.login.footer} <Link className="underline" href="register">{dict.login.register}</Link></p>
       </div>
     </section>
   ) 
