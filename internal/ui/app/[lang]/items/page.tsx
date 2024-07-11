@@ -1,4 +1,4 @@
-import ItemList from "@/app/ui/items/items-list";
+import ItemList from "@/app/ui/items/list";
 import { Suspense } from "react";
 import { revalidateTag } from "next/cache";
 

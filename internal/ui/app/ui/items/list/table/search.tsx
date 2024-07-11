@@ -1,4 +1,5 @@
 'use client'
+
 import { Input } from "@/components/input"
 import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 import { useDebouncedCallback } from 'use-debounce';

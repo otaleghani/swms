@@ -1,5 +1,5 @@
-import ItemList from "@/app/ui/items/items-list";
-import SingleItem from "@/app/ui/items/item-single";
+import ItemList from "@/app/ui/items/list";
+import SingleItem from "@/app/ui/items/single";
 import { Suspense } from "react";
 
 async function getData(ms: number) {

@@ -33,3 +33,8 @@ export async function createTransaction(formData: FormData) {
   }
   console.log(rawFormData.quantity)
 }
+
+export async function RefreshData(data: string) {
+
+  console.log(data)
+}

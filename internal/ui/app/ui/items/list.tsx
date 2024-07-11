@@ -1,6 +1,6 @@
-import { ItemsDataTable } from "@/app/ui/items/table/data-table";
-import { columns } from "@/app/ui/items/table/columns";
-import { items } from "@/app/ui/items/table/data";
+import { ItemsDataTable } from "@/app/ui/items/list/table/data-table";
+import { columns } from "@/app/ui/items/list/table/columns";
+import { items } from "@/app/ui/items/list/table/data";
 
 // Here I will pass the things from the page
 // here I would do the filtering by http
