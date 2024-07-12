@@ -2,11 +2,11 @@
 
 import { Button } from "@/components/button";
 import { Input } from "@/components/input"
+import FormError from "@/app/ui/_general/form-error";
+import { Loader2 } from "lucide-react";
 
-import { useActionState } from "react";
-import { registerAction, State } from "@/lib/action";
-// import { register } from "@/lib/action";
-import { useFormState } from "react-dom";
+import { useActionState, useEffect, useState } from "react";
+import { registerAction, RegisterFormState } from "@/app/ui/register/action";
 
 interface RegisterFormProps {
   label: {
@@ -16,26 +16,41 @@ interface RegisterFormProps {
   }
 }
 
-// const initialState = { message: "", code: "" };
-const initialState = 0
-
 export default function RegisterForm({ label }: RegisterFormProps) {
-  // useActionState does not work with "use server", it returns undefined everytime.
-  const [state, formAction] = useActionState(registerAction, initialState);
-  console.log(state)
+  const initialState: RegisterFormState = {errors: {}, message:"" }
+  const [state, formAction, isPending] = useActionState(registerAction, initialState);
 
   return (
     <>
       <form action={formAction} className="flex flex-col gap-2 items-start" id="register-form">
-        <Input 
-          name="email"
-          type="email" 
-          placeholder={label.email} />
-        <Input 
-          name="password"
-          type="password" 
-          placeholder={label.password} />
-        <Button className="mt-2 w-full" type="submit" form="register-form">{label.button}</Button>
+        <div className="w-full text-left">
+          <Input 
+            className={`${state?.errors.email ? "border-red-500" : "border-black"}`}
+            name="email"
+            type="email" 
+            required
+            aria-describedby="email-error"
+            placeholder={label.email} />
+          <FormError 
+            id="email-error" 
+            description={state?.errors.email} />
+        </div>
+        <div className="w-full text-left">
+          <Input 
+            name="password"
+            type="password" 
+            maxLength={20}
+            minLength={8}
+            required
+            placeholder={label.password} />
+          <FormError 
+            id="password-error" 
+            description={state?.errors.password} />
+        </div>
+        <Button disabled={isPending} className="mt-2 w-full" type="submit" form="register-form">
+          {isPending ? <><Loader2 className=" h-4 w-4 animate-spin" /> wait please</>
+          : label.button}
+        </Button>
       </form>
     </>
   );

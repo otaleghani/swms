@@ -13,6 +13,13 @@ export function middleware(request: NextRequest) {
   if (pathname.startsWith('/favicon')) {
     return 
   }
+  // if (pathname.startsWith('/tets')) {
+  //   return 
+  // }
+  if (request.method === "POST") {
+    return 
+  }
+
 
   const pathnameHasLocale = languages.some((locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`)
  

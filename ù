@@ -1,0 +1,30 @@
+"use client";
+
+import { AlertCircle, XIcon } from "lucide-react";
+import { use, useState } from "react";
+
+interface FormErrorProps {
+  description: string,
+  show: boolean,
+  id: string,
+}
+
+export default function FormError(props: FormErrorProps) {
+  // let showError = props.show
+  const [showError, setShowError] = useState(props.show)
+  return (
+    <>
+      {showError && (
+        <div id={props.id} aria-live="polite" aria-atomic="true" className="my-2 rounded-md p-3 gap-2 items-center flex border border-red-500 text-red-500">
+          <AlertCircle className="h-4 w-4" />
+          <span className="text-sm">
+            {props.description}
+          </span>
+          <button type="button" onClick={() => {showError = false}}>
+            <XIcon className="h-4 w-4" />
+          </button>
+        </div>
+      )}
+    </>
+  )
+}
