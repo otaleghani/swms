@@ -154,7 +154,7 @@ func Serve(path, port string) {
 
 	mux.HandleFunc("POST /api/v1/login/{$}", login(&dbConn))
 	mux.HandleFunc("POST /api/v1/revoke/{$}", revokeHandler(&dbConn))
-	mux.HandleFunc("POST /api/v1/refresh/{$}", refreshHandler(&dbConn))
+	mux.HandleFunc("POST /api/v1/Tefresh/{$}", refreshHandler(&dbConn))
 
 	corsMux := middlewareCors(mux)
 	srv := &http.Server{

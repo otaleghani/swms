@@ -1,6 +1,7 @@
 "use server";
 
 import { getDictionary, Locale } from "@/lib/dictionaries";
+import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 
 export type LoginFormState = {
@@ -85,22 +86,21 @@ export async function loginAction(
       state.message = dict.login.form.success
 
       cookies().set({
-        name: "access_token",
+        name: "gennaro",
         value: resBody.data.accessToken,
+        path: "/",
         httpOnly: true,
-        path: '/',
         sameSite: true,
-        secure: true,
       })
       cookies().set({
         name: "refresh_token",
         value: resBody.data.refreshToken,
+        path: "/",
         httpOnly: true,
-        path: '/',
         sameSite: true,
-        secure: true,
       })
     }
+    redirect("/")
   }
 
   return state

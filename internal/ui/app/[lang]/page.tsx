@@ -25,16 +25,6 @@ export default async function Home({ params }: HomeProps ) {
   return (
     <main className="px-96 py-40">
       <h1 className="text-2xl">{dict.home.title}</h1>
-      <Select>
-        <SelectTrigger className="w-[180px]">
-          <SelectValue placeholder="Theme" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value="light">Light</SelectItem>
-          <SelectItem value="dark">Dark</SelectItem>
-          <SelectItem value="system">System</SelectItem>
-        </SelectContent>
-      </Select>
       <MainForm items={parsedData}/>
       <Image src={"/assets/next.svg"} width={50} height={50} alt=""/>
     </main>

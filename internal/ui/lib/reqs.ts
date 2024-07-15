@@ -1,7 +1,9 @@
-'use server';
+"use server";
+
+import { cookies } from "next/headers";
 
 export async function getItems() {
-  const jwt = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzd21zIiwic3ViIjoic29tZUB0aGluZy5jb20iLCJleHAiOjE3MTk5MTY5NTYsImlhdCI6MTcxOTkxMzM1Nn0.KrO2a-7M1KFEKnj5c-r2ruvu46IIJNFsHO8HsfPpFK0'
+  const jwt = cookies().get("gennaro")?.value
 
   const res = await fetch('http://localhost:8080/api/v1/items/', {
     method: 'GET',
@@ -10,8 +12,36 @@ export async function getItems() {
       'Content-Type': 'application/json',
     },
   });
+  const response = await res.json()
 
-  return res.json();
+  if (response.code === 401) {
+    const refresh = cookies().get("refresh_token")?.value
+    const body = JSON.stringify({refreshToken: refresh});
+    const resRefresh = await fetch('http://localhost:8080/api/v1/refresh/', {
+      method: 'POST',
+      headers: {
+        //'Authorization': `Bearer ${jwt}`,
+        'Content-Type': 'application/json',
+      },
+      body: body,
+    });
+    const resRefreshBody = await resRefresh.json()
+    console.log(resRefreshBody)
+    if (resRefreshBody.code = 200) {
+      cookies().delete("gennaro")
+      cookies().set({
+        name: "gennaro",
+        value: resRefreshBody.data.accessToken,
+        path: "/",
+        httpOnly: true,
+        sameSite: true,
+      })
+    } else {
+      console.log("GOT PROBLEM")
+    }
+  }
+
+  return response
 }
 
 export async function getItemsName() {
