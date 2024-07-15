@@ -11,7 +11,29 @@
     "form": {
       "email": "Indirizzo email",
       "password": "Password",
-      "button": "Accedi"
+      "button": "Accedi",
+      "pending": "Un secondo...",
+      "success": "Accesso avvenuto con successo. Stai per essere redirezionato",
+      "errors": {
+        "email": {
+          "type": "Email fornita non è valida, riprova.",
+          "empty": "Inserisci un'email.",
+          "not_valid": "Inserisci un'email valida",
+          "min": "L'email deve essere di minimo 5 caratteri",
+          "max": "L'email deve essere massimo di 40 caratteri",
+          "used": "Questa email è già stata utilizzata"
+        },
+        "password": {
+          "type": "Email fornita non è valida, riprova.",
+          "empty": "Inserisci una password",
+          "not_valid": "Inserisci una password valida",
+          "min": "La password deve essere di almeno 8 caratteri",
+          "max": "La password deve essere di massimo 20 caratteri"
+        },
+        "general": {
+          "auth": "Combinazione di email e password non conincidono."
+        }
+      }
     }
   },
   "register": {
@@ -22,7 +44,26 @@
     "form": {
       "email": "Indirizzo email",
       "password": "Password",
-      "button": "Registrati"
+      "button": "Registrati",
+      "pending": "Un secondo...",
+      "success": "Form inviato con successo. Adesso passa alla pagina di accesso per accedere",
+      "errors": {
+        "email": {
+          "type": "Email fornita non è valida, riprova.",
+          "empty": "Inserisci un'email.",
+          "not_valid": "Inserisci un'email valida",
+          "min": "L'email deve essere di minimo 5 caratteri",
+          "max": "L'email deve essere massimo di 40 caratteri",
+          "used": "Questa email è già stata utilizzata"
+        },
+        "password": {
+          "type": "Email fornita non è valida, riprova.",
+          "empty": "Inserisci una password",
+          "not_valid": "Inserisci una password valida",
+          "min": "La password deve essere di almeno 8 caratteri",
+          "max": "La password deve essere di massimo 20 caratteri"
+        }
+      }
     }
   }
 }

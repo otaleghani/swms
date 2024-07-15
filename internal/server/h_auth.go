@@ -2,7 +2,7 @@ package server
 
 import (
 	"encoding/json"
-	"fmt"
+	// "fmt"
 	"net/http"
 	// "time"
 
@@ -34,28 +34,32 @@ func login(db *database.Database) http.HandlerFunc {
 		body := Login{}
 		err := json.NewDecoder(r.Body).Decode(&body)
 		if err != nil {
-			http.Error(w, fmt.Sprintf("400: %v", err), 400)
-			logRequest(r.Method, r.URL.Path, r.RemoteAddr, 400)
+      ErrorResponse{Message: err.Error()}.r400(w, r)
+			// http.Error(w, fmt.Sprintf("400: %v", err), 400)
+			// logRequest(r.Method, r.URL.Path, r.RemoteAddr, 400)
 			return
 		}
 
 		err = db.CheckUser(body.Email, body.Password)
 		if err != nil {
-			http.Error(w, fmt.Sprintf("403: %v", err), 403)
-			logRequest(r.Method, r.URL.Path, r.RemoteAddr, 403)
+      ErrorResponse{Message: err.Error()}.r403(w, r)
+			// http.Error(w, fmt.Sprintf("403: %v", err), 403)
+			// logRequest(r.Method, r.URL.Path, r.RemoteAddr, 403)
 			return
 		}
 
 		accessToken, err := getAccessToken(body.Email, db)
 		if err != nil {
-			http.Error(w, fmt.Sprintf("500: %v", err), 500)
-			logRequest(r.Method, r.URL.Path, r.RemoteAddr, 500)
+      ErrorResponse{Message: err.Error()}.r500(w, r)
+			// http.Error(w, fmt.Sprintf("500: %v", err), 500)
+			// logRequest(r.Method, r.URL.Path, r.RemoteAddr, 500)
 			return
 		}
 		refreshToken, err := getRefreshToken(body.Email, db)
 		if err != nil {
-			http.Error(w, fmt.Sprintf("500: %v", err), 500)
-			logRequest(r.Method, r.URL.Path, r.RemoteAddr, 500)
+      ErrorResponse{Message: err.Error()}.r500(w, r)
+			// http.Error(w, fmt.Sprintf("500: %v", err), 500)
+			// logRequest(r.Method, r.URL.Path, r.RemoteAddr, 500)
 			return
 		}
 
@@ -70,20 +74,26 @@ func login(db *database.Database) http.HandlerFunc {
 			return
 		}
 
-		encodedResp, err := json.Marshal(Auth{
+    resp := Auth{
 			AccessToken:  accessToken,
 			RefreshToken: refreshToken,
-		})
-		if err != nil {
-			http.Error(w, fmt.Sprintf("500: %v", err), 500)
-			logRequest(r.Method, r.URL.Path, r.RemoteAddr, 500)
-			return
-		}
+    }
+		// encodedResp, err := json.Marshal(Auth{
+		// 	AccessToken:  accessToken,
+		// 	RefreshToken: refreshToken,
+		// })
+		// if err != nil {
+    //   ErrorResponse{Message: err.Error()}.r500(w, r)
+		// 	// http.Error(w, fmt.Sprintf("500: %v", err), 500)
+		// 	// logRequest(r.Method, r.URL.Path, r.RemoteAddr, 500)
+		// 	return
+		// }
 
-		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(200)
-		w.Write(encodedResp)
-		logRequest(r.Method, r.URL.Path, r.RemoteAddr, 200)
+		//w.Header().Set("Content-Type", "application/json")
+		//w.WriteHeader(200)
+		//w.Write(encodedResp)
+		//logRequest(r.Method, r.URL.Path, r.RemoteAddr, 200)
+		SuccessResponse{Data: resp}.r200(w, r)
 	}
 }
 

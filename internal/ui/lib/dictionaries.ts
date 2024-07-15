@@ -18,4 +18,3 @@ const dictionaries: Dictionaries = {
 
 export type Locale = keyof Dictionaries;
 export const getDictionary = async (locale: Locale) => dictionaries[locale]();
-

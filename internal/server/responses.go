@@ -37,6 +37,10 @@ func (e ErrorResponse) r401(w http.ResponseWriter, r *http.Request) {
 	e.Code = http.StatusUnauthorized
 	e.Send(w, r)
 }
+func (e ErrorResponse) r403(w http.ResponseWriter, r *http.Request) {
+	e.Code = http.StatusForbidden
+	e.Send(w, r)
+}
 func (e ErrorResponse) r404(w http.ResponseWriter, r *http.Request) {
 	e.Code = http.StatusNotFound
 	e.Send(w, r)

@@ -1,30 +1,71 @@
 'use client';
 
+import { useActionState } from "react";
+import { LoginFormState, loginAction } from "@/app/ui/login/action";
+
 import { Button } from "@/components/button";
 import { Input } from "@/components/input"
-import { Login } from "@/lib/login";
+import { Loader2 } from "lucide-react";
+import FormFieldError from "@/app/ui/general/form/error_field";
+import FormError from "@/app/ui/general/form/error_form";
+import FormSuccess from "@/app/ui/general/form/success";
 
 interface LoginFormProps {
   label: {
     email: string;
     password: string;
     button: string;
-  }
+    pending: string;
+  };
+  lang: string;
 }
 
-export default function LoginForm({ label }: LoginFormProps) {
+export default function LoginForm({ label, lang }: LoginFormProps) {
+  const initialState: LoginFormState = {
+    error: false, 
+    errorMessages: {
+      email: [],
+      password: [],
+  }}
+  const [state, formAction, isPending] = useActionState(loginAction, initialState);
+
   return (
     <>
-      <form action={Login} className="flex flex-col gap-2 items-start" id="login-form">
+      <form action={formAction} className="flex flex-col gap-2 items-start" id="login-form">
+        <input type="hidden" name="locale" value={lang} />
         <Input 
+          className={`${state.errorMessages.email.length != 0 
+          ? "border-red-500" 
+          : ""}`}
           name="email"
           type="email" 
+          required
+          aria-describedby="email-error"
           placeholder={label.email} />
+        <FormFieldError 
+          id="email-error" 
+          description={state.errorMessages.email} />
         <Input 
+          className={`${state.errorMessages.email.length != 0 
+          ? "border-red-500" 
+          : ""}`}
           name="password"
           type="password" 
           placeholder={label.password} />
-        <Button className="mt-2 w-full" type="submit" form="login-form">{label.button}</Button>
+        <FormFieldError 
+          id="email-error" 
+          description={state.errorMessages.password} />
+        <Button disabled={isPending} className="mt-2 w-full" type="submit" form="login-form">
+          {isPending ? <><Loader2 className="h-4 w-4 mr-2 animate-spin" />{label.pending}</>
+          : label.button}
+        </Button>
+        {state.error ? (
+          <FormError 
+            message={state.message!} />
+        ) 
+        : (
+          <FormSuccess message={state.message!} />
+        )}
       </form>
     </>
   );

@@ -1,93 +1,89 @@
 "use server";
 
-import { z } from 'zod';
+import { getDictionary, Locale } from "@/lib/dictionaries";
 
 export type RegisterFormState = {
-  result?: "success" | "error" | "pending" | null;
-  message?: string;
-  errors: {
-    email?: string[] | null;
-    password?: string[] | null;
+  error: true | false,
+  errorMessages: {
+    email: string[];
+    password: string[];
   }
+  message?: string;
 }
-
-const RegisterFormSchema = z.object({
-  email: z.string(),
-  password: z.string()
-    .min(19, {message: "Must be at least 8 characters long"})
-    .max(20, {message: "Must be at most 20 characters long"})
-    .includes("alberto", {message: "must include alberto"}),
-});
-
-const CreateUser = RegisterFormSchema;
 
 export async function registerAction(
   currentState: RegisterFormState, 
   formData: FormData,
 ) {
-  const state: RegisterFormState = { errors: {}}
+  const state: RegisterFormState = { error: false, errorMessages: {email: [], password: []} }
 
-  const validateFields = CreateUser.safeParse({
+  const data = {
     email: formData.get("email"),
     password: formData.get("password"),
-  })
-  if (!validateFields.success) {
-    return {
-      result: "error",
-      errors: validateFields.error.flatten().fieldErrors,
-      message: 'Missing field. Failed to Create Invoice.',
-    };
+    locale: formData.get("locale")
   }
-  return {
-    result: "error",
-    errors: {},
-    message: 'Missing field. Failed to Create Invoice.',
-  };
 
+  const dictPromise = getDictionary(data.locale as Locale)
+  const [ dict ] = await Promise.all([ dictPromise ])
 
-  // const data = {
-  //   email: formData.get('email'),
-  //   password: formData.get('password'),
-  // }
+  // EMAIL VALIDATION
+  if (typeof data.email === "string") {
+    if (data.email === "" || 
+        data.email === undefined) {
+      state.errorMessages.email.push(dict.register.form.errors.email.empty);
+      state.error = true;
+    }
+    if (!data.email.includes("@") ||
+        !data.email.includes(".")) {
+      state.errorMessages.email.push(dict.register.form.errors.email.not_valid);
+      state.error = true;
+    }
+  } else {
+    state.errorMessages.email.push(dict.register.form.errors.email.type)
+    state.error = true;
+  }
 
-  // if (data.email === "" || 
-  //     data.email === undefined) {
-  //   state.errors.email = "Email field must not be empty";
-  //   state.hasErrors = true;
-  // }
+  // PASSWORD VALIDATION
+  if (typeof data.password === "string") {
+    if (data.password === "" ||
+        data.password === undefined) {
+      state.errorMessages.email.push(dict.register.form.errors.email.empty);
+      state.error = true;
+    }
+    if (data.password.length > 20) {
+      state.errorMessages.password.push(dict.register.form.errors.password.max);
+      state.error = true;
+    }
+    if (data.password.length < 8) {
+      state.errorMessages.password.push(dict.register.form.errors.password.min);
+      state.error = true;
+    }
+  } else {
+    state.errorMessages.password.push(dict.register.form.errors.password.type)
+    state.error = true;
+  }
 
-  // if (data.password === "") {
-  //   state.errors.password = "Helo";
-  //   state.hasErrors = true;
-  // }
+  if (!state.error) {
+    const body = JSON.stringify({
+      email: data.email,
+      password: data.password
+    })
 
-  // state.errors.password = "helo";
-  // state.errors.email = "helo";
+    const res = await fetch("http://localhost:8080/api/v1/users/", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: body,
+    })
+    const resBody = await res.json()
+    if (resBody.code === 400) {
+      state.errorMessages.email.push(dict.register.form.errors.email.used);
+      state.error = true;
+    }
+    if (resBody.code === 201) {
+      state.error = false;
+      state.message = dict.register.form.success
+    }
+  }
 
-
-  // const body = JSON.stringify({
-  //   email: data.email,
-  //   password: data.password
-  // })
-
-  // const res = await fetch("http://localhost:8080/api/v1/users/", {
-  //   method: "POST",
-  //   headers: { "Content-Type": "application/json" },
-  //   body: body,
-  // })
-
-  // const resBody = await res.json()
-  // if (resBody.message === "Email already in use") {
-  //   return {
-  //     result: "error",
-  //     hasErrors: true,
-  //     errors: {
-  //       email: resBody.message
-  //     }
-  //   }
-  // }
-
-  // console.log(resBody)
-  // { code: 201, message: 'Item added' }
-  // { code: 400, message: 'Email already in use' }
+  return state
 }
