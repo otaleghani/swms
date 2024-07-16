@@ -86,15 +86,8 @@ export async function loginAction(
       state.message = dict.login.form.success
 
       cookies().set({
-        name: "gennaro",
+        name: "access",
         value: resBody.data.accessToken,
-        path: "/",
-        httpOnly: true,
-        sameSite: true,
-      })
-      cookies().set({
-        name: "refresh_token",
-        value: resBody.data.refreshToken,
         path: "/",
         httpOnly: true,
         sameSite: true,

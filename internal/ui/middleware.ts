@@ -1,25 +1,33 @@
-import { NextResponse } from "next/server"; 
-import type { NextRequest } from "next/server";
-import { headers } from "next/headers";
+import { NextResponse, NextRequest } from "next/server"; 
+import { headers, cookies } from "next/headers";
 
 const languages = ["it", "en", "es"];
 
 export function middleware(request: NextRequest) {
   const locales = headers().get('accept-language');
   const { pathname } = request.nextUrl;
+
+  if (cookies().get("access") === undefined) {
+    console.log(pathname)
+    if (!pathname.includes("login") && !pathname.includes("register")) {
+      request.nextUrl.pathname = "login"
+      const response = NextResponse.redirect(request.nextUrl)
+      return response
+    }
+  }
+
   if (pathname.startsWith('/assets')) {
     return 
   }
   if (pathname.startsWith('/favicon')) {
     return 
   }
-  // if (pathname.startsWith('/tets')) {
-  //   return 
-  // }
+  if (pathname.startsWith("/api")) {
+    return 
+  }
   if (request.method === "POST") {
     return 
   }
-
 
   const pathnameHasLocale = languages.some((locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`)
  

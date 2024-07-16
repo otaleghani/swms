@@ -43,7 +43,7 @@ func getAccessToken(id string, db *database.Database) (string, error) {
 	}
 
 	claims := jwt.RegisteredClaims{
-		ExpiresAt: jwt.NewNumericDate(time.Now().Add(1 * time.Hour)),
+		// ExpiresAt: jwt.NewNumericDate(time.Now().Add(1 * time.Hour)),
 		IssuedAt:  jwt.NewNumericDate(time.Now()),
 		Issuer:    "swms",
 		Subject:   id,
