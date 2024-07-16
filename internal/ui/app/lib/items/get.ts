@@ -15,7 +15,7 @@ export default async function GetItems() {
   const body = await res.json();
 
   if (body.code === 401) {
-    redirect("/login") 
+    redirect("/login?error=403") 
   }
 
   if (body.code === 200) {

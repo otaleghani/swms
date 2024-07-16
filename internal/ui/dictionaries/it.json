@@ -14,6 +14,7 @@
       "button": "Accedi",
       "pending": "Un secondo...",
       "success": "Accesso avvenuto con successo. Stai per essere redirezionato",
+      "invalid_token": "Ho avuto dei problemi ad accedere al server. Ritenta il login",
       "errors": {
         "email": {
           "type": "Email fornita non è valida, riprova.",

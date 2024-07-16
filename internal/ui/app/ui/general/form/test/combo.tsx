@@ -19,32 +19,15 @@ import {
 } from "@/components/popover"
 import { CommandList } from "cmdk"
 
-export function ComboboxSelect() {
+interface TestComboboxSelectProps {
+  frameworks: any;
+  stocaz: any;
+  setStocaz: any;
+}
+
+export function TestComboboxSelect({ frameworks, stocaz, setStocaz }: TestComboboxSelectProps) {
   const [open, setOpen] = React.useState(false)
   const [value, setValue] = React.useState("")
-
-  const frameworks = [
-    {
-      value: "next.js",
-      label: "Next.js",
-    },
-    {
-      value: "sveltekit",
-      label: "SvelteKit",
-    },
-    {
-      value: "nuxt.js",
-      label: "Nuxt.js",
-    },
-    {
-      value: "remix",
-      label: "Remix",
-    },
-    {
-      value: "astro",
-      label: "Astro",
-    },
-  ]
 
   return (
     <>
@@ -57,7 +40,7 @@ export function ComboboxSelect() {
             className="w-[200px] justify-between"
           >
             {value
-              ? frameworks.find((framework) => framework.value === value)?.label
+              ? frameworks.find((framework: any) => framework.value === value)?.label
               : "Select framework..."}
             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
@@ -68,13 +51,14 @@ export function ComboboxSelect() {
             <CommandEmpty>No framework found.</CommandEmpty>
             <CommandList>
             <CommandGroup>
-              {frameworks.map((framework) => (
+              {frameworks.map((framework: any) => (
                 <CommandItem
                   key={framework.value}
                   value={framework.value}
                   onSelect={(currentValue) => {
                     setValue(currentValue === value ? "" : currentValue)
                     setOpen(false)
+                    setStocaz(currentValue)
                   }}
                 >
                   <Check

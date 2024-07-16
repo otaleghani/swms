@@ -9,6 +9,7 @@ import { Loader2 } from "lucide-react";
 import FormFieldError from "@/app/ui/general/form/error_field";
 import FormError from "@/app/ui/general/form/error_form";
 import FormSuccess from "@/app/ui/general/form/success";
+import { useSearchParams } from "next/navigation";
 
 interface LoginFormProps {
   label: {
@@ -16,18 +17,24 @@ interface LoginFormProps {
     password: string;
     button: string;
     pending: string;
+    invalid_token: string;
   };
   lang: string;
 }
 
 export default function LoginForm({ label, lang }: LoginFormProps) {
+  const error = useSearchParams().get("error") ? label.invalid_token : undefined
+
   const initialState: LoginFormState = {
-    error: false, 
+    error: error ? true : false, 
     errorMessages: {
       email: [],
       password: [],
-  }}
+    },
+    message: error,
+  }
   const [state, formAction, isPending] = useActionState(loginAction, initialState);
+  
 
   return (
     <>
