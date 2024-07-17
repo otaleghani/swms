@@ -69,6 +69,14 @@
   },
   "category": {
     "form": {
+      "name": {
+        "placeholder": "Nome dalla categoria",
+        "name": "Nome",
+      },
+      "description": "Una breve descrizione",
+      "button": "Aggiungi",
+      "pending": "Un secondo...",
+      "success": "Form inviato con successo.",
       "errors": {
         "name": {
           "type": "Il nome deve essere una stringa.",

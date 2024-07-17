@@ -4,6 +4,7 @@ import { getDictionary, Locale } from "@/lib/dictionaries";
 import AddItemForm from "../ui/general/form/items/add/form";
 import { ComboboxForm } from "../ui/general/form/test-shad";
 import TestForm from "../ui/general/form/test/form";
+import SelectCategory from "../ui/general/form/select/category/field";
 
 interface HomeProps {
   params: {
@@ -21,7 +22,10 @@ export default async function Home({ params }: HomeProps ) {
     <main className="px-96 py-40">
       <h1 className="text-2xl">{dict.home.title}</h1>
       <Image src={"/assets/next.svg"} width={50} height={50} alt=""/>
-      <TestForm data={parsedData}/>
+      {
+      // <TestForm data={parsedData}/>
+      }
+      <SelectCategory data={parsedData} lang={params.lang} dict={dict.category.form} />
     </main>
   );
 }

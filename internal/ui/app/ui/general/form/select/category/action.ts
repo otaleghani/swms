@@ -11,6 +11,10 @@ export type FormCategoryState = {
     description: string[];
   }
   message?: string;
+  result?: {
+    id: string;
+    name: string;
+  }
 }
 
 export async function AddNewCategory(
@@ -20,7 +24,7 @@ export async function AddNewCategory(
     errorMessages: {
       name: [],
       description: [],
-    }
+    },
   }
   const data = {
     name: formData.get("name"),
@@ -34,15 +38,15 @@ export async function AddNewCategory(
   if (typeof data.name === "string") {
     if (data.name === "" || 
         data.name === undefined) {
-      state.errorMessages.name.push(dict.category.form.errors.email.empty);
+      state.errorMessages.name.push(dict.category.form.errors.name.empty);
       state.error = true;
     }
     if (data.name.length > 40) {
-      state.errorMessages.name.push(dict.category.form.errors.email.max);
+      state.errorMessages.name.push(dict.category.form.errors.name.max);
       state.error = true;
     }
   } else {
-    state.errorMessages.name.push(dict.category.form.errors.email.type)
+    state.errorMessages.name.push(dict.category.form.errors.name.type)
     state.error = true;
   }
 
@@ -54,5 +58,10 @@ export async function AddNewCategory(
 
   // ERROR HANDLING
 
+  state.message = "everything is a-okay"
+  state.result = {
+    id: "anvedi",
+    name: "something"
+  }
   return state
 }

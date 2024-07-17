@@ -45,7 +45,7 @@ export function ComboboxSelect({ list, element, setElement }: ComboboxSelectProp
             className="w-[200px] justify-between"
           >
             {element
-              ? list.find((item: any) => item.id === element)?.id
+              ? list.find((item: any) => item.id === element)?.name
               : "Select framework..."}
             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
@@ -71,7 +71,7 @@ export function ComboboxSelect({ list, element, setElement }: ComboboxSelectProp
                       element === item.id ? "opacity-100" : "opacity-0"
                     )}
                   />
-                  {item.id}
+                  {item.name}
                 </CommandItem>
               ))}
             </CommandGroup>

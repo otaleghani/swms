@@ -7,7 +7,22 @@ import { Button } from "@/components/button";
 import { CirclePlus } from "lucide-react";
 import { DialogAddCategory } from "./dialog";
 
-export default function SelectCategory({ data }: { data: any }) {
+interface SelectCategoryProps {
+  data: {
+    id: string;
+    name: string;
+  }[],
+  lang: string;
+  dict: {
+    name: string;
+    description: string;
+    button: string;
+    pending: string;
+    success: string;
+  }
+}
+
+export default function SelectCategory({ data, lang, dict }: SelectCategoryProps) {
   const [element, setElement] = useState("")
   const [list, setList] = useState(data)
 
@@ -15,7 +30,7 @@ export default function SelectCategory({ data }: { data: any }) {
     const newList = list
     newList.push(item)
     setList(newList)
-    setElement(newList.value)
+    setElement(item.id)
   }
 
   return (
@@ -25,7 +40,10 @@ export default function SelectCategory({ data }: { data: any }) {
         list={list} 
         element={element} 
         setElement={setElement} />
-      <DialogAddCategory handler={handleNewCategory} />
+      <DialogAddCategory 
+        handler={handleNewCategory} 
+        lang={lang} 
+        dict={dict} />
     </div>
   )
 }
