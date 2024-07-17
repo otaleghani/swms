@@ -1,3 +1,9 @@
+// The combo takes an array of objects
+// { 
+//    id: string;
+//    name: string;
+// }
+
 "use client"
 
 import * as React from "react"
@@ -19,16 +25,14 @@ import {
 } from "@/components/popover"
 import { CommandList } from "cmdk"
 
-interface TestComboboxSelectProps {
+interface ComboboxSelectProps {
   list: any;
   element: any;
   setElement: any;
 }
 
-export function TestComboboxSelect({ list, element, setElement }: TestComboboxSelectProps) {
+export function ComboboxSelect({ list, element, setElement }: ComboboxSelectProps) {
   const [open, setOpen] = React.useState(false)
-
-  //const [value, setValue] = React.useState("")
 
   return (
     <>

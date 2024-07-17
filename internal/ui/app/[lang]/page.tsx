@@ -21,7 +21,7 @@ export default async function Home({ params }: HomeProps ) {
     <main className="px-96 py-40">
       <h1 className="text-2xl">{dict.home.title}</h1>
       <Image src={"/assets/next.svg"} width={50} height={50} alt=""/>
-      <TestForm />
+      <TestForm data={parsedData}/>
     </main>
   );
 }

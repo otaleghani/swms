@@ -66,5 +66,19 @@
         }
       }
     }
+  },
+  "category": {
+    "form": {
+      "errors": {
+        "name": {
+          "type": "Il nome deve essere una stringa.",
+          "empty": "Il nome non può essere vuoto.",
+          "not_valid": "Il nome che hai inserito non è valido.",
+          "min": "Il nome deve essere di almeno 1 carattere.",
+          "max": "Il nome deve essere di massimo 40 caratteri.",
+          "used": "Il nome che hai inserito è già in uso."
+        }
+      }
+    }
   }
 }
