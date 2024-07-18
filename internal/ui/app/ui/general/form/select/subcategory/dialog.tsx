@@ -26,7 +26,7 @@ import { useActionState, useEffect, useState } from "react";
 import { useMediaQuery } from "usehooks-ts"
 
 import { AddNewSubcategory, FormSubcategoryState } from "./action";
-import { Select } from "@radix-ui/react-select"
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@radix-ui/react-select"
 
 interface DialogProps {
   handler: any;
@@ -40,6 +40,10 @@ interface DialogProps {
         placeholder: string;
       };
       description: {
+        label: string;
+        placeholder: string;
+      };
+      category: {
         label: string;
         placeholder: string;
       };
@@ -101,6 +105,7 @@ export function DialogAddSubcategory({ handler, lang, dict, category }: DialogPr
             lang={lang}
             dict={dict}
             setOpen={setOpen}
+            category={category}
           />
         </div>
         <DrawerFooter className="pt-2">
@@ -128,6 +133,10 @@ interface CategoryFormProps {
         label: string;
         placeholder: string;
       };
+      category: {
+        label: string;
+        placeholder: string;
+      };
     };
     button: string;
     pending: string;
@@ -146,14 +155,16 @@ function CategoryForm({ handler, lang, dict, setOpen, category }: CategoryFormPr
     errorMessages: {
       name: [],
       description: [],
+      category: [],
     }
   }
+
   const [state, action, isPending] = useActionState(AddNewSubcategory, initialState)
 
   useEffect(() => {
     if (!state.error && state.message) {
-      setOpen(false)
-      handler(state.result)
+      setOpen(false);
+      handler(state.result);
     }
   }, [state])
 
@@ -175,11 +186,11 @@ function CategoryForm({ handler, lang, dict, setOpen, category }: CategoryFormPr
           />
         </div>
         <div>
-          <Label htmlFor="name" className="text-right">{dict.fields.description.label}</Label>
+          <Label htmlFor="category" className="text-right">{dict.fields.category.label}</Label>
+          <input type="hidden" value={category.id} name="category" />
           <Input
             disabled
-            name="category"
-            defaultValue={category.id}
+            defaultValue={category.name}
             placeholder="sandro"
           />
         </div>

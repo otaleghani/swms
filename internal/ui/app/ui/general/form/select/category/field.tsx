@@ -7,9 +7,7 @@ import { DialogAddCategory } from "./dialog";
 import { DialogAddSubcategory } from "../subcategory/dialog";
 
 interface SelectCategoryProps {
-  categoryData: {
-    id: string;
-    name: string;
+  categoryData: { id: string; name: string;
   }[],
   subcategoryData: {
     id: string;
@@ -17,7 +15,7 @@ interface SelectCategoryProps {
     category: string;
   }[],
   lang: string;
-  dict: {
+  dictCategory: {
     combobox: {
       select: string;
       search: string;
@@ -38,15 +36,17 @@ interface SelectCategoryProps {
     button: string;
     pending: string;
     success: string;
-  }
+  };
+  dictSubcategory: any;
 }
 
-export default function SelectCategory({ categoryData, subcategoryData, lang, dict }: SelectCategoryProps) {
+export default function SelectCategory({ categoryData, subcategoryData, lang, dictCategory, dictSubcategory }: SelectCategoryProps) {
   const [category, setCategory] = useState({id: "", name: ""})
   const [categoryList, setCategoryList] = useState(categoryData)
   
   const [subcategory, setSubcategory] = useState({id: "", name: "", category: ""})
   const [subcategoryList, setSubcategoryList] = useState(subcategoryData)
+  const [subcategoryFilteredList, setSubcategoryFilteredList] = useState(subcategoryData)
 
   async function handleNewCategory(item: any) {
     const newList = categoryList
@@ -54,14 +54,28 @@ export default function SelectCategory({ categoryData, subcategoryData, lang, di
     setCategoryList(newList)
     setCategory(item)
   }
-
-  // handle new subcategory?
-  // Yes, it has to chage the subcategory and the list
+  async function handleNewSubcategory(item: any) {
+    const newList = subcategoryList
+    newList.push(item)
+    setSubcategoryList(newList)
+    setSubcategory(item)
+  }
 
   useEffect(() => {
-    // if (category.id === "") => resetta subcategory
-    console.log(subcategoryList)
-    
+    // FILTER SUBCATEGORIES BASED ON THE CATEGORY
+    const newList = []
+    for (let i = 0; i < subcategoryList.length; i++) {
+      if (subcategoryList[i].category === category.id) {
+        newList.push(subcategoryList[i])
+      }
+    }
+    setSubcategoryFilteredList(newList)
+  }, [category, subcategory])
+
+  useEffect(() => {
+    if (category.id !== subcategory.category) {
+      setSubcategory({id: "", name: "", category: ""});
+    }
   }, [category])
 
   return (
@@ -72,25 +86,25 @@ export default function SelectCategory({ categoryData, subcategoryData, lang, di
           list={categoryList} 
           element={category} 
           setElement={setCategory} 
-          dict={dict.combobox} />
+          dict={dictCategory.combobox} />
         <DialogAddCategory 
           handler={handleNewCategory} 
           lang={lang} 
-          dict={dict} />
+          dict={dictCategory} />
       </div>
       { category.id !== "" && (
         <div className="flex w-full">
           <input type="hidden" name="category" value={category.id} />
           <ComboboxSelect 
-            list={subcategoryList} 
+            list={subcategoryFilteredList} 
             element={subcategory} 
             setElement={setSubcategory} 
-            dict={dict.combobox} />
+            dict={dictSubcategory.combobox} />
           <DialogAddSubcategory 
-            handler={handleNewCategory}
+            handler={handleNewSubcategory}
             lang={lang} 
             category={category}
-            dict={dict} />
+            dict={dictSubcategory} />
         </div>
       )}
     </>

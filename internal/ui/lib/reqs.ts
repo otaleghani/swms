@@ -54,10 +54,6 @@ export async function getCategory() {
       response.push(body.data[i])
     }
   }
-
-  // const index = body.data.indexOf({id: "nil"});
-  // console.log(index)
-  // body.data.pop(index)
   return response
 }
 
@@ -71,6 +67,11 @@ export async function getSubcategory() {
     },
   });
   const body = await res.json()
-  console.log(body.data)
-  return body.data
+  const response = []
+  for (let i = 0; i < body.data.length; i++) {
+    if (body.data[i].id != "nil") {
+      response.push(body.data[i])
+    }
+  }
+  return response
 }

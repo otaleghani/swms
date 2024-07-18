@@ -100,5 +100,43 @@
         }
       }
     }
+  },
+  "subcategory": {
+    "form": {
+      "combobox": {
+        "select": "Seleziona sottocategoria...",
+        "search": "Cerca una sottocategoria...",
+        "empty": "Nessuna sottocategoria"
+      },
+      "title": "Aggiungi una nuova sottocategoria",
+      "description": "Usa questo form per aggiungere una nuova sottocategoria e selezionarla automaticamente.",
+      "fields": {
+        "name": {
+          "placeholder": "Nome dalla sottocategoria",
+          "label": "Nome"
+        },
+        "description": {
+          "placeholder": "Una breve descrizione",
+          "label": "Descrizione"
+        },
+        "category": {
+          "placeholder": "Categoria",
+          "label": "Categoria"
+        }
+      },
+      "button": "Aggiungi",
+      "pending": "Un secondo...",
+      "success": "Form inviato con successo.",
+      "errors": {
+        "name": {
+          "type": "Il nome deve essere una stringa.",
+          "empty": "Il nome non può essere vuoto.",
+          "not_valid": "Il nome che hai inserito non è valido.",
+          "min": "Il nome deve essere di almeno 1 carattere.",
+          "max": "Il nome deve essere di massimo 40 caratteri.",
+          "used": "Il nome che hai inserito è già in uso."
+        }
+      }
+    }
   }
 }

@@ -38,7 +38,7 @@ interface ComboboxSelectProps {
 
 export function ComboboxSelect({ list, element, setElement, dict }: ComboboxSelectProps) {
   const [open, setOpen] = React.useState(false)
-  console.log("ComboboxSelect: ", element)
+  // console.log("ComboboxSelect: ", element)
 
   return (
     <>
