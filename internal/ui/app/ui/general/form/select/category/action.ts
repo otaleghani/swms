@@ -60,7 +60,7 @@ export async function AddNewCategory(
       description: data.description,
     })
     const jwt = cookies().get("access")?.value
-    const res = await fetch("http://localhost:8080/api/v1/items/", {
+    const res = await fetch("http://localhost:8080/api/v1/categories/", {
       method: "POST",
       headers: { 
         "Content-Type": "application/json",
@@ -86,3 +86,5 @@ export async function AddNewCategory(
   }
   return state
 }
+
+// create subcategory here? 

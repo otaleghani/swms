@@ -1,16 +1,20 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { ComboboxSelect } from "@/app/ui/general/form/select/combobox";
-import { Button } from "@/components/button";
-import { CirclePlus } from "lucide-react";
 import { DialogAddCategory } from "./dialog";
+import { DialogAddSubcategory } from "../subcategory/dialog";
 
 interface SelectCategoryProps {
-  data: {
+  categoryData: {
     id: string;
     name: string;
+  }[],
+  subcategoryData: {
+    id: string;
+    name: string;
+    category: string;
   }[],
   lang: string;
   dict: {
@@ -37,29 +41,58 @@ interface SelectCategoryProps {
   }
 }
 
-export default function SelectCategory({ data, lang, dict }: SelectCategoryProps) {
-  const [element, setElement] = useState("")
-  const [list, setList] = useState(data)
+export default function SelectCategory({ categoryData, subcategoryData, lang, dict }: SelectCategoryProps) {
+  const [category, setCategory] = useState({id: "", name: ""})
+  const [categoryList, setCategoryList] = useState(categoryData)
+  
+  const [subcategory, setSubcategory] = useState({id: "", name: "", category: ""})
+  const [subcategoryList, setSubcategoryList] = useState(subcategoryData)
 
   async function handleNewCategory(item: any) {
-    const newList = list
+    const newList = categoryList
     newList.push(item)
-    setList(newList)
-    setElement(item.id)
+    setCategoryList(newList)
+    setCategory(item)
   }
 
+  // handle new subcategory?
+  // Yes, it has to chage the subcategory and the list
+
+  useEffect(() => {
+    // if (category.id === "") => resetta subcategory
+    console.log(subcategoryList)
+    
+  }, [category])
+
   return (
-    <div className="flex w-full">
-      <input type="hidden" name="category" value={element} />
-      <ComboboxSelect 
-        list={list} 
-        element={element} 
-        setElement={setElement} 
-        dict={dict.combobox} />
-      <DialogAddCategory 
-        handler={handleNewCategory} 
-        lang={lang} 
-        dict={dict} />
-    </div>
+    <>
+      <div className="flex w-full">
+        <input type="hidden" name="category" value={category.id} />
+        <ComboboxSelect 
+          list={categoryList} 
+          element={category} 
+          setElement={setCategory} 
+          dict={dict.combobox} />
+        <DialogAddCategory 
+          handler={handleNewCategory} 
+          lang={lang} 
+          dict={dict} />
+      </div>
+      { category.id !== "" && (
+        <div className="flex w-full">
+          <input type="hidden" name="category" value={category.id} />
+          <ComboboxSelect 
+            list={subcategoryList} 
+            element={subcategory} 
+            setElement={setSubcategory} 
+            dict={dict.combobox} />
+          <DialogAddSubcategory 
+            handler={handleNewCategory}
+            lang={lang} 
+            category={category}
+            dict={dict} />
+        </div>
+      )}
+    </>
   )
 }

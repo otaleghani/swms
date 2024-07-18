@@ -37,3 +37,40 @@ export async function getItemsName() {
   }
   return parsedData
 }
+
+export async function getCategory() {
+  const jwt = cookies().get("access")?.value
+  const res = await fetch("http://localhost:8080/api/v1/categories/", {
+    method: "GET",
+    headers: {
+      "Authorization": `Bearer ${jwt}`,
+      "Content-Type": "application/json",
+    },
+  });
+  const body = await res.json()
+  const response = []
+  for (let i = 0; i < body.data.length; i++) {
+    if (body.data[i].id != "nil") {
+      response.push(body.data[i])
+    }
+  }
+
+  // const index = body.data.indexOf({id: "nil"});
+  // console.log(index)
+  // body.data.pop(index)
+  return response
+}
+
+export async function getSubcategory() {
+  const jwt = cookies().get("access")?.value
+  const res = await fetch("http://localhost:8080/api/v1/subcategories/", {
+    method: "GET",
+    headers: {
+      "Authorization": `Bearer ${jwt}`,
+      "Content-Type": "application/json",
+    },
+  });
+  const body = await res.json()
+  console.log(body.data)
+  return body.data
+}

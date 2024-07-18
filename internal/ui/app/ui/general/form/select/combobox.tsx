@@ -50,13 +50,13 @@ export function ComboboxSelect({ list, element, setElement, dict }: ComboboxSele
             aria-expanded={open}
             className="w-full justify-between"
           >
-            {element
-              ? list.find((item: any) => item.id === element)?.name
+            {element.name != '' 
+              ? list.find((item: any) => item.name === element.name)?.name
               : dict.select }
             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-96 p-0">
+        <PopoverContent className="w-[--radix-popover-trigger-width] h-[--radix-popover-content-available-height] p-0">
           <Command>
             <CommandInput placeholder={dict.search} />
             <CommandEmpty>{dict.empty}</CommandEmpty>
@@ -65,16 +65,21 @@ export function ComboboxSelect({ list, element, setElement, dict }: ComboboxSele
               {list.map((item: any) => (
                 <CommandItem
                   key={item.id}
-                  value={item.id}
+                  value={item.name}
                   onSelect={(currentValue) => {
-                    setElement(currentValue === element ? "" : currentValue)
+                    setElement(currentValue === element.name 
+                    ? {id: "", name: ""} 
+                    : {
+                        id: list.find((item: any) => item.name === currentValue)?.id, 
+                        name: currentValue
+                    })
                     setOpen(false)
                   }}
                 >
                   <Check
                     className={cn(
                       "mr-2 h-4 w-4",
-                      element === item.id ? "opacity-100" : "opacity-0"
+                      element.id === item.id ? "opacity-100" : "opacity-0"
                     )}
                   />
                   {item.name}

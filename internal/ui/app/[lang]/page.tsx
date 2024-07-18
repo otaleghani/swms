@@ -1,5 +1,6 @@
 import Image from "next/image";
 import GetItems from "@/app/lib/items/get";
+import { getCategory, getSubcategory } from "@/lib/reqs";
 import { getDictionary, Locale } from "@/lib/dictionaries";
 import AddItemForm from "../ui/general/form/items/add/form";
 import { ComboboxForm } from "../ui/general/form/test-shad";
@@ -16,13 +17,17 @@ export default async function Home({ params }: HomeProps ) {
   const dict = await getDictionary(params.lang as Locale);
 
   const data = GetItems()
-  const [ parsedData ] = await Promise.all([data])
+  const category = getCategory()
+  const subcategory = getSubcategory()
+  const [ parsedData, parsedCategory, parsedSubcategory ] = await Promise.all([data, category, subcategory])
 
   return (
-    <main className="">
-      <h1 className="text-2xl">{dict.home.title}</h1>
-      <Image src={"/assets/next.svg"} width={50} height={50} alt=""/>
-      <SelectCategory data={parsedData} lang={params.lang} dict={dict.category.form} />
+    <main className="w-full p-4">
+      <SelectCategory 
+        categoryData={parsedCategory} 
+        subcategoryData={parsedSubcategory}
+        lang={params.lang} 
+        dict={dict.category.form} />
     </main>
   );
 }

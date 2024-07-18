@@ -25,7 +25,8 @@ import { Loader2, PlusCircleIcon } from "lucide-react"
 import { useActionState, useEffect, useState } from "react";
 import { useMediaQuery } from "usehooks-ts"
 
-import { AddNewCategory, FormCategoryState } from "./action";
+import { AddNewSubcategory, FormSubcategoryState } from "./action";
+import { Select } from "@radix-ui/react-select"
 
 interface DialogProps {
   handler: any;
@@ -47,10 +48,14 @@ interface DialogProps {
     pending: string;
     success: string;
   };
+  category: {
+    id: string;
+    name: string;
+  };
 }
 
 
-export function DialogAddCategory({ handler, lang, dict }: DialogProps) {
+export function DialogAddSubcategory({ handler, lang, dict, category }: DialogProps) {
   const isDesktop = useMediaQuery("(min-width: 768px)")
   const [open, setOpen] = useState(false);
 
@@ -72,6 +77,7 @@ export function DialogAddCategory({ handler, lang, dict }: DialogProps) {
               lang={lang}
               dict={dict}
               setOpen={setOpen}
+              category={category}
             />
         </DialogContent>
       </Dialog>
@@ -128,17 +134,21 @@ interface CategoryFormProps {
     success: string;
   };
   setOpen: any;
+  category: {
+    id: string;
+    name: string;
+  };
 }
 
-function CategoryForm({ handler, lang, dict, setOpen }: CategoryFormProps) {
-  const initialState: FormCategoryState = {
+function CategoryForm({ handler, lang, dict, setOpen, category }: CategoryFormProps) {
+  const initialState: FormSubcategoryState = {
     error: false,
     errorMessages: {
       name: [],
       description: [],
     }
   }
-  const [state, action, isPending] = useActionState(AddNewCategory, initialState)
+  const [state, action, isPending] = useActionState(AddNewSubcategory, initialState)
 
   useEffect(() => {
     if (!state.error && state.message) {
@@ -162,6 +172,15 @@ function CategoryForm({ handler, lang, dict, setOpen }: CategoryFormProps) {
           <Input
             name="description"
             placeholder={dict.fields.description.placeholder}
+          />
+        </div>
+        <div>
+          <Label htmlFor="name" className="text-right">{dict.fields.description.label}</Label>
+          <Input
+            disabled
+            name="category"
+            defaultValue={category.id}
+            placeholder="sandro"
           />
         </div>
         <Button 
