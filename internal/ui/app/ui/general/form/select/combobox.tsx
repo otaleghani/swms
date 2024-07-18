@@ -29,10 +29,16 @@ interface ComboboxSelectProps {
   list: any;
   element: any;
   setElement: any;
+  dict: {
+    select: string;
+    search: string;
+    empty: string;
+  }
 }
 
-export function ComboboxSelect({ list, element, setElement }: ComboboxSelectProps) {
+export function ComboboxSelect({ list, element, setElement, dict }: ComboboxSelectProps) {
   const [open, setOpen] = React.useState(false)
+  console.log("ComboboxSelect: ", element)
 
   return (
     <>
@@ -42,18 +48,18 @@ export function ComboboxSelect({ list, element, setElement }: ComboboxSelectProp
             variant="outline"
             role="combobox"
             aria-expanded={open}
-            className="w-[200px] justify-between"
+            className="w-full justify-between"
           >
             {element
               ? list.find((item: any) => item.id === element)?.name
-              : "Select framework..."}
+              : dict.select }
             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-[200px] p-0">
+        <PopoverContent className="w-96 p-0">
           <Command>
-            <CommandInput placeholder="Search framework..." />
-            <CommandEmpty>No framework found.</CommandEmpty>
+            <CommandInput placeholder={dict.search} />
+            <CommandEmpty>{dict.empty}</CommandEmpty>
             <CommandList>
             <CommandGroup>
               {list.map((item: any) => (

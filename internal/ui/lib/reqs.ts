@@ -28,7 +28,6 @@ export async function getItemsName() {
   const [items] = await Promise.all([itemsData]);
   const parsedData = [];
   if (items.data === undefined) {
-    
 
     // redirect("/login")
     return []

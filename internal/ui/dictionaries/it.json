@@ -69,11 +69,23 @@
   },
   "category": {
     "form": {
-      "name": {
-        "placeholder": "Nome dalla categoria",
-        "name": "Nome",
+      "combobox": {
+        "select": "Seleziona categoria...",
+        "search": "Cerca una categoria...",
+        "empty": "Nessuna categoria"
       },
-      "description": "Una breve descrizione",
+      "title": "Aggiungi una nuova categoria",
+      "description": "Usa questo form per aggiungere una nuova categoria e selezionarla automaticamente.",
+      "fields": {
+        "name": {
+          "placeholder": "Nome dalla categoria",
+          "label": "Nome"
+        },
+        "description": {
+          "placeholder": "Una breve descrizione",
+          "label": "Descrizione"
+        }
+      },
       "button": "Aggiungi",
       "pending": "Un secondo...",
       "success": "Form inviato con successo.",

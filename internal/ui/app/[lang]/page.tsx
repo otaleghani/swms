@@ -19,12 +19,9 @@ export default async function Home({ params }: HomeProps ) {
   const [ parsedData ] = await Promise.all([data])
 
   return (
-    <main className="px-96 py-40">
+    <main className="">
       <h1 className="text-2xl">{dict.home.title}</h1>
       <Image src={"/assets/next.svg"} width={50} height={50} alt=""/>
-      {
-      // <TestForm data={parsedData}/>
-      }
       <SelectCategory data={parsedData} lang={params.lang} dict={dict.category.form} />
     </main>
   );

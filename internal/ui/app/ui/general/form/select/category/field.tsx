@@ -14,8 +14,23 @@ interface SelectCategoryProps {
   }[],
   lang: string;
   dict: {
-    name: string;
+    combobox: {
+      select: string;
+      search: string;
+      empty: string;
+    },
+    title: string;
     description: string;
+    fields: {
+      name: {
+        label: string;
+        placeholder: string;
+      };
+      description: {
+        label: string;
+        placeholder: string;
+      };
+    };
     button: string;
     pending: string;
     success: string;
@@ -34,12 +49,13 @@ export default function SelectCategory({ data, lang, dict }: SelectCategoryProps
   }
 
   return (
-    <div className="flex">
+    <div className="flex w-full">
       <input type="hidden" name="category" value={element} />
       <ComboboxSelect 
         list={list} 
         element={element} 
-        setElement={setElement} />
+        setElement={setElement} 
+        dict={dict.combobox} />
       <DialogAddCategory 
         handler={handleNewCategory} 
         lang={lang} 

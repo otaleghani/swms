@@ -10,10 +10,21 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/dialog"
+import {
+  Drawer, 
+  DrawerTrigger,
+  DrawerClose,
+  DrawerTitle,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerContent
+} from "@/components/drawer"
 import { Input } from "@/components/input"
 import { Label } from "@/components/label"
-import { Loader2 } from "lucide-react"
+import { Loader2, PlusCircleIcon } from "lucide-react"
 import { useActionState, useEffect, useState } from "react";
+import { useMediaQuery } from "usehooks-ts"
 
 import { AddNewCategory, FormCategoryState } from "./action";
 
@@ -21,15 +32,106 @@ interface DialogProps {
   handler: any;
   lang: string;
   dict: {
-    name: string;
+    title: string;
     description: string;
+    fields: {
+      name: {
+        label: string;
+        placeholder: string;
+      };
+      description: {
+        label: string;
+        placeholder: string;
+      };
+    };
     button: string;
     pending: string;
     success: string;
   };
 }
 
+
 export function DialogAddCategory({ handler, lang, dict }: DialogProps) {
+  const isDesktop = useMediaQuery("(min-width: 768px)")
+  const [open, setOpen] = useState(false);
+
+  if (isDesktop) {
+    return (
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogTrigger asChild>
+          <Button variant="outline" className="ml-2 p-0 aspect-square">
+            <PlusCircleIcon className="h-[1.2rem] w-[1.2rem]" />
+          </Button>
+        </DialogTrigger>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>{dict.title}</DialogTitle>
+            <DialogDescription>{dict.description}</DialogDescription>
+          </DialogHeader>
+            <CategoryForm 
+              handler={handler}
+              lang={lang}
+              dict={dict}
+              setOpen={setOpen}
+            />
+        </DialogContent>
+      </Dialog>
+    )
+  }
+  return (
+    <Drawer open={open} onOpenChange={setOpen}>
+      <DrawerTrigger asChild>
+        <Button variant="outline" className="ml-2 p-0 aspect-square">
+          <PlusCircleIcon className="h-[1.2rem] w-[1.2rem]" />
+        </Button>
+      </DrawerTrigger>
+      <DrawerContent>
+        <DrawerHeader className="text-left">
+          <DrawerTitle>{dict.title}</DrawerTitle>
+          <DrawerDescription>{dict.description}</DrawerDescription>
+        </DrawerHeader>
+        <div className="px-4">
+          <CategoryForm 
+            handler={handler}
+            lang={lang}
+            dict={dict}
+            setOpen={setOpen}
+          />
+        </div>
+        <DrawerFooter className="pt-2">
+          <DrawerClose asChild>
+            <Button variant="outline">Cancel</Button>
+          </DrawerClose>
+        </DrawerFooter>
+      </DrawerContent>
+    </Drawer>
+  )
+}
+
+interface CategoryFormProps {
+  handler: any;
+  lang: string;
+  dict: {
+    title: string;
+    description: string;
+    fields: {
+      name: {
+        label: string;
+        placeholder: string;
+      };
+      description: {
+        label: string;
+        placeholder: string;
+      };
+    };
+    button: string;
+    pending: string;
+    success: string;
+  };
+  setOpen: any;
+}
+
+function CategoryForm({ handler, lang, dict, setOpen }: CategoryFormProps) {
   const initialState: FormCategoryState = {
     error: false,
     errorMessages: {
@@ -37,10 +139,7 @@ export function DialogAddCategory({ handler, lang, dict }: DialogProps) {
       description: [],
     }
   }
-
-  const [open, setOpen] = useState(false);
   const [state, action, isPending] = useActionState(AddNewCategory, initialState)
-  console.log(state)
 
   useEffect(() => {
     if (!state.error && state.message) {
@@ -50,48 +149,32 @@ export function DialogAddCategory({ handler, lang, dict }: DialogProps) {
   }, [state])
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button variant="outline">Edit Profile</Button>
-      </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
-        <form action={action} id="category_dialog">
-          <DialogHeader>
-            <DialogTitle>Edit profile</DialogTitle>
-            <DialogDescription>
-              Make changes to your profile here. Click save when you're done.
-            </DialogDescription>
-          </DialogHeader>
-
-        <div className="grid gap-4 py-4">
-          <div className="grid items-center gap-4">
-          <input type="hidden" name="locale" value={lang} />
-              <div>
-                <Label htmlFor="name" className="text-right">asd</Label>
-                <Input
-                  name="name"
-                  placeholder={dict.name}
-                />
-              </div>
-              <div>
-                <Label htmlFor="name" className="text-right">asd</Label>
-                <Input
-                  name="description"
-                  placeholder={dict.description}
-                />
-              </div>
-
-          </div>
+    <form action={action} id="category_dialog">
+      <div className="grid gap-4 py-4">
+        <input type="hidden" name="locale" value={lang} />
+        <div>
+          <Label htmlFor="name" className="text-right">{dict.fields.name.label}</Label>
+          <Input
+            name="name"
+            placeholder={dict.fields.name.placeholder}/>
         </div>
-        <DialogFooter>
-
-        <Button disabled={isPending} className="mt-2 w-full" type="submit" form="category_dialog">
-          {isPending ? <><Loader2 className="h-4 w-4 mr-2 animate-spin" />{dict.pending}</>
-          : dict.button}
+        <div>
+          <Label htmlFor="name" className="text-right">{dict.fields.description.label}</Label>
+          <Input
+            name="description"
+            placeholder={dict.fields.description.placeholder}
+          />
+        </div>
+        <Button 
+          disabled={isPending} 
+          className="mt-2 w-full" 
+          type="submit" 
+          form="category_dialog">
+            {isPending ? 
+            <><Loader2 className="h-4 w-4 mr-2 animate-spin" />{dict.pending}</>
+            : dict.button}
         </Button>
-        </DialogFooter>
-        </form>
-      </DialogContent>
-    </Dialog>
+      </div>
+    </form>
   )
 }

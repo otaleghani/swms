@@ -51,17 +51,38 @@ export async function AddNewCategory(
   }
 
   // DESCRIPTION VALIDATION
+
   
   // REQUEST
-  
-  // AFTER REQUEST VALIDATION
+  if (!state.error) {
+    const body = JSON.stringify({
+      name: data.name,
+      description: data.description,
+    })
+    const jwt = cookies().get("access")?.value
+    const res = await fetch("http://localhost:8080/api/v1/items/", {
+      method: "POST",
+      headers: { 
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${jwt}`
+      },
+      body: body,
+    })
+    const resBody = await res.json();
+    
+    // AFTER REQUEST VALIDATION
+    if (resBody.code === 400) {
 
-  // ERROR HANDLING
+    }
 
-  state.message = "everything is a-okay"
-  state.result = {
-    id: "anvedi",
-    name: "something"
+    // ERROR HANDLING
+
+    // SUCCESS
+    state.message = "everything is a-okay"
+    state.result = {
+      id: resBody.data.uuid as string,
+      name: data.name as string
+    }
   }
   return state
 }

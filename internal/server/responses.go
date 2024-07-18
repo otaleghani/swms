@@ -16,6 +16,10 @@ type ErrorResponse struct {
 	Details []ErrorDetail `json:"details,omitempty"`
 }
 
+type UniqueId struct {
+  UUID string `json:"uuid"`
+}
+
 func (e ErrorResponse) Send(w http.ResponseWriter, r *http.Request) {
 	body, err := json.Marshal(e)
 	if err != nil {
