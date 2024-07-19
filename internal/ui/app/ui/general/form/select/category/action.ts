@@ -51,7 +51,24 @@ export async function AddNewCategory(
   }
 
   // DESCRIPTION VALIDATION
-
+  if (typeof data.description === "string") {
+    if (data.description === "" || 
+        data.description === undefined) {
+      state.errorMessages.description.push(dict.category.form.errors.description.empty);
+      state.error = true;
+    }
+    if (data.description.length < 2) {
+      state.errorMessages.description.push(dict.category.form.errors.description.min);
+      state.error = true;
+    }
+    if (data.description.length > 100) {
+      state.errorMessages.description.push(dict.category.form.errors.description.max);
+      state.error = true;
+    }
+  } else {
+    state.errorMessages.description.push(dict.category.form.errors.description.type)
+    state.error = true;
+  }
   
   // REQUEST
   if (!state.error) {
@@ -70,12 +87,31 @@ export async function AddNewCategory(
     })
     const resBody = await res.json();
     
+
     // AFTER REQUEST VALIDATION
-    if (resBody.code === 400) {
+    if (resBody.code !== 201) {
+      // not authorized
+      if (resBody.code === 401) {
+        redirect("/login?error=true");
+      }
 
+      // malformed request (marshal failure)
+      if (resBody.code === 400) {
+        state.error = true;
+        state.message = dict.category.form.errors.general.marshal;
+        return state
+      }
+
+      if (resBody.code === 500) {
+        state.error = true;
+        state.message = dict.category.form.errors.general.internal;
+        return state
+      }
+
+      state.error = true;
+      state.message = dict.category.form.errors.general.unknown;
+      return state
     }
-
-    // ERROR HANDLING
 
     // SUCCESS
     state.message = "everything is a-okay"
@@ -84,7 +120,6 @@ export async function AddNewCategory(
       name: data.name as string
     }
   }
+
   return state
 }
-
-// create subcategory here? 

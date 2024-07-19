@@ -1,5 +1,9 @@
 "use client"
 
+import FormFieldError from "@/app/ui/general/form/error_field";
+import FormError from "@/app/ui/general/form/error_form";
+import FormSuccess from "@/app/ui/general/form/success";
+
 import { Button } from "@/components/button"
 import {
   Dialog,
@@ -175,24 +179,42 @@ function CategoryForm({ handler, lang, dict, setOpen, category }: CategoryFormPr
         <div>
           <Label htmlFor="name" className="text-right">{dict.fields.name.label}</Label>
           <Input
+            className={`${state.errorMessages.name.length != 0 
+            ? "border-red-500" 
+            : ""}`}
             name="name"
             placeholder={dict.fields.name.placeholder}/>
+          <FormFieldError 
+            id="email-error" 
+            description={state.errorMessages.name} />
         </div>
         <div>
           <Label htmlFor="name" className="text-right">{dict.fields.description.label}</Label>
           <Input
+            className={`${state.errorMessages.description.length != 0 
+            ? "border-red-500" 
+            : ""}`}
             name="description"
             placeholder={dict.fields.description.placeholder}
           />
+          <FormFieldError 
+            id="email-error" 
+            description={state.errorMessages.description} />
         </div>
         <div>
           <Label htmlFor="category" className="text-right">{dict.fields.category.label}</Label>
           <input type="hidden" value={category.id} name="category" />
           <Input
+            className={`${state.errorMessages.category.length != 0 
+            ? "border-red-500" 
+            : ""}`}
             disabled
             defaultValue={category.name}
             placeholder="sandro"
           />
+          <FormFieldError 
+            id="email-error" 
+            description={state.errorMessages.category} />
         </div>
         <Button 
           disabled={isPending} 
@@ -203,6 +225,13 @@ function CategoryForm({ handler, lang, dict, setOpen, category }: CategoryFormPr
             <><Loader2 className="h-4 w-4 mr-2 animate-spin" />{dict.pending}</>
             : dict.button}
         </Button>
+        {state.error ? (
+          <FormError 
+            message={state.message!} />
+        ) 
+        : (
+          <FormSuccess message={state.message!} />
+        )}
       </div>
     </form>
   )

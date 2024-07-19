@@ -1,9 +1,3 @@
-// The combo takes an array of objects
-// { 
-//    id: string;
-//    name: string;
-// }
-
 "use client"
 
 import * as React from "react"
@@ -38,7 +32,6 @@ interface ComboboxSelectProps {
 
 export function ComboboxSelect({ list, element, setElement, dict }: ComboboxSelectProps) {
   const [open, setOpen] = React.useState(false)
-  // console.log("ComboboxSelect: ", element)
 
   return (
     <>
@@ -56,7 +49,10 @@ export function ComboboxSelect({ list, element, setElement, dict }: ComboboxSele
             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-[--radix-popover-trigger-width] h-[--radix-popover-content-available-height] p-0">
+        {
+        // h-[--radix-popover-content-available-height] 
+        }
+        <PopoverContent className="w-[--radix-popover-trigger-width] p-0">
           <Command>
             <CommandInput placeholder={dict.search} />
             <CommandEmpty>{dict.empty}</CommandEmpty>

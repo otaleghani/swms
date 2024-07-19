@@ -1,7 +1,7 @@
 "use server";
 
 import { getDictionary, Locale } from "@/lib/dictionaries";
-import { redirect } from "next/navigation";
+import { redirect } from "next/dist/server/api-utils";
 import { cookies } from "next/headers";
 
 export type FormSubcategoryState = {
@@ -75,39 +75,39 @@ export async function AddNewSubcategory(
   }
   
   // CATEGORY VALIDATION
-  if (typeof data.category === "string") {
-    if (data.category === "" || 
-        data.category === undefined) {
+  if (typeof data.description === "string") {
+    if (data.name === "" || 
+        data.name === undefined) {
       state.errorMessages.category.push(dict.subcategory.form.errors.category.empty);
       state.error = true;
     }
-    
-    // Checks if the category exists
+    // TEST CATEGORY
     const jwt = cookies().get("access")?.value
-    const categoryCheck = await fetch(`http://localhost:8080/api/v1/categories/${data.category}`, {
+    const categoryCheck = await fetch(`http://localhost:8080/api/v1/category/${data.category}`, {
       method: "GET",
       headers: { 
         "Content-Type": "application/json",
         "Authorization": `Bearer ${jwt}`
       }
     });
-
-    console.log(jwt)
     const resCategoryBody = await categoryCheck.json();
-
     if (resCategoryBody.code !== 200) {
       if (resCategoryBody.code === 404) {
         state.errorMessages.category.push(dict.subcategory.form.errors.category.not_found);
         state.error = true;
       }
       if (resCategoryBody.code === 401) {
-        redirect("/login?error=true");
+        state.error = true;
+        redirect(
       }
+
     }
   } else {
     state.errorMessages.category.push(dict.subcategory.form.errors.category.type)
     state.error = true;
   }
+  // is it a string?
+  // does it exists?
 
   // REQUEST
   if (!state.error) {
@@ -127,29 +127,11 @@ export async function AddNewSubcategory(
     })
     const resBody = await res.json();
     
-    if (resBody.code !== 201) {
-      // not authorized
-      if (resBody.code === 401) {
-        redirect("/login?error=true");
-      }
+    // AFTER REQUEST VALIDATION
+    if (resBody.code === 400) {
 
-      // malformed request (marshal failure)
-      if (resBody.code === 400) {
-        state.error = true;
-        state.message = dict.subcategory.form.errors.general.marshal;
-        return state
-      }
-
-      if (resBody.code === 500) {
-        state.error = true;
-        state.message = dict.subcategory.form.errors.general.internal;
-        return state
-      }
-
-      state.error = true;
-      state.message = dict.subcategory.form.errors.general.unknown;
-      return state
     }
+    // ERROR HANDLING
 
     // SUCCESS
     state.message = "everything is a-okay";
@@ -157,9 +139,8 @@ export async function AddNewSubcategory(
       id: resBody.data.uuid as string,
       name: data.name as string,
       category: data.category as string,
-    }
+    };
   }
-
   return state
 }
 

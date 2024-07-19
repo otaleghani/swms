@@ -1,11 +1,7 @@
-import Image from "next/image";
 import GetItems from "@/app/lib/items/get";
 import { getCategory, getSubcategory } from "@/lib/reqs";
 import { getDictionary, Locale } from "@/lib/dictionaries";
-import AddItemForm from "../ui/general/form/items/add/form";
-import { ComboboxForm } from "../ui/general/form/test-shad";
-import TestForm from "../ui/general/form/test/form";
-import SelectCategory from "../ui/general/form/select/category/field";
+import FormItemsAdd from "@/app/ui/general/form/items/add/form";
 
 interface HomeProps {
   params: {
@@ -23,10 +19,11 @@ export default async function Home({ params }: HomeProps ) {
 
   return (
     <main className="w-full p-4">
-      <SelectCategory 
-        categoryData={parsedCategory} 
-        subcategoryData={parsedSubcategory}
+      <FormItemsAdd 
+        listCategory={parsedCategory} 
+        listSubcategory={parsedSubcategory}
         lang={params.lang} 
+        dict={dict}
         dictCategory={dict.category.form}
         dictSubcategory={dict.subcategory.form} />
     </main>

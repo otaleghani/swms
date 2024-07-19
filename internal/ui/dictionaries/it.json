@@ -3,6 +3,7 @@
   "home": {
     "title": "Home"
   },
+
   "login": {
     "title": "Accedi",
     "description": "Usa la email e password per accedere",
@@ -37,6 +38,7 @@
       }
     }
   },
+
   "register": {
     "title": "Registrati",
     "description": "Scegli la tua migliore email e un password forte",
@@ -67,8 +69,10 @@
       }
     }
   },
+
   "category": {
     "form": {
+      "name": "Categoria",
       "combobox": {
         "select": "Seleziona categoria...",
         "search": "Cerca una categoria...",
@@ -97,12 +101,26 @@
           "min": "Il nome deve essere di almeno 1 carattere.",
           "max": "Il nome deve essere di massimo 40 caratteri.",
           "used": "Il nome che hai inserito è già in uso."
+        },
+        "description": {
+          "type": "La descrizione deve essere una stringa.",
+          "empty": "La descrizione non può essere vuota.",
+          "not_valid": "La descrizione che hai inserito non è valida.",
+          "min": "La descrizione deve essere di almeno 1 carattere.",
+          "max": "La descrizione deve essere di massimo 100 caratteri."
+        },
+        "general": {
+          "marshal": "Qualcosa è andato storto, prova a riempire nuovamente il form.",
+          "internal": "Il server al momento non può esegure questa operazione. Ritenta più tardi",
+          "unknown": "Il server non è disponibile al momento. Contatta l'amministratore."
         }
       }
     }
   },
+
   "subcategory": {
     "form": {
+      "name": "Sottocategoria",
       "combobox": {
         "select": "Seleziona sottocategoria...",
         "search": "Cerca una sottocategoria...",
@@ -135,6 +153,66 @@
           "min": "Il nome deve essere di almeno 1 carattere.",
           "max": "Il nome deve essere di massimo 40 caratteri.",
           "used": "Il nome che hai inserito è già in uso."
+        },
+        "description": {
+          "type": "La descrizione deve essere una stringa.",
+          "empty": "La descrizione non può essere vuota.",
+          "not_valid": "La descrizione che hai inserito non è valida.",
+          "min": "La descrizione deve essere di almeno 1 carattere.",
+          "max": "La descrizione deve essere di massimo 100 caratteri."
+        },
+        "category": {
+          "type": "La categoria deve essere una stringa.",
+          "empty": "La categoria non può essere vuota.",
+          "not_found": "La categoria specificata non esiste. Riprova"
+        },
+        "general": {
+          "marshal": "Qualcosa è andato storto, prova a riempire nuovamente il form.",
+          "internal": "Il server al momento non può esegure questa operazione. Ritenta più tardi",
+          "unknown": "Il server non è disponibile al momento. Contatta l'amministratore."
+        }
+      }
+    }
+  },
+
+  "item": {
+    "form": {
+      "title": "Aggiungi un nuovo oggetto",
+      "description": "Usa questo form per aggiungere un nuovo oggetto.",
+      "fields": {
+        "name": {
+          "placeholder": "Nome dell'oggetto",
+          "label": "Nome"
+        },
+        "description": {
+          "placeholder": "Una breve descrizione",
+          "label": "Descrizione"
+        }
+      },
+      "button": "Aggiungi",
+      "clear_button": "Resetta",
+      "pending": "Un secondo...",
+      "success": "Form inviato con successo."
+    }
+  },
+  "variant": {
+    "form": {
+      "fields": {
+        "length": {
+          "placeholder": "Lunghezza dell'oggetto",
+          "label": "Lunghezza"
+        },
+        "width": {
+          "placeholder": "Larghezza dell'oggetto",
+          "label": "Larghezza"
+        },
+        "height": {
+          "placeholder": "Altezza dell'oggetto",
+          "label": "Altezza"
+        },
+        "weight": {
+          "placeholder": "Peso dell'oggetto",
+          "label": "Peso"
         }
       }
     }
