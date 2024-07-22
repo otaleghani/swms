@@ -92,7 +92,6 @@ export async function AddNewSubcategory(
       }
     });
 
-    console.log(jwt)
     const resCategoryBody = await categoryCheck.json();
 
     if (resCategoryBody.code !== 200) {

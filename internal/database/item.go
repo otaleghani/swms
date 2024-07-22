@@ -5,7 +5,10 @@ type Item struct {
   Name string               `json:"name"`
   Description string        `json:"description"`
   Archive bool              `json:"archive"`
-  Position_id string        `json:"position"`
+  Zone_id string            `json:"zone"`
+  Aisle_id string            `json:"aisle"`
+  Rack_id string            `json:"rack"`
+  Shelf_id string            `json:"shelf"`
   Category_id string        `json:"category"`
   Subcategory_id string     `json:"subcategory"`
 }

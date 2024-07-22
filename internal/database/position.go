@@ -26,6 +26,7 @@ type Aisle struct {
 type Rack struct {
   Id string `json:"id"`
   Name string `json:"name"`
+  Zone_id string `json:"zone"`
   Aisle_id string `json:"aisle"`
 }
 
@@ -33,6 +34,8 @@ type Rack struct {
 type Shelf struct {
   Id string `json:"id"`
   Name string `json:"name"`
+  Zone_id string `json:"zone"`
+  Aisle_id string `json:"aisle"`
   Rack_id string `json:"rack"`
 }
 
