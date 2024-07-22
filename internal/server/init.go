@@ -67,6 +67,7 @@ func Serve(path, port string) {
 
   
 	mux.HandleFunc("POST /api/v1/bulk_add/zones/{$}", postBulkZones(&dbConn))
+	mux.HandleFunc("GET /api/v1/zones_extra/{$}", getZonesWithData(&dbConn))
 
 	mux.HandleFunc("GET /api/v1/zones/{$}", getZones(&dbConn))
 	mux.HandleFunc("POST /api/v1/zones/{$}", postZones(&dbConn))

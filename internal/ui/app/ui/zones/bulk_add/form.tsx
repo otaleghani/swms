@@ -41,12 +41,6 @@ function AddBulkZonesForm({ dict, locale }: AddBulkZonesProps) {
     }
   }, [document.getElementById('quantity')])
 
-  // useEffect(() => {
-  //   if (state.message && !state.error) {
-  //     useRouter().reload
-  //   }
-  // }, [state])
-  
   return (
     <>
       <form action={action}>

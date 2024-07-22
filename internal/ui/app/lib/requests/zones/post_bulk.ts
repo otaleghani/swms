@@ -14,5 +14,6 @@ export default async function PostZonesBulk(req_body: any) {
     body: req_body,
   })
   const res_body = await res.json()
+
   return res_body
 }
