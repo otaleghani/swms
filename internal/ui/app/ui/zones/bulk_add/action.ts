@@ -1,6 +1,6 @@
 "use server";
 
-import PostZonesBulk from "@/app/lib/requests/zones/post_bulk";
+import { PostZonesBulk } from "@/app/lib/requests/zones/post";
 import { Locale, getDictionary } from "@/lib/dictionaries";
 import { revalidateTag } from "next/cache";
 

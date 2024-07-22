@@ -122,3 +122,24 @@ func deleteAisle(db *database.Database) http.HandlerFunc {
 		SuccessResponse{Message: "Row deleted"}.r200(w, r)
 	}
 }
+
+func getAislesByZone(db *database.Database) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
+		if err := checkAccessToken(token, db); err != nil {
+			ErrorResponse{Message: err.Error()}.r401(w, r)
+			return
+		}
+		path := r.PathValue("id")
+    list, err := db.SelectAislesByZone(path)
+		if err != nil {
+			ErrorResponse{Message: err.Error()}.r500(w, r)
+			return
+		}
+		if len(list) == 0 {
+			ErrorResponse{Message: "Not found"}.r404(w, r)
+			return
+		}
+		SuccessResponse{Data: list}.r200(w, r)
+  }
+}

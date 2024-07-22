@@ -170,19 +170,16 @@ func getZonesWithData(db *database.Database) http.HandlerFunc {
       ErrorResponse{Message: err.Error()}.r401(w, r)
       return
     }
-
 		zones, err := db.SelectZones("")
 		if err != nil {
 			ErrorResponse{Message: err.Error()}.r500(w, r)
 			return
 		}
-
     var data []struct {
       Zone database.Zone `json:"zone"`
       Aisle_count int `json:"aisles_count"`
       Items_count int `json:"items_count"`
     }
-
     for i := 0; i < len(zones); i++ {
       aisles, err := db.SelectAislesByZone(zones[i].Id)
 		  if err != nil {
@@ -194,7 +191,6 @@ func getZonesWithData(db *database.Database) http.HandlerFunc {
 		  	ErrorResponse{Message: err.Error()}.r500(w, r)
 		  	return
 		  }
-
       data = append(data, struct{
           Zone database.Zone `json:"zone"`
           Aisle_count int `json:"aisles_count"`
@@ -206,7 +202,6 @@ func getZonesWithData(db *database.Database) http.HandlerFunc {
         },
       )
     }
-
 		SuccessResponse{Data: data}.r200(w, r)
   }
 }

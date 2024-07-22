@@ -1,15 +1,26 @@
+import { getAislesByZoneId } from "@/app/lib/requests/aisles/get";
+import { getZoneById } from "@/app/lib/requests/zones/get";
+
 interface ZoneIdPageProps {
   params: {
     id: string;
   }
 }
 
-export default function ZoneIdPage({ params }: ZoneIdPageProps) {
-  // Here I would have to get the data of zone AND aisles
+export default async function ZoneIdPage({ params }: ZoneIdPageProps) {
+  const promiseZoneData = getZoneById(params.id);
+  const promiseAislesOfZone = getAislesByZoneId(params.id);
+  const [zoneData, aislesOfZone] = await Promise.all([promiseZoneData, promiseAislesOfZone]);
+  console.log(aislesOfZone)
+  
   return (
     <>
-      <div>zone id {params.id}</div>
-      <div>list of aisles...</div>
+      <div>{zoneData.name}</div>
+      <div>{aislesOfZone.map((item: any) => (
+        <div>{item.id}</div>
+      ))}</div>
     </>
   )
 }
+
+

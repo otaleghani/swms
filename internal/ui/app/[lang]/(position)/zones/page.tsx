@@ -36,7 +36,7 @@ export default async function ZonePage({ params }: ZonesPageProps ) {
             <CardFooter className="flex justify-end gap-2 text-sm">
               <Button variant="secondary">Edit</Button>
               <Button asChild variant="default">
-                <Link href="/zone/id">View</Link>
+                <Link href={`/zones/${item.zone.id}`}>View</Link>
               </Button>
             </CardFooter>
           </Card>
