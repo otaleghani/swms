@@ -221,6 +221,50 @@
 
   "zones": {
     "title": "Zone",
+    "card": {
+      "labels": {
+        "aisles": "Corridoi",
+        "items": "Oggetti",
+        "edit": "Modifica",
+        "view": "Guarda"
+      }
+    },
+    "delete_form": {
+      "title": "Elimina zona",
+      "description": "Vuoi eliminare questa zona? L'operazione non può essere reversibile",
+      "button": "Elimina",
+      "clear_button": "Ci ho ripensato"
+    },
+    "edit_form": {
+      "dialog_button": "Modifica",
+      "title": "Modifica zone",
+      "description": "Cambia il nome della zona da quello generato automaticamente a quello che vuoi tu.",
+      "button": "Modifica",
+      "clear_button": "Resetta", 
+      "pending": "Un secondo...",
+      "success": "Modifica completata",
+      "fields": {
+        "name": {
+          "label": "Nome"
+        }
+      },
+      "errors": {
+        "name": {
+          "type": "Il nome deve essere una stringa",
+          "empty": "Il nome non può essere vuoto",
+          "not_valid": "Il nome inserito non è valido",
+          "min": "Il nome deve essere di minimo un carattere",
+          "max": "Il nome deve essere di massimo 20 caratteri"
+        },
+        "general": {
+          "not_found": "La zona non è stata trovata.",
+          "auth": "Combinazione di email e password non conincidono.",
+          "marshal": "Qualcosa è andato storto, prova a riempire nuovamente il form.",
+          "internal": "Il server al momento non può esegure questa operazione. Ritenta più tardi",
+          "unknown": "Il server non è disponibile al momento. Contatta l'amministratore."
+        }
+      }
+    },
     "bulk_form": {
       "dialog_button": "Aggiungi zone",
       "title": "Quante zone vuoi aggiungere?",
@@ -232,7 +276,7 @@
       "success": "Generazione completata.",
       "errors": {
         "quantity": {
-          "type": "Il quantità deve essere una stringa.",
+          "type": "La quantità deve essere una stringa.",
           "empty": "La quantità non può essere vuota",
           "not_valid": "La quantità non è valida, riprova."
         },

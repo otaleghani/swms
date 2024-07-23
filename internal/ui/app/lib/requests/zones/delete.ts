@@ -2,7 +2,7 @@
 
 import { cookies } from "next/headers";
 
-export async function deleteZone(id: string) {
+export async function DeleteZone(id: string) {
   const jwt = cookies().get("access")?.value
   const res = await fetch(`http://localhost:8080/api/v1/zones/${id}`, {
     method: "DELETE",

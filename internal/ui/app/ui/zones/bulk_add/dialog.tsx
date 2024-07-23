@@ -63,7 +63,7 @@ function AddBulkZonesForm({ dict, locale }: AddBulkZonesProps) {
           id="quantity-error" 
           description={state.errorMessages.quantity} />
         <input type="hidden" value={locale} name="locale" />
-        <Button type="submit" className="w-full">{dict.button}</Button>
+        <Button type="submit" className="w-full mt-2">{dict.button}</Button>
         {state.error ? (
           <FormError 
             message={state.message!} />
@@ -134,7 +134,9 @@ export function AddBulkZones({ dict, locale }: AddBulkZonesProps) {
           <DrawerTitle>{dict.title}</DrawerTitle>
           <DrawerDescription>{dict.description}</DrawerDescription>
         </DrawerHeader>
-        <AddBulkZonesForm dict={dict} locale={locale} />
+        <div className="px-4">
+          <AddBulkZonesForm dict={dict} locale={locale} />
+        </div>
         <DrawerFooter className="pt-2">
           <DrawerClose asChild>
             <Button variant="outline">{dict.clear_button}</Button>
