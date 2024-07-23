@@ -7,6 +7,7 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/otaleghani/swms/internal/database"
+  "github.com/otaleghani/spg"
 )
 
 func getAisles(db *database.Database) http.HandlerFunc {
@@ -141,5 +142,88 @@ func getAislesByZone(db *database.Database) http.HandlerFunc {
 			return
 		}
 		SuccessResponse{Data: list}.r200(w, r)
+  }
+}
+
+type BodyRequestBulkPostAisles struct {
+  Number int `json:"number"`
+  Zone_id string `json:"zone"`
+}
+
+func postBulkAisles(db *database.Database) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+    token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
+    if err := checkAccessToken(token, db); err != nil {
+      ErrorResponse{Message: err.Error()}.r401(w, r)
+      return
+    }
+
+    var data BodyRequestBulkPostAisles
+    err := json.NewDecoder(r.Body).Decode(&data)
+    if err != nil {
+      ErrorResponse{Message: err.Error()}.r400(w, r)
+      return
+    }
+
+    g := spg.New("en-usa")
+    var opt = spg.Options{Format: "camel", Separator: "-"}
+    var aisle database.Aisle
+
+    for i := 0; i < data.Number; i++ {
+		  aisle.Id = uuid.NewString()
+      aisle.Name = g.Place().State(opt)
+      aisle.Zone_id = data.Zone_id
+
+		  err = db.Insert(aisle)
+      if err != nil {
+        ErrorResponse{Message: err.Error()}.r500(w, r)
+        return
+      }
+    }
+
+		SuccessResponse{Message: "Rows added"}.r201(w, r)
+  }
+}
+
+func getAislesWithData(db *database.Database) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+    token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
+    if err := checkAccessToken(token, db); err != nil {
+      ErrorResponse{Message: err.Error()}.r401(w, r)
+      return
+    }
+		aisles, err := db.SelectAisles("")
+		if err != nil {
+			ErrorResponse{Message: err.Error()}.r500(w, r)
+			return
+		}
+    var data []struct {
+      Aisle database.Aisle `json:"aisle"`
+      Racks_count int `json:"racks_count"`
+      Items_count int `json:"items_count"`
+    }
+    for i := 0; i < len(aisles); i++ {
+      racks, err := db.SelectRacksByAisle(aisles[i].Id)
+		  if err != nil {
+		  	ErrorResponse{Message: err.Error()}.r500(w, r)
+		  	return
+		  }
+      items, err := db.SelectItem("Aisle_id = ?", aisles[i].Id)
+		  if err != nil {
+		  	ErrorResponse{Message: err.Error()}.r500(w, r)
+		  	return
+		  }
+      data = append(data, struct{
+          Aisle database.Aisle `json:"aisle"`
+          Racks_count int `json:"racks_count"`
+          Items_count int `json:"items_count"`
+        }{
+          Aisle: aisles[i],
+          Racks_count: len(racks),
+          Items_count: len(items),
+        },
+      )
+    }
+		SuccessResponse{Data: data}.r200(w, r)
   }
 }

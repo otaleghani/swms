@@ -14,7 +14,10 @@ export async function getAislesByZoneId(id: string) {
     next: { tags: ["aisles"] },
   });
   const body = await res.json();
-  console.log(`http://localhost:8080/api/v1/zones/${id}/aisles`)
+
+  if (body.data === undefined) {
+    return []
+  }
   
   return body.data;
 }

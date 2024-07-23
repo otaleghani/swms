@@ -13,8 +13,6 @@ import {
 } from "@/components/alert-dialog"
 import { Button } from "@/components/button"
 import { Trash2 } from "lucide-react";
-import { DeleteZone } from "@/app/lib/requests/zones/delete";
-import { revalidateTag } from "next/cache";
 import { HandlerDeleteZone } from "./action";
 
 interface DeleteDialog {
@@ -22,17 +20,7 @@ interface DeleteDialog {
   id: string;
 }
 
-// useEffect to understand the state
-
 export function DeleteZoneDialog({ dict, id }: DeleteDialog) {
-  // const handleDeleteZone = (async (id: string) => {
-  //   const resPromise = DeleteZone(id);
-  //   const [res_body] = await Promise.all([resPromise]);
-  //   console.log(res_body)
-  //   
-  //   revalidateTag("zone");
-  // })
-
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>

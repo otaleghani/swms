@@ -2,9 +2,9 @@
 
 import { cookies } from "next/headers"
 
-export async function PostZonesBulk(req_body: any) {
+export async function PostAislesBulk(req_body: any) {
   const jwt = cookies().get("access")?.value
-  const res = await fetch("http://localhost:8080/api/v1/zones/bulk", {
+  const res = await fetch("http://localhost:8080/api/v1/aisles/bulk/", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

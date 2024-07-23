@@ -31,7 +31,7 @@ export async function getZones() {
 
 export async function getZonesWithData() {
   const jwt = cookies().get("access")?.value
-  const res = await fetch("http://localhost:8080/api/v1/zones_extra/", {
+  const res = await fetch("http://localhost:8080/api/v1/zones/extra/", {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

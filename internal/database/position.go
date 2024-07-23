@@ -102,7 +102,7 @@ func (db *Database) SelectRackById(id string) (Rack, error) {
   return list[0], nil
 }
 
-func (db *Database) SelectRackByAisle(id string) ([]Rack, error) {
+func (db *Database) SelectRacksByAisle(id string) ([]Rack, error) {
   list := []Rack{}
   err := db.Sorm.Select(&list, "Aisle_id = ?", id)
   if err != nil {
