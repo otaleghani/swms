@@ -1,9 +1,10 @@
 import { getDictionary, Locale } from "@/lib/dictionaries";
 import { getAislesByZoneId } from "@/app/lib/requests/aisles/get";
 import { getZoneById } from "@/app/lib/requests/zones/get";
-import ZoneHeader from "@/app/ui/zones/header";
-import { ScrollArea } from "@radix-ui/react-scroll-area";
-import { AddBulkAisles } from "@/app/ui/aisles/bulk_add/dialog";
+import { ScrollArea } from "@/components/scroll-area";
+import AislesCards from "@/app/ui/aisles/cards";
+import SingleZoneHeader from "@/app/ui/zones/single_header";
+import SingleZoneCard from "@/app/ui/zones/single_card";
 
 interface ZoneIdPageProps {
   params: {
@@ -22,23 +23,37 @@ export default async function ZoneIdPage({ params }: ZoneIdPageProps) {
   
   return (
     <>
-      <main className="grid xl:grid-cols-2">
+      <div className="grid xl:grid-cols-2">
         <div className="xl:border-r">
-          <ZoneHeader dict={dict.zones} lang={params.lang} />
-          <ScrollArea className="xl:h-[calc(100vh_-_57px)] h-[calc(100vh_-_57px)] p-4" type="always">
-            <AddBulkAisles dict={dict.aisles.bulk_form} locale={params.lang} zone_id={params.id} />
-            <div className="w-full">{zoneData.name}</div>
-            <div>{aislesOfZone.map((item: any) => (
-              <div>{item.id}</div>
-            ))}</div>
+          <SingleZoneHeader 
+            dict_header={dict.zones.header_single} 
+            dict_aisles_bulk_form={dict.aisles.bulk_form} 
+            lang={params.lang} 
+            zone={zoneData} />
+          <ScrollArea className="h-[calc(100vh_-_57px)]" type="always">
+            <div className="p-4">
+              <SingleZoneCard 
+                locale={params.lang}
+                zone={zoneData} 
+                dict_card={dict.zones.card}
+                dict_edit={dict.zones.edit_form}
+                dict_delete={dict.zones.delete_form}
+                aisles_count={aislesOfZone.length}
+                items_count={2}/>
+              <AislesCards 
+                aisle_data={aislesOfZone} 
+                dict_card={dict.aisles.card} 
+                dict_edit={dict.zones.edit_form}
+                locale={params.lang} />
+            </div>
           </ScrollArea>
         </div>
         <div>
-          <ZoneHeader dict={dict.zones} lang={params.lang} />
-          <ScrollArea className="xl:h-[calc(100vh_-_57px)] h-[calc(100vh_-_114px)] p-4" type="always">
+          <ScrollArea className="h-[calc(100vh_-_57px)]" type="always">
+            Sandro
           </ScrollArea>
         </div>
-      </main>
+      </div>
     </>
   )
 }

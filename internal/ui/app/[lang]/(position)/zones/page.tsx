@@ -1,8 +1,9 @@
 import { getDictionary, Locale } from "@/lib/dictionaries";
-import { getZones, getZonesWithData} from "@/app/lib/requests/zones/get";
-import ZoneCard from "@/app/ui/zones/card";
+import { getZonesWithData} from "@/app/lib/requests/zones/get";
+import ZoneCard from "@/app/ui/zones/collection_card";
 import { ZoneInfo } from "@/app/lib/types";
-import ZoneHeader from "@/app/ui/zones/header";
+import ZoneHeader from "@/app/ui/zones/collection_header";
+import { Breadcrumbs } from "@/app/ui/general/breadcrumbs";
 
 interface ZonesPageProps {
   params: {

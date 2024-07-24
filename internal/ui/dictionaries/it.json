@@ -220,7 +220,16 @@
   },
 
   "zones": {
-    "title": "Zone",
+    "header_single": {
+      "title": "Zone",
+      "breadcrumbs": {
+        "home": "Home",
+        "zone": "Zone"
+      }
+    },
+    "header_collection": {
+      "title": "Zone"
+    },
     "card": {
       "labels": {
         "aisles": "Corridoi",
@@ -290,6 +299,14 @@
     }
   },
   "aisles": {
+    "card": {
+      "labels": {
+        "racks": "Scaffali",
+        "items": "Oggetti",
+        "edit": "Modifica",
+        "view": "Guarda"
+      }
+    },
     "bulk_form": {
       "dialog_button": "Aggiungi corridoi",
       "title": "Quanti corridoi vuoi aggiungere?",

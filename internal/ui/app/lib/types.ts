@@ -7,3 +7,8 @@ export type ZoneInfo = {
   aisles_count: number;
   items_count: number;
 }
+export type Aisle = {
+  id: string;
+  name: string;
+  zone: string;
+}
