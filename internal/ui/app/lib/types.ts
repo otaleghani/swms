@@ -12,3 +12,8 @@ export type Aisle = {
   name: string;
   zone: string;
 }
+export type AisleInfo = {
+  aisle: Aisle;
+  racks_count: number;
+  items_count: number;
+}

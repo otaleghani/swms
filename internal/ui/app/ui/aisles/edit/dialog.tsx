@@ -5,14 +5,18 @@ import { EditAisleState, EditAisleAction } from "@/app/ui/aisles/edit/action";
 import FormFieldError from "@/app/ui/general/form/error_field";
 import FormError from "@/app/ui/general/form/error_form";
 import FormSuccess from "@/app/ui/general/form/success";
+import SelectZone from "../../general/form/select/zone/field";
+import { Zone } from "@/app/lib/types";
 
 interface EditAisleProps {
   dict: any;
+  dict_zone_select: any;
   locale: string;
   aisle: any;
+  zones: Zone[];
 }
 
-function EditAisleForm({ dict, locale, aisle }: EditAisleProps) {
+function EditAisleForm({ dict, dict_zone_select, locale, aisle, zones }: EditAisleProps) {
   const initialState: EditAisleState = {
     error: false,
     errorMessages: { name: [], id: [], zone: [] },
@@ -23,15 +27,20 @@ function EditAisleForm({ dict, locale, aisle }: EditAisleProps) {
   return (
     <>
       <form action={action}>
-        <Label>{dict.fields.name.label}</Label>
-        <Input 
-          name="name"
-          defaultValue={aisle.name}
-          placeholder={aisle.name}
-        />
-        <FormFieldError 
-          id="quantity-error" 
-          description={state.errorMessages.name} />
+        <div>
+          <Label>{dict.fields.name.label}</Label>
+          <Input 
+            name="name"
+            defaultValue={aisle.name}
+            placeholder={aisle.name}
+          />
+          <FormFieldError 
+            id="quantity-error" 
+            description={state.errorMessages.name} />
+        </div>
+        <SelectZone
+          dict_zone_select={dict_zone_select}
+          zones={zones} />
         <input type="hidden" value={locale} name="locale" />
         <Input type="hidden" value={aisle.id} name="id" />
         <Button type="submit" className="w-full mt-2">{dict.button}</Button>
@@ -71,7 +80,7 @@ import {
 import { Input } from "@/components/input";
 import { Label } from "@/components/label";
 
-export function EditAisle({ dict, locale, aisle }: EditAisleProps) {
+export function EditAisle({ dict, locale, aisle, dict_zone_select, zones }: EditAisleProps) {
   const [open, setOpen] = React.useState(false)
   const isDesktop = useMediaQuery("(min-width: 768px)")
 
@@ -86,7 +95,12 @@ export function EditAisle({ dict, locale, aisle }: EditAisleProps) {
             <DialogTitle>{dict.title}</DialogTitle>
             <DialogDescription>{dict.description}</DialogDescription>
           </DialogHeader>
-          <EditAisleForm dict={dict} locale={locale} aisle={aisle} />
+          <EditAisleForm 
+            dict={dict} 
+            locale={locale} 
+            aisle={aisle}
+            dict_zone_select={dict_zone_select}
+            zones={zones} />
         </DialogContent>
       </Dialog>
     )
@@ -103,7 +117,12 @@ export function EditAisle({ dict, locale, aisle }: EditAisleProps) {
           <DrawerDescription>{dict.description}</DrawerDescription>
         </DrawerHeader>
         <div className="px-4">
-          <EditAisleForm dict={dict} locale={locale} aisle={aisle} />
+          <EditAisleForm 
+            dict={dict} 
+            locale={locale} 
+            aisle={aisle}
+            dict_zone_select={dict_zone_select}
+            zones={zones} />
         </div>
         <DrawerFooter className="pt-2">
           <DrawerClose asChild>

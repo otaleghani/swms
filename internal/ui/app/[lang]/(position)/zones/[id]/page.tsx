@@ -1,8 +1,8 @@
 import { getDictionary, Locale } from "@/lib/dictionaries";
-import { getAislesByZoneId } from "@/app/lib/requests/aisles/get";
-import { getZoneById } from "@/app/lib/requests/zones/get";
+import { getAislesByZoneIdWithExtra } from "@/app/lib/requests/aisles/get";
+import { getZoneById, getZones } from "@/app/lib/requests/zones/get";
 import { ScrollArea } from "@/components/scroll-area";
-import AislesCards from "@/app/ui/aisles/cards";
+import CollectionAislesCards from "@/app/ui/aisles/collection_cards";
 import SingleZoneHeader from "@/app/ui/zones/single_header";
 import SingleZoneCard from "@/app/ui/zones/single_card";
 
@@ -16,11 +16,13 @@ interface ZoneIdPageProps {
 export default async function ZoneIdPage({ params }: ZoneIdPageProps) {
   const dict = await getDictionary(params.lang as Locale);
 
+  const promiseZones = getZones();
   const promiseZoneData = getZoneById(params.id);
-  const promiseAislesOfZone = getAislesByZoneId(params.id);
+  const promiseAislesOfZone = getAislesByZoneIdWithExtra(params.id);
 
-  const [zoneData, aislesOfZone] = await Promise.all([promiseZoneData, promiseAislesOfZone]);
+  const [zoneData, zones, aislesOfZone] = await Promise.all([promiseZoneData, promiseZones, promiseAislesOfZone]);
   
+  console.log(dict.zones.select_field)
   return (
     <>
       <div className="grid xl:grid-cols-2">
@@ -40,11 +42,13 @@ export default async function ZoneIdPage({ params }: ZoneIdPageProps) {
                 dict_delete={dict.zones.delete_form}
                 aisles_count={aislesOfZone.length}
                 items_count={2}/>
-              <AislesCards 
+              <CollectionAislesCards 
                 aisle_data={aislesOfZone} 
                 dict_card={dict.aisles.card} 
                 dict_edit={dict.zones.edit_form}
-                locale={params.lang} />
+                dict_zone_select={dict.zones.select_field}
+                locale={params.lang} 
+                zones={zones} />
             </div>
           </ScrollArea>
         </div>

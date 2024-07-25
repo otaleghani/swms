@@ -79,6 +79,7 @@ func Serve(path, port string) {
 	mux.HandleFunc("PUT /api/v1/aisles/{id}", putAisle(&dbConn))
 	mux.HandleFunc("DELETE /api/v1/aisles/{id}", deleteAisle(&dbConn))
 	mux.HandleFunc("GET /api/v1/zones/{id}/aisles", getAislesByZone(&dbConn))
+	mux.HandleFunc("GET /api/v1/zones/{id}/aisles/extra", getAislesByZoneWithData(&dbConn))
 	mux.HandleFunc("POST /api/v1/aisles/bulk/{$}", postBulkAisles(&dbConn))
 	mux.HandleFunc("GET /api/v1/aisles/extra/{$}", getAislesWithData(&dbConn))
 

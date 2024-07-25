@@ -220,6 +220,14 @@
   },
 
   "zones": {
+    "select_field": {
+      "name": "Sottocategoria",
+      "combobox": {
+        "select": "Seleziona sottocategoria...",
+        "search": "Cerca una sottocategoria...",
+        "empty": "Nessuna sottocategoria"
+      }
+    },
     "header_single": {
       "title": "Zone",
       "breadcrumbs": {
@@ -298,6 +306,7 @@
       }
     }
   },
+
   "aisles": {
     "card": {
       "labels": {
