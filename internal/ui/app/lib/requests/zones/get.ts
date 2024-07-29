@@ -1,6 +1,7 @@
 "use server";
 
 import { cookies } from "next/headers";
+import { Zone } from "../../types";
 
 export async function getZones() {
   const jwt = cookies().get("access")?.value
@@ -26,7 +27,7 @@ export async function getZones() {
       response.push(body.data[i])
     }
   }
-  return response;
+  return response as Zone[];
 }
 
 export async function getZonesWithData() {
@@ -80,5 +81,25 @@ export async function getZoneById(id: string) {
   //     response.push(body.data[i])
   //   }
   // }
-  return body.data;
+  return body.data as Zone;
+}
+
+export async function getZoneByAisle(id: string) {
+  const jwt = cookies().get("access")?.value
+  const res = await fetch(`http://localhost:8080/api/v1/aisles/${id}/zone`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${jwt}`
+    },
+    next: { tags: ["zones"] },
+  })
+  const body = await res.json()
+
+  if (body.code !== 200) {
+    // error state?
+    return;
+  }
+
+  return body.data as Zone;
 }

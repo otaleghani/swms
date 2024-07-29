@@ -1,7 +1,4 @@
 import { AddBulkAisles } from "@/app/ui/aisles/bulk_add/dialog";
-import { Button } from "@/components/button";
-import { ChevronLeft } from "lucide-react";
-import Link from "next/link";
 import { Breadcrumbs } from "../general/breadcrumbs";
 import { Zone } from "@/app/lib/types";
 

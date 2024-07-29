@@ -22,7 +22,6 @@ export default async function ZoneIdPage({ params }: ZoneIdPageProps) {
 
   const [zoneData, zones, aislesOfZone] = await Promise.all([promiseZoneData, promiseZones, promiseAislesOfZone]);
   
-  console.log(dict.zones.select_field)
   return (
     <>
       <div className="grid xl:grid-cols-2">
@@ -46,6 +45,7 @@ export default async function ZoneIdPage({ params }: ZoneIdPageProps) {
                 aisle_data={aislesOfZone} 
                 dict_card={dict.aisles.card} 
                 dict_edit={dict.zones.edit_form}
+                dict_delete={dict.aisles.delete_form}
                 dict_zone_select={dict.zones.select_field}
                 locale={params.lang} 
                 zones={zones} />

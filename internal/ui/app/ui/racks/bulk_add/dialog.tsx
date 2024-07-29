@@ -1,48 +1,70 @@
 "use client";
 
-import { useActionState } from "react"
-import { EditAisleState, EditAisleAction } from "@/app/ui/aisles/edit/action";
+import { useActionState, useEffect } from "react"
+import { AddBulkRacksState, AddBulkRacksAction } from "./action";
+import { Minus, PlusIcon } from "lucide-react";
+import { GeistSans } from "geist/font/sans";
 import FormFieldError from "@/app/ui/general/form/error_field";
 import FormError from "@/app/ui/general/form/error_form";
 import FormSuccess from "@/app/ui/general/form/success";
-import SelectZone from "../../general/form/select/zone/field";
-import { Zone } from "@/app/lib/types";
 
-interface EditAisleProps {
-  dict: any;
-  dict_zone_select: any;
-  locale: string;
-  aisle: any;
-  zones: Zone[];
+interface AddBulkAislesProps {
+  dict: any,
+  locale: string,
+  aisle: Aisle,
 }
 
-function EditAisleForm({ dict, dict_zone_select, locale, aisle, zones }: EditAisleProps) {
-  const initialState: EditAisleState = {
+function AddBulkRacksForm({ dict, locale, aisle }: AddBulkAislesProps) {
+  const initialState: AddBulkRacksState = {
     error: false,
-    errorMessages: { name: [], id: [], zone: [] },
+    errorMessages: { quantity: [], zone_id: [], aisle_id: [] },
     message: "",
   }
-  const [state, action] = useActionState(EditAisleAction, initialState);
+  const [state, action] = useActionState(AddBulkRacksAction, initialState);
+
+  const subOne = (() => {
+    const input = document.getElementById('quantity') as HTMLInputElement;
+    if (Number(input.value) > 0) {
+      input.value = String(Number(input.value) - 1)
+    }
+  });
+
+  const addOne = (() => {
+    const input = document.getElementById("quantity") as HTMLInputElement;
+    input.value = String(Number(input.value) + 1)
+  });
+
+  useEffect(() => {
+    const input = document.getElementById("quantity") as HTMLInputElement;
+    if (Number(input.value) < 0) {
+      input.value = String(Number(0))
+    }
+  }, [document.getElementById("quantity")])
 
   return (
     <>
       <form action={action}>
-       <div>
-          <Label>{dict.fields.name.label}</Label>
-          <Input 
-            name="name"
-            defaultValue={aisle.name}
-            placeholder={aisle.name}
+        <div className="flex items-center">
+          <Button className="flex rounded-full w-12 h-12" variant="secondary" onClick={subOne} type="button"><Minus className="w-4 h-4"/></Button>
+          <input 
+            id="quantity"
+            key="quantity"
+            name="quantity"
+            type="number"
+            placeholder="0"
+            min="0"
+            inputMode="numeric" 
+            onFocus={(e) => e.target.select()}
+            className={`${GeistSans.className} font-bold text-8xl block text-foreground w-full text-center leading-none tracking-tighter`}
           />
-          <FormFieldError 
-            id="quantity-error" 
-            description={state.errorMessages.name} />
+          <Button className="flex rounded-full w-12 h-12" variant="secondary" onClick={addOne} type="button"><PlusIcon className="w-4 h-4"/></Button>
         </div>
-        <SelectZone
-          dict_zone_select={dict_zone_select}
-          zones={zones} />
+        <FormFieldError 
+          id="quantity-error" 
+          description={state.errorMessages.quantity} />
         <input type="hidden" value={locale} name="locale" />
-        <Input type="hidden" value={aisle.id} name="id" />
+        <input type="hidden" value={aisle.zone} name="zone_id" />
+        <input type="hidden" value={aisle.id} name="aisle_id" />
         <Button type="submit" className="w-full mt-2">{dict.button}</Button>
         {state.error ? (
           <FormError 
@@ -57,6 +79,7 @@ function EditAisleForm({ dict, dict_zone_select, locale, aisle, zones }: EditAis
 }
 
 import * as React from "react"
+
 import { useMediaQuery } from "usehooks-ts";
 import { Button } from "@/components/button"
 import {
@@ -77,10 +100,9 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/drawer"
-import { Input } from "@/components/input";
-import { Label } from "@/components/label";
+import { Aisle } from "@/app/lib/types";
 
-export function EditAisle({ dict, locale, aisle, dict_zone_select, zones }: EditAisleProps) {
+export function AddBulkRacks({ dict, locale, aisle }: AddBulkAislesProps) {
   const [open, setOpen] = React.useState(false)
   const isDesktop = useMediaQuery("(min-width: 768px)")
 
@@ -95,12 +117,10 @@ export function EditAisle({ dict, locale, aisle, dict_zone_select, zones }: Edit
             <DialogTitle>{dict.title}</DialogTitle>
             <DialogDescription>{dict.description}</DialogDescription>
           </DialogHeader>
-          <EditAisleForm 
+          <AddBulkRacksForm 
             dict={dict} 
             locale={locale} 
-            aisle={aisle}
-            dict_zone_select={dict_zone_select}
-            zones={zones} />
+            aisle={aisle} />
         </DialogContent>
       </Dialog>
     )
@@ -117,12 +137,10 @@ export function EditAisle({ dict, locale, aisle, dict_zone_select, zones }: Edit
           <DrawerDescription>{dict.description}</DrawerDescription>
         </DrawerHeader>
         <div className="px-4">
-          <EditAisleForm 
+          <AddBulkRacksForm 
             dict={dict} 
             locale={locale} 
-            aisle={aisle}
-            dict_zone_select={dict_zone_select}
-            zones={zones} />
+            aisle={aisle} />
         </div>
         <DrawerFooter className="pt-2">
           <DrawerClose asChild>

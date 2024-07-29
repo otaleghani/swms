@@ -83,7 +83,7 @@ export function EditZones({ dict, locale, zone }: EditZoneProps) {
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
           <Button variant="outline">{dict.dialog_button}</Button>
-        </DialogTrigger>
+       </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
             <DialogTitle>{dict.title}</DialogTitle>

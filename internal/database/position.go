@@ -129,7 +129,7 @@ func (db *Database) SelectShelfById(id string) (Shelf, error) {
   return list[0], nil
 }
 
-func (db *Database) SelectShelfByRack(id string) ([]Shelf, error) {
+func (db *Database) SelectShelfsByRack(id string) ([]Shelf, error) {
   list := []Shelf{}
   err := db.Sorm.Select(&list, "Rack_id = ?", id)
   if err != nil {

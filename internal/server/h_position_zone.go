@@ -136,29 +136,24 @@ func postBulkZones(db *database.Database) http.HandlerFunc {
       ErrorResponse{Message: err.Error()}.r401(w, r)
       return
     }
-
     var data BodyRequestBulkPostZones
     err := json.NewDecoder(r.Body).Decode(&data)
     if err != nil {
       ErrorResponse{Message: err.Error()}.r400(w, r)
       return
     }
-
     g := spg.New("en-usa")
     var opt = spg.Options{Format: "camel", Separator: "-"}
     var zone database.Zone
-
     for i := 0; i < data.Number; i++ {
 		  zone.Id = uuid.NewString()
       zone.Name = g.Place().Country(opt)
-
 		  err = db.Insert(zone)
       if err != nil {
         ErrorResponse{Message: err.Error()}.r500(w, r)
         return
       }
     }
-
 		SuccessResponse{Message: "Rows added"}.r201(w, r)
   }
 }
@@ -205,3 +200,27 @@ func getZonesWithData(db *database.Database) http.HandlerFunc {
 		SuccessResponse{Data: data}.r200(w, r)
   }
 }
+
+func getZonesByAisleId(db *database.Database) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+    token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
+    if err := checkAccessToken(token, db); err != nil {
+      ErrorResponse{Message: err.Error()}.r401(w, r)
+      return
+    }
+		path := r.PathValue("id")
+		aisle, err := db.SelectAisleById(path)
+		if err != nil {
+			ErrorResponse{Message: "Not found"}.r404(w, r)
+			return
+		}
+    zone, err := db.SelectZoneById(aisle.Zone_id)
+		if err != nil {
+			ErrorResponse{Message: "Not found"}.r404(w, r)
+			return
+		}
+		SuccessResponse{Data: zone}.r200(w, r)
+  }
+}
+
+

@@ -1,11 +1,11 @@
 "use server";
 
-import { DeleteZone } from "@/app/lib/requests/zones/delete";
+import { DeleteAisle } from "@/app/lib/requests/aisles/delete";
 import { revalidateTag } from "next/cache";
-import { redirect } from "next/navigation";
 
-export async function HandlerDeleteZone(id: string) {
-  const res_body = DeleteZone(id);
+export async function HandlerDeleteAisle(id: string) {
+  const res_body = DeleteAisle(id);
+  revalidateTag("aisles");
   revalidateTag("zones");
-  redirect("/zones");
+  //redirect("/zones");
 }
