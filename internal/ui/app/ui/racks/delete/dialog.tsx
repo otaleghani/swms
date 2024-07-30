@@ -13,14 +13,14 @@ import {
 } from "@/components/alert-dialog"
 import { Button } from "@/components/button"
 import { Trash2 } from "lucide-react";
-import { HandlerDeleteAisle } from "./action";
+import { handlerDeleteRack } from "./action";
 
 interface DeleteDialog {
   dict: any;
   id: string;
 }
 
-export function DeleteAisleDialog({ dict, id }: DeleteDialog) {
+export function DeleteRackDialog({ dict, id }: DeleteDialog) {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -33,7 +33,7 @@ export function DeleteAisleDialog({ dict, id }: DeleteDialog) {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>{dict.clear_button}</AlertDialogCancel>
-          <AlertDialogAction onClick={() => {HandlerDeleteAisle(id)}}>{dict.button}</AlertDialogAction>
+          <AlertDialogAction onClick={() => {handlerDeleteRack(id)}}>{dict.button}</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

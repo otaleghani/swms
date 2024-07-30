@@ -1,6 +1,6 @@
 "use server";
 
-import { PostRacksBulk } from "@/app/lib/requests/racks/post";
+import { postRacksBulk } from "@/app/lib/requests/racks/post";
 import { Locale, getDictionary } from "@/lib/dictionaries";
 import { revalidateTag } from "next/cache";
 
@@ -33,8 +33,6 @@ export async function AddBulkRacksAction(
     aisle_id: formData.get("aisle_id"),
   }
 
-  console.log(data)
-
   const dictPromise = getDictionary(data.locale as Locale)
   const [ dict ] = await Promise.all([ dictPromise ])
 
@@ -64,8 +62,8 @@ export async function AddBulkRacksAction(
       zone: data.zone_id,
       aisle: data.aisle_id,
     });  
-
-    const res_body = await PostRacksBulk(req_body)
+    
+    const res_body = await postRacksBulk(req_body)
 
     if (res_body.code !== 201) {
       if (res_body.code === 401) {

@@ -3,6 +3,7 @@ import { Button } from "@/components/button";
 import Link from "next/link";
 import { Aisle, Rack, Zone } from "@/app/lib/types";
 import { EditRackDialog } from "./edit/dialog";
+import { DeleteRackDialog } from "./delete/dialog";
 
 interface AislesCardsProps {
   racks: Rack[];
@@ -21,8 +22,8 @@ export default function CollectionRacksCards({
   racks,
   aisles, 
   zones,
-  dict_card, 
   locale, 
+  dict_card, 
   dict_delete, 
   dict_edit, 
   dict_zone_select, 
@@ -58,12 +59,10 @@ export default function CollectionRacksCards({
                 locale={locale} 
                 dict={dict_edit} 
                 dict_zone_select={dict_zone_select}
-                dict_aisle_select={dict_zone_select} />
-                {
-              //<DeleteRackDialog 
-              //  dict={dict_delete} 
-              //  id={item.aisle.id} />
-                }
+                dict_aisle_select={dict_aisle_select} />
+              <DeleteRackDialog 
+                dict={dict_delete} 
+                id={item.rack.id} />
               <Button asChild variant="default">
                 <Link href={`/racks/${item.rack.id}`}>{dict_card.labels.view}</Link>
               </Button>

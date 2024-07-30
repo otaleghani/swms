@@ -30,8 +30,6 @@ export async function AddBulkAislesAction(
     zone_id: formData.get("zone_id"),
   }
 
-  console.log(data)
-
   const dictPromise = getDictionary(data.locale as Locale)
   const [ dict ] = await Promise.all([ dictPromise ])
 

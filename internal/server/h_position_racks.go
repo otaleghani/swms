@@ -127,7 +127,7 @@ func deleteRack(db *database.Database) http.HandlerFunc {
 type BodyRequestBulkPostRacks struct {
   Number int `json:"number"`
   Zone_id string `json:"zone"`
-  Aisle_id string `json:"zone"`
+  Aisle_id string `json:"aisle"`
 }
 
 func postBulkRacks(db *database.Database) http.HandlerFunc {

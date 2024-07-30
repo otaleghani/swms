@@ -34,13 +34,12 @@ function EditRackForm({
     errorMessages: { name: [], id: [], zone: [], aisle: [] },
     message: "",
   }
+
   const [state, action] = useActionState(EditRackAction, initialState);
   const [zone, setZone] = useState({id: "", name: ""});
   const [aisle, setAisle] = useState({id: "", name: "", zone: ""});
   const [filteredAisles, setFilteredAisles] = useState(aisles);
   
-  console.log(zone)
-
   useEffect(() => {
     // Filters subcategories based on the select category
     const newList = []
@@ -50,6 +49,7 @@ function EditRackForm({
       }
     }
     setFilteredAisles(newList)
+    setAisle({id: "", name: "", zone: ""});
   }, [zone])
 
   return (
@@ -75,6 +75,8 @@ function EditRackForm({
 
         {zone.id !== "" && (
           <SelectAisle
+            aisle={aisle}
+            setAisle={setAisle}
             dict_aisle_select={dict_aisle_select}
             aisles={filteredAisles} />
         )}

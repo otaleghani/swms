@@ -37,6 +37,8 @@ export async function EditRackAction(
     aisle: formData.get("aisle"),
     locale: formData.get("locale"),
   }
+  
+  console.log(data)
 
   const dictPromise = getDictionary(data.locale as Locale)
   const [ dict ] = await Promise.all([ dictPromise ])

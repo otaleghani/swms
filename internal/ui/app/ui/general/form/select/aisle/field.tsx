@@ -1,25 +1,30 @@
 "use client";
 
 import { Label } from "@/components/label";
-import { useState } from "react";
 import { ComboboxSelect } from "@/app/ui/general/form/select/combobox";
+import { Aisle } from "@/app/lib/types";
 
-interface SelectZoneProps {
+interface SelectAisleProps {
   dict_aisle_select: any;
-  aisles: any;
+  aisles: Aisle[];
+  aisle: Aisle;
+  setAisle: React.Dispatch<React.SetStateAction<Aisle>>;
 }
 
-export default function SelectZone({
-  dict_aisle_select, aisles}: SelectZoneProps) {
-  const [aisle, setAisle] = useState({id: "", name: ""});
+export default function SelectAisle({
+  aisles,
+  aisle,
+  setAisle,
+  dict_aisle_select, 
+  }: SelectAisleProps) {
 
   return (
     <>
       <div className="w-full mb-2">
         <input 
           type="hidden" 
-          id="zone" 
-          name="zone" 
+          id="aisle" 
+          name="aisle" 
           value={aisle.id} />
         <Label>{dict_aisle_select.name}</Label>
         <ComboboxSelect 

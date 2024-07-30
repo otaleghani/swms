@@ -1,14 +1,11 @@
 import { getZones } from "@/app/lib/requests/zones/get";
 import { getDictionary, Locale } from "@/lib/dictionaries";
-import { ScrollArea } from "@/components/scroll-area";
-import SingleAisleCard from "@/app/ui/aisles/single_card";
 import { getAisleById, getAisles } from "@/app/lib/requests/aisles/get";
 import { getRacksByAisleIdWithExtra } from "@/app/lib/requests/racks/get";
 import { getZoneByAisle } from "@/app/lib/requests/zones/get";
+import { ScrollArea } from "@/components/scroll-area";
+import SingleAisleCard from "@/app/ui/aisles/single_card";
 import CollectionRacksCards from "@/app/ui/racks/collection_cards";
-
-import { Zone, Aisle } from "@/app/lib/types";
-
 import SingleAisleHeader from "@/app/ui/aisles/s_header";
 
 interface AisleIdPageProps {
@@ -27,7 +24,8 @@ export default async function AisleIdPage({ params }: AisleIdPageProps) {
   const pAisles = getAisles();
   const pZones = getZones();
   
-  const [item, itemZone, itemRacks, aisles, zones] = await Promise.all([pItem, pItemZone, pItemRacks, pAisles, pZones]);
+  const [item, itemZone, itemRacks, aisles, zones] = await Promise.all(
+    [pItem, pItemZone, pItemRacks, pAisles, pZones]);
 
   return (
     <>
@@ -57,11 +55,11 @@ export default async function AisleIdPage({ params }: AisleIdPageProps) {
               racks={itemRacks} 
               aisles={aisles}
               zones={zones}
-              dict_card={dict.aisles.card} 
-              dict_edit={dict.zones.edit_form}
-              dict_delete={dict.aisles.delete_form}
+              dict_card={dict.racks.card} 
+              dict_edit={dict.racks.edit_form}
+              dict_delete={dict.racks.delete_form}
               dict_zone_select={dict.zones.select_field}
-              dict_aisle_select={dict.zones.select_field}
+              dict_aisle_select={dict.aisles.select_field}
               locale={params.lang} />
           </ScrollArea>
           
