@@ -4,21 +4,24 @@ import { DeleteAisleDialog } from "./delete/dialog";
 import { EditAisle } from "./edit/dialog";
 
 interface SingleAisleCardProps {
+  aisle: Aisle;
+  aisleZone: Zone;
+  zones: Zone[];
+  racks_count: number;
+  items_count: number;
+
   locale: string;
   dict_card: any;
   dict_edit: any;
   dict_delete: any;
   dict_zone_select: any;
-  zones: Zone[];
-  aisle: Aisle;
-  racks_count: number;
-  items_count: number;
 }
 
 export default function SingleAisleCard({ 
-  locale,
-  zones,
   aisle,
+  aisleZone,
+  zones,
+  locale,
   dict_card,
   dict_edit,
   dict_delete,
@@ -34,8 +37,15 @@ export default function SingleAisleCard({
           <CardDescription>{aisle.id}</CardDescription>
         </CardHeader>
         <CardContent className="text-sm">
-          <div className="flex justify-between py-2 border-y"><span>{dict_card.labels.aisles}</span><span>{racks_count}</span></div>
-          <div className="flex justify-between py-2 border-b"><span>{dict_card.labels.items}</span><span>{items_count}</span></div>
+          <div className="flex justify-between py-2 border-y">
+            <span>{dict_card.labels.racks}</span><span>{racks_count}</span>
+          </div>
+          <div className="flex justify-between py-2 border-b">
+            <span>{dict_card.labels.items}</span><span>{items_count}</span>
+          </div>
+          <div className="flex justify-between py-2 border-b">
+            <span>{dict_card.labels.zone}</span><span>{aisleZone.name}</span>
+          </div>
         </CardContent>
         <CardFooter className="gap-2 text-sm">
           <DeleteAisleDialog dict={dict_delete} id={aisle.id}/>

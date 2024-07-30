@@ -1,17 +1,22 @@
 "use client";
 
 import { Label } from "@/components/label";
-import { useState } from "react";
 import { ComboboxSelect } from "@/app/ui/general/form/select/combobox";
+import { Zone } from "@/app/lib/types";
 
 interface SelectZoneProps {
+  zones: Zone[];
+  zone: Zone;
+  setZone: React.Dispatch<React.SetStateAction<Zone>>;
   dict_zone_select: any;
-  zones: any;
 }
 
 export default function SelectZone({
-  dict_zone_select, zones}: SelectZoneProps) {
-  const [zone, setZone] = useState({id: "", name: ""});
+  zones,
+  zone,
+  setZone,
+  dict_zone_select, 
+  }: SelectZoneProps) {
 
   return (
     <>

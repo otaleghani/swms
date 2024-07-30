@@ -88,7 +88,7 @@ export async function getAisleById(id: string) {
 
   if (body.code !== 200) {
     // error state?
-    return;
+    return {} as Aisle;
   }
 
   return body.data as Aisle;
@@ -109,7 +109,7 @@ export async function getAisles() {
 
   if (body.code !== 200) {
     // error state?
-    return [];
+    return [] as Aisle[];
   }
 
   const response = [];

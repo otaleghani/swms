@@ -286,7 +286,6 @@
       "dialog_button": "Aggiungi zone",
       "title": "Quante zone vuoi aggiungere?",
       "description": "Immetti il numero di zone che vuoi generare. Verranno generate usando dei nomi randomici che potrai successivamente cambiare",
-
       "button": "Aggiungi",
       "clear_button": "Resetta",
       "pending": "Un secondo...",
@@ -308,6 +307,14 @@
   },
 
   "aisles": {
+    "select_field": {
+      "name": "Corridoio",
+      "combobox": {
+        "select": "Seleziona un corridoio...",
+        "search": "Cerca un corridoio...",
+        "empty": "Nessun corridoio"
+      }
+    },
     "header_single": {
       "title": "Aisles",
       "breadcrumbs": {
@@ -322,8 +329,39 @@
       "button": "Elimina",
       "clear_button": "Ci ho ripensato"
     },
+    "edit_form": {
+      "dialog_button": "Modifica",
+      "title": "Modifica corridoio",
+      "description": "Cambia il nome del corridoio da quello generato automaticamente a quello che vuoi tu.",
+      "button": "Modifica",
+      "clear_button": "Resetta", 
+      "pending": "Un secondo...",
+      "success": "Modifica completata",
+      "fields": {
+        "name": {
+          "label": "Nome"
+        }
+      },
+      "errors": {
+        "name": {
+          "type": "Il nome deve essere una stringa",
+          "empty": "Il nome non può essere vuoto",
+          "not_valid": "Il nome inserito non è valido",
+          "min": "Il nome deve essere di minimo un carattere",
+          "max": "Il nome deve essere di massimo 20 caratteri"
+        },
+        "general": {
+          "not_found": "La zona non è stata trovata.",
+          "auth": "Combinazione di email e password non conincidono.",
+          "marshal": "Qualcosa è andato storto, prova a riempire nuovamente il form.",
+          "internal": "Il server al momento non può esegure questa operazione. Ritenta più tardi",
+          "unknown": "Il server non è disponibile al momento. Contatta l'amministratore."
+        }
+      }
+    },
     "card": {
       "labels": {
+        "zone": "Zona",
         "racks": "Scaffali",
         "items": "Oggetti",
         "edit": "Modifica",
@@ -353,6 +391,7 @@
       }
     }
   },
+
   "racks": {
     "bulk_form": {
       "dialog_button": "Aggiungi scaffali",

@@ -72,15 +72,9 @@ export async function getZoneById(id: string) {
 
   if (body.code !== 200) {
     // error state?
-    return [];
+    return {} as Zone;
   }
 
-  // const response = [];
-  // for (let i = 0; i < body.data.length; i++) {
-  //   if (body.data[i].id != "nil") {
-  //     response.push(body.data[i])
-  //   }
-  // }
   return body.data as Zone;
 }
 
@@ -98,7 +92,7 @@ export async function getZoneByAisle(id: string) {
 
   if (body.code !== 200) {
     // error state?
-    return;
+    return {} as Zone;
   }
 
   return body.data as Zone;

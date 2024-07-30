@@ -5,6 +5,7 @@ import SingleAisleCard from "@/app/ui/aisles/single_card";
 import { getAisleById, getAisles } from "@/app/lib/requests/aisles/get";
 import { getRacksByAisleIdWithExtra } from "@/app/lib/requests/racks/get";
 import { getZoneByAisle } from "@/app/lib/requests/zones/get";
+import CollectionRacksCards from "@/app/ui/racks/collection_cards";
 
 import { Zone, Aisle } from "@/app/lib/types";
 
@@ -20,46 +21,50 @@ interface AisleIdPageProps {
 export default async function AisleIdPage({ params }: AisleIdPageProps) {
   const dict = await getDictionary(params.lang as Locale)
 
-  // you need both for the select
-  const promiseAisles = getAisles();
-  const promiseSingleAisle = getAisleById(params.id);
-  const promiseSingleZone = getZoneByAisle(params.id);
-  const promiseZones = getZones();
-  const promiseRacksOfAisle = getRacksByAisleIdWithExtra(params.id);
+  const pItem = getAisleById(params.id);
+  const pItemZone = getZoneByAisle(params.id);
+  const pItemRacks = getRacksByAisleIdWithExtra(params.id);
+  const pAisles = getAisles();
+  const pZones = getZones();
   
-  const [aisles, aisle, zones, racks, zone] = await Promise.all([promiseAisles, promiseSingleAisle, promiseZones, promiseRacksOfAisle, promiseSingleZone]);
-  
+  const [item, itemZone, itemRacks, aisles, zones] = await Promise.all([pItem, pItemZone, pItemRacks, pAisles, pZones]);
 
   return (
     <>
       <div className="grid xl:grid-cols-2">
         <div className="xl:border-r">
           <SingleAisleHeader 
-            dict_header={dict.aisles.header_single} 
-            dict_racks_bulk_form={dict.racks.bulk_form} 
+            aisle={item}
+            zone={itemZone}
             lang={params.lang} 
-            zone={zone as Zone}
-            aisle={aisle as Aisle} />
+            dict_header={dict.aisles.header_single} 
+            dict_racks_bulk_form={dict.racks.bulk_form} />
           <ScrollArea className="h-[calc(100vh_-_57px)]" type="always">
             <div className="p-4">
               <SingleAisleCard 
+                aisle={item} 
+                aisleZone={itemZone}
+                zones={zones}
+                racks_count={itemRacks.length}
+                items_count={2}
                 locale={params.lang}
-                zone={zone} 
-                dict_card={dict.zones.card}
-                dict_edit={dict.zones.edit_form}
-                dict_delete={dict.zones.delete_form}
-                aisles_count={aislesOfZone.length}
-                items_count={2}/>
-              <CollectionRacksCards 
-                aisle_data={aislesOfZone} 
-                dict_card={dict.aisles.card} 
-                dict_edit={dict.zones.edit_form}
+                dict_card={dict.aisles.card}
+                dict_edit={dict.aisles.edit_form}
                 dict_delete={dict.aisles.delete_form}
-                dict_zone_select={dict.zones.select_field}
-                locale={params.lang} 
-                zones={zones} />
+                dict_zone_select={dict.zones.select_field} />
             </div>
+            <CollectionRacksCards 
+              racks={itemRacks} 
+              aisles={aisles}
+              zones={zones}
+              dict_card={dict.aisles.card} 
+              dict_edit={dict.zones.edit_form}
+              dict_delete={dict.aisles.delete_form}
+              dict_zone_select={dict.zones.select_field}
+              dict_aisle_select={dict.zones.select_field}
+              locale={params.lang} />
           </ScrollArea>
+          
         </div>
         <div>
           <ScrollArea className="h-[calc(100vh_-_57px)]" type="always">
@@ -67,7 +72,6 @@ export default async function AisleIdPage({ params }: AisleIdPageProps) {
           </ScrollArea>
         </div>
       </div>
-
     </>
   )
 }
