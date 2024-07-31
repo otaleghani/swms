@@ -92,12 +92,16 @@ func Serve(path, port string) {
 	mux.HandleFunc("POST /api/v1/racks/bulk/{$}", postBulkRacks(&dbConn))
 	mux.HandleFunc("GET /api/v1/aisles/{id}/racks/extra", getRacksByAisleWithData(&dbConn))
 	//mux.HandleFunc("GET /api/v1/racks/extra/{$}", getRacksWithData(&dbConn))
+	mux.HandleFunc("GET /api/v1/racks/{id}/zone/{$}", getZonesByRackId(&dbConn))
+	mux.HandleFunc("GET /api/v1/racks/{id}/aisle/{$}", getAisleByRackId(&dbConn))
 
 	mux.HandleFunc("GET /api/v1/shelfs/{$}", getShelfs(&dbConn))
 	mux.HandleFunc("POST /api/v1/shelfs/{$}", postShelfs(&dbConn))
 	mux.HandleFunc("GET /api/v1/shelfs/{id}", getShelfById(&dbConn))
 	mux.HandleFunc("PUT /api/v1/shelfs/{id}", putShelf(&dbConn))
 	mux.HandleFunc("DELETE /api/v1/shelfs/{id}", deleteShelf(&dbConn))
+	mux.HandleFunc("GET /api/v1/racks/{id}/shelfs/extra", getShelfsByRackWithData(&dbConn))
+	mux.HandleFunc("POST /api/v1/shelfs/bulk/{$}", postBulkShelfs(&dbConn))
 
 	mux.HandleFunc("GET /api/v1/variants/{$}", getVariants(&dbConn))
 	mux.HandleFunc("POST /api/v1/variants/{$}", postVariants(&dbConn))

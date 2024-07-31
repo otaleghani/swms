@@ -146,20 +146,17 @@ func postBulkRacks(db *database.Database) http.HandlerFunc {
     g := spg.New("en-usa")
     var opt = spg.Options{Format: "camel", Separator: "-"}
     var rack database.Rack
-
     for i := 0; i < data.Number; i++ {
 		  rack.Id = uuid.NewString()
       rack.Name = g.Place().City(opt)
       rack.Zone_id = data.Zone_id
       rack.Aisle_id = data.Aisle_id
-
 		  err = db.Insert(rack)
       if err != nil {
         ErrorResponse{Message: err.Error()}.r500(w, r)
         return
       }
     }
-
 		SuccessResponse{Message: "Rows added"}.r201(w, r)
   }
 }
@@ -207,3 +204,4 @@ func getRacksByAisleWithData(db *database.Database) http.HandlerFunc {
 		SuccessResponse{Data: data}.r200(w, r)
   }
 }
+

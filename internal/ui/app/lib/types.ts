@@ -28,3 +28,14 @@ export type RackInfo = {
   shelfs_count: number;
   items_count: number;
 }
+export type Shelf = {
+  id: string;
+  name: string;
+  zone: string;
+  aisle: string;
+  rack: string;
+}
+export type ShelfInfo = {
+  shelR: Shelf;
+  items_count: number;
+}

@@ -50,7 +50,6 @@ export default async function AisleIdPage({ params }: AisleIdPageProps) {
                 dict_edit={dict.aisles.edit_form}
                 dict_delete={dict.aisles.delete_form}
                 dict_zone_select={dict.zones.select_field} />
-            </div>
             <CollectionRacksCards 
               racks={itemRacks} 
               aisles={aisles}
@@ -61,6 +60,7 @@ export default async function AisleIdPage({ params }: AisleIdPageProps) {
               dict_zone_select={dict.zones.select_field}
               dict_aisle_select={dict.aisles.select_field}
               locale={params.lang} />
+            </div>
           </ScrollArea>
           
         </div>

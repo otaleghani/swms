@@ -223,4 +223,26 @@ func getZonesByAisleId(db *database.Database) http.HandlerFunc {
   }
 }
 
+func getZonesByRackId(db *database.Database) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+    token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
+    if err := checkAccessToken(token, db); err != nil {
+      ErrorResponse{Message: err.Error()}.r401(w, r)
+      return
+    }
+		path := r.PathValue("id")
+		rack, err := db.SelectRackById(path)
+		if err != nil {
+			ErrorResponse{Message: "Not found"}.r404(w, r)
+			return
+		}
+    zone, err := db.SelectZoneById(rack.Zone_id)
+		if err != nil {
+			ErrorResponse{Message: "Not found"}.r404(w, r)
+			return
+		}
+		SuccessResponse{Data: zone}.r200(w, r)
+  }
+}
+
 

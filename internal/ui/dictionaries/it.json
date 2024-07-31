@@ -390,7 +390,7 @@
         }
       }
     }
-  },
+  },  
 
   "racks": {
     "delete_form": {
@@ -442,6 +442,78 @@
       "dialog_button": "Aggiungi scaffali",
       "title": "Quanti scaffali vuoi aggiungere?",
       "description": "Immetti il numero di scaffali che vuoi generare. Verranno generate usando dei nomi randomici che potrai successivamente cambiare",
+      "button": "Aggiungi",
+      "clear_button": "Resetta",
+      "pending": "Un secondo...",
+      "success": "Generazione completata.",
+      "errors": {
+        "quantity": {
+          "type": "La quantità deve essere una stringa.",
+          "empty": "La quantità non può essere vuota",
+          "not_valid": "La quantità non è valida, riprova."
+        },
+        "general": {
+          "auth": "Combinazione di email e password non conincidono.",
+          "marshal": "Qualcosa è andato storto, prova a riempire nuovamente il form.",
+          "internal": "Il server al momento non può esegure questa operazione. Ritenta più tardi",
+          "unknown": "Il server non è disponibile al momento. Contatta l'amministratore."
+        }
+      }
+    }
+  },
+
+  "shelfs": {
+    "delete_form": {
+      "title": "Elimina ripiano",
+      "description": "Vuoi eliminare questo ripiano? L'operazione non può essere reversibile",
+      "button": "Elimina",
+      "clear_button": "Ci ho ripensato"
+    },
+    "edit_form": {
+      "dialog_button": "Modifica",
+      "title": "Modifica ripiano",
+      "description": "Cambia il nome del ripiano da quello generato automaticamente a quello che vuoi tu.",
+      "button": "Modifica",
+      "clear_button": "Resetta", 
+      "pending": "Un secondo...",
+      "success": "Modifica completata",
+      "fields": {
+        "name": {
+          "label": "Nome"
+        }
+      },
+      "errors": {
+        "name": {
+          "type": "Il nome deve essere una stringa",
+          "empty": "Il nome non può essere vuoto",
+          "not_valid": "Il nome inserito non è valido",
+          "min": "Il nome deve essere di minimo un carattere",
+          "max": "Il nome deve essere di massimo 20 caratteri"
+        },
+        "general": {
+          "not_found": "La zona non è stata trovata.",
+          "auth": "Combinazione di email e password non conincidono.",
+          "marshal": "Qualcosa è andato storto, prova a riempire nuovamente il form.",
+          "internal": "Il server al momento non può esegure questa operazione. Ritenta più tardi",
+          "unknown": "Il server non è disponibile al momento. Contatta l'amministratore."
+        }
+      }
+    },
+    "card": {
+      "labels": {
+        "zone": "Zona",
+        "aisle": "Corridoio",
+        "shelfs": "Ripiano",
+        "racks": "Scaffali",
+        "items": "Oggetti",
+        "edit": "Modifica",
+        "view": "Guarda"
+      }
+    },
+    "bulk_form": {
+      "dialog_button": "Aggiungi ripiani",
+      "title": "Quanti ripiani vuoi aggiungere?",
+      "description": "Immetti il numero di ripiani che vuoi generare. Verranno generate usando dei nomi randomici che potrai successivamente cambiare",
       "button": "Aggiungi",
       "clear_button": "Resetta",
       "pending": "Un secondo...",

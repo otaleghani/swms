@@ -97,3 +97,25 @@ export async function getZoneByAisle(id: string) {
 
   return body.data as Zone;
 }
+
+export async function getZoneByRack(id: string) {
+  const jwt = cookies().get("access")?.value
+  const res = await fetch(`http://localhost:8080/api/v1/racks/${id}/zone`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${jwt}`
+    },
+    next: { tags: ["zones"] },
+  })
+  const body = await res.json()
+
+  if (body.code !== 200) {
+    // error state?
+    return {} as Zone;
+  }
+
+  return body.data as Zone;
+}
+
+
