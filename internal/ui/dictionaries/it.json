@@ -232,7 +232,9 @@
       "title": "Zone",
       "breadcrumbs": {
         "home": "Home",
-        "zone": "Zone"
+        "zone": "Zone",
+        "aisle": "Corridoio",
+        "rack": "Scaffale"
       }
     },
     "header_collection": {
@@ -393,6 +395,23 @@
   },  
 
   "racks": {
+    "header_single": {
+      "title": "Scaffale",
+      "breadcrumbs": {
+        "home": "Home",
+        "zone": "Zone",
+        "aisle": "Corridoio",
+        "rack": "Scaffale"
+      }
+    },
+    "select_field": {
+      "name": "Scaffale",
+      "combobox": {
+        "select": "Seleziona uno scaffale...",
+        "search": "Cerca uno scaffale...",
+        "empty": "Nessun scaffale"
+      }
+    },
     "delete_form": {
       "title": "Elimina scaffale",
       "description": "Vuoi eliminare questo scaffale? L'operazione non può essere reversibile",
@@ -433,6 +452,8 @@
       "labels": {
         "shelfs": "Ripiano",
         "racks": "Scaffali",
+        "aisle": "Corridoio",
+        "zone": "Zona",
         "items": "Oggetti",
         "edit": "Modifica",
         "view": "Guarda"

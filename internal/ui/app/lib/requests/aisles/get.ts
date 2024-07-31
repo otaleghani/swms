@@ -141,5 +141,3 @@ export async function getAisleByRack(id: string) {
 
   return body.data as Aisle;
 }
-
-

@@ -1,12 +1,12 @@
 import { Card, CardContent, CardHeader, CardTitle, CardFooter, CardDescription } from "@/components/card";
 import { Button } from "@/components/button";
 import Link from "next/link";
-import { Aisle, RackInfo, Zone } from "@/app/lib/types";
-import { EditRackDialog } from "./edit/dialog";
-import { DeleteRackDialog } from "./delete/dialog";
+import { Aisle, Rack, Zone, ShelfInfo } from "@/app/lib/types";
+import { EditShelfDialog } from "./edit/dialog";
 
-interface AislesCardsProps {
-  racks: RackInfo[];
+interface ShelfsCardsProps {
+  shelfs: ShelfInfo[];
+  racks: Rack[];
   aisles: Aisle[];
   zones: Zone[];
 
@@ -16,9 +16,11 @@ interface AislesCardsProps {
   dict_delete: any;
   dict_zone_select: any;
   dict_aisle_select: any;
+  dict_rack_select: any;
 }
 
-export default function CollectionRacksCards({ 
+export default function CollectionShelfsCards({ 
+  shelfs,
   racks,
   aisles, 
   zones,
@@ -27,24 +29,21 @@ export default function CollectionRacksCards({
   dict_delete, 
   dict_edit, 
   dict_zone_select, 
-  dict_aisle_select
-  }: AislesCardsProps) {
+  dict_aisle_select,
+  dict_rack_select
+  }: ShelfsCardsProps) {
 
   return (
     <>
       <div className="grid xl:grid-cols-3 gap-4">
-        {racks.map((item: RackInfo) => (
+        {shelfs.map((item: ShelfInfo) => (
           <Card>
             <CardHeader>
-              <CardTitle className="text-xl">{item.rack.name}</CardTitle>
-              <CardDescription className="">{item.rack.id}</CardDescription>
+              <CardTitle className="text-xl">{item.shelf.name}</CardTitle>
+              <CardDescription className="">{item.shelf.id}</CardDescription>
             </CardHeader>
 
             <CardContent className="text-sm">
-              <div className="flex justify-between py-2 border-y">
-                <span>{dict_card.labels.shelfs}</span>
-                <span>{item.shelfs_count}</span>
-              </div>
               <div className="flex justify-between py-2 border-b">
                 <span>{dict_card.labels.items}</span>
                 <span>{item.items_count}</span>
@@ -52,19 +51,23 @@ export default function CollectionRacksCards({
             </CardContent>
 
             <CardFooter className="gap-2 justify-end text-sm">
-              <EditRackDialog 
-                rack={item.rack} 
-                zones={zones}
+              <EditShelfDialog 
+                shelf={item.shelf}
+                racks={racks}
                 aisles={aisles}
-                locale={locale} 
+                zones={zones}
+                locale={locale}  
                 dict={dict_edit} 
                 dict_zone_select={dict_zone_select}
-                dict_aisle_select={dict_aisle_select} />
-              <DeleteRackDialog 
-                dict={dict_delete} 
-                id={item.rack.id} />
+                dict_aisle_select={dict_aisle_select}
+                dict_rack_select={dict_rack_select} />
+              {
+              //<DeleteRackDialog 
+              //  dict={dict_delete} 
+              //  id={item.rack.id} />
+              }
               <Button asChild variant="default">
-                <Link href={`/racks/${item.rack.id}`}>{dict_card.labels.view}</Link>
+                <Link href={`/shelf/${item.shelf.id}`}>{dict_card.labels.view}</Link>
               </Button>
             </CardFooter>
           </Card>
@@ -73,7 +76,6 @@ export default function CollectionRacksCards({
         {racks.length === 0 ? 
           <div className="text-center xl:col-span-3 py-12">Nothing to see here</div> 
           : <></> }
-
       </div>
     </>
   )

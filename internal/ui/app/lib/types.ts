@@ -36,6 +36,6 @@ export type Shelf = {
   rack: string;
 }
 export type ShelfInfo = {
-  shelR: Shelf;
+  shelf: Shelf;
   items_count: number;
 }

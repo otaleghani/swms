@@ -6,21 +6,28 @@ import { Button } from "@/components/button";
 import Link from "next/link";
 
 interface AislesCardsProps {
-  aisle_data: any;
   dict_card: any;
   dict_edit: any;
   dict_delete: any;
   dict_zone_select: any;
   locale: string;
   zones: any[];
+  aisles: any;
 }
 
-export default function CollectionAislesCards({ aisle_data, dict_card, dict_delete, dict_edit, dict_zone_select, locale, zones }: AislesCardsProps) {
-  console.log(aisle_data)
+export default function CollectionAislesCards({ 
+  aisles, 
+  dict_card, 
+  dict_delete, 
+  dict_edit, 
+  dict_zone_select, 
+  locale, 
+  zones }: AislesCardsProps) {
+
   return (
     <>
       <div className="grid xl:grid-cols-3 gap-4">
-        {aisle_data.map((item: any) => (
+        {aisles.map((item: any) => (
           <Card>
             <CardHeader>
               <CardTitle className="text-xl">{item.aisle.name}</CardTitle>
@@ -37,7 +44,9 @@ export default function CollectionAislesCards({ aisle_data, dict_card, dict_dele
                 locale={locale} 
                 aisle={item.aisle} 
                 zones={zones} />
-              <DeleteAisleDialog dict={dict_delete} id={item.aisle.id} />
+              <DeleteAisleDialog 
+                dict={dict_delete} 
+                id={item.aisle.id} />
               <Button asChild variant="default">
                 <Link href={`/aisles/${item.aisle.id}`}>{dict_card.labels.view}</Link>
               </Button>
@@ -45,7 +54,7 @@ export default function CollectionAislesCards({ aisle_data, dict_card, dict_dele
             </CardFooter>
           </Card>
         ))}
-        {aisle_data.length === 0 ? <div className="text-center xl:col-span-3 py-12">Nothing to see here </div> : <></>}
+        {aisles.length === 0 ? <div className="text-center xl:col-span-3 py-12">Nothing to see here </div> : <></>}
       </div>
     </>
   )
