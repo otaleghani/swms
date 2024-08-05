@@ -4,7 +4,7 @@ import { getZones } from "@/app/lib/requests/zones/get";
 
 import { AisleInfo } from "@/app/lib/types";
 import AislesCollectionHeader from "@/app/ui/aisles/c_header";
-import CollectionAislesCards from "@/app/ui/aisles/collection_cards";
+import CollectionAislesCards from "@/app/ui/aisles/c_cards";
 
 interface AislePageProps {
   params: {
@@ -26,10 +26,10 @@ export default async function ZonePage({ params }: AislePageProps ) {
       <main className="p-4 grid xl:grid-cols-5 gap-2">
         {aisles.map((item: AisleInfo) => (
           <CollectionAislesCards
+            dict_card={dict.aisles.card}
             aisles={aisles}
             zones={zones}
             locale={params.lang}
-            dict_cart={dict.aisles.card}
             dict_edit={dict.aisles.edit_form}
             dict_delete={dict.aisles.delete_form}
             dict_zone_select={dict.zone.select_field}

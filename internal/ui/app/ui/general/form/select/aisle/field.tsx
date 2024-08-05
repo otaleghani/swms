@@ -22,6 +22,7 @@ export default function SelectAisle({
     <>
       <div className="w-full mb-2">
         <input 
+          required
           type="hidden" 
           id="aisle" 
           name="aisle" 

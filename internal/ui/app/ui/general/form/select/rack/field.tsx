@@ -22,6 +22,7 @@ export default function SelectRack({
     <>
       <div className="w-full mb-2">
         <input 
+          required
           type="hidden" 
           id="rack" 
           name="rack" 

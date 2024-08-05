@@ -2,7 +2,7 @@ import { getDictionary, Locale } from "@/lib/dictionaries";
 import { getAislesByZoneIdWithExtra } from "@/app/lib/requests/aisles/get";
 import { getZoneById, getZones } from "@/app/lib/requests/zones/get";
 import { ScrollArea } from "@/components/scroll-area";
-import CollectionAislesCards from "@/app/ui/aisles/collection_cards";
+import CollectionAislesCards from "@/app/ui/aisles/c_cards";
 import SingleZoneHeader from "@/app/ui/zones/single_header";
 import SingleZoneCard from "@/app/ui/zones/single_card";
 
@@ -42,7 +42,7 @@ export default async function ZoneIdPage({ params }: ZoneIdPageProps) {
                 aisles_count={aislesOfZone.length}
                 items_count={2}/>
               <CollectionAislesCards 
-                aisle_data={aislesOfZone} 
+                aisles={aislesOfZone} 
                 dict_card={dict.aisles.card} 
                 dict_edit={dict.zones.edit_form}
                 dict_delete={dict.aisles.delete_form}

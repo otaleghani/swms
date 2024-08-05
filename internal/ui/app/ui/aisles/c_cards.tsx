@@ -50,7 +50,6 @@ export default function CollectionAislesCards({
               <Button asChild variant="default">
                 <Link href={`/aisles/${item.aisle.id}`}>{dict_card.labels.view}</Link>
               </Button>
-
             </CardFooter>
           </Card>
         ))}

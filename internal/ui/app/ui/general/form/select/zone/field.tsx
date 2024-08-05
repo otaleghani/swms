@@ -22,6 +22,7 @@ export default function SelectZone({
     <>
       <div className="w-full mb-2">
         <input 
+          required
           type="hidden" 
           id="zone" 
           name="zone" 
