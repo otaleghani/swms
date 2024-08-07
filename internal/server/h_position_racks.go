@@ -204,4 +204,45 @@ func getRacksByAisleWithData(db *database.Database) http.HandlerFunc {
 		SuccessResponse{Data: data}.r200(w, r)
   }
 }
-
+func getRacksWithData(db *database.Database) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+    token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
+    if err := checkAccessToken(token, db); err != nil {
+      ErrorResponse{Message: err.Error()}.r401(w, r)
+      return
+    }
+		racks, err := db.SelectRacks("")
+		if err != nil {
+			ErrorResponse{Message: err.Error()}.r500(w, r)
+			return
+		}
+    var data []struct {
+      Rack database.Rack `json:"rack"`
+      Shelfs_count int `json:"shelfs_count"`
+      Items_count int `json:"items_count"`
+    }
+    for i := 0; i < len(racks); i++ {
+      shelfs, err := db.SelectShelfsByRack(racks[i].Id)
+		  if err != nil {
+		  	ErrorResponse{Message: err.Error()}.r500(w, r)
+		  	return
+		  }
+      items, err := db.SelectItem("Rack_id = ?", racks[i].Id)
+		  if err != nil {
+		  	ErrorResponse{Message: err.Error()}.r500(w, r)
+		  	return
+		  }
+      data = append(data, struct{
+          Rack database.Rack `json:"rack"`
+          Shelfs_count int `json:"shelfs_count"`
+          Items_count int `json:"items_count"`
+        }{
+          Rack: racks[i],
+          Shelfs_count: len(shelfs),
+          Items_count: len(items),
+        },
+      )
+    }
+		SuccessResponse{Data: data}.r200(w, r)
+  }
+}

@@ -325,6 +325,9 @@
         "aisle": "Corridoi"
       }
     },
+    "header_collection": {
+      "title": "Corridoi"
+    },
     "delete_form": {
       "title": "Elimina corridoio",
       "description": "Vuoi eliminare questo corridoio? L'operazione non può essere reversibile",
@@ -395,6 +398,9 @@
   },  
 
   "racks": {
+    "header_collection": {
+      "title": "Scaffali"
+    },
     "header_single": {
       "title": "Scaffale",
       "breadcrumbs": {

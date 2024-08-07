@@ -55,18 +55,16 @@ export async function getAislesWithData() {
       "Content-Type": "application/json",
       "Authorization": `Bearer ${jwt}`
     },
-    next: { tags: ["zones"] },
+    next: { tags: ["aisles"] },
   })
-
   const body = await res.json()
-
   if (body.code !== 200) {
     // error state?
     return [];
   }
   const response = [];
   for (let i = 0; i < body.data.length; i++) {
-    if (body.data[i].zone.id != "nil") {
+    if (body.data[i].aisle.id != "nil") {
       response.push(body.data[i])
     }
   }

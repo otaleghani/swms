@@ -94,6 +94,7 @@ func Serve(path, port string) {
 	//mux.HandleFunc("GET /api/v1/racks/extra/{$}", getRacksWithData(&dbConn))
 	mux.HandleFunc("GET /api/v1/racks/{id}/zone/{$}", getZonesByRackId(&dbConn))
 	mux.HandleFunc("GET /api/v1/racks/{id}/aisle/{$}", getAisleByRackId(&dbConn))
+	mux.HandleFunc("GET /api/v1/racks/extra/{$}", getRacksWithData(&dbConn))
 
 	mux.HandleFunc("GET /api/v1/shelfs/{$}", getShelfs(&dbConn))
 	mux.HandleFunc("POST /api/v1/shelfs/{$}", postShelfs(&dbConn))

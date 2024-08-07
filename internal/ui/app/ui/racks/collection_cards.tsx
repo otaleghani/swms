@@ -5,7 +5,7 @@ import { Aisle, RackInfo, Zone } from "@/app/lib/types";
 import { EditRackDialog } from "./edit/dialog";
 import { DeleteRackDialog } from "./delete/dialog";
 
-interface AislesCardsProps {
+interface RacksCardsProps {
   racks: RackInfo[];
   aisles: Aisle[];
   zones: Zone[];
@@ -28,7 +28,7 @@ export default function CollectionRacksCards({
   dict_edit, 
   dict_zone_select, 
   dict_aisle_select
-  }: AislesCardsProps) {
+  }: RacksCardsProps) {
 
   return (
     <>
@@ -73,7 +73,6 @@ export default function CollectionRacksCards({
         {racks.length === 0 ? 
           <div className="text-center xl:col-span-3 py-12">Nothing to see here</div> 
           : <></> }
-
       </div>
     </>
   )

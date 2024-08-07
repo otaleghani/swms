@@ -1,6 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle, CardFooter, CardDescription } from "@/components/card";
 import { EditAisle } from "./edit/dialog";
-import { DeleteAisle } from "@/app/lib/requests/aisles/delete";
 import { DeleteAisleDialog } from "./delete/dialog";
 import { Button } from "@/components/button";
 import Link from "next/link";
@@ -53,8 +52,8 @@ export default function CollectionAislesCards({
             </CardFooter>
           </Card>
         ))}
-        {aisles.length === 0 ? <div className="text-center xl:col-span-3 py-12">Nothing to see here </div> : <></>}
       </div>
+      {aisles.length === 0 ? <div className="text-center xl:col-span-3 py-12">Nothing to see here </div> : <></>}
     </>
   )
 }

@@ -5,8 +5,8 @@ import { getShelfsByRackWithExtra } from "@/app/lib/requests/shelfs/get"
 import { getDictionary, Locale } from "@/lib/dictionaries";
 
 import { ScrollArea } from "@/components/scroll-area";
-import SingleRackHeader from "@/app/ui/racks/s_header";
-import SingleRackCard from "@/app/ui/racks/s_card";
+import SingleRackHeader from "@/app/ui/racks/single_header";
+import SingleRackCard from "@/app/ui/racks/single_card";
 import CollectionShelfsCards from "@/app/ui/shelfs/collection_cards";
 
 interface AisleIdPageProps {
@@ -16,7 +16,7 @@ interface AisleIdPageProps {
   };
 }
 
-export default async function AisleIdPage({ params }: AisleIdPageProps) {
+export default async function RackIdPage({ params }: AisleIdPageProps) {
   const dict = await getDictionary(params.lang as Locale)
 
   const pItem = getRackById(params.id);

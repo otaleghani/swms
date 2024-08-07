@@ -2,7 +2,7 @@ import { getDictionary, Locale } from "@/lib/dictionaries";
 import { getAislesByZoneIdWithExtra } from "@/app/lib/requests/aisles/get";
 import { getZoneById, getZones } from "@/app/lib/requests/zones/get";
 import { ScrollArea } from "@/components/scroll-area";
-import CollectionAislesCards from "@/app/ui/aisles/c_cards";
+import CollectionAislesCards from "@/app/ui/aisles/collection_cards";
 import SingleZoneHeader from "@/app/ui/zones/single_header";
 import SingleZoneCard from "@/app/ui/zones/single_card";
 

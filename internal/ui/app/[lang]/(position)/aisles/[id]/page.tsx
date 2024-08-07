@@ -6,7 +6,7 @@ import { getZoneByAisle } from "@/app/lib/requests/zones/get";
 import { ScrollArea } from "@/components/scroll-area";
 import SingleAisleCard from "@/app/ui/aisles/single_card";
 import CollectionRacksCards from "@/app/ui/racks/collection_cards";
-import SingleAisleHeader from "@/app/ui/aisles/s_header";
+import SingleAisleHeader from "@/app/ui/aisles/single_header";
 
 interface AisleIdPageProps {
   params: {
