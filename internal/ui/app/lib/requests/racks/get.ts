@@ -88,3 +88,21 @@ export async function getRacksWithData() {
   }
   return response;
 }
+
+export async function getRackByShelf(id: string) {
+  const jwt = cookies().get("access")?.value
+  const res = await fetch(`http://localhost:8080/api/v1/shelfs/${id}/rack`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${jwt}`
+    },
+    next: { tags: ["aisles"] },
+  })
+  const body = await res.json()
+  if (body.code !== 200) {
+    // error state?
+    return {} as Rack;
+  }
+  return body.data as Rack;
+}

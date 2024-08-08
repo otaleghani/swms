@@ -201,7 +201,7 @@ func getZonesWithData(db *database.Database) http.HandlerFunc {
   }
 }
 
-func getZonesByAisleId(db *database.Database) http.HandlerFunc {
+func getZoneByAisleId(db *database.Database) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
     token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
     if err := checkAccessToken(token, db); err != nil {
@@ -223,7 +223,7 @@ func getZonesByAisleId(db *database.Database) http.HandlerFunc {
   }
 }
 
-func getZonesByRackId(db *database.Database) http.HandlerFunc {
+func getZoneByRackId(db *database.Database) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
     token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
     if err := checkAccessToken(token, db); err != nil {
@@ -245,4 +245,24 @@ func getZonesByRackId(db *database.Database) http.HandlerFunc {
   }
 }
 
-
+func getZoneByShelfId(db *database.Database) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+    token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
+    if err := checkAccessToken(token, db); err != nil {
+      ErrorResponse{Message: err.Error()}.r401(w, r)
+      return
+    }
+		path := r.PathValue("id")
+		shelf, err := db.SelectShelfById(path)
+		if err != nil {
+			ErrorResponse{Message: "Not found"}.r404(w, r)
+			return
+		}
+    zone, err := db.SelectZoneById(shelf.Zone_id)
+		if err != nil {
+			ErrorResponse{Message: "Not found"}.r404(w, r)
+			return
+		}
+		SuccessResponse{Data: zone}.r200(w, r)
+  }
+}

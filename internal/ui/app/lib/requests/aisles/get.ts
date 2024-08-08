@@ -139,3 +139,21 @@ export async function getAisleByRack(id: string) {
 
   return body.data as Aisle;
 }
+
+export async function getAisleByShelf(id: string) {
+  const jwt = cookies().get("access")?.value
+  const res = await fetch(`http://localhost:8080/api/v1/shelfs/${id}/aisle`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${jwt}`
+    },
+    next: { tags: ["aisles"] },
+  })
+  const body = await res.json()
+  if (body.code !== 200) {
+    // error state?
+    return {} as Aisle;
+  }
+  return body.data as Aisle;
+}

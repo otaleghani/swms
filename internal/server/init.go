@@ -82,7 +82,7 @@ func Serve(path, port string) {
 	mux.HandleFunc("GET /api/v1/zones/{id}/aisles/extra", getAislesByZoneWithData(&dbConn))
 	mux.HandleFunc("POST /api/v1/aisles/bulk/{$}", postBulkAisles(&dbConn))
 	mux.HandleFunc("GET /api/v1/aisles/extra/{$}", getAislesWithData(&dbConn))
-	mux.HandleFunc("GET /api/v1/aisles/{id}/zone/{$}", getZonesByAisleId(&dbConn))
+	mux.HandleFunc("GET /api/v1/aisles/{id}/zone/{$}", getZoneByAisleId(&dbConn))
 
 	mux.HandleFunc("GET /api/v1/racks/{$}", getRacks(&dbConn))
 	mux.HandleFunc("POST /api/v1/racks/{$}", postRacks(&dbConn))
@@ -92,7 +92,7 @@ func Serve(path, port string) {
 	mux.HandleFunc("POST /api/v1/racks/bulk/{$}", postBulkRacks(&dbConn))
 	mux.HandleFunc("GET /api/v1/aisles/{id}/racks/extra", getRacksByAisleWithData(&dbConn))
 	//mux.HandleFunc("GET /api/v1/racks/extra/{$}", getRacksWithData(&dbConn))
-	mux.HandleFunc("GET /api/v1/racks/{id}/zone/{$}", getZonesByRackId(&dbConn))
+	mux.HandleFunc("GET /api/v1/racks/{id}/zone/{$}", getZoneByRackId(&dbConn))
 	mux.HandleFunc("GET /api/v1/racks/{id}/aisle/{$}", getAisleByRackId(&dbConn))
 	mux.HandleFunc("GET /api/v1/racks/extra/{$}", getRacksWithData(&dbConn))
 
@@ -103,6 +103,10 @@ func Serve(path, port string) {
 	mux.HandleFunc("DELETE /api/v1/shelfs/{id}", deleteShelf(&dbConn))
 	mux.HandleFunc("GET /api/v1/racks/{id}/shelfs/extra", getShelfsByRackWithData(&dbConn))
 	mux.HandleFunc("POST /api/v1/shelfs/bulk/{$}", postBulkShelfs(&dbConn))
+	mux.HandleFunc("GET /api/v1/shelfs/{id}/zone/{$}", getZoneByShelfId(&dbConn))
+	mux.HandleFunc("GET /api/v1/shelfs/{id}/aisle/{$}", getAisleByShelfId(&dbConn))
+	mux.HandleFunc("GET /api/v1/shelfs/{id}/rack/{$}", getRackByShelfId(&dbConn))
+	mux.HandleFunc("GET /api/v1/shelfs/extra/{$}", getShelfsWithData(&dbConn))
 
 	mux.HandleFunc("GET /api/v1/variants/{$}", getVariants(&dbConn))
 	mux.HandleFunc("POST /api/v1/variants/{$}", postVariants(&dbConn))

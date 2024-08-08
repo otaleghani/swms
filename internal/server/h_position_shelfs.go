@@ -199,3 +199,38 @@ func postBulkShelfs(db *database.Database) http.HandlerFunc {
 		SuccessResponse{Message: "Rows added"}.r201(w, r)
   }
 }
+
+func getShelfsWithData(db *database.Database) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+    token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
+    if err := checkAccessToken(token, db); err != nil {
+      ErrorResponse{Message: err.Error()}.r401(w, r)
+      return
+    }
+		shelfs, err := db.SelectShelfs("")
+		if err != nil {
+			ErrorResponse{Message: err.Error()}.r500(w, r)
+			return
+		}
+    var data []struct {
+      Shelf database.Shelf `json:"shelf"`
+      Items_count int `json:"items_count"`
+    }
+    for i := 0; i < len(shelfs); i++ {
+      items, err := db.SelectItem("Shelf_id = ?", shelfs[i].Id)
+		  if err != nil {
+		  	ErrorResponse{Message: err.Error()}.r500(w, r)
+		  	return
+		  }
+      data = append(data, struct{
+          Shelf database.Shelf `json:"shelf"`
+          Items_count int `json:"items_count"`
+        }{
+          Shelf: shelfs[i],
+          Items_count: len(items),
+        },
+      )
+    }
+		SuccessResponse{Data: data}.r200(w, r)
+  }
+}

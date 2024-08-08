@@ -6,13 +6,13 @@ import { getRacksWithData } from "@/app/lib/requests/racks/get";
 import CollectionRacksCards from "@/app/ui/racks/collection_cards";
 import CollectionRacksHeader from "@/app/ui/racks/collection_header";
 
-interface AislePageProps {
+interface RacksPageProps {
   params: {
     lang: string;
   }
 }
 
-export default async function RacksPage({ params }: AislePageProps ) {
+export default async function RacksPage({ params }: RacksPageProps ) {
   const dict = await getDictionary(params.lang as Locale);
   const pZones = getZones();
   const pAisles = getAisles();

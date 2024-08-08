@@ -9,14 +9,14 @@ import SingleRackHeader from "@/app/ui/racks/single_header";
 import SingleRackCard from "@/app/ui/racks/single_card";
 import CollectionShelfsCards from "@/app/ui/shelfs/collection_cards";
 
-interface AisleIdPageProps {
+interface RacksIdPageProps {
   params: {
     id: string;
     lang: string;
   };
 }
 
-export default async function RackIdPage({ params }: AisleIdPageProps) {
+export default async function RackIdPage({ params }: RacksIdPageProps) {
   const dict = await getDictionary(params.lang as Locale)
 
   const pItem = getRackById(params.id);

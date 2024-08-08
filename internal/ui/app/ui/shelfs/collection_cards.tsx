@@ -3,6 +3,7 @@ import { Button } from "@/components/button";
 import Link from "next/link";
 import { Aisle, Rack, Zone, ShelfInfo } from "@/app/lib/types";
 import { EditShelfDialog } from "./edit/dialog";
+import { DeleteShelfDialog } from "./delete/dialog";
 
 interface ShelfsCardsProps {
   shelfs: ShelfInfo[];
@@ -61,13 +62,11 @@ export default function CollectionShelfsCards({
                 dict_zone_select={dict_zone_select}
                 dict_aisle_select={dict_aisle_select}
                 dict_rack_select={dict_rack_select} />
-              {
-              //<DeleteRackDialog 
-              //  dict={dict_delete} 
-              //  id={item.rack.id} />
-              }
+              <DeleteShelfDialog 
+                dict={dict_delete} 
+                id={item.shelf.id} />
               <Button asChild variant="default">
-                <Link href={`/shelf/${item.shelf.id}`}>{dict_card.labels.view}</Link>
+                <Link href={`/shelfs/${item.shelf.id}`}>{dict_card.labels.view}</Link>
               </Button>
             </CardFooter>
           </Card>

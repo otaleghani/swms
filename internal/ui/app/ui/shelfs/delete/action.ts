@@ -1,10 +1,12 @@
 "use server";
 
-import { deleteRack } from "@/app/lib/requests/racks/delete";
+import { deleteShelf } from "@/app/lib/requests/shelfs/delete";
 import { revalidateTag } from "next/cache";
 
-export async function handlerDeleteRack(id: string) {
-  const res_body = deleteRack(id);
+export async function handlerDeleteShelf(id: string) {
+  const res_body = deleteShelf(id);
+  revalidateTag("shelfs");
+  revalidateTag("aisles");
   revalidateTag("racks");
-    revalidateTag("aisles");
+  revalidateTag("zones");
 }

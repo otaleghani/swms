@@ -45,3 +45,45 @@ export async function getShelfs() {
     }
   }
 }
+
+export async function getShelfById(id: string) {
+  const jwt = cookies().get("access")?.value
+  const res = await fetch(`http://localhost:8080/api/v1/shelfs/${id}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${jwt}`
+    },
+    next: { tags: ["shelfs"] },
+  })
+  const body = await res.json()
+  if (body.code !== 200) {
+    // error state?
+    return {} as Shelf;
+  }
+  return body.data as Shelf;
+}
+
+export async function getShelfsWithData() {
+  const jwt = cookies().get("access")?.value
+  const res = await fetch("http://localhost:8080/api/v1/shelfs/extra/", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${jwt}`
+    },
+    next: { tags: ["shelfs"] },
+  })
+  const body = await res.json()
+  if (body.code !== 200) {
+    // error state?
+    return [];
+  }
+  const response = [];
+  for (let i = 0; i < body.data.length; i++) {
+    if (body.data[i].shelf.id != "nil") {
+      response.push(body.data[i])
+    }
+  }
+  return response;
+}

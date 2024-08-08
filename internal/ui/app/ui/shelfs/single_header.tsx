@@ -1,23 +1,20 @@
-import { AddBulkShelfsDialog } from "@/app/ui/shelfs/bulk_add/dialog";
 import { Breadcrumbs } from "../general/breadcrumbs";
-import { Aisle, Rack, Zone } from "@/app/lib/types";
+import { Aisle, Rack, Zone, Shelf } from "@/app/lib/types";
 
 interface SingleRackHeaderProps {
   dict_header: any;
-  dict_shelfs_bulk_form: any;
-  lang: string;
   zone: Zone;
   aisle: Aisle;
   rack: Rack;
+  shelf: Shelf;
 }
 
-export default function SingleRackHeader({ 
+export default function SingleShelfHeader({ 
   dict_header, 
-  dict_shelfs_bulk_form, 
-  lang, 
   zone,
   aisle,
-  rack }: SingleRackHeaderProps) {
+  rack,
+  shelf }: SingleRackHeaderProps) {
 
   const breadcrumbs_items = [
     {
@@ -39,18 +36,22 @@ export default function SingleRackHeader({
     {
       label: dict_header.breadcrumbs.rack,
       url: "/racks",
-    }
+    },
+    {
+      label: rack.name,
+      url: `/racks/${rack.id}`,
+    },
+    {
+      label: dict_header.breadcrumbs.shelf,
+      url: "/shelfs/",
+    },
   ]
 
   return (
     <header className="border-b p-4 h-[57px] flex items-center justify-between bg-background z-10">
       <div className="flex gap-4 items-center">
-        <Breadcrumbs items={breadcrumbs_items} current_item={rack.name} />
+        <Breadcrumbs items={breadcrumbs_items} current_item={shelf.name} />
       </div>
-      <AddBulkShelfsDialog 
-        dict={dict_shelfs_bulk_form} 
-        locale={lang} 
-        rack={rack} />
     </header>
   )
 }

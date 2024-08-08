@@ -490,6 +490,19 @@
   },
 
   "shelfs": {
+    "header_single": {
+      "title": "Ripiano",
+      "breadcrumbs": {
+        "home": "Home",
+        "zone": "Zone",
+        "aisle": "Corridoio",
+        "rack": "Scaffale",
+        "shelf": "Ripiano"
+      }
+    },
+    "header_collection": {
+      "title": "Scaffali"
+    },
     "delete_form": {
       "title": "Elimina ripiano",
       "description": "Vuoi eliminare questo ripiano? L'operazione non può essere reversibile",
@@ -530,8 +543,8 @@
       "labels": {
         "zone": "Zona",
         "aisle": "Corridoio",
-        "shelfs": "Ripiano",
-        "racks": "Scaffali",
+        "shelf": "Ripiano",
+        "rack": "Scaffali",
         "items": "Oggetti",
         "edit": "Modifica",
         "view": "Guarda"
