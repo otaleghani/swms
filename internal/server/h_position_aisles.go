@@ -203,7 +203,7 @@ func getAislesWithData(db *database.Database) http.HandlerFunc {
 		  	ErrorResponse{Message: err.Error()}.r500(w, r)
 		  	return
 		  }
-      items, err := db.SelectItem("Aisle_id = ?", aisles[i].Id)
+      items, err := db.SelectItems("Aisle_id = ?", aisles[i].Id)
 		  if err != nil {
 		  	ErrorResponse{Message: err.Error()}.r500(w, r)
 		  	return
@@ -247,7 +247,7 @@ func getAislesByZoneWithData(db *database.Database) http.HandlerFunc {
 		  	ErrorResponse{Message: err.Error()}.r500(w, r)
 		  	return
 		  }
-      items, err := db.SelectItem("Aisle_id = ?", aisles[i].Id)
+      items, err := db.SelectItems("Aisle_id = ?", aisles[i].Id)
 		  if err != nil {
 		  	ErrorResponse{Message: err.Error()}.r500(w, r)
 		  	return

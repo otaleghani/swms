@@ -24,7 +24,7 @@ export function DeleteZoneDialog({ dict, id }: DeleteDialog) {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="outline" className="aspect-square p-0"><Trash2 className="w-[1.2rem] h-[1.2rem]" /></Button>
+       <Button variant="outline" className="aspect-square p-0"><Trash2 className="w-[1.2rem] h-[1.2rem]" /></Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>

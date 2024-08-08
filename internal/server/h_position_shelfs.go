@@ -142,7 +142,7 @@ func getShelfsByRackWithData(db *database.Database) http.HandlerFunc {
       Items_count int `json:"items_count"`
     }
     for i := 0; i < len(shelfs); i++ {
-      items, err := db.SelectItem("Shelf_id = ?", shelfs[i].Id)
+      items, err := db.SelectItems("Shelf_id = ?", shelfs[i].Id)
 		  if err != nil {
 		  	ErrorResponse{Message: err.Error()}.r500(w, r)
 		  	return
@@ -217,7 +217,7 @@ func getShelfsWithData(db *database.Database) http.HandlerFunc {
       Items_count int `json:"items_count"`
     }
     for i := 0; i < len(shelfs); i++ {
-      items, err := db.SelectItem("Shelf_id = ?", shelfs[i].Id)
+      items, err := db.SelectItems("Shelf_id = ?", shelfs[i].Id)
 		  if err != nil {
 		  	ErrorResponse{Message: err.Error()}.r500(w, r)
 		  	return

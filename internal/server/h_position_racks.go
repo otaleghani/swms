@@ -185,7 +185,7 @@ func getRacksByAisleWithData(db *database.Database) http.HandlerFunc {
 		  	ErrorResponse{Message: err.Error()}.r500(w, r)
 		  	return
 		  }
-      items, err := db.SelectItem("Rack_id = ?", racks[i].Id)
+      items, err := db.SelectItems("Rack_id = ?", racks[i].Id)
 		  if err != nil {
 		  	ErrorResponse{Message: err.Error()}.r500(w, r)
 		  	return
@@ -204,6 +204,7 @@ func getRacksByAisleWithData(db *database.Database) http.HandlerFunc {
 		SuccessResponse{Data: data}.r200(w, r)
   }
 }
+
 func getRacksWithData(db *database.Database) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
     token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
@@ -227,7 +228,7 @@ func getRacksWithData(db *database.Database) http.HandlerFunc {
 		  	ErrorResponse{Message: err.Error()}.r500(w, r)
 		  	return
 		  }
-      items, err := db.SelectItem("Rack_id = ?", racks[i].Id)
+      items, err := db.SelectItems("Rack_id = ?", racks[i].Id)
 		  if err != nil {
 		  	ErrorResponse{Message: err.Error()}.r500(w, r)
 		  	return

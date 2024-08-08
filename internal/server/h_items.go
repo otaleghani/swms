@@ -16,7 +16,7 @@ func getItems(db *database.Database) http.HandlerFunc {
 			ErrorResponse{Message: err.Error()}.r401(w, r)
 			return
 		}
-		rows, err := db.SelectItem("")
+		rows, err := db.SelectItems("")
 		if err != nil {
 			ErrorResponse{Message: err.Error()}.r500(w, r)
 			return
@@ -33,7 +33,7 @@ func getItemById(db *database.Database) http.HandlerFunc {
 			return
 		}
 		path := r.PathValue("id")
-		rows, _ := db.SelectItem("Id = ?", path)
+		rows, _ := db.SelectItems("Id = ?", path)
 		if len(rows) == 0 {
 			ErrorResponse{Message: "Not found"}.r404(w, r)
 			return
@@ -73,7 +73,7 @@ func putItem(db *database.Database) http.HandlerFunc {
 			return
 		}
 		id := r.PathValue("id")
-		rows, err := db.SelectItem("Id = ?", id)
+		rows, err := db.SelectItems("Id = ?", id)
 		if err != nil {
 			ErrorResponse{Message: err.Error()}.r500(w, r)
 			return
@@ -105,7 +105,7 @@ func deleteItem(db *database.Database) http.HandlerFunc {
 			return
 		}
 		path := r.PathValue("id")
-		rows, err := db.SelectItem("Id = ?", path)
+		rows, err := db.SelectItems("Id = ?", path)
 		if err != nil {
 			ErrorResponse{Message: "Not found"}.r500(w, r)
 			return

@@ -2,7 +2,7 @@
 
 import { cookies } from "next/headers";
 
-export async function DeleteZone(id: string) {
+export async function deleteZone(id: string) {
   const jwt = cookies().get("access")?.value
   const res = await fetch(`http://localhost:8080/api/v1/zones/${id}`, {
     method: "DELETE",
@@ -13,4 +13,17 @@ export async function DeleteZone(id: string) {
   })
 
   const body = await res.json()
+}
+
+export async function deleteZoneSubstitution(id: string, sub_id: string) {
+  const jwt = cookies().get("access")?.value
+  const res = await fetch(`http://localhost:8080/api/v1/zones/${id}/replace-with/${sub_id}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${jwt}`
+    },
+  })
+  const resBody = await res.json();
+  return resBody;
 }

@@ -2,55 +2,44 @@
 
 import { Locale, getDictionary } from "@/lib/dictionaries";
 import { revalidateTag } from "next/cache";
-import { Zone } from "@/app/lib/types";
-import { PutZone } from "@/app/lib/requests/zones/put";
+import { deleteZoneSubstitution } from "@/app/lib/requests/zones/delete";
 
-export type EditZoneState = {
+export type DeleteZoneState = {
   error: true | false;
   errorMessages: {
-    name: string[];
     id: string[];
+    zone: string[]
   };
   message?: string;
 }
 
-export async function EditZoneAction(
-  currentState: EditZoneState, formData: FormData) {
-  const state: EditZoneState = {
+export async function DeleteZoneAction(
+  currentState: DeleteZoneState, formData: FormData) {
+  const state: DeleteZoneState = {
     error: false,
     errorMessages: {
-      name: [],
       id: [],
+      zone: [],
     },
     message: "",
   }
 
   const data = {
-    name: formData.get("name"),
     id: formData.get("id"),
+    zone: formData.get("zone"),
     locale: formData.get("locale"),
   }
 
   const dictPromise = getDictionary(data.locale as Locale)
   const [ dict ] = await Promise.all([ dictPromise ])
 
-  if (typeof data.name === "string") {
-    if (data.name === "" || 
-        data.name === undefined ||
-        data.name === "0") {
-      state.errorMessages.name.push(dict.zones.edit_form.errors.name.empty);
-      state.error = true;
-    }
-  } else {
-    state.errorMessages.name.push(dict.zones.edit_form.errors.name.type);
-  }
+  // TO DO
+  // error hadling 
+  // check if current id actually exist
+  // check if sub id actually exist
 
   if (!state.error) {
-    const req_body: Zone = {
-      id: data.id as string,
-      name: data.name as string,
-    }
-    const res_body = await PutZone(req_body, data.id as string)
+    const res_body = await deleteZoneSubstitution(data.id as string, data.zone as string)
 
     if (res_body.code !== 200) {
       if (res_body.code === 401) {
@@ -70,11 +59,11 @@ export async function EditZoneAction(
         state.error = true;
       }
     } else {
-      state.message = dict.zones.edit_form.success;
+      state.message = dict.zones.bulk_form.success;
       state.error = false;
-      revalidateTag('zones')
-      return state
+      revalidateTag("zones");
+      return state;
     }
   }
-  return state
+  return state;
 }

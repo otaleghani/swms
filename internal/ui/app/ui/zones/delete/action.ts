@@ -9,3 +9,5 @@ export async function HandlerDeleteZone(id: string) {
   revalidateTag("zones");
   redirect("/zones");
 }
+
+

@@ -14,7 +14,7 @@ type Item struct {
 }
 
 // Select an item based on the condition and the args
-func (db *Database) SelectItem(condition string, args ...interface{}) ([]Item, error) {
+func (db *Database) SelectItems(condition string, args ...interface{}) ([]Item, error) {
   list := []Item{}
   err := db.Sorm.Select(&list, condition, args...)
   if err != nil {

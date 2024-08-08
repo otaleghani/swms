@@ -181,7 +181,7 @@ func getZonesWithData(db *database.Database) http.HandlerFunc {
 		  	ErrorResponse{Message: err.Error()}.r500(w, r)
 		  	return
 		  }
-      items, err := db.SelectItem("Zone_id = ?", zones[i].Id)
+      items, err := db.SelectItems("Zone_id = ?", zones[i].Id)
 		  if err != nil {
 		  	ErrorResponse{Message: err.Error()}.r500(w, r)
 		  	return
@@ -265,4 +265,86 @@ func getZoneByShelfId(db *database.Database) http.HandlerFunc {
 		}
 		SuccessResponse{Data: zone}.r200(w, r)
   }
+}
+
+func deleteZoneSub(db *database.Database) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
+		if err := checkAccessToken(token, db); err != nil {
+			ErrorResponse{Message: err.Error()}.r401(w, r)
+			return
+		}
+		path := r.PathValue("id")
+		replacer := r.PathValue("rep")
+		itemToDelete, err := db.SelectZones("Id = ?", path)
+		if err != nil {
+			ErrorResponse{Message: "Error fetching data from db"}.r500(w, r)
+			return
+		}
+		if len(itemToDelete) == 0 {
+			ErrorResponse{Message: "Not found"}.r404(w, r)
+			return
+		}
+    itemThatReplaces, err := db.SelectZones("Id = ?", replacer)
+		if err != nil {
+			ErrorResponse{Message: "Error fetching data from db"}.r500(w, r)
+			return
+		}
+		if len(itemThatReplaces) == 0 {
+			ErrorResponse{Message: "Not found"}.r404(w, r)
+			return
+		}
+
+    var data DeleteSubRequest = DeleteSubRequest{
+      Id: itemToDelete[0].Id,
+      SubId: itemThatReplaces[0].Id,
+    } 
+
+    aisles, err := db.SelectAisles("Zone_id = ?", data.Id)
+		if err != nil {
+			ErrorResponse{Message: err.Error()}.r500(w, r)
+			return
+		}
+		err = db.Update(aisles, "Zone_id = ?", data.SubId)
+		if err != nil {
+			ErrorResponse{Message: err.Error()}.r500(w, r)
+			return
+		}
+    racks, err := db.SelectRacks("Zone_id = ?", data.Id)
+		if err != nil {
+			ErrorResponse{Message: err.Error()}.r500(w, r)
+			return
+		}
+		err = db.Update(racks, "Zone_id = ?", data.SubId)
+		if err != nil {
+			ErrorResponse{Message: err.Error()}.r500(w, r)
+			return
+		}
+    shelfs, err := db.SelectShelfs("Zone_id = ?", data.Id)
+		if err != nil {
+			ErrorResponse{Message: err.Error()}.r500(w, r)
+			return
+		}
+		err = db.Update(shelfs, "Zone_id = ?", data.SubId)
+		if err != nil {
+			ErrorResponse{Message: err.Error()}.r500(w, r)
+			return
+		}
+    items, err := db.SelectItems("Zone_id = ?", data.Id)
+		if err != nil {
+			ErrorResponse{Message: err.Error()}.r500(w, r)
+			return
+		}
+		err = db.Update(items, "Zone_id = ?", data.SubId)
+		if err != nil {
+			ErrorResponse{Message: err.Error()}.r500(w, r)
+			return
+		}
+		err = db.Delete(itemToDelete[0], "Id = ?", path)
+		if err != nil {
+			ErrorResponse{Message: err.Error()}.r500(w, r)
+			return
+		}
+		SuccessResponse{Message: "Row deleted"}.r200(w, r)
+	}
 }
