@@ -11,7 +11,6 @@ export async function deleteZone(id: string) {
       "Authorization": `Bearer ${jwt}`
     },
   })
-
   const body = await res.json()
 }
 
@@ -24,6 +23,7 @@ export async function deleteZoneSubstitution(id: string, sub_id: string) {
       "Authorization": `Bearer ${jwt}`
     },
   })
+  console.log(res.body)
   const resBody = await res.json();
   return resBody;
 }

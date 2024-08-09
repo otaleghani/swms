@@ -20,7 +20,7 @@ interface DeleteZoneProps {
 function DeleteZoneForm({ dict, locale, item, zones, dict_zone_select }: DeleteZoneProps) {
   const initialState: DeleteZoneState = {
     error: false,
-    errorMessages: { name: [], id: [], zone: [] },
+    errorMessages: { id: [], zone: [] },
     message: "",
   }
   const [state, action] = useActionState(DeleteZoneAction, initialState);
@@ -29,7 +29,6 @@ function DeleteZoneForm({ dict, locale, item, zones, dict_zone_select }: DeleteZ
   return (
     <>
       <form action={action}>
-        <Label>{dict.fields.name.label}</Label>
         <SelectZone
           dict_zone_select={dict_zone_select}
           zone={zone}
@@ -38,9 +37,9 @@ function DeleteZoneForm({ dict, locale, item, zones, dict_zone_select }: DeleteZ
 
         <FormFieldError 
           id="quantity-error" 
-          description={state.errorMessages.name} />
+          description={state.errorMessages.zone} />
         <input type="hidden" value={locale} name="locale" />
-        <Input type="hidden" value={zone.id} name="id" />
+        <Input type="hidden" value={item.id} name="id" />
         <Button type="submit" className="w-full mt-2">{dict.button}</Button>
         {state.error ? (
           <FormError 
@@ -79,7 +78,7 @@ import { Input } from "@/components/input";
 import { Label } from "@/components/label";
 import SelectZone from "../../general/form/select/zone/field";
 
-export function EditZones({ dict, locale, item, zones, dict_zone_select }: DeleteZoneProps) {
+export function DeleteAndSubZoneDialog({ dict, locale, item, zones, dict_zone_select }: DeleteZoneProps) {
   const [open, setOpen] = React.useState(false)
   const isDesktop = useMediaQuery("(min-width: 768px)")
 

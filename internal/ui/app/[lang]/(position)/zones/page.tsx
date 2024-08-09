@@ -1,5 +1,5 @@
 import { getDictionary, Locale } from "@/lib/dictionaries";
-import { getZonesWithData} from "@/app/lib/requests/zones/get";
+import { getZonesWithData, getZones } from "@/app/lib/requests/zones/get";
 import ZoneCard from "@/app/ui/zones/collection_cards";
 import { ZoneInfo } from "@/app/lib/types";
 import ZoneHeader from "@/app/ui/zones/collection_header";
@@ -12,7 +12,7 @@ interface ZonesPageProps {
 
 export default async function ZonesPage({ params }: ZonesPageProps ) {
   const dict = await getDictionary(params.lang as Locale);
-  const pZones = getZonesWithData()
+  const pZones= getZonesWithData()
   const [zones] = await Promise.all([pZones])
 
   return (
@@ -24,7 +24,8 @@ export default async function ZonesPage({ params }: ZonesPageProps ) {
           locale={params.lang}
           dict_card={dict.zones.card}
           dict_delete={dict.zones.delete_form}
-          dict_edit={dict.zones.edit_form} />
+          dict_edit={dict.zones.edit_form}
+          dict_zone_select={dict.zones.select_field} />
       </main>
     </div>
   )

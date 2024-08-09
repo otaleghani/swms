@@ -29,6 +29,7 @@ export async function DeleteZoneAction(
     zone: formData.get("zone"),
     locale: formData.get("locale"),
   }
+  console.log(data)
 
   const dictPromise = getDictionary(data.locale as Locale)
   const [ dict ] = await Promise.all([ dictPromise ])
@@ -40,7 +41,6 @@ export async function DeleteZoneAction(
 
   if (!state.error) {
     const res_body = await deleteZoneSubstitution(data.id as string, data.zone as string)
-
     if (res_body.code !== 200) {
       if (res_body.code === 401) {
         state.message = dict.zones.edit_form.errors.general.auth;

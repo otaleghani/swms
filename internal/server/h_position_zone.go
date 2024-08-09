@@ -295,51 +295,31 @@ func deleteZoneSub(db *database.Database) http.HandlerFunc {
 			return
 		}
 
-    var data DeleteSubRequest = DeleteSubRequest{
-      Id: itemToDelete[0].Id,
-      SubId: itemThatReplaces[0].Id,
-    } 
+    var aisle database.Aisle = database.Aisle{Zone_id: itemThatReplaces[0].Id}
+    err = db.Update(aisle, "Zone_id = ?", itemToDelete[0].Id)
+		if err != nil {
+			ErrorResponse{Message: err.Error()}.r500(w, r)
+			return
+    }
+    var rack database.Rack = database.Rack{Zone_id: itemThatReplaces[0].Id}
+    err = db.Update(rack, "Zone_id = ?", itemToDelete[0].Id)
+		if err != nil {
+			ErrorResponse{Message: err.Error()}.r500(w, r)
+			return
+		}
+    var shelf database.Shelf = database.Shelf{Zone_id: itemThatReplaces[0].Id}
+    err = db.Update(shelf, "Zone_id = ?", itemToDelete[0].Id)
+		if err != nil {
+			ErrorResponse{Message: err.Error()}.r500(w, r)
+			return
+		}
+    var item database.Item = database.Item{Zone_id: itemThatReplaces[0].Id}
+    err = db.Update(item, "Zone_id = ?", itemToDelete[0].Id)
+		if err != nil {
+			ErrorResponse{Message: err.Error()}.r500(w, r)
+			return
+		}
 
-    aisles, err := db.SelectAisles("Zone_id = ?", data.Id)
-		if err != nil {
-			ErrorResponse{Message: err.Error()}.r500(w, r)
-			return
-		}
-		err = db.Update(aisles, "Zone_id = ?", data.SubId)
-		if err != nil {
-			ErrorResponse{Message: err.Error()}.r500(w, r)
-			return
-		}
-    racks, err := db.SelectRacks("Zone_id = ?", data.Id)
-		if err != nil {
-			ErrorResponse{Message: err.Error()}.r500(w, r)
-			return
-		}
-		err = db.Update(racks, "Zone_id = ?", data.SubId)
-		if err != nil {
-			ErrorResponse{Message: err.Error()}.r500(w, r)
-			return
-		}
-    shelfs, err := db.SelectShelfs("Zone_id = ?", data.Id)
-		if err != nil {
-			ErrorResponse{Message: err.Error()}.r500(w, r)
-			return
-		}
-		err = db.Update(shelfs, "Zone_id = ?", data.SubId)
-		if err != nil {
-			ErrorResponse{Message: err.Error()}.r500(w, r)
-			return
-		}
-    items, err := db.SelectItems("Zone_id = ?", data.Id)
-		if err != nil {
-			ErrorResponse{Message: err.Error()}.r500(w, r)
-			return
-		}
-		err = db.Update(items, "Zone_id = ?", data.SubId)
-		if err != nil {
-			ErrorResponse{Message: err.Error()}.r500(w, r)
-			return
-		}
 		err = db.Delete(itemToDelete[0], "Id = ?", path)
 		if err != nil {
 			ErrorResponse{Message: err.Error()}.r500(w, r)

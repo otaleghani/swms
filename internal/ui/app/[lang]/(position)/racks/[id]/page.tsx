@@ -42,7 +42,7 @@ export default async function RackIdPage({ params }: RacksIdPageProps) {
             rack={item}
             lang={params.lang} 
             dict_header={dict.racks.header_single} 
-            dict_shelfs_bulk_form={dict.racks.bulk_form} />
+            dict_shelfs_bulk_form={dict.shelfs.bulk_form} />
           <ScrollArea className="h-[calc(100vh_-_57px)]" type="always">
             <div className="p-4">
               <SingleRackCard 

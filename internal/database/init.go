@@ -135,7 +135,6 @@ func (db Database) Insert(rows ...interface{}) error {
 
 // General query to update an item
 func (db Database) Update(obj interface{}, condition string, args ...interface{}) error {
-
   err := db.Sorm.Update(obj, condition, args...)
   if err != nil {
     return err
