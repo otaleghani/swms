@@ -1,43 +1,48 @@
 "use client";
 
 import { useActionState, useState } from "react"
-import { DeleteZoneState, DeleteZoneAction } from "@/app/ui/zones/delete/action_new";
+import { DeleteAisleState, DeleteAisleAction } from "./action";
 
 import FormFieldError from "@/app/ui/general/form/error_field";
 import FormError from "@/app/ui/general/form/error_form";
 import FormSuccess from "@/app/ui/general/form/success";
 
-import { Zone } from "@/app/lib/types";
+import { Aisle } from "@/app/lib/types";
 
-interface DeleteZoneProps {
+interface DeleteAisleProps {
   dict: any;
   locale: string;
-  item: Zone;
-  zones: Zone[];
-  dict_zone_select: any;
+  item: Aisle;
+  aisles: Aisle[];
+  dict_aisle_select: any;
 }
 
-function DeleteZoneForm({ dict, locale, item, zones, dict_zone_select }: DeleteZoneProps) {
-  const initialState: DeleteZoneState = {
+function DeleteAisleForm({ 
+  dict, 
+  locale, 
+  item, 
+  aisles, 
+  dict_aisle_select }: DeleteAisleProps) {
+  const initialState: DeleteAisleState = {
     error: false,
-    errorMessages: { id: [], zone: [] },
+    errorMessages: { id: [], aisle: [] },
     message: "",
   }
-  const [state, action] = useActionState(DeleteZoneAction, initialState);
-  const [zone, setZone] = useState({id: "", name: ""});
+  const [state, action] = useActionState(DeleteAisleAction, initialState);
+  const [aisle, setAisle] = useState({id: "", name: "", zone: ""});
 
   return (
     <>
       <form action={action}>
-        <SelectZone
-          dict_zone_select={dict_zone_select}
-          zone={zone}
-          setZone={setZone}
-          zones={zones} />
-
+        <SelectAisle 
+          aisle={aisle}
+          setAisle={setAisle}
+          aisles={aisles}
+          dict_aisle_select={dict_aisle_select}
+        />
         <FormFieldError 
           id="quantity-error" 
-          description={state.errorMessages.zone} />
+          description={state.errorMessages.aisle} />
         <input type="hidden" value={locale} name="locale" />
         <Input type="hidden" value={item.id} name="id" />
         <Button type="submit" className="w-full mt-2">{dict.button}</Button>
@@ -75,10 +80,16 @@ import {
   DrawerTrigger,
 } from "@/components/drawer"
 import { Input } from "@/components/input";
-import { Label } from "@/components/label";
-import SelectZone from "../../general/form/select/zone/field";
+import { Trash2 } from "lucide-react";
+import SelectAisle from "../../general/form/select/aisle/field";
 
-export function DeleteAndSubZoneDialog({ dict, locale, item, zones, dict_zone_select }: DeleteZoneProps) {
+export function DeleteAndSubAisleDialog({
+  dict, 
+  locale, 
+  item, 
+  aisles, 
+  dict_aisle_select }: DeleteAisleProps) {
+
   const [open, setOpen] = React.useState(false)
   const isDesktop = useMediaQuery("(min-width: 768px)")
 
@@ -86,19 +97,21 @@ export function DeleteAndSubZoneDialog({ dict, locale, item, zones, dict_zone_se
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button variant="outline">{dict.dialog_button}</Button>
+          <Button variant="outline" className="aspect-square p-0">
+            <Trash2 className="w-[1.2rem] h-[1.2rem]" />
+          </Button>
        </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
             <DialogTitle>{dict.title}</DialogTitle>
             <DialogDescription>{dict.description}</DialogDescription>
           </DialogHeader>
-          <DeleteZoneForm 
+          <DeleteAisleForm 
             dict={dict} 
             locale={locale} 
             item={item}
-            zones={zones}
-            dict_zone_select={dict_zone_select} />
+            aisles={aisles}
+            dict_aisle_select={dict_aisle_select} />
         </DialogContent>
       </Dialog>
     )
@@ -107,7 +120,9 @@ export function DeleteAndSubZoneDialog({ dict, locale, item, zones, dict_zone_se
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <Button variant="outline">{dict.dialog_button}</Button>
+        <Button variant="outline" className="aspect-square p-0">
+          <Trash2 className="w-[1.2rem] h-[1.2rem]" />
+        </Button>
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader className="text-left">
@@ -115,12 +130,12 @@ export function DeleteAndSubZoneDialog({ dict, locale, item, zones, dict_zone_se
           <DrawerDescription>{dict.description}</DrawerDescription>
         </DrawerHeader>
         <div className="px-4">
-          <DeleteZoneForm 
+          <DeleteAisleForm 
             dict={dict} 
             locale={locale} 
             item={item}
-            zones={zones}
-            dict_zone_select={dict_zone_select} />
+            aisles={aisles}
+            dict_aisle_select={dict_aisle_select} />
         </div>
         <DrawerFooter className="pt-2">
           <DrawerClose asChild>

@@ -11,6 +11,19 @@ export async function DeleteAisle(id: string) {
       "Authorization": `Bearer ${jwt}`
     },
   })
-
   const body = await res.json()
+}
+
+export async function deleteAisleSubstitution(id: string, sub_id: string) {
+  const jwt = cookies().get("access")?.value
+  const res = await fetch(`http://localhost:8080/api/v1/aisles/${id}/replace-with/${sub_id}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${jwt}`
+    },
+  })
+  console.log(res.body)
+  const resBody = await res.json();
+  return resBody;
 }

@@ -269,3 +269,62 @@ func getRackByShelfId(db *database.Database) http.HandlerFunc {
 		SuccessResponse{Data: aisle}.r200(w, r)
   }
 }
+
+func deleteRackSub(db *database.Database) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
+		if err := checkAccessToken(token, db); err != nil {
+			ErrorResponse{Message: err.Error()}.r401(w, r)
+			return
+		}
+		path := r.PathValue("id")
+		replacer := r.PathValue("rep")
+		itemToDelete, err := db.SelectRacks("Id = ?", path)
+		if err != nil {
+			ErrorResponse{Message: "Error fetching data from db"}.r500(w, r)
+			return
+		}
+		if len(itemToDelete) == 0 {
+			ErrorResponse{Message: "Not found"}.r404(w, r)
+			return
+		}
+    itemThatReplaces, err := db.SelectRacks("Id = ?", replacer)
+		if err != nil {
+			ErrorResponse{Message: "Error fetching data from db"}.r500(w, r)
+			return
+		}
+		if len(itemThatReplaces) == 0 {
+			ErrorResponse{Message: "Not found"}.r404(w, r)
+			return
+		}
+
+    var shelf database.Shelf = database.Shelf{
+      Zone_id: itemThatReplaces[0].Zone_id, 
+      Aisle_id: itemThatReplaces[0].Aisle_id,
+      Rack_id: itemThatReplaces[0].Id,
+    }
+    err = db.Update(shelf, "Rack_id = ?", itemToDelete[0].Id)
+		if err != nil {
+			ErrorResponse{Message: err.Error()}.r500(w, r)
+			return
+		}
+
+    var item database.Item = database.Item{
+      Zone_id: itemThatReplaces[0].Zone_id, 
+      Aisle_id: itemThatReplaces[0].Aisle_id,
+      Rack_id: itemThatReplaces[0].Id,
+    }
+    err = db.Update(item, "Rack_id = ?", itemToDelete[0].Id)
+		if err != nil {
+			ErrorResponse{Message: err.Error()}.r500(w, r)
+			return
+		}
+
+		err = db.Delete(itemToDelete[0], "Id = ?", path)
+		if err != nil {
+			ErrorResponse{Message: err.Error()}.r500(w, r)
+			return
+		}
+		SuccessResponse{Message: "Row deleted"}.r200(w, r)
+	}
+}

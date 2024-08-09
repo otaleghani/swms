@@ -35,10 +35,12 @@ export default async function ZoneIdPage({ params }: ZoneIdPageProps) {
             <div className="p-4">
               <SingleZoneCard 
                 locale={params.lang}
-                zone={zoneData} 
+                item={zoneData} 
+                zones={zones} 
                 dict_card={dict.zones.card}
                 dict_edit={dict.zones.edit_form}
                 dict_delete={dict.zones.delete_form}
+                dict_zone_select={dict.zones.select_field}
                 aisles_count={aislesOfZone.length}
                 items_count={2}/>
               <CollectionAislesCards 
@@ -47,6 +49,7 @@ export default async function ZoneIdPage({ params }: ZoneIdPageProps) {
                 dict_edit={dict.zones.edit_form}
                 dict_delete={dict.aisles.delete_form}
                 dict_zone_select={dict.zones.select_field}
+                dict_aisle_select={dict.aisles.select_field}
                 locale={params.lang} 
                 zones={zones} />
             </div>

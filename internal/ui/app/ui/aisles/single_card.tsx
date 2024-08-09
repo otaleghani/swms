@@ -16,6 +16,7 @@ interface SingleAisleCardProps {
   dict_edit: any;
   dict_delete: any;
   dict_zone_select: any;
+  dict_aisle_select: any;
 }
 
 export default function SingleAisleCard({ 
@@ -27,6 +28,7 @@ export default function SingleAisleCard({
   dict_edit,
   dict_delete,
   dict_zone_select,
+  dict_aisle_select,
   racks_count,
   items_count }: SingleAisleCardProps) {
 

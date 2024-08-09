@@ -3,8 +3,7 @@ import { Button } from "@/components/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/card";
 import { Zone, ZoneInfo } from "@/app/lib/types";
 import { EditZones } from "./edit/dialog";
-import { DeleteZoneDialog } from "./delete/dialog";
-import { DeleteAndSubZoneDialog } from "./delete/dialog_new";
+import { DeleteAndSubZoneDialog } from "./delete_safe/dialog";
 
 interface ZoneCardProps {
   zones: ZoneInfo[];
@@ -42,7 +41,6 @@ export default function CollectionZonesCards({
             <div className="flex justify-between py-2 border-b"><span>{dict_card.labels.items}</span><span>{zone.items_count}</span></div>
           </CardContent>
           <CardFooter className="flex justify-end gap-2 text-sm">
-            <DeleteZoneDialog dict={dict_delete} id={zone.zone.id}/>
             <DeleteAndSubZoneDialog 
               dict={dict_delete} 
               locale={locale} 

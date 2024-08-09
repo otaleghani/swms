@@ -31,6 +31,7 @@ export default async function AislesPage({ params }: AislePageProps ) {
           dict_edit={dict.aisles.edit_form}
           dict_delete={dict.aisles.delete_form}
           dict_zone_select={dict.zones.select_field}
+          dict_aisle_select={dict.aisles.select_field}
         />
       </main>
     </div>

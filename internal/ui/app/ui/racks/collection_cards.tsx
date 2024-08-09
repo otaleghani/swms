@@ -1,9 +1,9 @@
 import { Card, CardContent, CardHeader, CardTitle, CardFooter, CardDescription } from "@/components/card";
 import { Button } from "@/components/button";
 import Link from "next/link";
-import { Aisle, RackInfo, Zone } from "@/app/lib/types";
+import { Aisle, Rack, RackInfo, Zone } from "@/app/lib/types";
 import { EditRackDialog } from "./edit/dialog";
-import { DeleteRackDialog } from "./delete/dialog";
+import { DeleteAndSubRackDialog } from "./delete_safe/dialog";
 
 interface RacksCardsProps {
   racks: RackInfo[];
@@ -16,6 +16,7 @@ interface RacksCardsProps {
   dict_delete: any;
   dict_zone_select: any;
   dict_aisle_select: any;
+  dict_rack_select: any;
 }
 
 export default function CollectionRacksCards({ 
@@ -27,8 +28,14 @@ export default function CollectionRacksCards({
   dict_delete, 
   dict_edit, 
   dict_zone_select, 
-  dict_aisle_select
+  dict_aisle_select,
+  dict_rack_select
   }: RacksCardsProps) {
+
+  let racksList: Rack[] = [];
+  for (let i = 0; i < racks.length; i++) {
+    racksList.push(racks[i].rack)
+  }
 
   return (
     <>
@@ -60,9 +67,13 @@ export default function CollectionRacksCards({
                 dict={dict_edit} 
                 dict_zone_select={dict_zone_select}
                 dict_aisle_select={dict_aisle_select} />
-              <DeleteRackDialog 
+              <DeleteAndSubRackDialog
                 dict={dict_delete} 
-                id={item.rack.id} />
+                locale={locale}
+                item={item.rack}
+                racks={racksList}
+                dict_rack_select={dict_rack_select}
+              />
               <Button asChild variant="default">
                 <Link href={`/racks/${item.rack.id}`}>{dict_card.labels.view}</Link>
               </Button>
