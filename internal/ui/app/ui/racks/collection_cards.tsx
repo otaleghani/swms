@@ -72,8 +72,7 @@ export default function CollectionRacksCards({
                 locale={locale}
                 item={item.rack}
                 racks={racksList}
-                dict_rack_select={dict_rack_select}
-              />
+                dict_rack_select={dict_rack_select} />
               <Button asChild variant="default">
                 <Link href={`/racks/${item.rack.id}`}>{dict_card.labels.view}</Link>
               </Button>

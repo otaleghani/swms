@@ -66,10 +66,11 @@ export default async function RackIdPage({ params }: RacksIdPageProps) {
                 zones={zones}
                 dict_card={dict.racks.card} 
                 dict_edit={dict.racks.edit_form}
-                dict_delete={dict.racks.delete_form}
+                dict_delete={dict.shelfs.delete_form}
                 dict_zone_select={dict.zones.select_field}
                 dict_aisle_select={dict.aisles.select_field}
                 dict_rack_select={dict.racks.select_field}
+                dict_shelf_select={dict.shelfs.select_field}
                 locale={params.lang} />
             </div>
           </ScrollArea>

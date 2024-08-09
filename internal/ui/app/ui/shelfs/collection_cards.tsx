@@ -1,9 +1,10 @@
 import { Card, CardContent, CardHeader, CardTitle, CardFooter, CardDescription } from "@/components/card";
 import { Button } from "@/components/button";
 import Link from "next/link";
-import { Aisle, Rack, Zone, ShelfInfo } from "@/app/lib/types";
+import { Aisle, Rack, Zone, Shelf, ShelfInfo } from "@/app/lib/types";
 import { EditShelfDialog } from "./edit/dialog";
 import { DeleteShelfDialog } from "./delete/dialog";
+import { DeleteAndSubShelfDialog } from "./delete_safe/dialog";
 
 interface ShelfsCardsProps {
   shelfs: ShelfInfo[];
@@ -18,6 +19,7 @@ interface ShelfsCardsProps {
   dict_zone_select: any;
   dict_aisle_select: any;
   dict_rack_select: any;
+  dict_shelf_select: any;
 }
 
 export default function CollectionShelfsCards({ 
@@ -31,8 +33,14 @@ export default function CollectionShelfsCards({
   dict_edit, 
   dict_zone_select, 
   dict_aisle_select,
-  dict_rack_select
+  dict_rack_select,
+  dict_shelf_select,
   }: ShelfsCardsProps) {
+
+  let shelfList: Shelf[] = [];
+  for (let i = 0; i < shelfs.length; i++) {
+    shelfList.push(shelfs[i].shelf)
+  }
 
   return (
     <>
@@ -65,6 +73,12 @@ export default function CollectionShelfsCards({
               <DeleteShelfDialog 
                 dict={dict_delete} 
                 id={item.shelf.id} />
+              <DeleteAndSubShelfDialog
+                dict={dict_delete} 
+                locale={locale}
+                item={item.shelf}
+                shelfs={shelfList}
+                dict_shelf_select={dict_shelf_select} />
               <Button asChild variant="default">
                 <Link href={`/shelfs/${item.shelf.id}`}>{dict_card.labels.view}</Link>
               </Button>

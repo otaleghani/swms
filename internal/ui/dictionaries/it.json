@@ -490,6 +490,14 @@
   },
 
   "shelfs": {
+    "select_field": {
+      "name": "Ripiano",
+      "combobox": {
+        "select": "Seleziona un ripiano...",
+        "search": "Cerca un ripiano...",
+        "empty": "Nessun ripiano"
+      }
+    },
     "header_single": {
       "title": "Ripiano",
       "breadcrumbs": {
