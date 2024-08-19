@@ -1,11 +1,13 @@
 import { Aisle, Rack, Zone, Shelf } from "@/app/lib/types"
 import { Card, CardHeader, CardTitle, CardDescription, CardFooter, CardContent } from "@/components/card"
-import { DeleteShelfDialog } from "./delete/dialog";
+// import { DeleteShelfDialog } from "./delete/dialog";
+import { DeleteAndSubShelfDialog } from "./delete_safe/dialog";
 import { EditShelfDialog } from "./edit/dialog";
 import Link from "next/link";
 
 interface SingleAisleCardProps {
   shelf: Shelf;
+  shelfs: Shelf[];
   shelfRack: Rack;
   shelfZone: Zone;
   shelfAisle: Aisle;
@@ -21,10 +23,12 @@ interface SingleAisleCardProps {
   dict_zone_select: any;
   dict_aisle_select: any;
   dict_rack_select: any;
+  dict_shelf_select: any;
 }
 
 export default function SingleShelfCard({ 
   shelf,
+  shelfs,
   shelfRack,
   shelfZone,
   shelfAisle,
@@ -38,6 +42,7 @@ export default function SingleShelfCard({
   dict_zone_select,
   dict_aisle_select,
   dict_rack_select,
+  dict_shelf_select,
   items_count }: SingleAisleCardProps) {
 
   return (
@@ -65,7 +70,15 @@ export default function SingleShelfCard({
           </div>
         </CardContent>
         <CardFooter className="gap-2 text-sm">
-          <DeleteShelfDialog dict={dict_delete} id={shelf.id}/>
+          {
+          // <DeleteShelfDialog dict={dict_delete} id={shelf.id}/>
+          }
+          <DeleteAndSubShelfDialog
+            dict={dict_delete} 
+            locale={locale}
+            item={shelf}
+            shelfs={shelfs}
+            dict_shelf_select={dict_shelf_select} />
           <EditShelfDialog 
             shelf={shelf}
             aisles={aisles}

@@ -3,6 +3,7 @@
 import { Locale, getDictionary } from "@/lib/dictionaries";
 import { revalidateTag } from "next/cache";
 import { deleteAisleSubstitution } from "@/app/lib/requests/aisles/delete";
+import { redirect } from "next/navigation";
 
 export type DeleteAisleState = {
   error: true | false;
@@ -61,6 +62,7 @@ export async function DeleteAisleAction(
       state.message = dict.aisles.bulk_form.success;
       state.error = false;
       revalidateTag("aisles");
+      redirect("/aisles/" + data.aisle)
       return state;
     }
   }

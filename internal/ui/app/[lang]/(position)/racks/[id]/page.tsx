@@ -47,6 +47,7 @@ export default async function RackIdPage({ params }: RacksIdPageProps) {
             <div className="p-4">
               <SingleRackCard 
                 rack={item}
+                racks={racks}
                 rackZone={itemZone}
                 rackAisle={itemAisle}
                 zones={zones}
@@ -58,7 +59,8 @@ export default async function RackIdPage({ params }: RacksIdPageProps) {
                 dict_edit={dict.racks.edit_form}
                 dict_delete={dict.racks.delete_form}
                 dict_zone_select={dict.zones.select_field}
-                dict_aisle_select={dict.aisles.select_field} />
+                dict_aisle_select={dict.aisles.select_field}
+                dict_rack_select={dict.racks.select_field} />
               <CollectionShelfsCards
                 shelfs={itemShelfs}
                 shelfs_collection={shelfs}

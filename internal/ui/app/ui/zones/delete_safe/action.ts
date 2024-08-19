@@ -2,6 +2,7 @@
 
 import { Locale, getDictionary } from "@/lib/dictionaries";
 import { revalidateTag } from "next/cache";
+import { redirect } from "next/navigation";
 import { deleteZoneSubstitution } from "@/app/lib/requests/zones/delete";
 
 export type DeleteZoneState = {
@@ -62,6 +63,7 @@ export async function DeleteZoneAction(
       state.message = dict.zones.bulk_form.success;
       state.error = false;
       revalidateTag("zones");
+      redirect("/zones/" + data.zone)
       return state;
     }
   }

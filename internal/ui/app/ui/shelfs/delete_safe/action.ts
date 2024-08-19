@@ -2,6 +2,7 @@
 
 import { Locale, getDictionary } from "@/lib/dictionaries";
 import { revalidateTag } from "next/cache";
+import { redirect } from "next/navigation";
 import { deleteShelfSubstitution } from "@/app/lib/requests/shelfs/delete";
 
 export type DeleteShelfState = {
@@ -61,8 +62,7 @@ export async function DeleteShelfAction(
     } else {
       state.message = dict.shelfs.bulk_form.success;
       state.error = false;
-      revalidateTag("shelfs");
-      return state;
+      redirect("/shelfs/" + data.shelf)
     }
   }
   return state;

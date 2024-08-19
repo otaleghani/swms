@@ -2,6 +2,7 @@
 
 import { Locale, getDictionary } from "@/lib/dictionaries";
 import { revalidateTag } from "next/cache";
+import { redirect } from "next/navigation";
 import { deleteRackSubstitution } from "@/app/lib/requests/racks/delete";
 
 export type DeleteRackState = {
@@ -62,6 +63,7 @@ export async function DeleteRackAction(
       state.message = dict.racks.bulk_form.success;
       state.error = false;
       revalidateTag("racks");
+      redirect("/racks/" + data.rack)
       return state;
     }
   }

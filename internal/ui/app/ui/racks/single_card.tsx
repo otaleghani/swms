@@ -1,11 +1,13 @@
 import { Aisle, Rack, Zone } from "@/app/lib/types"
 import { Card, CardHeader, CardTitle, CardDescription, CardFooter, CardContent } from "@/components/card"
-import { DeleteRackDialog } from "./delete/dialog";
+// import { DeleteRackDialog } from "./delete/dialog";
+import { DeleteAndSubRackDialog } from "./delete_safe/dialog";
 import { EditRackDialog } from "./edit/dialog";
 import Link from "next/link";
 
 interface SingleAisleCardProps {
   rack: Rack;
+  racks: Rack[];
   rackZone: Zone;
   rackAisle: Aisle;
   zones: Zone[];
@@ -19,10 +21,12 @@ interface SingleAisleCardProps {
   dict_delete: any;
   dict_zone_select: any;
   dict_aisle_select: any;
+  dict_rack_select: any;
 }
 
 export default function SingleRackCard({ 
   rack,
+  racks,
   rackZone,
   rackAisle,
   zones,
@@ -33,6 +37,7 @@ export default function SingleRackCard({
   dict_delete,
   dict_zone_select,
   dict_aisle_select,
+  dict_rack_select,
   shelfs_count,
   items_count }: SingleAisleCardProps) {
 
@@ -60,7 +65,15 @@ export default function SingleRackCard({
           </div>
         </CardContent>
         <CardFooter className="gap-2 text-sm">
-          <DeleteRackDialog dict={dict_delete} id={rack.id}/>
+          {
+          // <DeleteRackDialog dict={dict_delete} id={rack.id}/>
+          }
+          <DeleteAndSubRackDialog
+            dict={dict_delete} 
+            locale={locale}
+            item={rack}
+            racks={racks}
+            dict_rack_select={dict_rack_select} />
           <EditRackDialog 
             dict_zone_select={dict_zone_select}
             dict_aisle_select={dict_aisle_select}

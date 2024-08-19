@@ -3,7 +3,7 @@ import { Button } from "@/components/button";
 import Link from "next/link";
 import { Aisle, Rack, Zone, Shelf, ShelfInfo } from "@/app/lib/types";
 import { EditShelfDialog } from "./edit/dialog";
-import { DeleteShelfDialog } from "./delete/dialog";
+// import { DeleteShelfDialog } from "./delete/dialog";
 import { DeleteAndSubShelfDialog } from "./delete_safe/dialog";
 
 interface ShelfsCardsProps {

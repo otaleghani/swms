@@ -27,9 +27,10 @@ export default async function ShelfIdPage({ params }: ShelfIdPageProps) {
   const pAisles = getAisles();
   const pZones = getZones();
   const pRacks = getRacks();
+  const pShelfs = getShelfs();
   
-  const [item, itemZone, itemAisle, itemRack, aisles, zones, racks] = await Promise.all(
-    [pItem, pItemZone, pItemAisle, pItemRack, pAisles, pZones, pRacks]);
+  const [item, itemZone, itemAisle, itemRack, aisles, zones, racks, shelfs] = await Promise.all(
+    [pItem, pItemZone, pItemAisle, pItemRack, pAisles, pZones, pRacks, pShelfs]);
   
   return (
     <>
@@ -45,6 +46,7 @@ export default async function ShelfIdPage({ params }: ShelfIdPageProps) {
             <div className="p-4">
               <SingleShelfCard 
                 shelf={item}
+                shelfs={shelfs}
                 shelfZone={itemZone}
                 shelfAisle={itemAisle}
                 shelfRack={itemRack}
@@ -58,7 +60,8 @@ export default async function ShelfIdPage({ params }: ShelfIdPageProps) {
                 dict_delete={dict.shelfs.delete_form}
                 dict_zone_select={dict.zones.select_field}
                 dict_aisle_select={dict.aisles.select_field}
-                dict_rack_select={dict.racks.select_field} />
+                dict_rack_select={dict.racks.select_field} 
+                dict_shelf_select={dict.shelfs.select_field} />
             </div>
           </ScrollArea>
         </div>
