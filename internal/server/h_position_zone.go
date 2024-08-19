@@ -276,6 +276,10 @@ func deleteZoneSub(db *database.Database) http.HandlerFunc {
 		}
 		path := r.PathValue("id")
 		replacer := r.PathValue("rep")
+    if path == replacer {
+      ErrorResponse{Message: "Cannot delete the same item."}.r500(w, r)
+      return
+    }
 		itemToDelete, err := db.SelectZones("Id = ?", path)
 		if err != nil {
 			ErrorResponse{Message: "Error fetching data from db"}.r500(w, r)

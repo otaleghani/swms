@@ -44,6 +44,7 @@ export async function getShelfs() {
       response.push(body.data[i])
     }
   }
+  return response;
 }
 
 export async function getShelfById(id: string) {

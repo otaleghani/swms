@@ -1,7 +1,7 @@
 import { getZones, getZoneByRack  } from "@/app/lib/requests/zones/get";
 import { getAisles, getAisleByRack } from "@/app/lib/requests/aisles/get";
 import { getRacks, getRackById } from "@/app/lib/requests/racks/get"
-import { getShelfsByRackWithExtra } from "@/app/lib/requests/shelfs/get"
+import { getShelfs, getShelfsByRackWithExtra } from "@/app/lib/requests/shelfs/get"
 import { getDictionary, Locale } from "@/lib/dictionaries";
 
 import { ScrollArea } from "@/components/scroll-area";
@@ -27,7 +27,7 @@ export default async function RackIdPage({ params }: RacksIdPageProps) {
   const pAisles = getAisles();
   const pZones = getZones();
   const pRacks = getRacks();
-  const pShelfs = getShelfsByRackWithExtra(params.id);
+  const pShelfs = getShelfs();
   
   const [item, itemZone, itemAisle, itemShelfs, aisles, zones, racks, shelfs] = await Promise.all(
     [pItem, pItemZone, pItemAisle, pItemShelfs, pAisles, pZones, pRacks, pShelfs]);
@@ -60,7 +60,8 @@ export default async function RackIdPage({ params }: RacksIdPageProps) {
                 dict_zone_select={dict.zones.select_field}
                 dict_aisle_select={dict.aisles.select_field} />
               <CollectionShelfsCards
-                shelfs={shelfs}
+                shelfs={itemShelfs}
+                shelfs_collection={shelfs}
                 racks={racks} 
                 aisles={aisles}
                 zones={zones}

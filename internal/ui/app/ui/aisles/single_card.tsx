@@ -1,6 +1,7 @@
 import { Aisle, Zone } from "@/app/lib/types"
 import { Card, CardHeader, CardTitle, CardDescription, CardFooter, CardContent } from "@/components/card"
-import { DeleteAisleDialog } from "./delete/dialog";
+// import { DeleteAisleDialog } from "./delete/dialog";
+import { DeleteAndSubAisleDialog } from "./delete_safe/dialog";
 import { EditAisle } from "./edit/dialog";
 import Link from "next/link";
 
@@ -8,6 +9,7 @@ interface SingleAisleCardProps {
   aisle: Aisle;
   aisleZone: Zone;
   zones: Zone[];
+  aisles: Aisle[];
   racks_count: number;
   items_count: number;
 
@@ -21,6 +23,7 @@ interface SingleAisleCardProps {
 
 export default function SingleAisleCard({ 
   aisle,
+  aisles,
   aisleZone,
   zones,
   locale,
@@ -52,7 +55,16 @@ export default function SingleAisleCard({
           </div>
         </CardContent>
         <CardFooter className="gap-2 text-sm">
-          <DeleteAisleDialog dict={dict_delete} id={aisle.id}/>
+          {
+          // <DeleteAisleDialog dict={dict_delete} id={aisle.id}/>
+          }
+          <DeleteAndSubAisleDialog
+            dict={dict_delete} 
+            locale={locale}
+            item={aisle}
+            aisles={aisles}
+            dict_aisle_select={dict_aisle_select}
+          />
           <EditAisle 
             dict_zone_select={dict_zone_select}
             dict={dict_edit} 

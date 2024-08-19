@@ -8,6 +8,7 @@ import { DeleteAndSubShelfDialog } from "./delete_safe/dialog";
 
 interface ShelfsCardsProps {
   shelfs: ShelfInfo[];
+  shelfs_collection: Shelf[];
   racks: Rack[];
   aisles: Aisle[];
   zones: Zone[];
@@ -35,12 +36,12 @@ export default function CollectionShelfsCards({
   dict_aisle_select,
   dict_rack_select,
   dict_shelf_select,
-  }: ShelfsCardsProps) {
+  shelfs_collection }: ShelfsCardsProps) {
 
-  let shelfList: Shelf[] = [];
-  for (let i = 0; i < shelfs.length; i++) {
-    shelfList.push(shelfs[i].shelf)
-  }
+  // let shelfList: Shelf[] = [];
+  // for (let i = 0; i < shelfs.length; i++) {
+  //   shelfList.push(shelfs[i].shelf)
+  // }
 
   return (
     <>
@@ -70,14 +71,16 @@ export default function CollectionShelfsCards({
                 dict_zone_select={dict_zone_select}
                 dict_aisle_select={dict_aisle_select}
                 dict_rack_select={dict_rack_select} />
-              <DeleteShelfDialog 
-                dict={dict_delete} 
-                id={item.shelf.id} />
+              {
+              // <DeleteShelfDialog 
+              //   dict={dict_delete} 
+              //   id={item.shelf.id} />
+              }
               <DeleteAndSubShelfDialog
                 dict={dict_delete} 
                 locale={locale}
                 item={item.shelf}
-                shelfs={shelfList}
+                shelfs={shelfs_collection}
                 dict_shelf_select={dict_shelf_select} />
               <Button asChild variant="default">
                 <Link href={`/shelfs/${item.shelf.id}`}>{dict_card.labels.view}</Link>

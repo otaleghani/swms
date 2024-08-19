@@ -1,5 +1,5 @@
 import { getDictionary, Locale } from "@/lib/dictionaries";
-import { getAislesByZoneIdWithExtra } from "@/app/lib/requests/aisles/get";
+import { getAisles, getAislesByZoneIdWithExtra } from "@/app/lib/requests/aisles/get";
 import { getZoneById, getZones } from "@/app/lib/requests/zones/get";
 import { ScrollArea } from "@/components/scroll-area";
 import CollectionAislesCards from "@/app/ui/aisles/collection_cards";
@@ -16,11 +16,12 @@ interface ZoneIdPageProps {
 export default async function ZoneIdPage({ params }: ZoneIdPageProps) {
   const dict = await getDictionary(params.lang as Locale);
 
-  const promiseZones = getZones();
-  const promiseZoneData = getZoneById(params.id);
-  const promiseAislesOfZone = getAislesByZoneIdWithExtra(params.id);
+  const pZones = getZones();
+  const pZoneData = getZoneById(params.id);
+  const pAislesOfZone = getAislesByZoneIdWithExtra(params.id);
+  const pAisles = getAisles();
 
-  const [zoneData, zones, aislesOfZone] = await Promise.all([promiseZoneData, promiseZones, promiseAislesOfZone]);
+  const [zoneData, zones, aislesOfZone, aisles] = await Promise.all([pZoneData, pZones, pAislesOfZone, pAisles]);
   
   return (
     <>
@@ -51,7 +52,8 @@ export default async function ZoneIdPage({ params }: ZoneIdPageProps) {
                 dict_zone_select={dict.zones.select_field}
                 dict_aisle_select={dict.aisles.select_field}
                 locale={params.lang} 
-                zones={zones} />
+                zones={zones} 
+                aisles_collection={aisles} />
             </div>
           </ScrollArea>
         </div>

@@ -7,6 +7,7 @@ import { DeleteAndSubZoneDialog } from "./delete_safe/dialog";
 
 interface ZoneCardProps {
   zones: ZoneInfo[];
+  zones_collection: Zone[];
   locale: string;
   dict_card: any;
   dict_edit: any;
@@ -16,6 +17,7 @@ interface ZoneCardProps {
 
 export default function CollectionZonesCards({ 
   zones, 
+  zones_collection,
   locale, 
   dict_card, 
   dict_edit, 
@@ -23,10 +25,10 @@ export default function CollectionZonesCards({
   dict_zone_select
 }: ZoneCardProps) {
 
-  let zonesList: Zone[] = [];
-  for (let i = 0; i < zones.length; i++) {
-    zonesList.push(zones[i].zone)
-  }
+  // let zonesList: Zone[] = [];
+  // for (let i = 0; i < zones.length; i++) {
+  //   zonesList.push(zones[i].zone)
+  // }
   
   return (
     <>
@@ -45,9 +47,12 @@ export default function CollectionZonesCards({
               dict={dict_delete} 
               locale={locale} 
               item={zone.zone} 
-              zones={zonesList} 
+              zones={zones_collection} 
               dict_zone_select={dict_zone_select} />
-            <EditZones dict={dict_edit} locale={locale} zone={zone.zone} />
+            <EditZones 
+              dict={dict_edit} 
+              locale={locale} 
+              zone={zone.zone} />
             <Button asChild variant="default">
               <Link href={`/zones/${zone.zone.id}`}>{dict_card.labels.view}</Link>
             </Button>

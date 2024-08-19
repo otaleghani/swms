@@ -1,10 +1,9 @@
 import { Card, CardContent, CardHeader, CardTitle, CardFooter, CardDescription } from "@/components/card";
 import { EditAisle } from "./edit/dialog";
-import { DeleteAisleDialog } from "./delete/dialog";
 import { Button } from "@/components/button";
 import Link from "next/link";
 import { DeleteAndSubAisleDialog } from "./delete_safe/dialog";
-import { Aisle, AisleInfo } from "@/app/lib/types";
+import { AisleInfo } from "@/app/lib/types";
 
 interface AislesCardsProps {
   dict_card: any;
@@ -15,6 +14,7 @@ interface AislesCardsProps {
   locale: string;
   zones: any[];
   aisles: any;
+  aisles_collection: any;
 }
 
 export default function CollectionAislesCards({ 
@@ -25,12 +25,13 @@ export default function CollectionAislesCards({
   dict_zone_select, 
   dict_aisle_select, 
   locale, 
-  zones }: AislesCardsProps) {
+  zones,
+  aisles_collection }: AislesCardsProps) {
 
-  let aislesList: Aisle[] = [];
-  for (let i = 0; i < aisles.length; i++) {
-    aislesList.push(aisles[i].aisle)
-  }
+  // let aislesList: Aisle[] = [];
+  // for (let i = 0; i < aisles.length; i++) {
+  //   aislesList.push(aisles[i].aisle)
+  // }
 
   return (
     <>
@@ -52,14 +53,16 @@ export default function CollectionAislesCards({
                 locale={locale} 
                 aisle={item.aisle} 
                 zones={zones} />
-              <DeleteAisleDialog 
-                dict={dict_delete} 
-                id={item.aisle.id} />
+              {
+              //<DeleteAisleDialog 
+              //  dict={dict_delete} 
+              //  id={item.aisle.id} />
+              }
               <DeleteAndSubAisleDialog
                 dict={dict_delete} 
                 locale={locale}
                 item={item.aisle}
-                aisles={aislesList}
+                aisles={aisles_collection}
                 dict_aisle_select={dict_aisle_select}
               />
               <Button asChild variant="default">

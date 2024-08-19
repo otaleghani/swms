@@ -9,7 +9,7 @@ interface RacksCardsProps {
   racks: RackInfo[];
   aisles: Aisle[];
   zones: Zone[];
-
+  racks_collection: Rack[];
   locale: string;
   dict_card: any;
   dict_edit: any;
@@ -29,13 +29,13 @@ export default function CollectionRacksCards({
   dict_edit, 
   dict_zone_select, 
   dict_aisle_select,
-  dict_rack_select
-  }: RacksCardsProps) {
+  dict_rack_select,
+  racks_collection }: RacksCardsProps) {
 
-  let racksList: Rack[] = [];
-  for (let i = 0; i < racks.length; i++) {
-    racksList.push(racks[i].rack)
-  }
+  // let racksList: Rack[] = [];
+  // for (let i = 0; i < racks.length; i++) {
+  //   racksList.push(racks[i].rack)
+  // }
 
   return (
     <>
@@ -57,7 +57,6 @@ export default function CollectionRacksCards({
                 <span>{item.items_count}</span>
               </div>
             </CardContent>
-
             <CardFooter className="gap-2 justify-end text-sm">
               <EditRackDialog 
                 rack={item.rack} 
@@ -71,7 +70,7 @@ export default function CollectionRacksCards({
                 dict={dict_delete} 
                 locale={locale}
                 item={item.rack}
-                racks={racksList}
+                racks={racks_collection}
                 dict_rack_select={dict_rack_select} />
               <Button asChild variant="default">
                 <Link href={`/racks/${item.rack.id}`}>{dict_card.labels.view}</Link>

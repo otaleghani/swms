@@ -1,7 +1,7 @@
 import { getZones } from "@/app/lib/requests/zones/get";
 import { getDictionary, Locale } from "@/lib/dictionaries";
 import { getAisleById, getAisles } from "@/app/lib/requests/aisles/get";
-import { getRacksByAisleIdWithExtra } from "@/app/lib/requests/racks/get";
+import { getRacks, getRacksByAisleIdWithExtra } from "@/app/lib/requests/racks/get";
 import { getZoneByAisle } from "@/app/lib/requests/zones/get";
 import { ScrollArea } from "@/components/scroll-area";
 import SingleAisleCard from "@/app/ui/aisles/single_card";
@@ -21,11 +21,14 @@ export default async function AisleIdPage({ params }: AisleIdPageProps) {
   const pItem = getAisleById(params.id);
   const pItemZone = getZoneByAisle(params.id);
   const pItemRacks = getRacksByAisleIdWithExtra(params.id);
+
   const pAisles = getAisles();
   const pZones = getZones();
+  const pRacks = getRacks();
   
-  const [item, itemZone, itemRacks, aisles, zones] = await Promise.all(
-    [pItem, pItemZone, pItemRacks, pAisles, pZones]);
+  const [item, itemZone, itemRacks, aisles, zones, racks] = await Promise.all(
+    [pItem, pItemZone, pItemRacks, pAisles, pZones, pRacks]);
+
 
   return (
     <>
@@ -41,6 +44,7 @@ export default async function AisleIdPage({ params }: AisleIdPageProps) {
             <div className="p-4">
               <SingleAisleCard 
                 aisle={item} 
+                aisles={aisles} 
                 aisleZone={itemZone}
                 zones={zones}
                 racks_count={itemRacks.length}
@@ -53,6 +57,7 @@ export default async function AisleIdPage({ params }: AisleIdPageProps) {
                 dict_aisle_select={dict.aisles.select_field} />
             <CollectionRacksCards 
               racks={itemRacks} 
+              racks_collection={racks}
               aisles={aisles}
               zones={zones}
               dict_card={dict.racks.card} 
