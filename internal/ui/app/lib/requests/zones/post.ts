@@ -19,5 +19,15 @@ export async function PostZonesBulk(req_body: any) {
 
 export async function PostZone(req_body: any) { 
   const jwt = cookies().get("access")?.value;
-  const res = await fetch("") 
+  const res = await fetch("http://localhost:8080/api/v1/zones/", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${jwt}`
+    },
+    body: req_body,
+  })
+  const res_body = await res.json()
+
+  return res_body
 }

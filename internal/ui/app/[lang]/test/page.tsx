@@ -16,11 +16,10 @@ export default async function TestingPage( {params}: {params: {lang: string}}) {
 
   const [zones, aisles, racks, shelfs] = await Promise.all([pZones, pAisles, pRacks, pShelfs]);
 
-
-
   return (
     <main>
       <SelectPosition
+        locale={params.lang}
         zones={zones}
         aisles={aisles}
         racks={racks}
@@ -30,6 +29,8 @@ export default async function TestingPage( {params}: {params: {lang: string}}) {
         dict_aisle_select={dict.aisles.select_field}
         dict_rack_select={dict.racks.select_field}
         dict_shelf_select={dict.shelfs.select_field}
+
+        dict_zone_add_dialog={dict.zones.add_dialog}
       />
     </main>
   )

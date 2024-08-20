@@ -53,7 +53,6 @@ interface DialogProps {
   };
 }
 
-
 export function DialogAddCategory({ handler, lang, dict }: DialogProps) {
   const isDesktop = useMediaQuery("(min-width: 768px)")
   const [open, setOpen] = useState(false);

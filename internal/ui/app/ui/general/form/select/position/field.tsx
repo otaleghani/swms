@@ -17,8 +17,10 @@ import SelectZone from "../zone/field";
 import SelectAisle from "../aisle/field";
 import SelectRack from "../rack/field";
 import SelectShelf from "../shelf/field";
+import AddZoneDialog from "../../add/zone/dialog";
 
 interface SelectPositionProps {
+  locale: string;
   zones: Zone[];
   aisles: Aisle[];
   racks: Rack[];
@@ -28,9 +30,13 @@ interface SelectPositionProps {
   dict_aisle_select: any;
   dict_rack_select: any;
   dict_shelf_select: any;
+
+  dict_zone_add_dialog: any;
+
 }
 
 export default function SelectPosition({ 
+  locale,
   zones, 
   aisles, 
   racks, 
@@ -38,7 +44,8 @@ export default function SelectPosition({
   dict_zone_select,
   dict_aisle_select,
   dict_rack_select,
-  dict_shelf_select }: SelectPositionProps) {
+  dict_shelf_select,
+  dict_zone_add_dialog }: SelectPositionProps) {
 
   const [zone, setZone] = useState({id: "", name: ""} as Zone);
   const [aisle, setAisle] = useState({id: "", name: "", zone: ""} as Aisle);
@@ -84,7 +91,6 @@ export default function SelectPosition({
   useEffect(() => {
     if (aisle.zone !== zone.id) {
       setAisle({id: "", name: "", zone: ""})
-
       // If the single had to chage, surely the list has to change too
       const newList = [];
       for (let i = 0; i < aislesList.length; i++) {
@@ -95,11 +101,9 @@ export default function SelectPosition({
       setAislesFilteredList(newList);
     }
   }, [zone])
-
   useEffect(() => {
     if (rack.aisle !== aisle.id) {
       setRack({id: "", name: "", zone: "", aisle: ""})
-
       const newList = [];
       for (let i = 0; i < racksList.length; i++) {
         if (racksList[i].aisle === aisle.id) {
@@ -109,11 +113,9 @@ export default function SelectPosition({
       setRacksFilteredList(newList);
     }
   }, [aisle])
-
   useEffect(() => {
     if (shelf.rack !== rack.id) {
       setShelf({id: "", name: "", zone: "", aisle: "", rack: ""})
-
       const newList = [];
       for (let i = 0; i < shelfsList.length; i++) {
         if (shelfsList[i].rack === rack.id) {
@@ -126,12 +128,19 @@ export default function SelectPosition({
 
   return (
     <>
-      <SelectZone 
-        zones={zonesList}
-        zone={zone}
-        setZone={setZone}
-        dict_zone_select={dict_zone_select}
-      />
+      <div>
+        <SelectZone 
+          zones={zonesList}
+          zone={zone}
+          setZone={setZone}
+          dict_zone_select={dict_zone_select}
+        />
+        <AddZoneDialog
+          handleAddZone={addNewZone}
+          dict_zone_add_dialog={dict_zone_add_dialog}
+          lang={locale} 
+        />
+      </div>
       { zone.id !== "" && (
         <SelectAisle
           aisles={aislesFilteredList}
