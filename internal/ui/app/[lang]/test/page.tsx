@@ -32,6 +32,7 @@ export default async function TestingPage( {params}: {params: {lang: string}}) {
 
         dict_zone_add_dialog={dict.zones.add_dialog}
         dict_aisle_add_dialog={dict.aisles.add_dialog}
+        dict_rack_add_dialog={dict.racks.add_dialog}
       />
     </main>
   )

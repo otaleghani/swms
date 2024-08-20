@@ -19,6 +19,7 @@ import SelectRack from "../rack/field";
 import SelectShelf from "../shelf/field";
 import AddZoneDialog from "../../add/zone/dialog";
 import AddAisleDialog from "../../add/aisle/dialog";
+import AddRackDialog from "../../add/rack/dialog";
 
 interface SelectPositionProps {
   locale: string;
@@ -34,6 +35,7 @@ interface SelectPositionProps {
 
   dict_zone_add_dialog: any;
   dict_aisle_add_dialog: any;
+  dict_rack_add_dialog: any;
 }
 
 export default function SelectPosition({ 
@@ -47,7 +49,8 @@ export default function SelectPosition({
   dict_rack_select,
   dict_shelf_select,
   dict_zone_add_dialog,
-  dict_aisle_add_dialog }: SelectPositionProps) {
+  dict_aisle_add_dialog,
+  dict_rack_add_dialog }: SelectPositionProps) {
 
   const [zone, setZone] = useState({id: "", name: ""} as Zone);
   const [aisle, setAisle] = useState({id: "", name: "", zone: ""} as Aisle);
@@ -89,6 +92,13 @@ export default function SelectPosition({
     const newList = racksList;
     newList.push(item)
     setRacksList(newList)
+    const newFilteredList = [];
+    for (let i = 0; i < racksList.length; i++) {
+      if (racksList[i].aisle === aisle.id) {
+        newFilteredList.push(racksList[i]);
+      }
+    }
+    setRacksFilteredList(newFilteredList);
     setRack(item)
   }
   async function addNewShelf(item: Shelf) {
@@ -168,12 +178,21 @@ export default function SelectPosition({
         </div>
       )}
       { aisle.id !== "" && (
-        <SelectRack 
-          racks={racksFilteredList}
-          rack={rack}
-          setRack={setRack}
-          dict_rack_select={dict_rack_select}
-        />
+        <div className="flex items-end mb-2">
+          <SelectRack 
+            racks={racksFilteredList}
+            rack={rack}
+            setRack={setRack}
+            dict_rack_select={dict_rack_select}
+          />
+          <AddRackDialog 
+            handleAddRack={addNewRack}
+            dict_rack_add_dialog={dict_rack_add_dialog}
+            lang={locale}
+            zone={zone}
+            aisle={aisle}
+          />
+        </div>
       )}
       { rack.id !== "" && (
         <SelectShelf
