@@ -1,32 +1,33 @@
 "use server";
 
-import { PostZone } from "@/app/lib/requests/zones/post";
+import { PostAisles } from "@/app/lib/requests/aisles/post";
 import { getDictionary, Locale } from "@/lib/dictionaries";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
-import { Zone } from "@/app/lib/types";
+import { Aisle } from "@/app/lib/types";
 
-export type AddZoneDialogState = {
+export type AddAisleDialogState = {
   error: true | false;
   errorMessages: {
     name: string[];
-    description: string[];
+    zone: string[];
   };
   message?: string;
-  result?: Zone;
+  result?: Aisle;
 };
 
-export async function AddZoneDialogAction(
-  currentState: AddZoneDialogState, formData: FormData) {
-  const state: AddZoneDialogState = {
+export async function AddAisleDialogAction(
+  currentState: AddAisleDialogState, formData: FormData) {
+  const state: AddAisleDialogState = {
     error: false,
     errorMessages: {
       name: [],
-      description: [],
+      zone: [],
     },
   };
   const data = {
     name: formData.get("name"),
+    zone: formData.get("zone"),
     locale: formData.get("locale"),
   }
 
@@ -37,39 +38,41 @@ export async function AddZoneDialogAction(
   if (typeof data.name === "string") {
     if (data.name === "" ||
        data.name === undefined) {
-      state.errorMessages.name.push(dict.zones.add_dialog.errors.name.empty);
+      state.errorMessages.name.push(dict.aisles.add_dialog.errors.name.empty);
       state.error = true;
     }
   } else {
-    state.errorMessages.name.push(dict.zones.add_dialog.errors.name.type);
+    state.errorMessages.name.push(dict.aisles.add_dialog.errors.name.type);
     state.error = true;
   }
+
+  // TODO: Add server side validation for zone
 
   if (!state.error) {
     const req_body = JSON.stringify({
       name: data.name,
+      zone: data.zone,
     });
     const jwt = cookies().get("access")?.value;
-    const res_body = await PostZone(req_body);
+    const res_body = await PostAisles(req_body);
 
-    console.log(res_body)
     if (res_body.code !== 201) {
       if (res_body.code === 401) {
         redirect("/login?error=true");
       }
       if (res_body.code === 400) {
         state.error = true;
-        state.message = dict.zones.add_dialog.errors.general.marshal;
+        state.message = dict.aisles.add_dialog.errors.general.marshal;
         return state;
       }
       if (res_body.code === 500) {
         state.error = true;
-        state.message = dict.zones.add_dialog.errors.general.internal;
+        state.message = dict.aisles.add_dialog.errors.general.internal;
         return state;
       }
 
       state.error = true;
-      state.message = dict.zones.add_dialog.errors.general.unknown;
+      state.message = dict.aisles.add_dialog.errors.general.unknown;
       return state;
     }
 
@@ -77,6 +80,7 @@ export async function AddZoneDialogAction(
     state.result = {
       id: res_body.data.uuid as string,
       name: data.name as string,
+      zone: data.zone as string,
     }
   }
   return state;

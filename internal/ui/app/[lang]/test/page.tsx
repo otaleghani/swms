@@ -31,6 +31,7 @@ export default async function TestingPage( {params}: {params: {lang: string}}) {
         dict_shelf_select={dict.shelfs.select_field}
 
         dict_zone_add_dialog={dict.zones.add_dialog}
+        dict_aisle_add_dialog={dict.aisles.add_dialog}
       />
     </main>
   )

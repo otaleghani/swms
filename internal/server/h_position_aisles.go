@@ -62,7 +62,7 @@ func postAisles(db *database.Database) http.HandlerFunc {
 			ErrorResponse{Message: err.Error()}.r500(w, r)
 			return
 		}
-		SuccessResponse{Message: "Row added"}.r201(w, r)
+    SuccessResponse{Message: "Row added", Data: UniqueId{UUID: data.Id}}.r201(w, r)
 	}
 }
 

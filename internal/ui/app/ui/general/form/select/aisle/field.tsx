@@ -20,7 +20,7 @@ export default function SelectAisle({
 
   return (
     <>
-      <div className="w-full mb-2">
+      <div className="w-full">
         <input 
           required
           type="hidden" 

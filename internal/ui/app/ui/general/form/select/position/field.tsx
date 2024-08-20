@@ -18,6 +18,7 @@ import SelectAisle from "../aisle/field";
 import SelectRack from "../rack/field";
 import SelectShelf from "../shelf/field";
 import AddZoneDialog from "../../add/zone/dialog";
+import AddAisleDialog from "../../add/aisle/dialog";
 
 interface SelectPositionProps {
   locale: string;
@@ -32,7 +33,7 @@ interface SelectPositionProps {
   dict_shelf_select: any;
 
   dict_zone_add_dialog: any;
-
+  dict_aisle_add_dialog: any;
 }
 
 export default function SelectPosition({ 
@@ -45,7 +46,8 @@ export default function SelectPosition({
   dict_aisle_select,
   dict_rack_select,
   dict_shelf_select,
-  dict_zone_add_dialog }: SelectPositionProps) {
+  dict_zone_add_dialog,
+  dict_aisle_add_dialog }: SelectPositionProps) {
 
   const [zone, setZone] = useState({id: "", name: ""} as Zone);
   const [aisle, setAisle] = useState({id: "", name: "", zone: ""} as Aisle);
@@ -72,6 +74,15 @@ export default function SelectPosition({
     const newList = aislesList;
     newList.push(item)
     setAislesList(newList)
+    
+    // had to reset the filtered list too
+    const newFilteredList = [];
+    for (let i = 0; i < aislesList.length; i++) {
+      if (aislesList[i].zone === zone.id) {
+        newFilteredList.push(aislesList[i]);
+      }
+    }
+    setAislesFilteredList(newFilteredList);
     setAisle(item)
   }
   async function addNewRack(item: Rack) {
@@ -87,7 +98,6 @@ export default function SelectPosition({
     setShelf(item)
   }
 
-  // TO TEST: Everything will go down one by one
   useEffect(() => {
     if (aisle.zone !== zone.id) {
       setAisle({id: "", name: "", zone: ""})
@@ -128,7 +138,7 @@ export default function SelectPosition({
 
   return (
     <>
-      <div>
+      <div className="flex items-end mb-2">
         <SelectZone 
           zones={zonesList}
           zone={zone}
@@ -142,12 +152,20 @@ export default function SelectPosition({
         />
       </div>
       { zone.id !== "" && (
-        <SelectAisle
-          aisles={aislesFilteredList}
-          aisle={aisle}
-          setAisle={setAisle}
-          dict_aisle_select={dict_aisle_select}
-        />
+        <div className="flex items-end mb-2">
+          <SelectAisle
+            aisles={aislesFilteredList}
+            aisle={aisle}
+            setAisle={setAisle}
+            dict_aisle_select={dict_aisle_select}
+          />
+          <AddAisleDialog
+            handleAddAisle={addNewAisle}
+            dict_aisle_add_dialog={dict_aisle_add_dialog}
+            lang={locale}
+            zone={zone}
+          />
+        </div>
       )}
       { aisle.id !== "" && (
         <SelectRack 
