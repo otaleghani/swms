@@ -20,6 +20,7 @@ import SelectShelf from "../shelf/field";
 import AddZoneDialog from "../../add/zone/dialog";
 import AddAisleDialog from "../../add/aisle/dialog";
 import AddRackDialog from "../../add/rack/dialog";
+import AddShelfDialog from "../../add/shelf/dialog";
 
 interface SelectPositionProps {
   locale: string;
@@ -36,6 +37,7 @@ interface SelectPositionProps {
   dict_zone_add_dialog: any;
   dict_aisle_add_dialog: any;
   dict_rack_add_dialog: any;
+  dict_shelf_add_dialog: any;
 }
 
 export default function SelectPosition({ 
@@ -50,7 +52,8 @@ export default function SelectPosition({
   dict_shelf_select,
   dict_zone_add_dialog,
   dict_aisle_add_dialog,
-  dict_rack_add_dialog }: SelectPositionProps) {
+  dict_rack_add_dialog,
+  dict_shelf_add_dialog }: SelectPositionProps) {
 
   const [zone, setZone] = useState({id: "", name: ""} as Zone);
   const [aisle, setAisle] = useState({id: "", name: "", zone: ""} as Aisle);
@@ -105,6 +108,13 @@ export default function SelectPosition({
     const newList = shelfsList;
     newList.push(item)
     setShelfsList(newList)
+    const newFilteredList = [];
+    for (let i = 0; i < shelfsList.length; i++) {
+      if (shelfsList[i].rack === rack.id) {
+        newFilteredList.push(shelfsList[i]);
+      }
+    }
+    setShelfsFilteredList(newFilteredList);
     setShelf(item)
   }
 
@@ -195,12 +205,22 @@ export default function SelectPosition({
         </div>
       )}
       { rack.id !== "" && (
-        <SelectShelf
-          shelfs={shelfsFilteredList}
-          shelf={shelf}
-          setShelf={setShelf}
-          dict_shelf_select={dict_shelf_select}
-        />
+        <div className="flex items-end mb-2">
+          <SelectShelf
+            shelfs={shelfsFilteredList}
+            shelf={shelf}
+            setShelf={setShelf}
+            dict_shelf_select={dict_shelf_select}
+          />
+          <AddShelfDialog
+            handleAddShelf={addNewShelf}
+            dict_shelf_add_dialog={dict_shelf_add_dialog}
+            lang={locale}
+            zone={zone}
+            aisle={aisle}
+            rack={rack}
+          />
+        </div>
       )}
     </>
   )
