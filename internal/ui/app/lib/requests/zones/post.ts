@@ -1,4 +1,4 @@
-"use server";
+use server";
 
 import { cookies } from "next/headers"
 
@@ -12,13 +12,12 @@ export async function PostZonesBulk(req_body: any) {
     },
     body: req_body,
   })
-  const res_body = await res.json()
-
-  return res_body
+  const res_body = await res.json();
+  return res_body;
 }
 
-export async function PostZone(req_body: any) { 
-  const jwt = cookies().get("access")?.value;
+export async function PostZones(req_body: any) {
+  const jwt = cookies().get("access")?.value
   const res = await fetch("http://localhost:8080/api/v1/zones/", {
     method: "POST",
     headers: {
@@ -27,7 +26,6 @@ export async function PostZone(req_body: any) {
     },
     body: req_body,
   })
-  const res_body = await res.json()
-
-  return res_body
+  const res_body = await res.json();
+  return res_body;
 }

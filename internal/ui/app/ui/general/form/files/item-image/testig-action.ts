@@ -1,5 +1,8 @@
 "use server";
 
+import { cookies } from "next/headers";
+const sharp = require('sharp');
+
 export type FormFileUploadTestingState = {
   status: string;
 }
@@ -14,14 +17,42 @@ export async function TestFileUploadAction(
   const data = {
     file: formData.get("file"),
   }
+
   const file_data = formData.getAll("file") as File[];
-  console.log(file_data)
+  //console.log(file_data)
 
-  }
+  const buffer = Buffer.from(await file_data[0].arrayBuffer());
+  //console.log(buffer)
 
-  // const buffer = Buffer.from(await file_data.arrayBuffer());
-  // console.log(buffer)
+  const newBuf = await sharp(buffer)
+    .resize(1000, 1000, {
+      fit: 'contain',
+    })
+    .jpeg({ 
+      mozjpeg: true,
+      quality: 50,
+    })
+    .toBuffer();
+
+  const req_body = JSON.stringify({
+    item_id: "nil",
+    variant_id: "nil",
+    //blob: buffer.toString("base64"),
+    blob: newBuf.toString("base64")
+  })
+  const jwt = cookies().get("access")?.value
+  const res = await fetch("http://localhost:8080/media/", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${jwt}`
+    },
+    body: req_body,
+  })
+  const res_body = await res.json();
+  console.log(res_body);
+
+
   state.status = "got this"
-
   return state
 }
