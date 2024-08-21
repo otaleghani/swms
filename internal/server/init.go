@@ -32,6 +32,15 @@ func Serve(path, port string) {
 		}
 	}
 
+  media_path := "./media"
+  if _, err := os.Stat(media_path); os.IsNotExist(err) {
+    err := os.MkdirAll(media_path, os.ModePerm);
+    if err != nil {
+      log.Println("ERROR: ", err)
+      return
+    }
+  }
+
 	mux := http.NewServeMux()
 
 	mux.HandleFunc("GET /api/v1/items/{$}", getItems(&dbConn))
@@ -177,6 +186,12 @@ func Serve(path, port string) {
 	mux.HandleFunc("POST /api/v1/login/{$}", login(&dbConn))
 	mux.HandleFunc("POST /api/v1/revoke/{$}", revokeHandler(&dbConn))
 	mux.HandleFunc("POST /api/v1/Tefresh/{$}", refreshHandler(&dbConn))
+
+  // fileserver
+  // fileserver := http.FileServer(http.Dir("./media"))
+  // mux.Handle("GET /media/", http.StripPrefix("/media", fileserver))
+  mux.HandleFunc("GET /media/", getMedia(&dbConn))
+  mux.HandleFunc("POST /media/{$}", postMedia(&dbConn))
 
 	corsMux := middlewareCors(mux)
 	srv := &http.Server{
