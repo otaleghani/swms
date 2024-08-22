@@ -20,8 +20,6 @@ export async function TestFileUploadAction(
   console.log(data)
 
   const buffer = Buffer.from(await data.file[0].arrayBuffer());
-  //console.log(buffer)
-
   const newBuf = await sharp(buffer)
     .resize(1000, 1000, {
       fit: 'contain',

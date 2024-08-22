@@ -4,6 +4,7 @@ import { useActionState, useState, useRef, useEffect } from "react"
 import { FormFileUploadTestingState, TestFileUploadAction } from "./testig-action"
 import { Label } from "@/components/label";
 import { Upload, XIcon } from "lucide-react";
+import { clientSideImageCompression } from "./optimization";
 
 interface Image {
   file: File;
@@ -26,16 +27,20 @@ export default function FormFileUploadTesting() {
     console.log('The input', fileInputRef.current?.files);
   }, [images, files]);
 
-
   /**
+   *
    * Adds into the default <input type="file" /> all of the different images that are updated. 
-   * This function allows to upload multiple images in different uploads
-   * @param e The event handler for the input element
+   * This function allows to upload multiple images at different time.
+   *
+   * @param e - The event handler for the input element
    * @returns void
   */
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      const newFiles = Array.from(e.target.files);
+      const newFiles = await Promise.all(Array.from(e.target.files).map(async (file) => {
+        const compressed = await clientSideImageCompression(file, 1000, 1000, 0.5);
+        return compressed as File;
+      }));
       const newImages: Image[] = newFiles.map((file) => {
         return {
           file: file,
@@ -43,9 +48,6 @@ export default function FormFileUploadTesting() {
           id: Math.random().toString(36).substr(2, 9),
         };
       });
-
-      const mimeType = newImages[0].file.type;
-      const fileName = newImages[0].file.name;
 
       const updatedImages = [...images, ...newImages];
       const updatedFiles = [...files, ...newFiles];
