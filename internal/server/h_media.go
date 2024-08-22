@@ -55,6 +55,11 @@ func postMedia(db *database.Database) http.HandlerFunc {
       Variant_id: req_data.Variant_id,
     }
 
+  	decodedBlob, err := base64.StdEncoding.DecodeString(req_data.Blob)
+	  if err != nil {
+			ErrorResponse{Message: err.Error()}.r500(w, r)
+	  	return
+	  }
     fileName := "media/" + data.Id + ".jpg"
     file, err := os.Create(fileName)
     if err != nil {
@@ -62,11 +67,6 @@ func postMedia(db *database.Database) http.HandlerFunc {
 			return
     }
     defer file.Close()
-  	decodedBlob, err := base64.StdEncoding.DecodeString(req_data.Blob)
-	  if err != nil {
-			ErrorResponse{Message: err.Error()}.r500(w, r)
-	  	return
-	  }
     _, err = file.Write(decodedBlob)
     if err != nil {
 			ErrorResponse{Message: err.Error()}.r500(w, r)

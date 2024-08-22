@@ -15,13 +15,11 @@ export async function TestFileUploadAction(
     status: "got nothing",
   }
   const data = {
-    file: formData.get("file"),
+    file: formData.getAll("images") as File[],
   }
+  console.log(data)
 
-  const file_data = formData.getAll("file") as File[];
-  //console.log(file_data)
-
-  const buffer = Buffer.from(await file_data[0].arrayBuffer());
+  const buffer = Buffer.from(await data.file[0].arrayBuffer());
   //console.log(buffer)
 
   const newBuf = await sharp(buffer)
@@ -33,24 +31,25 @@ export async function TestFileUploadAction(
       quality: 50,
     })
     .toBuffer();
+  console.log(newBuf)
 
-  const req_body = JSON.stringify({
-    item_id: "nil",
-    variant_id: "nil",
-    //blob: buffer.toString("base64"),
-    blob: newBuf.toString("base64")
-  })
-  const jwt = cookies().get("access")?.value
-  const res = await fetch("http://localhost:8080/media/", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": `Bearer ${jwt}`
-    },
-    body: req_body,
-  })
-  const res_body = await res.json();
-  console.log(res_body);
+  //const req_body = JSON.stringify({
+  //  item_id: "nil",
+  //  variant_id: "nil",
+  //  //blob: buffer.toString("base64"),
+  //  blob: newBuf.toString("base64")
+  //})
+  //const jwt = cookies().get("access")?.value
+  //const res = await fetch("http://localhost:8080/media/", {
+  //  method: "POST",
+  //  headers: {
+  //    "Content-Type": "application/json",
+  //    "Authorization": `Bearer ${jwt}`
+  //  },
+  //  body: req_body,
+  //})
+  //const res_body = await res.json();
+  //console.log(res_body);
 
 
   state.status = "got this"
