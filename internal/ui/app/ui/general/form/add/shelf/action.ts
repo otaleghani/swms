@@ -55,14 +55,12 @@ export async function AddShelfDialogAction(
   // TODO: Add server side validation for zone
 
   if (!state.error) {
-    const req_body = JSON.stringify({
+    const res_body = await PostShelfs({
       name: data.name,
       zone: data.zone,
       aisle: data.aisle,
       rack: data.rack,
     });
-    const jwt = cookies().get("access")?.value;
-    const res_body = await PostShelfs(req_body);
 
     if (res_body.code !== 201) {
       if (res_body.code === 401) {

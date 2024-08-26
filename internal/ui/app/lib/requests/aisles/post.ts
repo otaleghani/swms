@@ -1,6 +1,7 @@
 "use server";
 
 import { cookies } from "next/headers"
+import { Aisle } from "../../types";
 
 export async function PostAislesBulk(req_body: any) {
   const jwt = cookies().get("access")?.value
@@ -17,7 +18,7 @@ export async function PostAislesBulk(req_body: any) {
   return res_body
 }
 
-export async function PostAisles(req_body: any) {
+export async function PostAisles(req_body: Aisle) {
   const jwt = cookies().get("access")?.value
   const res = await fetch("http://localhost:8080/api/v1/aisles/", {
     method: "POST",
@@ -25,7 +26,7 @@ export async function PostAisles(req_body: any) {
       "Content-Type": "application/json",
       "Authorization": `Bearer ${jwt}`
     },
-    body: req_body,
+    body: JSON.stringify(req_body),
   })
   const res_body = await res.json()
 

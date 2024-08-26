@@ -9,7 +9,7 @@ interface ItemsPageProps {
   }
 }
 
-export default function Page({ searchParams }: ItemsPageProps) {
+export default function ItemsPage({ searchParams }: ItemsPageProps) {
   const query = searchParams?.query || '';
   const currentPage = Number(searchParams?.page) || 1;
   if (currentPage === 5) {

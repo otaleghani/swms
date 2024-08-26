@@ -4,7 +4,7 @@ import { PostAisles } from "@/app/lib/requests/aisles/post";
 import { getDictionary, Locale } from "@/lib/dictionaries";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
-import { Aisle } from "@/app/lib/types";
+import { Zone, Aisle } from "@/app/lib/types";
 
 export type AddAisleDialogState = {
   error: true | false;
@@ -49,12 +49,10 @@ export async function AddAisleDialogAction(
   // TODO: Add server side validation for zone
 
   if (!state.error) {
-    const req_body = JSON.stringify({
+    const res_body = await PostAisles({
       name: data.name,
       zone: data.zone,
-    });
-    const jwt = cookies().get("access")?.value;
-    const res_body = await PostAisles(req_body);
+    } as Aisle);
 
     if (res_body.code !== 201) {
       if (res_body.code === 401) {

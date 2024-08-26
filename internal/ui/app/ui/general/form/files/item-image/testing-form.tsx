@@ -2,7 +2,6 @@
 
 import { useActionState, useState, useRef, useEffect } from "react"
 import { FormFileUploadTestingState, TestFileUploadAction } from "./testig-action"
-import { Label } from "@/components/label";
 import { Upload, XIcon } from "lucide-react";
 import { clientSideImageCompression } from "./optimization";
 
@@ -63,10 +62,13 @@ export default function FormFileUploadTesting() {
   };
 
   /**
-   * 
-   * @param id The id of the image that you want to delete from the stack 
+   *
+   * Removes images from the image field
+   *
+   * @param id The id of the image that you want to delete from the stack
    * of images
-  */
+   *
+   * */
   const handleRemoveImage = (id: string) => {
     const updatedImages = images.filter((image) => image.id !== id);
     const updatedFiles = files.filter((file) => updatedImages.some((img) => img.file === file));
@@ -79,7 +81,15 @@ export default function FormFileUploadTesting() {
       fileInputRef.current.files = rebuildFileList(allFilesRef.current);
     }
   };
-    
+
+  /**
+   *
+   * Rebuilds the file list. Used to handle multiple uploads
+   * and deletes of files inside of the image field.
+   * Needed because this field does not support those 
+   * features by default.
+   * 
+   * */
   const rebuildFileList = (items: File[]): FileList => {
     const dataTransfer = new DataTransfer();
     items.forEach((file: File) => dataTransfer.items.add(file));

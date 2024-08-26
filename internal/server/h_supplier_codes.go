@@ -122,3 +122,119 @@ func deleteSupplierCode(db *database.Database) http.HandlerFunc {
 		SuccessResponse{Message: "Row deleted"}.r200(w, r)
 	}
 }
+
+func getSupplierCodesWithData(db *database.Database) http.HandlerFunc {
+  return func(w http.ResponseWriter, r *http.Request) {
+    token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
+    if err := checkAccessToken(token, db); err != nil {
+      ErrorResponse{Message: err.Error()}.r401(w, r)
+      return
+    }
+    supplierCodes, err := db.SelectSupplierCodes("");
+    if err != nil {
+      ErrorResponse{Message: err.Error()}.r500(w, r)
+      return
+    }
+    var data []struct {
+      Supplier_code database.SupplierCode `json:"supplier_code"`
+      Supplier_name string `json:"supplier_name"`
+    }
+    for i := 0; i < len(supplierCodes); i++ {
+      supplier, err := db.SelectSupplierById(supplierCodes[i].Supplier_id)
+      if err != nil {
+        ErrorResponse{Message: err.Error()}.r500(w, r)
+        return
+      }
+      data = append(data, struct{
+        Supplier_code database.SupplierCode `json:"supplier_code"`
+        Supplier_name string `json:"supplier_name"`
+      }{
+        Supplier_code: supplierCodes[i],
+        Supplier_name: supplier.Name,
+      })
+    }
+    SuccessResponse{Data: data}.r200(w, r)
+  }
+}
+
+
+type SupplierCodesWithItem struct {
+  Item database.Item `json:"item"`
+  Codes []database.SupplierCode `json:"codes"`
+}
+
+func getSupplierCodesBySupplierWithItem(db *database.Database) http.HandlerFunc {
+  return func(w http.ResponseWriter, r *http.Request) {
+    token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
+    if err := checkAccessToken(token, db); err != nil {
+      ErrorResponse{Message: err.Error()}.r401(w, r)
+      return
+    }
+		path := r.PathValue("id")
+    codes, err := db.SelectSupplierCodes("Supplier_id = ?", path)
+    if err != nil {
+      ErrorResponse{Message: err.Error()}.r500(w, r)
+      return
+    }
+    var data []SupplierCodesWithItem
+    for i := 0; i < len(codes); i++ {
+      result := true;
+      for _, j := range data {
+        if j.Item.Id == codes[i].Item_id {
+          result = false;
+        }
+      }
+      if result {
+        item, err := db.SelectItemById(codes[i].Item_id)
+        if err != nil {
+          ErrorResponse{Message: err.Error()}.r500(w, r)
+          return
+        }
+        codes, err := db.SelectSupplierCodesByItemId(item.Id)
+        if err != nil {
+          ErrorResponse{Message: err.Error()}.r500(w, r)
+          return
+        }
+        data = append(data, SupplierCodesWithItem{
+          Item: item,
+          Codes: codes,
+        })
+      }
+    }
+		SuccessResponse{Data: data}.r200(w, r)
+  }
+}
+
+type CodesWithExtra struct {
+  SupplierCode database.SupplierCode `json:"supplier_code"`
+  SupplierName string `json:"supplier_name"`
+}
+
+func getSupplierCodesByItem(db *database.Database) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
+		if err := checkAccessToken(token, db); err != nil {
+			ErrorResponse{Message: err.Error()}.r401(w, r)
+			return
+		}
+		path := r.PathValue("id")
+		rows, err := db.SelectSupplierCodesByItemId(path)
+		if err != nil {
+			ErrorResponse{Message: err.Error()}.r500(w, r)
+			return
+		}
+    var data []CodesWithExtra
+    for _, i := range rows {
+      supplier, err := db.SelectSupplierById(i.Supplier_id)
+      if err != nil {
+			  ErrorResponse{Message: err.Error()}.r500(w, r)
+			  return
+      }
+      data = append(data, CodesWithExtra{
+        SupplierCode: i,
+        SupplierName: supplier.Name,
+      })
+    }
+		SuccessResponse{Data: data}.r200(w, r)
+	}
+}

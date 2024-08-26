@@ -44,6 +44,7 @@ func Serve(path, port string) {
 	mux := http.NewServeMux()
 
 	mux.HandleFunc("GET /api/v1/items/{$}", getItems(&dbConn))
+	mux.HandleFunc("GET /api/v1/items/{id}/supplier-codes/{$}", getItems(&dbConn))
 	mux.HandleFunc("POST /api/v1/items/{$}", postItems(&dbConn))
 	mux.HandleFunc("GET /api/v1/items/{id}", getItemById(&dbConn))
 	mux.HandleFunc("PUT /api/v1/items/{id}", putItem(&dbConn))
@@ -128,14 +129,17 @@ func Serve(path, port string) {
 	mux.HandleFunc("DELETE /api/v1/variants/{id}", deleteVariant(&dbConn))
 
 	mux.HandleFunc("GET /api/v1/suppliers/{$}", getSuppliers(&dbConn))
-	mux.HandleFunc("POST /api/v1/suppliers/{$}", postSuppliers(&dbConn))
+	mux.HandleFunc("GET /api/v1/suppliers/extra/{$}", getSuppliersWithData(&dbConn))
+	mux.HandleFunc("GET /api/v1/suppliers/{id}/codes/{$}", getSupplierCodesBySupplierWithItem(&dbConn))
 	mux.HandleFunc("GET /api/v1/suppliers/{id}", getSupplierById(&dbConn))
+	mux.HandleFunc("POST /api/v1/suppliers/{$}", postSuppliers(&dbConn))
 	mux.HandleFunc("PUT /api/v1/suppliers/{id}", putSupplier(&dbConn))
 	mux.HandleFunc("DELETE /api/v1/suppliers/{id}", deleteSupplier(&dbConn))
 
 	mux.HandleFunc("GET /api/v1/supplier-codes/{$}", getSupplierCodes(&dbConn))
-	mux.HandleFunc("POST /api/v1/supplier-codes/{$}", postSupplierCodes(&dbConn))
+	mux.HandleFunc("GET /api/v1/supplier-codes/extra/{$}", getSupplierCodesWithData(&dbConn))
 	mux.HandleFunc("GET /api/v1/supplier-codes/{id}", getSupplierCodeById(&dbConn))
+	mux.HandleFunc("POST /api/v1/supplier-codes/{$}", postSupplierCodes(&dbConn))
 	mux.HandleFunc("PUT /api/v1/supplier-codes/{id}", putSupplierCode(&dbConn))
 	mux.HandleFunc("DELETE /api/v1/supplier-codes/{id}", deleteSupplierCode(&dbConn))
 

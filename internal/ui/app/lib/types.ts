@@ -1,3 +1,4 @@
+// POSITION
 export type Zone = {
   id: string;
   name: string;
@@ -38,4 +39,44 @@ export type Shelf = {
 export type ShelfInfo = {
   shelf: Shelf;
   items_count: number;
+}
+
+// SUPPLIER
+export type Supplier = {
+  id: string;
+  name: string;
+  description: string;
+}
+export type SupplierInfo = {
+  supplier: Supplier;
+  codes_count: number;
+}
+export type SupplierCode = {
+  id: string;
+  code: string;
+  supplier: string;
+  item: string;
+  variant: string;
+}
+export type SupplierCodeInfo = {
+  supplier_code: SupplierCode;
+  supplier_name: string;
+}
+export type ItemAndSupplierCodes = {
+  item: Item;
+  codes: SupplierCode[];
+}
+
+// ITEMS
+export type Item = {
+  id: string;
+  name: string;
+  description: string;
+  archive: boolean;
+  zone: string;
+  aisle: string;
+  rack: string;
+  shelf: string;
+  category: string;
+  subcategory: string;
 }

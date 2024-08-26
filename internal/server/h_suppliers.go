@@ -61,7 +61,7 @@ func postSuppliers(db *database.Database) http.HandlerFunc {
 			ErrorResponse{Message: err.Error()}.r500(w, r)
 			return
 		}
-		SuccessResponse{Message: "Row added"}.r201(w, r)
+    SuccessResponse{Message: "Row added", Data: UniqueId{UUID: data.Id}}.r201(w, r)
 	}
 }
 
@@ -121,4 +121,39 @@ func deleteSupplier(db *database.Database) http.HandlerFunc {
 		}
 		SuccessResponse{Message: "Row deleted"}.r200(w, r)
 	}
+}
+
+func getSuppliersWithData(db *database.Database) http.HandlerFunc {
+  return func(w http.ResponseWriter, r *http.Request) {
+    token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
+    if err := checkAccessToken(token, db); err != nil {
+      ErrorResponse{Message: err.Error()}.r401(w, r)
+      return
+    }
+    suppliers, err := db.SelectSuppliers("");
+    if err != nil {
+      ErrorResponse{Message: err.Error()}.r500(w, r)
+      return
+    }
+    var data []struct {
+      Supplier database.Supplier `json:"supplier"`
+      Codes_count int `json:"codes_count"`
+    }
+    for i := 0; i < len(suppliers); i++ {
+      // select suppliercodes based on the supplier, count them
+      codes, err := db.SelectSupplierCodes("Supplier_id = ?", suppliers[i].Id)
+      if err != nil {
+        ErrorResponse{Message: err.Error()}.r500(w, r)
+        return
+      }
+      data = append(data, struct{
+        Supplier database.Supplier `json:"supplier"`
+        Codes_count int `json:"codes_count"`
+      }{
+        Supplier: suppliers[i],
+        Codes_count: len(codes),
+      })
+    }
+    SuccessResponse{Data: data}.r200(w, r)
+  }
 }

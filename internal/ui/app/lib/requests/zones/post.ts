@@ -1,4 +1,4 @@
-use server";
+"use server";
 
 import { cookies } from "next/headers"
 
@@ -24,7 +24,7 @@ export async function PostZones(req_body: any) {
       "Content-Type": "application/json",
       "Authorization": `Bearer ${jwt}`
     },
-    body: req_body,
+    body: JSON.stringify(req_body),
   })
   const res_body = await res.json();
   return res_body;

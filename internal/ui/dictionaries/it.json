@@ -740,5 +740,59 @@
         }
       }
     }
+  },
+
+  "images": {
+    "upload_field": {
+      "label": "Carica le immagini"
+    }
+  },
+
+  "suppliers": {
+    "header_collection": {
+      "title": "Fornitori"
+    },
+    "add_dialog": {
+      "dialog_button": "Aggiungi fornitore",
+      "name": "Fornitore",
+      "title": "Aggiungi un nuovo fornitore",
+      "description": "Usa questo form per aggiungere un nuovo fornitore",
+      "fields": {
+        "name": {
+          "placeholder": "Nome del fornitore",
+          "label": "Nome"
+        },
+        "description": {
+          "placeholder": "Una breve descrizione",
+          "label": "Descrizione"
+        }
+      },
+      "button": "Aggiungi",
+      "pending": "Un secondo...",
+      "success": "Form inviato con successo.",
+      "errors": {
+        "name": {
+          "type": "Il nome deve essere una stringa.",
+          "empty": "Il nome non può essere vuoto.",
+          "not_valid": "Il nome che hai inserito non è valido.",
+          "min": "Il nome deve essere di almeno 1 carattere.",
+          "max": "Il nome deve essere di massimo 40 caratteri.",
+          "used": "Il nome che hai inserito è già in uso."
+        },
+        "description": {
+          "type": "La descrizione deve essere una stringa.",
+          "empty": "La descrizione non può essere vuoto.",
+          "not_valid": "La descrizione che hai inserito non è valido.",
+          "min": "La descrizione deve essere di almeno 1 carattere.",
+          "max": "La descrizione deve essere di massimo 40 caratteri.",
+          "used": "La descrizione che hai inserito è già in uso."
+        },
+        "general": {
+          "marshal": "Qualcosa è andato storto, prova a riempire nuovamente il form.",
+          "internal": "Il server al momento non può esegure questa operazione. Ritenta più tardi",
+          "unknown": "Il server non è disponibile al momento. Contatta l'amministratore."
+        }
+      }
+    }
   }
 }

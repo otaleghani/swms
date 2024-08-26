@@ -1,7 +1,7 @@
 import GetItems from "@/app/lib/items/get";
 import { getCategory, getSubcategory } from "@/lib/reqs";
 import { getDictionary, Locale } from "@/lib/dictionaries";
-import FormItemsAdd from "@/app/ui/general/form/items/add/form";
+import FormItemsAdd from "@/app/ui/general/form/add/items/form";
 
 interface HomeProps {
   params: {

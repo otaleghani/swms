@@ -52,13 +52,11 @@ export async function AddRackDialogAction(
   // TODO: Add server side validation for zone
 
   if (!state.error) {
-    const req_body = JSON.stringify({
+    const res_body = await PostRacks({
       name: data.name,
       zone: data.zone,
       aisle: data.aisle,
     });
-    const jwt = cookies().get("access")?.value;
-    const res_body = await PostRacks(req_body);
 
     if (res_body.code !== 201) {
       if (res_body.code === 401) {
