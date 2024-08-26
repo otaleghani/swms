@@ -2,6 +2,7 @@
 
 import { cookies } from "next/headers"
 import { Supplier } from "../../types";
+import { revalidateTag } from "next/cache";
 
 export async function PostSupplier(req_body: Supplier) {
   const jwt = cookies().get("access")?.value
@@ -14,6 +15,8 @@ export async function PostSupplier(req_body: Supplier) {
     body: JSON.stringify(req_body),
   })
   const res_body = await res.json();
-  console.log(res_body)
+
+  revalidateTag("suppliers");
+
   return res_body;
 }
