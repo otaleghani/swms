@@ -157,3 +157,89 @@ func getSuppliersWithData(db *database.Database) http.HandlerFunc {
     SuccessResponse{Data: data}.r200(w, r)
   }
 }
+
+// delete supplier and sub
+func deleteSupplierSub(db *database.Database) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
+		if err := checkAccessToken(token, db); err != nil {
+			ErrorResponse{Message: err.Error()}.r401(w, r)
+			return
+		}
+		path := r.PathValue("id")
+		replacer := r.PathValue("rep")
+    if path == replacer {
+      ErrorResponse{Message: "Cannot delete the same item."}.r500(w, r)
+      return
+    }
+		itemToDelete, err := db.SelectSuppliers("Id = ?", path)
+		if err != nil {
+			ErrorResponse{Message: "Error fetching data from db"}.r500(w, r)
+			return
+		}
+		if len(itemToDelete) == 0 {
+			ErrorResponse{Message: "Not found"}.r404(w, r)
+			return
+		}
+    itemThatReplaces, err := db.SelectSuppliers("Id = ?", replacer)
+		if err != nil {
+			ErrorResponse{Message: "Error fetching data from db"}.r500(w, r)
+			return
+		}
+		if len(itemThatReplaces) == 0 {
+			ErrorResponse{Message: "Not found"}.r404(w, r)
+			return
+		}
+
+    var codes database.SupplierCode = database.SupplierCode{
+      Supplier_id: itemThatReplaces[0].Id}
+    err = db.Update(codes, "Supplier_id = ?", itemToDelete[0].Id)
+		if err != nil {
+			ErrorResponse{Message: err.Error()}.r500(w, r)
+			return
+    }
+
+		err = db.Delete(itemToDelete[0], "Id = ?", path)
+		if err != nil {
+			ErrorResponse{Message: err.Error()}.r500(w, r)
+			return
+		}
+		SuccessResponse{Message: "Row deleted"}.r200(w, r)
+	}
+}
+
+func getSupplierByIdWithData(db *database.Database) http.HandlerFunc {
+  return func(w http.ResponseWriter, r *http.Request) {
+    token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
+    if err := checkAccessToken(token, db); err != nil {
+      ErrorResponse{Message: err.Error()}.r401(w, r)
+      return
+    }
+		path := r.PathValue("id")
+		suppliers, err := db.SelectSuppliers("Id = ?", path)
+    if err != nil {
+      ErrorResponse{Message: err.Error()}.r500(w, r)
+      return
+    }
+    var data []struct {
+      Supplier database.Supplier `json:"supplier"`
+      Codes_count int `json:"codes_count"`
+    }
+    for i := 0; i < len(suppliers); i++ {
+      // select suppliercodes based on the supplier, count them
+      codes, err := db.SelectSupplierCodes("Supplier_id = ?", suppliers[i].Id)
+      if err != nil {
+        ErrorResponse{Message: err.Error()}.r500(w, r)
+        return
+      }
+      data = append(data, struct{
+        Supplier database.Supplier `json:"supplier"`
+        Codes_count int `json:"codes_count"`
+      }{
+        Supplier: suppliers[i],
+        Codes_count: len(codes),
+      })
+    }
+    SuccessResponse{Data: data}.r200(w, r)
+  }
+}

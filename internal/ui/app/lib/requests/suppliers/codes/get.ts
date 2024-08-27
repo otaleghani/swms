@@ -3,7 +3,7 @@
 import { cookies } from "next/headers";
 import { ItemAndSupplierCodes, SupplierCode, SupplierCodeInfo } from "../../../types";
 
-export async function GetSupplierCodes() {
+export async function getSupplierCodes() {
   const jwt = cookies().get("access")?.value
   const res = await fetch("http://localhost:8080/api/v1/supplier-codes/", {
     method: "GET",
@@ -30,10 +30,10 @@ export async function GetSupplierCodes() {
 // TO DO
 // export async function GetItemAndCodesBySupplier  // used in supplier/id pages to show items and codes related to those items
 
-export async function GetItemAndCodesBySupplier(id: string) {
+export async function getItemAndCodesBySupplier(id: string) {
   const jwt = cookies().get("access")?.value
   const res = await fetch(
-    `http://localhost:8080/api/v1/supplier/${id}/codes/`, 
+    `http://localhost:8080/api/v1/suppliers/${id}/codes`, 
     {
       method: "GET",
       headers: {
@@ -48,16 +48,18 @@ export async function GetItemAndCodesBySupplier(id: string) {
   if (body.code !== 200) {
     return [];
   }
-  const response: ItemAndSupplierCodes[] = [];
-  for (let i = 0; i < body.data.length; i++) {
-    if (body.data[i].item.id != "nil") {
-      response.push(body.data[i])
-    }
-  }
-  return response;
+  // De comment the following to filter out the nil item
+  //const response: ItemAndSupplierCodes[] = [];
+  //for (let i = 0; i < body.data.length; i++) {
+  //  if (body.data[i].item.id != "nil") {
+  //    response.push(body.data[i])
+  //  }
+  //}
+  //return response;
+  return body.data
 }
 
-export async function GetCodesByItem(id: string) {
+export async function getCodesByItem(id: string) {
   const jwt = cookies().get("access")?.value
   const res = await fetch(
     `http://localhost:8080/api/v1/items/${id}/codes/`, 

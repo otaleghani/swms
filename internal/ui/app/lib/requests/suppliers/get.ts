@@ -3,7 +3,7 @@
 import { cookies } from "next/headers";
 import { Supplier, SupplierInfo } from "../../types";
 
-export async function GetSuppliers() {
+export async function getSuppliers() {
   const jwt = cookies().get("access")?.value
   const res = await fetch("http://localhost:8080/api/v1/suppliers/", {
     method: "GET",
@@ -27,7 +27,7 @@ export async function GetSuppliers() {
   return response as Supplier[];
 }
 
-export async function GetSuppliersWithData() {
+export async function getSuppliersWithData() {
   const jwt = cookies().get("access")?.value
   const res = await fetch("http://localhost:8080/api/v1/suppliers/extra/", {
     method: "GET",
@@ -54,7 +54,7 @@ export async function GetSuppliersWithData() {
   return response;
 }
 
-export async function GetSupplierById(id: string) {
+export async function getSupplierById(id: string) {
   const jwt = cookies().get("access")?.value
   const res = await fetch(`http://localhost:8080/api/v1/suppliers/${id}`, {
     method: "GET",
@@ -73,4 +73,25 @@ export async function GetSupplierById(id: string) {
   }
 
   return body.data as Supplier;
+}
+
+export async function getSupplierByIdWithData(id: string) {
+  const jwt = cookies().get("access")?.value
+  const res = await fetch(`http://localhost:8080/api/v1/suppliers/${id}/extra`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${jwt}`
+    },
+    next: { tags: ["suppliers"] },
+  })
+
+  const body = await res.json()
+
+  if (body.code !== 200) {
+    // error state?
+    return {} as SupplierInfo;
+  }
+
+  return body.data[0] as SupplierInfo;
 }

@@ -132,7 +132,9 @@ func Serve(path, port string) {
 	mux.HandleFunc("GET /api/v1/suppliers/extra/{$}", getSuppliersWithData(&dbConn))
 	mux.HandleFunc("GET /api/v1/suppliers/{id}/codes/{$}", getSupplierCodesBySupplierWithItem(&dbConn))
 	mux.HandleFunc("GET /api/v1/suppliers/{id}", getSupplierById(&dbConn))
+	mux.HandleFunc("GET /api/v1/suppliers/{id}/extra/{$}", getSupplierByIdWithData(&dbConn))
 	mux.HandleFunc("POST /api/v1/suppliers/{$}", postSuppliers(&dbConn))
+	mux.HandleFunc("POST /api/v1/suppliers/{id}/replace-with/{rep}", deleteSupplierSub(&dbConn))
 	mux.HandleFunc("PUT /api/v1/suppliers/{id}", putSupplier(&dbConn))
 	mux.HandleFunc("DELETE /api/v1/suppliers/{id}", deleteSupplier(&dbConn))
 

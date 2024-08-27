@@ -157,10 +157,14 @@ func getSupplierCodesWithData(db *database.Database) http.HandlerFunc {
   }
 }
 
+type SupplierCodesWithVariant struct {
+  Variant database.Variant `json:"variant"`
+  Codes []database.SupplierCode `json:"codes"`
+}
 
 type SupplierCodesWithItem struct {
   Item database.Item `json:"item"`
-  Codes []database.SupplierCode `json:"codes"`
+  Variants SupplierCodesWithVariant `json:"variants"`
 }
 
 func getSupplierCodesBySupplierWithItem(db *database.Database) http.HandlerFunc {

@@ -1,6 +1,6 @@
 import SupplierHeaderCollection from "@/app/ui/suppliers/headers/collection";
 import { getDictionary, Locale } from "@/lib/dictionaries";
-import { GetSuppliersWithData } from "@/app/lib/requests/suppliers/get";
+import { getSuppliers, getSuppliersWithData } from "@/app/lib/requests/suppliers/get";
 import SupplierCardsCollection from "@/app/ui/suppliers/cards/collection";
 
 interface SupplierPageProps {
@@ -13,9 +13,10 @@ export default async function SupplierPage({
   params
 }: SupplierPageProps) {
   const dict = await getDictionary(params.lang as Locale);
-  const pSuppliers = GetSuppliersWithData();
+  const pSuppliers = getSuppliers();
+  const pSuppliersWithData = getSuppliersWithData();
   
-  const [suppliers] = await Promise.all([pSuppliers]);
+  const [suppliers, suppliersWithData] = await Promise.all([pSuppliers, pSuppliersWithData]);
   
   return (
     <>
@@ -23,9 +24,17 @@ export default async function SupplierPage({
         dict={dict.suppliers}
         locale={params.lang}
       />
-      <SupplierCardsCollection 
-        suppliers={suppliers}
-      />
+      <div className="grid grid-cols-3 gap-4 p-4">
+        <SupplierCardsCollection 
+          suppliers={suppliersWithData}
+          suppliers_collection={suppliers}
+          locale={params.lang}
+          dict_card={dict.suppliers.card}
+          dict_delete={dict.suppliers.delete_form}
+          dict_edit={dict.suppliers.edit_form}
+          dict_supplier_select={dict.suppliers.select_field}
+        />
+      </div>
     </>
   )
 }
