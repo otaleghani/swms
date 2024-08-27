@@ -871,5 +871,37 @@
         }
       }
     }
+  },
+  "supplier_codes": {
+    "add_dialog": {
+      "dialog_button": "Aggiungi codice del fornitore",
+      "name": "Codice fornitore",
+      "title": "Aggiungi un nuovo codice fornitore",
+      "description": "Usa questo form per aggiungere un nuovo codice fornitore",
+      "fields": {
+        "code": {
+          "placeholder": "Codice fornitore",
+          "label": "Codice"
+        }
+      },
+      "button": "Aggiungi",
+      "pending": "Un secondo...",
+      "success": "Form inviato con successo.",
+      "errors": {
+        "code": {
+          "type": "Il nome deve essere una stringa.",
+          "empty": "Il nome non può essere vuoto.",
+          "not_valid": "Il nome che hai inserito non è valido.",
+          "min": "Il nome deve essere di almeno 1 carattere.",
+          "max": "Il nome deve essere di massimo 40 caratteri.",
+          "used": "Il nome che hai inserito è già in uso."
+        },
+        "general": {
+          "marshal": "Qualcosa è andato storto, prova a riempire nuovamente il form.",
+          "internal": "Il server al momento non può esegure questa operazione. Ritenta più tardi",
+          "unknown": "Il server non è disponibile al momento. Contatta l'amministratore."
+        }
+      }
+    }
   }
 }

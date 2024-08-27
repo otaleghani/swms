@@ -61,7 +61,7 @@ func postSupplierCodes(db *database.Database) http.HandlerFunc {
 			ErrorResponse{Message: err.Error()}.r500(w, r)
 			return
 		}
-		SuccessResponse{Message: "Row added"}.r201(w, r)
+    SuccessResponse{Message: "Row added", Data: UniqueId{UUID: data.Id}}.r201(w, r)
 	}
 }
 
@@ -164,7 +164,7 @@ type SupplierCodesWithVariant struct {
 
 type SupplierCodesWithItem struct {
   Item database.Item `json:"item"`
-  Variants SupplierCodesWithVariant `json:"variants"`
+  Variants []SupplierCodesWithVariant `json:"variants"`
 }
 
 func getSupplierCodesBySupplierWithItem(db *database.Database) http.HandlerFunc {
@@ -194,14 +194,29 @@ func getSupplierCodesBySupplierWithItem(db *database.Database) http.HandlerFunc 
           ErrorResponse{Message: err.Error()}.r500(w, r)
           return
         }
-        codes, err := db.SelectSupplierCodesByItemId(item.Id)
+        // Find all the variants
+        variants, err := db.SelectVariants("Item_id = ?", item.Id)
         if err != nil {
           ErrorResponse{Message: err.Error()}.r500(w, r)
           return
         }
+        // Find all the codes for every variant
+        var codesWithVariant []SupplierCodesWithVariant
+        for k := 0; k < len(variants); k++ {
+          codes, err := db.SelectSupplierCodes("Variant_id = ?", variants[k].Id)
+          if err != nil {
+            ErrorResponse{Message: err.Error()}.r500(w, r)
+            return
+          }
+          codesWithVariant = append(codesWithVariant, SupplierCodesWithVariant{
+            Variant: variants[k],
+            Codes: codes,
+          })
+        }
+
         data = append(data, SupplierCodesWithItem{
           Item: item,
-          Codes: codes,
+          Variants: codesWithVariant,
         })
       }
     }

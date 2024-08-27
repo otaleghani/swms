@@ -64,6 +64,10 @@ export type SupplierCodeInfo = {
 }
 export type ItemAndSupplierCodes = {
   item: Item;
+  variants: VariantAndSupplierCodes[];
+}
+export type VariantAndSupplierCodes = {
+  variant: Variant;
   codes: SupplierCode[];
 }
 
@@ -79,4 +83,17 @@ export type Item = {
   shelf: string;
   category: string;
   subcategory: string;
+}
+
+export type Variant = {
+  id: string;
+  name: string;
+  description: string;
+  quantity: number;
+  internalId: string;
+  length: number;
+  width: number;
+  heigth: number;
+  defaultVariant: boolean;
+  item_id: string;
 }

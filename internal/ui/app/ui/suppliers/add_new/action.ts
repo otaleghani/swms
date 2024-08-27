@@ -5,6 +5,7 @@ import { getDictionary, Locale } from "@/lib/dictionaries";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import { Supplier } from "@/app/lib/types";
+import { revalidateTag } from "next/cache";
 
 export type AddSupplierDialogState = {
   error: true | false;
@@ -81,5 +82,7 @@ export async function AddSupplierDialogAction(
       description: data.description as string,
     }
   }
+
+  revalidateTag("suppliers")
   return state;
 }

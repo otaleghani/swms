@@ -1,11 +1,11 @@
 "use server";
 
 import { cookies } from "next/headers"
-import { Supplier } from "../../types";
+import { SupplierCode } from "../../../types";
 
-export async function PostSupplier(req_body: Supplier) {
+export async function postSupplierCode(req_body: SupplierCode) {
   const jwt = cookies().get("access")?.value
-  const res = await fetch("http://localhost:8080/api/v1/supplier/", {
+  const res = await fetch("http://localhost:8080/api/v1/supplier-codes/", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

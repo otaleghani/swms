@@ -1,12 +1,19 @@
-import { ItemAndSupplierCodes } from "@/app/lib/types";
+import { ItemAndSupplierCodes, Variant, SupplierCode, Supplier } from "@/app/lib/types";
 import { Card, CardHeader, CardTitle, CardDescription, CardFooter, CardContent } from "@/components/card"
+import { AddNewSupplierCodeDialog } from "../add_new/dialog";
 
 interface SupplierCodesCardsCollextionProps {
   itemWithCodes: ItemAndSupplierCodes[];
+  supplier: Supplier;
+  locale: string;
+  dict_supplier_code_add_dialog: any;
 }
 
 export default function SupplierCodesCardsCollection({
-  itemWithCodes 
+  itemWithCodes,
+  supplier,
+  locale,
+  dict_supplier_code_add_dialog,
 }: SupplierCodesCardsCollextionProps) {
   return (
     <>
@@ -21,21 +28,32 @@ export default function SupplierCodesCardsCollection({
             <CardDescription>{item.item.id}</CardDescription>
           </CardHeader>
           <CardContent className="text-sm">
-            <div>
-              <div className="py-2 font-semibold text-base">
-                Name of variant
-              </div>
-              {item.codes.map((code) => (
-                <div className="flex justify-between py-2 border-t
-                last:border-y" key={code.id}>
-                  <span>{code.code}</span>
-                  <div className="flex gap-2">
-                    <div>botton</div>
-                    <div>botton</div>
-                  </div>
+            {item.variants.map((variant) => (
+              <div>
+                <div className="flex justify-between 
+                py-2 font-semibold text-base">
+                  <span>{variant.variant.name}</span>
+                  <AddNewSupplierCodeDialog
+                    supplier={supplier}
+                    variant={variant.variant}
+                    item={item.item}
+                    locale={locale}
+                    dict_supplier_code_add_dialog={dict_supplier_code_add_dialog}
+                  />
                 </div>
-              ))}
-            </div>
+                  {variant.codes.map((code) => (
+                    <div className="flex justify-between py-2 border-t
+                    last:border-y" key={code.id}>
+                      <span>{code.code}</span>
+                      <div className="flex gap-2">
+                        <div>edit</div>
+                        <div>delete</div>
+                      </div>
+                    </div>
+
+                  ))}
+              </div>
+            ))}
           </CardContent>
           <CardFooter className="gap-2 text-sm">
             {

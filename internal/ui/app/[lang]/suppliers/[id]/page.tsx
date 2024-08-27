@@ -51,6 +51,9 @@ export default async function SupplierIdPage({ params }: SupplierIdPageProps) {
           locale={params.lang} />
         <ScrollArea className="h-[calc(100vh_-_57px)] p-4" type="always">
           <SupplierCodesCardsCollection 
+            supplier={item.supplier}
+            locale={params.lang}
+            dict_supplier_code_add_dialog={dict.supplier_codes.add_dialog}
             itemWithCodes={itemCodesByItem} />
         </ScrollArea>
       </div>

@@ -48,6 +48,8 @@ export async function getItemAndCodesBySupplier(id: string) {
   if (body.code !== 200) {
     return [];
   }
+  //console.log(body.data)
+  //console.log(body.data[0].variants)
   // De comment the following to filter out the nil item
   //const response: ItemAndSupplierCodes[] = [];
   //for (let i = 0; i < body.data.length; i++) {
