@@ -38,15 +38,15 @@ export async function AddNewCategory(
   if (typeof data.name === "string") {
     if (data.name === "" || 
         data.name === undefined) {
-      state.errorMessages.name.push(dict.category.form.errors.name.empty);
+      state.errorMessages.name.push(dict.categories.form.errors.name.empty);
       state.error = true;
     }
     if (data.name.length > 40) {
-      state.errorMessages.name.push(dict.category.form.errors.name.max);
+      state.errorMessages.name.push(dict.categories.form.errors.name.max);
       state.error = true;
     }
   } else {
-    state.errorMessages.name.push(dict.category.form.errors.name.type)
+    state.errorMessages.name.push(dict.categories.form.errors.name.type)
     state.error = true;
   }
 
@@ -54,19 +54,19 @@ export async function AddNewCategory(
   if (typeof data.description === "string") {
     if (data.description === "" || 
         data.description === undefined) {
-      state.errorMessages.description.push(dict.category.form.errors.description.empty);
+      state.errorMessages.description.push(dict.categories.form.errors.description.empty);
       state.error = true;
     }
     if (data.description.length < 2) {
-      state.errorMessages.description.push(dict.category.form.errors.description.min);
+      state.errorMessages.description.push(dict.categories.form.errors.description.min);
       state.error = true;
     }
     if (data.description.length > 100) {
-      state.errorMessages.description.push(dict.category.form.errors.description.max);
+      state.errorMessages.description.push(dict.categories.form.errors.description.max);
       state.error = true;
     }
   } else {
-    state.errorMessages.description.push(dict.category.form.errors.description.type)
+    state.errorMessages.description.push(dict.categories.form.errors.description.type)
     state.error = true;
   }
   
@@ -98,18 +98,18 @@ export async function AddNewCategory(
       // malformed request (marshal failure)
       if (resBody.code === 400) {
         state.error = true;
-        state.message = dict.category.form.errors.general.marshal;
+        state.message = dict.categories.form.errors.general.marshal;
         return state
       }
 
       if (resBody.code === 500) {
         state.error = true;
-        state.message = dict.category.form.errors.general.internal;
+        state.message = dict.categories.form.errors.general.internal;
         return state
       }
 
       state.error = true;
-      state.message = dict.category.form.errors.general.unknown;
+      state.message = dict.categories.form.errors.general.unknown;
       return state
     }
 

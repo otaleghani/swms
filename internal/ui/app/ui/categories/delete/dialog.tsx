@@ -1,7 +1,8 @@
+//:manca questo !!
 "use client";
 
-import { Supplier } from "@/app/lib/types";
-import DeleteSupplierForm from "./form";
+import { Category } from "@/app/lib/types";
+import DeleteCategoryForm from "./form";
 
 import * as React from "react"
 import { useMediaQuery } from "usehooks-ts";
@@ -26,20 +27,20 @@ import {
 } from "@/components/drawer"
 import { Trash2 } from "lucide-react";
 
-export interface DeleteSupplierDialogProps {
+export interface DeleteCategoryDialogProps {
   dict: any;
   locale: string;
-  item: Supplier;
-  suppliers: Supplier[];
-  dict_supplier_select: any;
+  item: Category;
+  categories: Category[];
+  dict_category_select: any;
 }
 
-export function DeleteSupplierDialog({
+export function DeleteCategoryDialog({
   dict, 
   locale, 
   item, 
-  suppliers, 
-  dict_supplier_select }: DeleteSupplierDialogProps) {
+  categories, 
+  dict_category_select }: DeleteCategoryDialogProps) {
 
   const [open, setOpen] = React.useState(false)
   const isDesktop = useMediaQuery("(min-width: 768px)")
@@ -87,8 +88,7 @@ export function DeleteSupplierDialog({
             locale={locale} 
             item={item}
             suppliers={suppliers}
-            dict_supplier_select={dict_supplier_select}
-            setOpen={setOpen} />
+            dict_supplier_select={dict_supplier_select} />
         </div>
         <DrawerFooter className="pt-2">
           <DrawerClose asChild>

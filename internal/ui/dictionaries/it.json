@@ -70,7 +70,16 @@
     }
   },
 
-  "category": {
+  "categories": {
+    "card": {
+      "labels": {
+        "edit": "Modifica",
+        "view": "Guarda"
+      }
+    },
+    "header_collection": {
+      "title": "Categorie"
+    },
     "form": {
       "name": "Categoria",
       "combobox": {
@@ -118,7 +127,7 @@
     }
   },
 
-  "subcategory": {
+  "subcategories": {
     "form": {
       "name": "Sottocategoria",
       "combobox": {

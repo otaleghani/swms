@@ -4,7 +4,7 @@ import { useActionState } from "react";
 
 import { AddNewItem, FormItemsAddState } from "@/app/ui/general/form/add/items/action";
 
-import SelectCategory from "@/app/ui/general/form/select/category/field";
+import SelectCategory from "@/app/ui/general/form/select/tags/field";
 import { Button } from "@/components/button";
 import FormFieldError from "@/app/ui/general/form/error_field";
 import FormError from "@/app/ui/general/form/error_form";
@@ -99,8 +99,8 @@ export default function FormItemsAdd({ listCategory, listSubcategory, dict, dict
             categoryData={listCategory} 
             subcategoryData={listSubcategory}
             lang={lang} 
-            dictCategory={dict.category.form}
-            dictSubcategory={dict.subcategory.form} />
+            dictCategory={dict.categories.form}
+            dictSubcategory={dict.subcategories.form} />
           <FormFieldError 
             id="email-error" 
             description={state.errorMessages.category} />

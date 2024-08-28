@@ -1,11 +1,11 @@
 "use server";
 
 import { cookies } from "next/headers"
-import { Category } from "../../types";
+import { Subcategory } from "../../types";
 
-export async function postCategory(req_body: Category) {
+export async function postSubcategory(req_body: Subcategory) {
   const jwt = cookies().get("access")?.value
-  const res = await fetch("http://localhost:8080/api/v1/categories/", {
+  const res = await fetch("http://localhost:8080/api/v1/subcategories/", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

@@ -42,15 +42,15 @@ export async function AddNewSubcategory(
   if (typeof data.name === "string") {
     if (data.name === "" || 
         data.name === undefined) {
-      state.errorMessages.name.push(dict.subcategory.form.errors.name.empty);
+      state.errorMessages.name.push(dict.subcategories.form.errors.name.empty);
       state.error = true;
     }
     if (data.name.length > 40) {
-      state.errorMessages.name.push(dict.subcategory.form.errors.name.max);
+      state.errorMessages.name.push(dict.subcategories.form.errors.name.max);
       state.error = true;
     }
   } else {
-    state.errorMessages.name.push(dict.subcategory.form.errors.name.type)
+    state.errorMessages.name.push(dict.subcategories.form.errors.name.type)
     state.error = true;
   }
 
@@ -58,19 +58,19 @@ export async function AddNewSubcategory(
   if (typeof data.description === "string") {
     if (data.description === "" || 
         data.description === undefined) {
-      state.errorMessages.description.push(dict.subcategory.form.errors.description.empty);
+      state.errorMessages.description.push(dict.subcategories.form.errors.description.empty);
       state.error = true;
     }
     if (data.description.length < 2) {
-      state.errorMessages.description.push(dict.subcategory.form.errors.description.min);
+      state.errorMessages.description.push(dict.subcategories.form.errors.description.min);
       state.error = true;
     }
     if (data.description.length > 100) {
-      state.errorMessages.description.push(dict.subcategory.form.errors.description.max);
+      state.errorMessages.description.push(dict.subcategories.form.errors.description.max);
       state.error = true;
     }
   } else {
-    state.errorMessages.description.push(dict.subcategory.form.errors.description.type)
+    state.errorMessages.description.push(dict.subcategories.form.errors.description.type)
     state.error = true;
   }
   
@@ -78,7 +78,7 @@ export async function AddNewSubcategory(
   if (typeof data.category === "string") {
     if (data.category === "" || 
         data.category === undefined) {
-      state.errorMessages.category.push(dict.subcategory.form.errors.category.empty);
+      state.errorMessages.category.push(dict.subcategories.form.errors.category.empty);
       state.error = true;
     }
     
@@ -96,7 +96,7 @@ export async function AddNewSubcategory(
 
     if (resCategoryBody.code !== 200) {
       if (resCategoryBody.code === 404) {
-        state.errorMessages.category.push(dict.subcategory.form.errors.category.not_found);
+        state.errorMessages.category.push(dict.subcategories.form.errors.category.not_found);
         state.error = true;
       }
       if (resCategoryBody.code === 401) {
@@ -104,7 +104,7 @@ export async function AddNewSubcategory(
       }
     }
   } else {
-    state.errorMessages.category.push(dict.subcategory.form.errors.category.type)
+    state.errorMessages.category.push(dict.subcategories.form.errors.category.type)
     state.error = true;
   }
 
@@ -135,18 +135,18 @@ export async function AddNewSubcategory(
       // malformed request (marshal failure)
       if (resBody.code === 400) {
         state.error = true;
-        state.message = dict.subcategory.form.errors.general.marshal;
+        state.message = dict.subcategories.form.errors.general.marshal;
         return state
       }
 
       if (resBody.code === 500) {
         state.error = true;
-        state.message = dict.subcategory.form.errors.general.internal;
+        state.message = dict.subcategories.form.errors.general.internal;
         return state
       }
 
       state.error = true;
-      state.message = dict.subcategory.form.errors.general.unknown;
+      state.message = dict.subcategories.form.errors.general.unknown;
       return state
     }
 

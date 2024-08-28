@@ -24,8 +24,8 @@ export default async function Home({ params }: HomeProps ) {
         listSubcategory={parsedSubcategory}
         lang={params.lang} 
         dict={dict}
-        dictCategory={dict.category.form}
-        dictSubcategory={dict.subcategory.form} />
+        dictCategory={dict.categories.form}
+        dictSubcategory={dict.subcategories.form} />
     </main>
   );
 }
