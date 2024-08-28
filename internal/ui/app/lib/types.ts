@@ -97,3 +97,15 @@ export type Variant = {
   defaultVariant: boolean;
   item_id: string;
 }
+
+export type Category = {
+  id: string;
+  name: string;
+  description: string;
+}
+export type Subcategory = {
+  id: string;
+  name: string;
+  description: string;
+  category: string;
+}

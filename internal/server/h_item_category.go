@@ -122,3 +122,83 @@ func deleteCategory(db *database.Database) http.HandlerFunc {
 		SuccessResponse{Message: "Row deleted"}.r200(w, r)
 	}
 }
+
+func deleteCategorySub(db *database.Database) http.HandlerFunc {
+  return func(w http.ResponseWriter, r *http.Request) {
+		token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
+		if err := checkAccessToken(token, db); err != nil {
+			ErrorResponse{Message: err.Error()}.r401(w, r)
+			return
+		}
+		path := r.PathValue("id")
+		replacer := r.PathValue("rep")
+    if path == replacer {
+      ErrorResponse{Message: "Cannot delete the same item."}.r500(w, r)
+      return
+    }
+		itemToDelete, err := db.SelectCategories("Id = ?", path)
+		if err != nil {
+			ErrorResponse{Message: "Error fetching data from db"}.r500(w, r)
+			return
+		}
+		if len(itemToDelete) == 0 {
+			ErrorResponse{Message: "Not found"}.r404(w, r)
+			return
+		}
+    itemThatReplaces, err := db.SelectCategories("Id = ?", replacer)
+		if err != nil {
+			ErrorResponse{Message: "Error fetching data from db"}.r500(w, r)
+			return
+		}
+		if len(itemThatReplaces) == 0 {
+			ErrorResponse{Message: "Not found"}.r404(w, r)
+			return
+		}
+
+    var subcategory database.Subcategory = database.Subcategory{
+      Category_id: itemThatReplaces[0].Id,
+    }
+    err = db.Update(subcategory, "Category_id = ?", itemToDelete[0])
+    if err != nil {
+			ErrorResponse{Message: err.Error()}.r500(w, r)
+			return
+    }
+    var item database.Item = database.Item{
+      Category_id: itemThatReplaces[0].Id,
+    }
+    err = db.Update(item, "Category_id = ?", itemToDelete[0])
+    if err != nil {
+			ErrorResponse{Message: err.Error()}.r500(w, r)
+			return
+    }
+
+		err = db.Delete(itemToDelete[0], "Id = ?", path)
+		if err != nil {
+			ErrorResponse{Message: err.Error()}.r500(w, r)
+			return
+		}
+		SuccessResponse{Message: "Row deleted"}.r200(w, r)
+  }
+}
+
+func getCategoryBySubcategory(db *database.Database) http.HandlerFunc {
+  return func(w http.ResponseWriter, r *http.Request) {
+		token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
+		if err := checkAccessToken(token, db); err != nil {
+			ErrorResponse{Message: err.Error()}.r401(w, r)
+			return
+		}
+		path := r.PathValue("id")
+    subcategory, err := db.SelectSubcategoryById(path)
+    if err != nil {
+			ErrorResponse{Message: "Not found"}.r500(w, r)
+			return
+    }
+    category, err := db.SelectCategoryById(subcategory.Id)
+    if err != nil {
+			ErrorResponse{Message: "Not found"}.r500(w, r)
+			return
+    }
+    SuccessResponse{Data: category}.r200(w, r)
+  }
+}

@@ -57,14 +57,17 @@ func Serve(path, port string) {
 	mux.HandleFunc("DELETE /api/v1/users/{id}", deleteUser(&dbConn))
 
 	mux.HandleFunc("GET /api/v1/categories/{$}", getCategories(&dbConn))
-	mux.HandleFunc("POST /api/v1/categories/{$}", postCategories(&dbConn))
 	mux.HandleFunc("GET /api/v1/categories/{id}", getCategoryById(&dbConn))
+	mux.HandleFunc("POST /api/v1/categories/{$}", postCategories(&dbConn))
 	mux.HandleFunc("PUT /api/v1/categories/{id}", putCategory(&dbConn))
+	mux.HandleFunc("POST /api/v1/categories/{id}/replace-with/{rep}", deleteCategorySub(&dbConn))
 	mux.HandleFunc("DELETE /api/v1/categories/{id}", deleteCategory(&dbConn))
 
 	mux.HandleFunc("GET /api/v1/subcategories/{$}", getSubcategories(&dbConn))
-	mux.HandleFunc("POST /api/v1/subcategories/{$}", postSubcategories(&dbConn))
 	mux.HandleFunc("GET /api/v1/subcategories/{id}", getSubcategoryById(&dbConn))
+	mux.HandleFunc("GET /api/v1/subcategories/{id}/category/{$}", 
+    getCategoryBySubcategory(&dbConn))
+	mux.HandleFunc("POST /api/v1/subcategories/{$}", postSubcategories(&dbConn))
 	mux.HandleFunc("PUT /api/v1/subcategories/{id}", putSubcategory(&dbConn))
 	mux.HandleFunc("DELETE /api/v1/subcategories/{id}", deleteSubcategory(&dbConn))
 
