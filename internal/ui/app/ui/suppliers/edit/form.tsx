@@ -39,19 +39,19 @@ export function EditSupplierForm({
             placeholder={supplier.name}
           />
           <FormFieldError 
-            id="quantity-error" 
+            id="name-error" 
             description={state.errorMessages.name} />
         </div>
 
         <div>
           <Label>{dict.fields.description.label}</Label>
           <Input 
-            name="name"
+            name="description"
             defaultValue={supplier.description}
             placeholder={supplier.description}
           />
           <FormFieldError 
-            id="quantity-error" 
+            id="description-error" 
             description={state.errorMessages.description} />
         </div>
 

@@ -3,7 +3,7 @@
 import { cookies } from "next/headers";
 import { Supplier } from "@/app/lib/types";
 
-export async function PutSupplier(s: Supplier, id: string) {
+export async function putSupplier(s: Supplier, id: string) {
   const jwt = cookies().get("access")?.value
   const req = await fetch(`http://localhost:8080/api/v1/suppliers/${id}`, {
     method: "PUT",

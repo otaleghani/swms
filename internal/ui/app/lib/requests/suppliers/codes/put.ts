@@ -1,11 +1,11 @@
 "use server";
 
 import { cookies } from "next/headers";
-import { Supplier } from "@/app/lib/types";
+import { SupplierCode } from "@/app/lib/types";
 
-export async function PutSupplier(s: Supplier, id: string) {
+export async function putSupplierCode(s: SupplierCode, id: string) {
   const jwt = cookies().get("access")?.value
-  const req = await fetch(`http://localhost:8080/api/v1/suppliers/${id}`, {
+  const req = await fetch(`http://localhost:8080/api/v1/supplier-codes/${id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",

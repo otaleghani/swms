@@ -2,7 +2,7 @@
 
 import { cookies } from "next/headers";
 
-export async function DeleteSupplierCode(id: string) {
+export async function deleteSupplierCode(id: string) {
   const jwt = cookies().get("access")?.value
   const res = await fetch(`http://localhost:8080/api/v1/supplier-codes/${id}`, {
     method: "DELETE",
@@ -12,4 +12,5 @@ export async function DeleteSupplierCode(id: string) {
     },
   })
   const body = await res.json()
+  return body;
 }

@@ -17,8 +17,6 @@ interface LayoutProps {
   children: React.ReactNode;
 }
 
-//           {// max-w-[1920px] px-8 m-auto}
-
 export default async function RootLayout({ params, children }: LayoutProps) {
   const dict = await getDictionary(params.lang as Locale);
 

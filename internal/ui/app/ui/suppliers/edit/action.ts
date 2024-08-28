@@ -3,7 +3,7 @@
 import { Locale, getDictionary } from "@/lib/dictionaries";
 import { revalidateTag } from "next/cache";
 import { Supplier } from "@/app/lib/types";
-import { PutSupplier } from "@/app/lib/requests/suppliers/put";
+import { putSupplier } from "@/app/lib/requests/suppliers/put";
 
 export type EditSupplierState = {
   error: true | false;
@@ -54,11 +54,12 @@ export async function EditSupplierAction(
       name: data.name as string,
       description: data.description as string,
     }
-    const res_body = await PutSupplier(req_body, data.id as string)
+
+    const res_body = await putSupplier(req_body, data.id as string)
 
     if (res_body.code !== 200) {
       if (res_body.code === 401) {
-        state.message = dict.supplier.edit_form.errors.general.auth;
+        state.message = dict.suppliers.edit_form.errors.general.auth;
         state.error = true;
       }
       if (res_body.code === 404) {

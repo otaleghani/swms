@@ -21,7 +21,7 @@ export function AddNewSupplierCodeForm({
   supplier,
   item,
   variant,
-  dict_supplier_code_add_dialog, 
+  dict_add_dialog, 
   locale,
   setOpen,
 }: AddNewSupplierCodeFormProps) {
@@ -48,13 +48,13 @@ export function AddNewSupplierCodeForm({
     <form action={action} id="supplier_dialog">
       <div>
         <div>
-          <Label htmlFor="name" className="text-right">{dict_supplier_code_add_dialog.fields.code.label}</Label>
+          <Label htmlFor="name" className="text-right">{dict_add_dialog.fields.code.label}</Label>
           <Input
             className={`${state.errorMessages.code.length != 0 
             ? "border-red-500" 
             : ""}`}
             name="code"
-            placeholder={dict_supplier_code_add_dialog.fields.code.placeholder}/>
+            placeholder={dict_add_dialog.fields.code.placeholder}/>
           <FormFieldError 
             id="code-error" 
             description={state.errorMessages.code} />
@@ -70,8 +70,8 @@ export function AddNewSupplierCodeForm({
           type="submit" 
           form="supplier_dialog">
             {isPending ? 
-            <><Loader2 className="h-4 w-4 mr-2 animate-spin" />{dict_supplier_code_add_dialog.pending}</>
-            : dict_supplier_code_add_dialog.button}
+            <><Loader2 className="h-4 w-4 mr-2 animate-spin" />{dict_add_dialog.pending}</>
+            : dict_add_dialog.button}
         </Button>
         {state.error ? (
           <FormError 
