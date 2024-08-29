@@ -226,6 +226,49 @@
   },
 
   "subcategories": {
+    "edit_dialog": {
+      "dialog_button": "Modifica",
+      "title": "Modifica tipologia",
+      "description": "Cambia il nome e la descrizione della tipologia",
+      "button": "Modifica",
+      "clear_button": "Resetta", 
+      "pending": "Un secondo...",
+      "success": "Modifica completata",
+      "fields": {
+        "name": {
+          "label": "Nome"
+        },
+        "description": {
+          "label": "Descrizione"
+        },
+        "category": {
+          "label": "Categoria"
+        }
+      },
+      "errors": {
+        "name": {
+          "type": "Il nome deve essere una stringa",
+          "empty": "Il nome non può essere vuoto",
+          "not_valid": "Il nome inserito non è valido",
+          "min": "Il nome deve essere di minimo un carattere",
+          "max": "Il nome deve essere di massimo 20 caratteri"
+        },
+        "description": {
+          "type": "La descrizione deve essere una stringa",
+          "empty": "La descrizione non può essere vuota",
+          "not_valid": "La descrizione inserita non è valido",
+          "min": "La descrizione deve essere di minimo un carattere",
+          "max": "La descrizione deve essere di massimo 20 caratteri"
+        },
+        "general": {
+          "not_found": "La zona non è stata trovata.",
+          "auth": "Combinazione di email e password non conincidono.",
+          "marshal": "Qualcosa è andato storto, prova a riempire nuovamente il form.",
+          "internal": "Il server al momento non può esegure questa operazione. Ritenta più tardi",
+          "unknown": "Il server non è disponibile al momento. Contatta l'amministratore."
+        }
+      }
+    },
     "select_field": {
       "name": "Tipologia",
       "combobox": {

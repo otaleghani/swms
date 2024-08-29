@@ -53,7 +53,9 @@ export default async function CategoryIdPage({
               locale={params.lang}
               dict_card={dict.subcategories.card} 
               dict_delete={dict.subcategories.delete_dialog}
-              dict_subcategory_select={dict.subcategories.select_field} />
+              dict_edit={dict.subcategories.edit_dialog}
+              dict_subcategory_select={dict.subcategories.select_field}
+              dict_category_select={dict.categories.select_field} />
           </div>
         </ScrollArea>
         {
