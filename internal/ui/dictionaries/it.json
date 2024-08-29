@@ -226,6 +226,17 @@
   },
 
   "subcategories": {
+    "header_single": {
+      "title": "Tipologie",
+      "breadcrumbs": {
+        "home": "Home",
+        "category": "Categorie",
+        "subcategory": "Tipologie"
+      }
+    },
+    "header_collection": {
+      "title": "Tipologie"
+    },
     "edit_dialog": {
       "dialog_button": "Modifica",
       "title": "Modifica tipologia",

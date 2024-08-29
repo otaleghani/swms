@@ -194,7 +194,7 @@ func getCategoryBySubcategory(db *database.Database) http.HandlerFunc {
 			ErrorResponse{Message: "Not found"}.r500(w, r)
 			return
     }
-    category, err := db.SelectCategoryById(subcategory.Id)
+    category, err := db.SelectCategoryById(subcategory.Category_id)
     if err != nil {
 			ErrorResponse{Message: "Not found"}.r500(w, r)
 			return
