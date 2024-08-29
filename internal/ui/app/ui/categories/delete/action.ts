@@ -59,7 +59,7 @@ export async function DeleteCategoryAction(
         state.error = true;
       }
     } else {
-      state.message = dict.categories.delete_dialog.success;
+      state.message = dict.categorie.delete_dialog.success;
       state.error = false;
       revalidateTag("categories");
       redirect("/categories/" + data.category)
