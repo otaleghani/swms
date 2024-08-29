@@ -158,7 +158,7 @@ func deleteCategorySub(db *database.Database) http.HandlerFunc {
     var subcategory database.Subcategory = database.Subcategory{
       Category_id: itemThatReplaces[0].Id,
     }
-    err = db.Update(subcategory, "Category_id = ?", itemToDelete[0])
+    err = db.Update(subcategory, "Category_id = ?", itemToDelete[0].Id)
     if err != nil {
 			ErrorResponse{Message: err.Error()}.r500(w, r)
 			return
@@ -166,7 +166,7 @@ func deleteCategorySub(db *database.Database) http.HandlerFunc {
     var item database.Item = database.Item{
       Category_id: itemThatReplaces[0].Id,
     }
-    err = db.Update(item, "Category_id = ?", itemToDelete[0])
+    err = db.Update(item, "Category_id = ?", itemToDelete[0].Id)
     if err != nil {
 			ErrorResponse{Message: err.Error()}.r500(w, r)
 			return

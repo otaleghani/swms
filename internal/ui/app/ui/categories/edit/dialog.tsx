@@ -1,8 +1,4 @@
-//:manca questo !!
 "use client";
-
-import { Category } from "@/app/lib/types";
-import DeleteCategoryForm from "./form";
 
 import * as React from "react"
 import { useMediaQuery } from "usehooks-ts";
@@ -25,23 +21,20 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/drawer"
-import { Trash2 } from "lucide-react";
+import { Category } from "@/app/lib/types";
+import { EditCategoryForm } from "./form";
 
-export interface DeleteCategoryDialogProps {
+export interface EditCategoryDialogProps {
   dict: any;
   locale: string;
-  item: Category;
-  categories: Category[];
-  dict_category_select: any;
+  category: Category;
 }
 
-export function DeleteCategoryDialog({
+export function EditCategoryDialog({ 
   dict, 
   locale, 
-  item, 
-  categories, 
-  dict_category_select }: DeleteCategoryDialogProps) {
-
+  category 
+}: EditCategoryDialogProps ) {
   const [open, setOpen] = React.useState(false)
   const isDesktop = useMediaQuery("(min-width: 768px)")
 
@@ -49,21 +42,17 @@ export function DeleteCategoryDialog({
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button variant="outline" className="aspect-square p-0">
-            <Trash2 className="w-[1.2rem] h-[1.2rem]" />
-          </Button>
+          <Button variant="outline">{dict.dialog_button}</Button>
        </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
             <DialogTitle>{dict.title}</DialogTitle>
             <DialogDescription>{dict.description}</DialogDescription>
           </DialogHeader>
-          <DeleteCategoryForm
+          <EditCategoryForm
             dict={dict}
             locale={locale}
-            item={item}
-            categories={categories}
-            dict_category_select={dict_category_select}
+            category={category}
             setOpen={setOpen} />
         </DialogContent>
       </Dialog>
@@ -73,9 +62,7 @@ export function DeleteCategoryDialog({
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <Button variant="outline" className="aspect-square p-0">
-          <Trash2 className="w-[1.2rem] h-[1.2rem]" />
-        </Button>
+        <Button variant="outline">{dict.dialog_button}</Button>
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader className="text-left">
@@ -83,12 +70,10 @@ export function DeleteCategoryDialog({
           <DrawerDescription>{dict.description}</DrawerDescription>
         </DrawerHeader>
         <div className="px-4">
-          <DeleteCategoryForm
+          <EditCategoryForm
             dict={dict}
             locale={locale}
-            item={item}
-            categories={categories}
-            dict_category_select={dict_category_select}
+            category={category}
             setOpen={setOpen} />
         </div>
         <DrawerFooter className="pt-2">

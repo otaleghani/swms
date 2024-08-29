@@ -37,7 +37,7 @@ export default function DeleteCategoryForm({
     <>
       <form action={action}>
         <SelectCategory
-          category={item}
+          category={category}
           categories={categories}
           setCategory={setCategory}
           dict_category_select={dict_category_select}

@@ -43,23 +43,23 @@ export async function DeleteCategoryAction(
     const res_body = await deleteCategorySubstitution(data.id as string, data.category as string)
     if (res_body.code !== 200) {
       if (res_body.code === 401) {
-        state.message = dict.category.delete_form.errors.general.auth;
+        state.message = dict.categories.delete_dialog.errors.general.auth;
         state.error = true;
       }
       if (res_body.code === 404) {
-        state.message = dict.category.delete_form.errors.general.not_found;
+        state.message = dict.categories.delete_dialog.errors.general.not_found;
         state.error = true;
       }
       if (res_body.code === 400) {
-        state.message = dict.category.delete_form.errors.general.marshal;
+        state.message = dict.categories.delete_dialog.errors.general.marshal;
         state.error = true;
       }
       if (res_body.code === 500) {
-        state.message = dict.category.delete_form.errors.general.internal;
+        state.message = dict.categories.delete_dialog.errors.general.internal;
         state.error = true;
       }
     } else {
-      state.message = dict.category.delete_form.success;
+      state.message = dict.categories.delete_dialog.success;
       state.error = false;
       revalidateTag("categories");
       redirect("/categories/" + data.category)
