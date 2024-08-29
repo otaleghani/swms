@@ -1,7 +1,7 @@
 "use client";
 
-import { Category } from "@/app/lib/types";
-import DeleteCategoryForm from "./form";
+import { Subcategory } from "@/app/lib/types";
+import DeleteSubcategoryForm from "./form";
 
 import * as React from "react"
 import { useMediaQuery } from "usehooks-ts";
@@ -26,20 +26,20 @@ import {
 } from "@/components/drawer"
 import { Trash2 } from "lucide-react";
 
-export interface DeleteCategoryDialogProps {
+export interface DeleteSubcategoryDialogProps {
   dict: any;
   locale: string;
-  item: Category;
-  categories: Category[];
-  dict_category_select: any;
+  item: Subcategory;
+  subcategories: Subcategory[];
+  dict_subcategory_select: any;
 }
 
-export function DeleteCategoryDialog({
+export function DeleteSubcategoryDialog({
   dict, 
   locale, 
   item, 
-  categories, 
-  dict_category_select }: DeleteCategoryDialogProps) {
+  subcategories, 
+  dict_subcategory_select }: DeleteSubcategoryDialogProps) {
 
   const [open, setOpen] = React.useState(false)
   const isDesktop = useMediaQuery("(min-width: 768px)")
@@ -57,12 +57,12 @@ export function DeleteCategoryDialog({
             <DialogTitle>{dict.title}</DialogTitle>
             <DialogDescription>{dict.description}</DialogDescription>
           </DialogHeader>
-          <DeleteCategoryForm
+          <DeleteSubcategoryForm
             dict={dict}
             locale={locale}
             item={item}
-            categories={categories}
-            dict_category_select={dict_category_select}
+            subcategories={subcategories}
+            dict_subcategory_select={dict_subcategory_select}
             setOpen={setOpen} />
         </DialogContent>
       </Dialog>
@@ -82,12 +82,12 @@ export function DeleteCategoryDialog({
           <DrawerDescription>{dict.description}</DrawerDescription>
         </DrawerHeader>
         <div className="px-4">
-          <DeleteCategoryForm
+          <DeleteSubcategoryForm
             dict={dict}
             locale={locale}
             item={item}
-            categories={categories}
-            dict_category_select={dict_category_select}
+            subcategories={subcategories}
+            dict_subcategory_select={dict_subcategory_select}
             setOpen={setOpen} />
         </div>
         <DrawerFooter className="pt-2">

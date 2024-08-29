@@ -58,6 +58,7 @@ func Serve(path, port string) {
 
 	mux.HandleFunc("GET /api/v1/categories/{$}", getCategories(&dbConn))
 	mux.HandleFunc("GET /api/v1/categories/{id}", getCategoryById(&dbConn))
+	mux.HandleFunc("GET /api/v1/categories/{id}/subcategories", getSubcategoriesByCategory(&dbConn))
 	mux.HandleFunc("POST /api/v1/categories/{$}", postCategories(&dbConn))
 	mux.HandleFunc("PUT /api/v1/categories/{id}", putCategory(&dbConn))
 	mux.HandleFunc("POST /api/v1/categories/{id}/replace-with/{rep}", deleteCategorySub(&dbConn))

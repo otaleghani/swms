@@ -30,8 +30,8 @@ export default async function SupplierPage({
           suppliers_collection={suppliers}
           locale={params.lang}
           dict_card={dict.suppliers.card}
-          dict_delete={dict.suppliers.delete_form}
-          dict_edit={dict.suppliers.edit_form}
+          dict_delete={dict.suppliers.delete_dialog}
+          dict_edit={dict.suppliers.edit_dialog}
           dict_supplier_select={dict.suppliers.select_field}
         />
       </div>

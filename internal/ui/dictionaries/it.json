@@ -71,6 +71,13 @@
   },
 
   "categories": {
+    "header_single": {
+      "title": "Categoria",
+      "breadcrumbs": {
+        "home": "Home",
+        "category": "Categoria"
+      }
+    },
     "edit_dialog": {
       "dialog_button": "Modifica",
       "title": "Modifica categoria",
@@ -219,6 +226,69 @@
   },
 
   "subcategories": {
+    "select_field": {
+      "name": "Tipologia",
+      "combobox": {
+        "select": "Seleziona una tipologia...",
+        "search": "Cerca una tipologia...",
+        "empty": "Nessuna tipologia"
+      }
+    },
+    "delete_dialog": {
+      "title": "Elimina tipologia",
+      "description": "Vuoi eliminare questa tipologia? L'operazione non può essere reversibile",
+      "button": "Elimina",
+      "clear_button": "Ci ho ripensato",
+      "errors": {
+        "general": {
+          "auth": "Combinazione di email e password non conincidono.",
+          "marshal": "Qualcosa è andato storto, prova a riempire nuovamente il form.",
+          "internal": "Il server al momento non può esegure questa operazione. Ritenta più tardi",
+          "unknown": "Il server non è disponibile al momento. Contatta l'amministratore."
+        }
+      },
+      "success": "Operazione conclusa con successo"
+    },
+    "add_dialog": {
+      "name": "Sottocategoria",
+      "title": "Aggiungi una nuova sottocategoria",
+      "dialog_button": "Aggiungi nuova sottocategoria",
+      "description": "Usa questo form per aggiungere una nuova sottocategoria.",
+      "fields": {
+        "name": {
+          "placeholder": "Nome dalla sottocategoria",
+          "label": "Nome"
+        },
+        "description": {
+          "placeholder": "Descrizione dalla sottocategoria",
+          "label": "Descrizione"
+        }
+      },
+      "button": "Aggiungi",
+      "pending": "Un secondo...",
+      "success": "Form inviato con successo.",
+      "errors": {
+        "name": {
+          "type": "Il nome deve essere una stringa.",
+          "empty": "Il nome non può essere vuoto.",
+          "not_valid": "Il nome che hai inserito non è valido.",
+          "min": "Il nome deve essere di almeno 1 carattere.",
+          "max": "Il nome deve essere di massimo 40 caratteri.",
+          "used": "Il nome che hai inserito è già in uso."
+        },
+        "general": {
+          "marshal": "Qualcosa è andato storto, prova a riempire nuovamente il form.",
+          "internal": "Il server al momento non può esegure questa operazione. Ritenta più tardi",
+          "unknown": "Il server non è disponibile al momento. Contatta l'amministratore."
+        }
+      }
+    },
+    "card": {
+      "labels": {
+        "edit": "Modifica",
+        "view": "Guarda"
+      }
+    },
     "form": {
       "name": "Sottocategoria",
       "combobox": {
@@ -836,7 +906,7 @@
         "supplier": "Fornitore"
       }
     },
-    "edit_form": {
+    "edit_dialog": {
       "dialog_button": "Modifica",
       "title": "Modifica fornitore",
       "description": "Cambia il nome e la descrizione del fornitore",
@@ -891,7 +961,7 @@
         "empty": "Nessun fornitore"
       }
     },
-    "delete_form": {
+    "delete_dialog": {
       "title": "Elimina fornitore",
       "description": "Vuoi eliminare questo fornitore? L'operazione non può essere reversibile",
       "button": "Elimina",

@@ -1,8 +1,8 @@
 import { getDictionary, Locale } from "@/lib/dictionaries";
 import { getCategories } from "@/app/lib/requests/categories/get";
 
-import CategoryHeaderSingle from "@/app/ui/categories/headers/collection";
 import CollectionCategoryCards from "@/app/ui/categories/cards/collection";
+import CategoryHeaderCollection from "@/app/ui/categories/headers/collection";
 
 interface CategoryPageProps {
   params: {
@@ -18,7 +18,7 @@ export default async function ZonesPage({ params }: CategoryPageProps ) {
 
   return (
     <div>
-      <CategoryHeaderSingle 
+      <CategoryHeaderCollection 
         dict={dict.categories} 
         dict_add_dialog={dict.categories.add_dialog}
         locale={params.lang} />

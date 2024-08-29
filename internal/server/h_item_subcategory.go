@@ -42,6 +42,27 @@ func getSubcategoryById(db *database.Database) http.HandlerFunc {
 	}
 }
 
+func getSubcategoriesByCategory(db *database.Database) http.HandlerFunc {
+  return func(w http.ResponseWriter, r *http.Request) {
+		token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
+		if err := checkAccessToken(token, db); err != nil {
+			ErrorResponse{Message: err.Error()}.r401(w, r)
+			return
+		}
+    path := r.PathValue("id")
+    rows, err := db.SelectSubcategories("Category_id = ?", path)
+    if err != nil {
+			ErrorResponse{Message: err.Error()}.r500(w, r)
+			return
+    }
+    if len(rows) == 0 {
+			ErrorResponse{Message: "Not found"}.r404(w, r)
+			return
+    }
+    SuccessResponse{Data: rows}.r200(w, r)
+  }
+}
+
 func postSubcategories(db *database.Database) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
@@ -158,7 +179,7 @@ func deleteSubcategorySub(db *database.Database) http.HandlerFunc {
     var item database.Item = database.Item{
       Subcategory_id: itemThatReplaces[0].Id,
     }
-    err = db.Update(item, "Subcategory_id = ?", itemToDelete[0])
+    err = db.Update(item, "Subcategory_id = ?", itemToDelete[0].Id)
     if err != nil {
 			ErrorResponse{Message: err.Error()}.r500(w, r)
 			return

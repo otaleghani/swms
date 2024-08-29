@@ -6,9 +6,6 @@ import { Category } from "@/app/lib/types";
 import { DeleteCategoryDialog } from "../delete/dialog";
 import { EditCategoryDialog } from "../edit/dialog";
 
-//import { EditZones } from "./edit/dialog";
-//import { DeleteAndSubZoneDialog } from "./delete_safe/dialog";
-
 interface CategoryCardProps {
   categories: Category[];
   locale: string;

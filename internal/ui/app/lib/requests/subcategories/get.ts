@@ -47,3 +47,26 @@ export async function getSubcategoryById(id: string) {
 
   return body.data as Subcategory;
 }
+
+export async function getSubcategoriesByCategory(id: string) {
+  const jwt = cookies().get("access")?.value
+  const res = await fetch(`http://localhost:8080/api/v1/categories/${id}/subcategories`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${jwt}`
+    },
+    next: { tags: ["subcategories"] },
+  })
+
+  const body = await res.json()
+
+  if (body.code !== 200) {
+    // error state?
+    return [] as Subcategory[];
+  }
+
+  console.log(body.data)
+
+  return body.data as Subcategory[];
+}

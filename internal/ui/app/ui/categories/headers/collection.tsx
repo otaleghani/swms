@@ -6,7 +6,7 @@ interface CategoryHeaderProps {
   locale: string;
 }
 
-export default function CategoryHeaderSingle({ 
+export default function CategoryHeaderCollection({ 
   dict, 
   dict_add_dialog, 
   locale 

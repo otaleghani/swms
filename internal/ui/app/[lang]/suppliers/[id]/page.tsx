@@ -38,8 +38,8 @@ export default async function SupplierIdPage({ params }: SupplierIdPageProps) {
             item={item}
             suppliers={suppliers}
             dict_card={dict.suppliers.card}
-            dict_edit={dict.suppliers.edit_form}
-            dict_delete={dict.suppliers.delete_form}
+            dict_edit={dict.suppliers.edit_dialog}
+            dict_delete={dict.suppliers.delete_dialog}
             dict_supplier_select={dict.suppliers.select_field}
           />
         </ScrollArea>
