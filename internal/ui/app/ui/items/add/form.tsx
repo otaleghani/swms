@@ -75,28 +75,31 @@ export default function FormAddItem({
 
   return (
     <form id={formName} className="p-4">
-      <NameInput 
-        dict={dict_general_fields.input.name}
-        className="pb-2"
-      />
-      <DescriptionInput 
-        dict={dict_general_fields.input.description}
-        className="pb-2"
-      />
-      <SelectTags 
-        categories={categories}
-        subcategories={subcategories}
-        locale={locale}
-        dict_category_select={dict_category_select}
-        dict_subcategory_select={dict_subcategory_select}
-        dict_category_add_dialog={dict_category_add_dialog}
-        dict_subcategory_add_dialog={dict_subcategory_add_dialog}
-      />
-
+      <div className="py-4">
+        <h3 className="font-semibold pb-2">Informazioni di base</h3>
+        <div className="xl:grid-cols-4 gap-2 p-5 bg-gray-50 rounded">
+          <NameInput 
+            dict={dict_general_fields.input.name}
+            className="pb-2"
+          />
+          <DescriptionInput 
+            dict={dict_general_fields.input.description}
+            className="pb-2"
+          />
+          <SelectTags 
+            categories={categories}
+            subcategories={subcategories}
+            locale={locale}
+            dict_category_select={dict_category_select}
+            dict_subcategory_select={dict_subcategory_select}
+            dict_category_add_dialog={dict_category_add_dialog}
+            dict_subcategory_add_dialog={dict_subcategory_add_dialog}
+          />
+        </div>
+      </div>
       <div className="py-4">
         <h3 className="font-semibold pb-2">Dimensione</h3>
-        <div className="grid xl:grid-cols-4 
-                        gap-2 p-5 bg-gray-50 rounded">
+        <div className="xl:grid-cols-4 gap-2 p-5 bg-gray-50 rounded">
           <WidthInput 
             dict={dict_general_fields.input.width}
             className=""
