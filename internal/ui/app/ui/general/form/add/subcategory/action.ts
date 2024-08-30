@@ -3,6 +3,7 @@
 import { getDictionary, Locale } from "@/lib/dictionaries";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
+import { Subcategory } from "@/app/lib/types";
 
 export type FormSubcategoryState = {
   error: true | false,
@@ -12,11 +13,7 @@ export type FormSubcategoryState = {
     category: string[];
   }
   message?: string;
-  result?: {
-    id: string;
-    name: string;
-    category: string;
-  }
+  result?: Subcategory;
 }
 
 export async function AddNewSubcategory(
@@ -155,8 +152,9 @@ export async function AddNewSubcategory(
     state.result = {
       id: resBody.data.uuid as string,
       name: data.name as string,
+      description: data.description as string,
       category: data.category as string,
-    }
+    } as Subcategory;
   }
 
   return state

@@ -19,13 +19,15 @@ export default async function Home({ params }: HomeProps ) {
 
   return (
     <main className="w-full p-4">
-      <FormItemsAdd 
-        listCategory={parsedCategory} 
-        listSubcategory={parsedSubcategory}
-        lang={params.lang} 
-        dict={dict}
-        dictCategory={dict.categories.form}
-        dictSubcategory={dict.subcategories.form} />
+      {
+      //<FormItemsAdd 
+      //  listCategory={parsedCategory} 
+      //  listSubcategory={parsedSubcategory}
+      //  lang={params.lang} 
+      //  dict={dict}
+      //  dictCategory={dict.categories.form}
+      //  dictSubcategory={dict.subcategories.form} />
+      }
     </main>
   );
 }

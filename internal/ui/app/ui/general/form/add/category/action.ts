@@ -3,6 +3,7 @@
 import { getDictionary, Locale } from "@/lib/dictionaries";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
+import { Category } from "@/app/lib/types";
 
 export type FormCategoryState = {
   error: true | false,
@@ -11,10 +12,7 @@ export type FormCategoryState = {
     description: string[];
   }
   message?: string;
-  result?: {
-    id: string;
-    name: string;
-  }
+  result?: Category;
 }
 
 export async function AddNewCategory(
@@ -117,7 +115,8 @@ export async function AddNewCategory(
     state.message = "everything is a-okay"
     state.result = {
       id: resBody.data.uuid as string,
-      name: data.name as string
+      name: data.name as string,
+      description: data.description as string
     }
   }
 

@@ -16,7 +16,7 @@ export default function SelectCategory({
   category,
   setCategory,
   dict_category_select, 
-  }: SelectCategoryProps) {
+}: SelectCategoryProps) {
 
   return (
     <>

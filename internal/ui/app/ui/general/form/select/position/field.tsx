@@ -11,7 +11,6 @@
 
 
 import { Zone, Aisle, Rack, Shelf } from "@/app/lib/types";
-import { Label } from "@/components/label";
 import { useState, useEffect } from "react";
 import SelectZone from "../zone/field";
 import SelectAisle from "../aisle/field";
@@ -24,6 +23,7 @@ import AddShelfDialog from "../../add/shelf/dialog";
 
 interface SelectPositionProps {
   locale: string;
+
   zones: Zone[];
   aisles: Aisle[];
   racks: Rack[];
@@ -42,18 +42,22 @@ interface SelectPositionProps {
 
 export default function SelectPosition({ 
   locale,
+
   zones, 
   aisles, 
   racks, 
   shelfs, 
+
   dict_zone_select,
   dict_aisle_select,
   dict_rack_select,
   dict_shelf_select,
+
   dict_zone_add_dialog,
   dict_aisle_add_dialog,
   dict_rack_add_dialog,
-  dict_shelf_add_dialog }: SelectPositionProps) {
+  dict_shelf_add_dialog 
+}: SelectPositionProps) {
 
   const [zone, setZone] = useState({id: "", name: ""} as Zone);
   const [aisle, setAisle] = useState({id: "", name: "", zone: ""} as Aisle);

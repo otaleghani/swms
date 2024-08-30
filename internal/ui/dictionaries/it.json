@@ -1159,5 +1159,40 @@
         }
       }
     }
+  },
+
+  "form_fields": {
+    "input": {
+      "name": {
+        "label": "Nome",
+        "placeholder": "Inserisci il nome"
+      },
+      "description": {
+        "label": "Descrizione",
+        "placeholder": "Inserisci la descrizione"
+      },
+      "width": {
+        "label": "Larghezza",
+        "placeholder": "La larghezza dell'oggetto"
+      },
+      "height": {
+        "label": "Altezza",
+        "placeholder": "L'altezza dell'oggetto"
+      },
+      "weight": {
+        "label": "Peso",
+        "placeholder": "Il peso dell'oggetto"
+      },
+      "length": {
+        "label": "Lunghezza",
+        "placeholder": "La lunghezza dell'oggetto"
+      }
+    },
+    "button": {
+      "submit": {
+        "active": "Invia",
+        "pending": "Un secondo..."
+      }
+    }
   }
 }
