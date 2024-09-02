@@ -94,8 +94,9 @@ export type Variant = {
   length: number;
   width: number;
   heigth: number;
+  weight: number;
   defaultVariant: boolean;
-  item_id: string;
+  item: string;
 }
 
 export type Category = {
@@ -108,4 +109,10 @@ export type Subcategory = {
   name: string;
   description: string;
   category: string;
+}
+
+export type Response = {
+  code: number;
+  message?: string;
+  data?: any;
 }

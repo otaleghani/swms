@@ -3,7 +3,7 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
-export default async function GetItems() {
+export default async function getItems() {
   const jwt = cookies().get("access")?.value;
   const res = await fetch('http://localhost:8080/api/v1/items/', {
     method: 'GET',

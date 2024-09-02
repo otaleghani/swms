@@ -80,11 +80,11 @@ export default function FormAddItem({
         <h3 className="font-semibold pb-2">Informazioni di base</h3>
         <div className="xl:grid-cols-4 gap-2 p-5 bg-gray-50 rounded">
           <NameInput 
-            dict={dict_general_fields.input.name}
+            dict={dict_general_fields.fields.name}
             className="pb-2"
           />
           <DescriptionInput 
-            dict={dict_general_fields.input.description}
+            dict={dict_general_fields.fields.description}
             className="pb-2"
           />
           <SelectTags 
@@ -103,19 +103,19 @@ export default function FormAddItem({
         <h3 className="font-semibold pb-2">Dimensione</h3>
         <div className="grid xl:grid-cols-4 gap-2 p-5 bg-gray-50 rounded">
           <WidthInput 
-            dict={dict_general_fields.input.width}
+            dict={dict_general_fields.fields.width}
             className=""
           />
           <LengthInput 
-            dict={dict_general_fields.input.length}
+            dict={dict_general_fields.fields.length}
             className=""
           />
           <HeightInput 
-            dict={dict_general_fields.input.height}
+            dict={dict_general_fields.fields.height}
             className=""
           />
           <WeightInput 
-            dict={dict_general_fields.input.weight}
+            dict={dict_general_fields.fields.weight}
             className=""
           />
         </div>

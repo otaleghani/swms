@@ -53,7 +53,7 @@ export default async function AddItemPage({
     <>
       <ItemHeaderAdd
         dict_header={dict.items.add_form.header}
-        dict_general_fields={dict.form_fields}
+        dict_general_fields={dict.forms}
         formName={formName} />
       <form id={formName}  className="grid xl:grid-cols-2">
         <ScrollArea className="h-[calc(100vh_-_57px)] p-4" type="always">
@@ -61,7 +61,7 @@ export default async function AddItemPage({
             locale={params.lang}
             formName={formName}
             dict_item_add_new={{}}
-            dict_general_fields={dict.form_fields}
+            dict_general_fields={dict.forms}
 
             dict_category_add_dialog={dict.categories.add_dialog}
             dict_subcategory_add_dialog={dict.subcategories.add_dialog}

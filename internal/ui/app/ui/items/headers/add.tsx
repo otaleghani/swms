@@ -17,7 +17,7 @@ export default function ItemHeaderAdd({
     
       <SubmitButton 
         isPending={false}
-        dict={dict_general_fields.button.submit}
+        dict={dict_general_fields.buttons.submit}
         className="pt-2"
         form={formName}
       />

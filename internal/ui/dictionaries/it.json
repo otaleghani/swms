@@ -407,8 +407,9 @@
     }
   },
 
-  "variant": {
+  "variants": {
     "form": {
+
       "fields": {
         "length": {
           "placeholder": "Lunghezza dell'oggetto",
@@ -1148,38 +1149,97 @@
     }
   },
 
-  "form_fields": {
-    "input": {
+  "forms": {
+    "messages": {
+      "success": {
+        "post": "Aggiunto correttamente",
+        "get": "Ricevuto correttamente",
+        "update": "Modificato correttamente",
+        "delete": "Eliminato correttamente"
+      }
+    },
+    "fields": {
       "name": {
         "label": "Nome",
-        "placeholder": "Inserisci il nome"
+        "placeholder": "Inserisci il nome",
+        "validation": {
+          "empty": "Il nome non puo essere vuoto",
+          "max": "Il nome deve essere al massimo di {{max}} di caratter.",
+          "min": "Il nome deve essere di minimo {{min}} di caratteri.",
+          "type": "Il nome deve essere una stringa."
+        }
       },
       "description": {
         "label": "Descrizione",
-        "placeholder": "Inserisci la descrizione"
+        "placeholder": "Inserisci la descrizione",
+        "validation": {
+          "empty": "La descrizione non puo essere vuota.",
+          "max": "La descrizione deve essere al massimo di {{max}} di caratter.",
+          "min": "La descrizione deve essere al minimo {{min}} di caratteri.",
+          "type": "La descrizione deve essere una stringa."
+        }
       },
       "width": {
         "label": "Larghezza",
-        "placeholder": "La larghezza dell'oggetto"
+        "placeholder": "La larghezza dell'oggetto",
+        "validation": {
+          "empty": "La larghezza non puo essere vuota.",
+          "not_valid": "La larghezza non puo essere vuota.",
+          "max": "La larghezza deve essere al massimo {{max}}.",
+          "min": "La larghezza deve essere al minimo {{min}}.",
+          "type": "La larghezza deve essere un numero."
+        }
       },
       "height": {
         "label": "Altezza",
-        "placeholder": "L'altezza dell'oggetto"
+        "placeholder": "L'altezza dell'oggetto",
+        "validation": {
+          "empty": "L'altezza non puo essere vuota.",
+          "not_valid": "L'altezza non puo essere vuota.",
+          "max": "L'altezza deve essere al massimo {{max}}.",
+          "min": "L'altezza deve essere al minimo {{min}}.",
+          "type": "L'altezza deve essere un numero."
+        }
       },
       "weight": {
         "label": "Peso",
-        "placeholder": "Il peso dell'oggetto"
+        "placeholder": "Il peso dell'oggetto",
+        "validation": {
+          "empty": "Il peso non puo essere vuoto.",
+          "not_valid": "Il peso non puo essere vuota.",
+          "max": "Il peso deve essere al massimo {{max}}.",
+          "min": "Il peso deve essere al minimo {{min}}.",
+          "type": "Il peso deve essere un numero."
+        }
       },
       "length": {
         "label": "Lunghezza",
-        "placeholder": "La lunghezza dell'oggetto"
+        "placeholder": "La lunghezza dell'oggetto",
+        "validation": {
+          "empty": "Lo spessore non puo essere vuoto.",
+          "not_valid": "Lo spessore non puo essere vuota.",
+          "max": "Lo spessore deve essere al massimo {{max}}.",
+          "min": "Lo spessore deve essere al minimo {{min}}.",
+          "type": "Lo spessore deve essere un numero."
+        }
+      },
+      "quantity": {
+        "label": "Quantità",
+        "placeholder": "La quantità in question",
+        "validation": {
+          "empty": "La quantità non puo essere vuota.",
+          "not_valid": "La quantità non puo essere vuota.",
+          "max": "La quantità deve essere al massimo {{max}}.",
+          "min": "La quantità deve essere al minimo {{min}}.",
+          "type": "La quantità deve essere un numero."
+        }
       }
     },
-    "button": {
+    "buttons": {
       "submit": {
         "active": "Invia",
         "pending": "Un secondo..."
       }
     }
-  }
+  } 
 }
