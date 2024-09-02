@@ -399,24 +399,11 @@
     }
   },
 
-  "item": {
-    "form": {
-      "title": "Aggiungi un nuovo oggetto",
-      "description": "Usa questo form per aggiungere un nuovo oggetto.",
-      "fields": {
-        "name": {
-          "placeholder": "Nome dell'oggetto",
-          "label": "Nome"
-        },
-        "description": {
-          "placeholder": "Una breve descrizione",
-          "label": "Descrizione"
-        }
-      },
-      "button": "Aggiungi",
-      "clear_button": "Resetta",
-      "pending": "Un secondo...",
-      "success": "Form inviato con successo."
+  "items": {
+    "add_form": {
+      "header": {
+        "title": "Aggiungi un nuovo oggetto"
+      }
     }
   },
 

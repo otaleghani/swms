@@ -86,7 +86,7 @@ export default function SelectTags({
   return (
     <>
       <div className="w-full mb-2">
-        <div className="flex w-full items-en">
+        <div className="flex w-full items-end">
           <SelectCategory
             category={category}
             categories={categories}

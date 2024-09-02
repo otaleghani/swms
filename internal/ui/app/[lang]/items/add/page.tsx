@@ -9,6 +9,9 @@ import { getShelfs } from "@/app/lib/requests/shelfs/get";
 
 /** Components */
 import FormAddItem from "@/app/ui/items/add/form";
+import ItemHeaderAdd from "@/app/ui/items/headers/add";
+import { ScrollArea } from "@/components/scroll-area";
+import UploadImageField from "@/app/ui/general/form/files/item-image/field";
 
 interface AddItemPageProps {
   params: {
@@ -19,6 +22,8 @@ interface AddItemPageProps {
 export default async function AddItemPage({
   params
 }: AddItemPageProps) {
+  const formName = "items-add-form";
+
   /** Fetch data */
   const dict = await getDictionary(params.lang as Locale);
   const pCategories = getCategories();
@@ -45,34 +50,46 @@ export default async function AddItemPage({
   ]);
 
   return (
-    <div className="grid xl:grid-cols-2">
-      <FormAddItem 
-        locale={params.lang}
-        dict_item_add_new={{}}
+    <>
+      <ItemHeaderAdd
+        dict_header={dict.items.add_form.header}
         dict_general_fields={dict.form_fields}
+        formName={formName} />
+      <form id={formName}  className="grid xl:grid-cols-2">
+        <ScrollArea className="h-[calc(100vh_-_57px)] p-4" type="always">
+          <FormAddItem 
+            locale={params.lang}
+            formName={formName}
+            dict_item_add_new={{}}
+            dict_general_fields={dict.form_fields}
 
-        dict_category_add_dialog={dict.categories.add_dialog}
-        dict_subcategory_add_dialog={dict.subcategories.add_dialog}
-        dict_zone_add_dialog={dict.zones.add_dialog}
-        dict_aisle_add_dialog={dict.aisles.add_dialog}
-        dict_rack_add_dialog={dict.racks.add_dialog}
-        dict_shelf_add_dialog={dict.shelfs.add_dialog}
+            dict_category_add_dialog={dict.categories.add_dialog}
+            dict_subcategory_add_dialog={dict.subcategories.add_dialog}
+            dict_zone_add_dialog={dict.zones.add_dialog}
+            dict_aisle_add_dialog={dict.aisles.add_dialog}
+            dict_rack_add_dialog={dict.racks.add_dialog}
+            dict_shelf_add_dialog={dict.shelfs.add_dialog}
 
-        dict_category_select={dict.categories.select_field}
-        dict_subcategory_select={dict.subcategories.select_field}
-        dict_zone_select={dict.zones.select_field}
-        dict_aisle_select={dict.aisles.select_field}
-        dict_rack_select={dict.racks.select_field}
-        dict_shelf_select={dict.shelfs.select_field}
+            dict_category_select={dict.categories.select_field}
+            dict_subcategory_select={dict.subcategories.select_field}
+            dict_zone_select={dict.zones.select_field}
+            dict_aisle_select={dict.aisles.select_field}
+            dict_rack_select={dict.racks.select_field}
+            dict_shelf_select={dict.shelfs.select_field}
 
-        categories={categories}
-        subcategories={subcategories} 
-        zones={zones}
-        aisles={aisles}
-        racks={racks}
-        shelfs={shelfs}
-        />
-    </div>
+            categories={categories}
+            subcategories={subcategories} 
+            zones={zones}
+            aisles={aisles}
+            racks={racks}
+            shelfs={shelfs}
+            />
+        </ScrollArea>
+        <ScrollArea className="h-[calc(100vh_-_57px)] p-4" type="always">
+          <UploadImageField dict_upload_image={dict.images.upload_field}/>
+        </ScrollArea>
+      </form>
+    </>
   )
 }
 

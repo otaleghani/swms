@@ -20,6 +20,7 @@ import SelectPosition from "../../general/form/select/position/field";
 
 interface FormAddItemProps {
   locale: string;
+  formName: string;
   dict_item_add_new: any;
   dict_general_fields: any;
 
@@ -47,6 +48,7 @@ interface FormAddItemProps {
 
 export default function FormAddItem({
   locale,
+  formName,
   dict_item_add_new,
   dict_general_fields,
 
@@ -71,11 +73,10 @@ export default function FormAddItem({
   racks, 
   shelfs, 
 }: FormAddItemProps) {
-  const formName = "form_add_item"
-
   return (
-    <form id={formName} className="p-4">
-      <div className="py-4">
+    <div className="">
+
+      <div className="pb-4">
         <h3 className="font-semibold pb-2">Informazioni di base</h3>
         <div className="xl:grid-cols-4 gap-2 p-5 bg-gray-50 rounded">
           <NameInput 
@@ -97,9 +98,10 @@ export default function FormAddItem({
           />
         </div>
       </div>
+
       <div className="py-4">
         <h3 className="font-semibold pb-2">Dimensione</h3>
-        <div className="xl:grid-cols-4 gap-2 p-5 bg-gray-50 rounded">
+        <div className="grid xl:grid-cols-4 gap-2 p-5 bg-gray-50 rounded">
           <WidthInput 
             dict={dict_general_fields.input.width}
             className=""
@@ -119,7 +121,7 @@ export default function FormAddItem({
         </div>
       </div>
 
-      <div className="py-4">
+      <div className="pt-4">
         <h3 className="font-semibold pb-2">Posizione</h3>
         <div className="grid xl:grid-cols-1 
                         gap-2 p-5 bg-gray-50 rounded">
@@ -142,15 +144,6 @@ export default function FormAddItem({
             dict_shelf_add_dialog={dict_shelf_add_dialog} />
         </div>
       </div>
-
-
-
-      <SubmitButton 
-        isPending={false}
-        dict={dict_general_fields.button.submit}
-        className="pt-2"
-        form={formName}
-      />
-    </form>
+    </div>
   )
 }
