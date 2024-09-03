@@ -1,5 +1,6 @@
 "use client";
 
+import UploadImageField from "../../general/form/files/item-image/field";
 import SubmitButton from "../../general/form/button/submit";
 import DescriptionInput from "../../general/form/input/description";
 import NameInput from "../../general/form/input/name";
@@ -23,6 +24,7 @@ interface FormAddItemProps {
   formName: string;
   dict_item_add_new: any;
   dict_general_fields: any;
+  dict_upload_image: any;
 
   dict_category_add_dialog: any;
   dict_subcategory_add_dialog: any;
@@ -44,6 +46,8 @@ interface FormAddItemProps {
   aisles: Aisle[];
   racks: Rack[];
   shelfs: Shelf[];
+
+  variantsJSON: string;
 }
 
 export default function FormAddItem({
@@ -51,6 +55,7 @@ export default function FormAddItem({
   formName,
   dict_item_add_new,
   dict_general_fields,
+  dict_upload_image,
 
   dict_category_add_dialog,
   dict_subcategory_add_dialog,
@@ -72,9 +77,10 @@ export default function FormAddItem({
   aisles, 
   racks, 
   shelfs, 
+  variantsJSON,
 }: FormAddItemProps) {
   return (
-    <div className="">
+    <form className="">
 
       <div className="pb-4">
         <h3 className="font-semibold pb-2">Informazioni di base</h3>
@@ -144,6 +150,16 @@ export default function FormAddItem({
             dict_shelf_add_dialog={dict_shelf_add_dialog} />
         </div>
       </div>
-    </div>
+
+      <div className="pt-4">
+        <h3 className="font-semibold pb-2">Immagini</h3>
+        <div className="bg-gray-50 p-5 rounded">
+        <UploadImageField 
+          dict_upload_image={dict_upload_image}
+        />
+        </div>
+      </div>
+      <input type="hidden" name="variants" value={variantsJSON} />
+    </form>
   )
 }

@@ -5,7 +5,7 @@ type Variant struct {
   Name string `json:"name"`
   Description string `json:"description"`
   Quantity int64 `json:"quantity"`
-  InternalId string `json:"internalId"`
+  Identifier string `json:"identifier"`
   Length float64 `json:"length"`
   Width float64 `json:"width"`
   Height float64 `json:"heigth"`

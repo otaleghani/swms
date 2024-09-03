@@ -12,7 +12,7 @@ export type AddVariantFieldState = {
   errorMessages: {
     name: string[];
     description: string[];
-    internalId: string[];
+    identifier: string[];
     quantity: string[];
     width: string[];
     height: string[];
@@ -31,7 +31,7 @@ export async function AddVariantFieldAction(
     errorMessages: {
       name: [],
       description: [],
-      internalId: [],
+      identifier: [],
       quantity: [],
       width: [],
       height: [],
@@ -45,7 +45,7 @@ export async function AddVariantFieldAction(
   const data = {
     name: formData.get("name") as string,
     description: formData.get("description") as string,
-    internalId: formData.get("internalId") as string,
+    identifier: formData.get("identifier") as string,
     quantity: formData.get("quantity"),
     width: formData.get("width") as string,
     height: formData.get("height") as string,
@@ -55,40 +55,46 @@ export async function AddVariantFieldAction(
     locale: formData.get("locale") as string,
   }
 
+  console.log(data)
+
   const dictPromise = getDictionary(data.locale as Locale);
   const [ dict ] = await Promise.all([ dictPromise ]);
 
 /** Validation */
   (state.errorMessages.name = validateString(
-    data.name as string, dict.form.validation.name, 2, 20
+    data.name as string, dict.forms.fields.name.validation, 2, 20
   )).length != 0 ? (state.error = true) : (state.error = false);
 
   (state.errorMessages.description = validateString(
-    data.description as string, dict.form.validation.description, -1, 100
+    data.description as string, dict.forms.fields.description.validation, -1, 100
+  )).length != 0 ? (state.error = true) : (state.error = false);
+
+  (state.errorMessages.identifier = validateString(
+    data.identifier as string, dict.forms.fields.identifier.validation, 2, 20
   )).length != 0 ? (state.error = true) : (state.error = false);
 
   (state.errorMessages.quantity = validateNumbers(
-    data.quantity as string, dict, -1, 9999999
+    data.quantity as string, dict.forms.fields.quantity.validation, -1, 9999999
   )).length != 0 ? (state.error = true) : (state.error = false);
 
   (state.errorMessages.width = validateNumbers(
-    data.width as string, dict, -1, 9999999
+    data.width as string, dict.forms.fields.width.validation, -1, 9999999
   )).length != 0 ? (state.error = true) : (state.error = false);
 
   (state.errorMessages.height = validateNumbers(
-    data.height as string, dict, -1, 9999999
+    data.height as string, dict.forms.fields.height.validation, -1, 9999999
   )).length != 0 ? (state.error = true) : (state.error = false);
 
   (state.errorMessages.length = validateNumbers(
-    data.length as string, dict, -1, 9999999
+    data.length as string, dict.forms.fields.length.validation, -1, 9999999
   )).length != 0 ? (state.error = true) : (state.error = false);
 
   (state.errorMessages.weight = validateNumbers(
-    data.weight as string, dict, -1, 9999999
+    data.weight as string, dict.forms.fields.weight.validation, -1, 9999999
   )).length != 0 ? (state.error = true) : (state.error = false);
 
   if (state.error) {
-    state.message = dict.variants.errors.ohoh
+    state.message = dict.forms.messages.errors.general;
     return state;
   }
 
@@ -97,7 +103,7 @@ export async function AddVariantFieldAction(
   state.result = {
     name: data.name,
     description: data.description,
-    internalId: data.internalId,
+    identifier: data.identifier,
     quantity: Number(data.quantity),
     width: Number(data.width),
     heigth: Number(data.height),
@@ -106,6 +112,6 @@ export async function AddVariantFieldAction(
     item: data.item,
   } as Variant;
 
-  state.message = dict.form.messages.success.post;
+  state.message = dict.forms.messages.success.post;
   return state;
 }

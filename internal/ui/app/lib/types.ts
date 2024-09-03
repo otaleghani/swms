@@ -90,7 +90,7 @@ export type Variant = {
   name: string;
   description: string;
   quantity: number;
-  internalId: string;
+  identifier: string;
   length: number;
   width: number;
   heigth: number;

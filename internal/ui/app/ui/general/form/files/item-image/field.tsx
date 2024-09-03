@@ -122,7 +122,7 @@ export default function UploadImageField({
 
   return (
     <div>
-      <label htmlFor="images" className="flex flex-col items-center gap-2 rounded border p-4">
+      <label htmlFor="images" className="bg-white flex flex-col items-center gap-2 rounded border p-4">
         <Upload />
         <div className="text-sm">{dict_upload_image.label}</div>
       </label>

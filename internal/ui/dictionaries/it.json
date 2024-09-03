@@ -408,25 +408,9 @@
   },
 
   "variants": {
-    "form": {
-
-      "fields": {
-        "length": {
-          "placeholder": "Lunghezza dell'oggetto",
-          "label": "Lunghezza"
-        },
-        "width": {
-          "placeholder": "Larghezza dell'oggetto",
-          "label": "Larghezza"
-        },
-        "height": {
-          "placeholder": "Altezza dell'oggetto",
-          "label": "Altezza"
-        },
-        "weight": {
-          "placeholder": "Peso dell'oggetto",
-          "label": "Peso"
-        }
+    "add_form": {
+      "header": {
+        "title": "Aggiungi una nuova variante all'oggetto"
       }
     }
   },
@@ -1156,6 +1140,9 @@
         "get": "Ricevuto correttamente",
         "update": "Modificato correttamente",
         "delete": "Eliminato correttamente"
+      },
+      "errors": {
+        "general": "Correggi gli errori prima di inviare di nuovo i dati"
       }
     },
     "fields": {
@@ -1232,6 +1219,16 @@
           "max": "La quantità deve essere al massimo {{max}}.",
           "min": "La quantità deve essere al minimo {{min}}.",
           "type": "La quantità deve essere un numero."
+        }
+      },
+      "identifier": {
+        "label": "Identificatore variante",
+        "placeholder": "Inserisci id della variante",
+        "validation": {
+          "empty": "L'identificate non puo essere vuoto",
+          "max": "L'identificate deve essere al massimo di {{max}} di caratter.",
+          "min": "L'identificate deve essere di minimo {{min}} di caratteri.",
+          "type": "L'identificate deve essere una stringa."
         }
       }
     },
