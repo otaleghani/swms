@@ -1236,6 +1236,10 @@
       "submit": {
         "active": "Invia",
         "pending": "Un secondo..."
+      },
+      "add": {
+        "active": "Aggiungi",
+        "pending": "Sto aggiungend..."
       }
     }
   } 

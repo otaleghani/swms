@@ -1,8 +1,11 @@
 "use client";
 
 import { useState, useEffect, useActionState } from "react";
-import { Item, Variant } from "@/app/lib/types";
+
+import { Variant } from "@/app/lib/types";
 import { AddVariantFieldState, AddVariantFieldAction } from "./action";
+
+/** Components */
 import WidthInput from "../../general/form/input/width";
 import HeightInput from "../../general/form/input/heigth";
 import WeightInput from "../../general/form/input/weight";
@@ -11,6 +14,7 @@ import NameInput from "../../general/form/input/name";
 import DescriptionInput from "../../general/form/input/description";
 import IdentifierInput from "../../general/form/input/identifier";
 import SubmitButton from "../../general/form/button/submit";
+import VariantsTable from "../table/component";
 
 interface AddVariantsFieldProps {
   locale: string;
@@ -45,33 +49,33 @@ export default function AddVariantsField({
 
   const formName = "variants";
   const [state, action, isPending] = useActionState(AddVariantFieldAction, initialState);
-  // const [variants, setVariants] = useState("");
+  const [variants, setVariants] = useState([{}] as Variant[]);
 
   useEffect(() => {
     if (state.message && !state.error) {
-      console.log(variantsJSON);
       const variants: Variant[] = JSON.parse(variantsJSON);
-      variants.push(state.result as Variant)
-      setVariantsJSON(JSON.stringify(variants))
+      variants.push(state.result as Variant);
+      setVariants(variants);
+      setVariantsJSON(JSON.stringify(variants));
     }
   }, [state])
 
   return (
     <div>
       <form action={action} id={formName} >
-        <div className="py-4">
+        <div className="">
           <h3 className="font-semibold pb-2">Variante</h3>
-          <div className="grid xl:grid-cols-4 gap-2 p-5 bg-gray-50 rounded">
+          <div className="grid gap-2 p-5 bg-gray-50 rounded">
             <NameInput 
-              dict={dict_general_fields.fields.width}
+              dict={dict_general_fields.fields.name}
               className=""
             />
             <DescriptionInput 
-              dict={dict_general_fields.fields.length}
+              dict={dict_general_fields.fields.description}
               className=""
             />
             <IdentifierInput 
-              dict={dict_general_fields.fields.length}
+              dict={dict_general_fields.fields.identifier}
               className=""
             />
           </div>
@@ -101,12 +105,15 @@ export default function AddVariantsField({
         <input type="hidden" name="locale" value={locale} />
 
         <SubmitButton 
-          dict={dict_general_fields.buttons.submit}
+          dict={dict_general_fields.buttons.add}
           isPending={isPending}
           className=""
           form={formName}
         />
       </form>
+      <div>
+        <VariantsTable />
+      </div>
     </div>
   )
 }

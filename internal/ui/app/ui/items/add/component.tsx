@@ -13,7 +13,7 @@ import {
 import FormAddItem from "@/app/ui/items/add/form";
 import ItemHeaderAdd from "@/app/ui/items/headers/add";
 import { ScrollArea } from "@/components/scroll-area";
-import AddVariantsField from "@/app/ui/variants/add/field";
+import AddVariantsField from "@/app/ui/variants/add/field_form_items";
 
 /** Hooks */
 import { useState } from "react";
@@ -80,7 +80,7 @@ export default function AddItemPageComponent({
   shelfs,
 
 }: AddItemPageLayoutProps) {
-  const [ variantsJSON, setVariantsJSON ] = useState("");
+  const [ variantsJSON, setVariantsJSON ] = useState("[{}]");
 
   return (
     <>
