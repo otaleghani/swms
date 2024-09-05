@@ -15,6 +15,7 @@ export default function QuantityInput({
       <Label htmlFor="quantity">{dict.label}</Label>
       <Input 
         type="number"
+        step={1}
         name="quantity"
         id="quantity"
         placeholder={dict.placeholder}

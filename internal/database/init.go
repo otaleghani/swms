@@ -121,6 +121,22 @@ func Init(path string) (Database, error) {
     return Database{}, err
   }
 
+  // Settings neeed
+  err = db.Sorm.CreateTable(Settings{})
+  if err != nil {
+    return Database{}, err
+  }
+  baseSettings := Settings{
+    Id: "base",
+    Unit_weight: "kg",
+    Unit_length: "cm",
+    Wizard: true,
+  }
+  err = db.Insert(baseSettings)
+  if err != nil {
+    return Database{}, err
+  }
+
   return db, nil
 }
 

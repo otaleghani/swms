@@ -410,9 +410,20 @@
   "variants": {
     "add_form": {
       "header": {
-        "title": "Aggiungi una nuova variante all'oggetto"
+        "title": "Aggiungi una nuova variante"
+      },
+      "table": {
+        "title": "Varianti",
+        "header": {
+          "name": "Nome",
+          "identifier": "Id",
+          "quantity": "Quantita",
+          "dimensions": "Dimensioni"
+        }
       }
-    }
+    },
+    "delete_dialog": "",
+    "edit_dialog": ""
   },
 
   "zones": {

@@ -1,6 +1,3 @@
-import { readFileSync } from 'fs';
-import path from 'path'
-
 import { MoreHorizontal } from "lucide-react";
 import {
   Table,
@@ -25,44 +22,62 @@ import { Variant } from "@/app/lib/types";
 interface VariantsTableProps {
   variants: Variant[];
   dict: any;
+  dict_variant_delete_dialog: any;
+  dict_variant_edit_dialog: any;
 }
 
-export default function VariantsTable() {
-  const settingsFilePath = path.join(process.cwd(), 'settings.json')
-  const file = readFileSync(settingsFilePath, 'utf8')
-  console.log(file)
+export default function VariantsTable({
+  variants,
+  dict,
+  dict_variant_delete_dialog,
+  dict_variant_edit_dialog,
+}: VariantsTableProps) {
+  console.log(variants)
+
   return (
-    <Table>
+    <Table className="border">
       <TableHeader>
-        <TableRow>
-          <TableHead className="w-[100px]">Nome</TableHead>
-          <TableHead>Identificatore</TableHead>
-          <TableHead>Quantita</TableHead>
-          <TableHead>Dimensioni</TableHead>
+        <TableRow className="!bg-white">
+          <TableHead className="">{dict.header.name}</TableHead>
+          <TableHead>{dict.header.identifier}</TableHead>
+          <TableHead>{dict.header.quantity}</TableHead>
+          <TableHead>{dict.header.dimensions}</TableHead>
           <TableHead></TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
-        <TableRow>
-          <TableCell className="font-medium">Variante</TableCell>
-          <TableCell>ID124012341234</TableCell>
-          <TableCell>123</TableCell>
-          <TableCell>1 x 2 x 3, 29</TableCell>
-          <TableCell>
-            <DropdownMenu>
-              <DropdownMenuTrigger>
-                <div className="aspect-square p-2 rounded borde">
-                  <MoreHorizontal className="h-4 w-4" />
-                  <span className="sr-only">Toggle menu</span>
-                </div>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                <DropdownMenuItem>Modifica qui il component</DropdownMenuItem>
-                <DropdownMenuItem>Elimina qui il component</DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </TableCell>
-        </TableRow>
+        {variants.length === 0 ? (
+          <TableRow className="!bg-white">
+            <TableCell>Nessuna variante</TableCell>
+            <TableCell></TableCell>
+            <TableCell></TableCell>
+            <TableCell></TableCell>
+            <TableCell></TableCell>
+          </TableRow>) : (
+          variants.map((variant: Variant) => (
+            <TableRow className="!bg-white">
+              <TableCell className="font-medium">{variant.name}</TableCell>
+              <TableCell>{variant.identifier}</TableCell>
+              <TableCell>{variant.quantity}</TableCell>
+              <TableCell>{variant.width} x {variant.length} x {variant.heigth}, {variant.weight}</TableCell>
+              <TableCell>
+                <DropdownMenu>
+                  <DropdownMenuTrigger>
+                    <div className="aspect-square p-2 rounded borde">
+                      <MoreHorizontal className="h-4 w-4" />
+                      <span className="sr-only">Toggle menu</span>
+                    </div>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent>
+                    <DropdownMenuItem>Modifica qui il component</DropdownMenuItem>
+                    <DropdownMenuItem>Elimina qui il component</DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </TableCell>
+            </TableRow>
+          ))
+        )}
+
       </TableBody>
     </Table>
   )

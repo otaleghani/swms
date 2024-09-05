@@ -34,6 +34,10 @@ interface AddItemPageLayoutProps {
   dict_rack_add_dialog: any;
   dict_shelf_add_dialog: any;
 
+  dict_variant_delete_dialog: any;
+  dict_variant_edit_dialog: any;
+  dict_variant_add_form: any;
+
   dict_category_select: any;
   dict_subcategory_select: any;
   dict_zone_select: any;
@@ -64,6 +68,10 @@ export default function AddItemPageComponent({
   dict_aisle_add_dialog,
   dict_rack_add_dialog,
   dict_shelf_add_dialog,
+
+  dict_variant_delete_dialog,
+  dict_variant_edit_dialog,
+  dict_variant_add_form,
 
   dict_category_select,
   dict_subcategory_select,
@@ -122,9 +130,11 @@ export default function AddItemPageComponent({
         </ScrollArea>
         <ScrollArea className="h-[calc(100vh_-_57px)] p-4" type="always">
           <AddVariantsField
-            dict_add_variant={{}}
+            dict_variant_add_form={dict_variant_add_form}
             locale={locale}
             dict_general_fields={dict_general_fields}
+            dict_variant_delete_dialog={dict_variant_delete_dialog}
+            dict_variant_edit_dialog={dict_variant_edit_dialog}
             setVariantsJSON={setVariantsJSON}
             variantsJSON={variantsJSON}
           />

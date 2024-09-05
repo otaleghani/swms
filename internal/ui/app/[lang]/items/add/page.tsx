@@ -66,6 +66,10 @@ export default async function AddItemPage({
       dict_rack_add_dialog={dict.racks.add_dialog}
       dict_shelf_add_dialog={dict.shelfs.add_dialog}
 
+      dict_variant_delete_dialog={dict.variants.delete_dialog}
+      dict_variant_edit_dialog={dict.variants.edit_dialog}
+      dict_variant_add_form={dict.variants.add_form}
+
       dict_category_select={dict.categories.select_field}
       dict_subcategory_select={dict.subcategories.select_field}
       dict_zone_select={dict.zones.select_field}

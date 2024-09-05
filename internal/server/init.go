@@ -197,6 +197,9 @@ func Serve(path, port string) {
 	mux.HandleFunc("POST /api/v1/revoke/{$}", revokeHandler(&dbConn))
 	mux.HandleFunc("POST /api/v1/Tefresh/{$}", refreshHandler(&dbConn))
 
+  mux.HandleFunc("GET /api/v1/settings/{$}", getSettings(&dbConn))
+  mux.HandleFunc("PUT /api/v1/settings/{$}", putSettings(&dbConn))
+
   // fileserver
   // fileserver := http.FileServer(http.Dir("./media"))
   // mux.Handle("GET /media/", http.StripPrefix("/media", fileserver))
