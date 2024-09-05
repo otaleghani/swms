@@ -28,13 +28,14 @@ func getMedia(db *database.Database) http.HandlerFunc {
 }
 
 type BodyRequestPostMedia struct {
-  //Images: []database.Item_image;
   Blob string `json:"blob"`
-  Item_id string `json:"item_id"`
-  Variant_id string `json:"variant_id"`
+  Item_id string `json:"item"`
+  // Extention string `json:"extension"`
+  // Images: []database.Item_image;
+  // Variant_id string `json:"variant_id"`
 }
 
-func postMedia(db *database.Database) http.HandlerFunc {
+func postItemImage(db *database.Database) http.HandlerFunc {
   return func(w http.ResponseWriter, r *http.Request) {
 	  token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
     if err := checkAccessToken(token, db); err != nil {
@@ -50,9 +51,9 @@ func postMedia(db *database.Database) http.HandlerFunc {
     }
 
     var data = database.Item_image{
-      Id: uuid.NewString(),
+     Id: uuid.NewString(),
       Item_id: req_data.Item_id,
-      Variant_id: req_data.Variant_id,
+      // Variant_id: req_data.Variant_id,
     }
 
   	decodedBlob, err := base64.StdEncoding.DecodeString(req_data.Blob)

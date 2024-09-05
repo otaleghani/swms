@@ -1,6 +1,6 @@
 // POSITION
 export type Zone = {
-  id: string;
+  id?: string;
   name: string;
 }
 export type ZoneInfo = {
@@ -9,7 +9,7 @@ export type ZoneInfo = {
   items_count: number;
 }
 export type Aisle = {
-  id: string;
+  id?: string;
   name: string;
   zone: string;
 }
@@ -19,7 +19,7 @@ export type AisleInfo = {
   items_count: number;
 }
 export type Rack = {
-  id: string;
+  id?: string;
   name: string;
   zone: string;
   aisle: string;
@@ -30,7 +30,7 @@ export type RackInfo = {
   items_count: number;
 }
 export type Shelf = {
-  id: string;
+  id?: string;
   name: string;
   zone: string;
   aisle: string;
@@ -43,7 +43,7 @@ export type ShelfInfo = {
 
 // SUPPLIER
 export type Supplier = {
-  id: string;
+  id?: string;
   name: string;
   description: string;
 }
@@ -52,7 +52,7 @@ export type SupplierInfo = {
   codes_count: number;
 }
 export type SupplierCode = {
-  id: string;
+  id?: string;
   code: string;
   supplier: string;
   item: string;
@@ -73,7 +73,7 @@ export type VariantAndSupplierCodes = {
 
 // ITEMS
 export type Item = {
-  id: string;
+  id?: string;
   name: string;
   description: string;
   archive: boolean;
@@ -86,7 +86,7 @@ export type Item = {
 }
 
 export type Variant = {
-  id: string;
+  id?: string;
   name: string;
   description: string;
   quantity: number;
@@ -100,12 +100,12 @@ export type Variant = {
 }
 
 export type Category = {
-  id: string;
+  id?: string;
   name: string;
   description: string;
 }
 export type Subcategory = {
-  id: string;
+  id?: string;
   name: string;
   description: string;
   category: string;
@@ -115,4 +115,9 @@ export type Response = {
   code: number;
   message?: string;
   data?: any;
+}
+
+export type MediaPost = {
+  item: string;
+  blob: string;
 }

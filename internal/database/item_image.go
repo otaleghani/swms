@@ -4,7 +4,7 @@ type Item_image struct {
   Id string `json:"id"`
   Uri string `json:"uri"`
   Item_id string `json:"item_id"`
-  Variant_id string `json:"variant_id"`
+  // Variant_id string `json:"variant_id"`
 }
 
 func (db *Database) SelectItemImages(condition string, args ...interface{}) ([]Item_image, error) {

@@ -1241,6 +1241,11 @@
           "min": "L'identificate deve essere di minimo {{min}} di caratteri.",
           "type": "L'identificate deve essere una stringa."
         }
+      },
+      "variants": {
+        "validation": {
+          "general": "Errore nell'analisi dei dati"
+        }
       }
     },
     "buttons": {

@@ -2,10 +2,36 @@
 
 import { cookies } from "next/headers";
 
-export default async function validateItem(
-  id: string,
-  dict: any,
-) {
+interface ValidateDatabaseParameters {
+  collection: "items" 
+    | "users" 
+    | "categories" 
+    | "subcategories" 
+    | "item-images" 
+    | "zones" 
+    | "aisles" 
+    | "racks" 
+    | "shelfs" 
+    | "variants" 
+    | "suppliers" 
+    | "supplier-codes" 
+    | "transitions" 
+    | "products" 
+    | "product-images" 
+    | "clients" 
+    | "ticket-states" 
+    | "ticket-types" 
+    | "tickets" 
+  id: string;
+  dict: any;
+}
+
+/** Validates if an item exists or not */
+export default async function validateDatabase({
+  collection,
+  id,
+  dict,
+}: ValidateDatabaseParameters) {
   const errors: string[] = [];
 
   if (typeof id === "string") {
@@ -19,14 +45,21 @@ export default async function validateItem(
   }
 
   const jwt = cookies().get("access")?.value
-  const request = await fetch(`http://localhost:8080/api/v1/items/${id}`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": `Bearer ${jwt}`
-    },
-    next: { tags: ["items"] },
-  });
+  if (!jwt) {
+    errors.push("anvedioh");
+    return errors
+  }
+
+  const request = await 
+    fetch(`http://localhost:8080/api/v1/${collection}/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${jwt}`
+      },
+      next: { tags: ["items"] },
+    }
+  );
   const response = await request.json();
 
   if (response.code === undefined) {

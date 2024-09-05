@@ -1,7 +1,8 @@
 "use server";
 
 import { cookies } from "next/headers";
-const sharp = require('sharp');
+//const sharp = require('sharp');
+import sharp from "sharp";
 
 export type FormFileUploadTestingState = {
   status: string;
@@ -29,7 +30,6 @@ export async function TestFileUploadAction(
       quality: 50,
     })
     .toBuffer();
-  console.log(newBuf)
 
   //const req_body = JSON.stringify({
   //  item_id: "nil",

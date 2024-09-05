@@ -60,7 +60,7 @@ export async function AddVariantFieldAction(
   const dictPromise = getDictionary(data.locale as Locale);
   const [ dict ] = await Promise.all([ dictPromise ]);
 
-/** Validation */
+  /** Validation */
   (state.errorMessages.name = validateString(
     data.name as string, dict.forms.fields.name.validation, 2, 20
   )).length != 0 ? (state.error = true) : (state.error = false);

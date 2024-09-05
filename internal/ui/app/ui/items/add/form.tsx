@@ -1,7 +1,11 @@
 "use client";
 
+/** React Hooks */
+import { useActionState, useEffect } from "react";
+import { AddItemFormState, AddItemFormAction } from "./action";
+
+/** Components */
 import UploadImageField from "../../general/form/files/item-image/field";
-import SubmitButton from "../../general/form/button/submit";
 import DescriptionInput from "../../general/form/input/description";
 import NameInput from "../../general/form/input/name";
 import WidthInput from "../../general/form/input/width";
@@ -18,6 +22,7 @@ import {
   Shelf
 } from "@/app/lib/types";
 import SelectPosition from "../../general/form/select/position/field";
+
 
 interface FormAddItemProps {
   locale: string;
@@ -79,9 +84,36 @@ export default function FormAddItem({
   shelfs, 
   variantsJSON,
 }: FormAddItemProps) {
-  return (
-    <form className="">
+  const initialState: AddItemFormState = {
+    error: false,
+    errorMessages: {
+      name: [],
+      description: [],
+      category: [],
+      subcategory: [],
+      zone: [],
+      aisle: [],
+      rack: [],
+      shelf: [],
+      quantity: [],
+      width: [],
+      height: [],
+      length: [],
+      weight: [],
+      images: [],
+      variants: [],
+    },
+    message: "",
+  };
 
+  const [state, action, isPending] = useActionState(AddItemFormAction, initialState);
+
+  useEffect(() => {
+    console.log(state);
+  }, [state])
+
+  return (
+    <form className="" id={formName} action={action}>
       <div className="pb-4">
         <h3 className="font-semibold pb-2">Informazioni di base</h3>
         <div className="xl:grid-cols-4 gap-2 p-5 bg-gray-50 rounded">
@@ -154,12 +186,13 @@ export default function FormAddItem({
       <div className="pt-4">
         <h3 className="font-semibold pb-2">Immagini</h3>
         <div className="bg-gray-50 p-5 rounded">
-        <UploadImageField 
-          dict_upload_image={dict_upload_image}
-        />
+          <UploadImageField 
+            dict_upload_image={dict_upload_image}
+          />
         </div>
       </div>
       <input type="hidden" name="variants" value={variantsJSON} />
+      <input type="hidden" name="locale" value={locale} />
     </form>
   )
 }

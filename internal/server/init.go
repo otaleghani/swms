@@ -72,8 +72,10 @@ func Serve(path, port string) {
 	mux.HandleFunc("DELETE /api/v1/subcategories/{id}", deleteSubcategory(&dbConn))
 	mux.HandleFunc("POST /api/v1/subcategories/{id}/replace-with/{rep}", deleteSubcategorySub(&dbConn))
 
+  // This was reworked, the others not.
+	mux.HandleFunc("POST /api/v1/item-images/{$}", postItemImage(&dbConn))
+
 	mux.HandleFunc("GET /api/v1/item-images/{$}", getItemImages(&dbConn))
-	mux.HandleFunc("POST /api/v1/item-images/{$}", postItemImages(&dbConn))
 	mux.HandleFunc("GET /api/v1/item-images/{id}", getItemImageById(&dbConn))
 	mux.HandleFunc("PUT /api/v1/item-images/{id}", putItemImage(&dbConn))
 	mux.HandleFunc("DELETE /api/v1/item-images/{id}", deleteItemImage(&dbConn))
@@ -195,7 +197,7 @@ func Serve(path, port string) {
 
 	mux.HandleFunc("POST /api/v1/login/{$}", login(&dbConn))
 	mux.HandleFunc("POST /api/v1/revoke/{$}", revokeHandler(&dbConn))
-	mux.HandleFunc("POST /api/v1/Tefresh/{$}", refreshHandler(&dbConn))
+  mux.HandleFunc("POST /api/v1/refresh/{$}", refreshHandler(&dbConn))
 
   mux.HandleFunc("GET /api/v1/settings/{$}", getSettings(&dbConn))
   mux.HandleFunc("PUT /api/v1/settings/{$}", putSettings(&dbConn))
@@ -204,7 +206,7 @@ func Serve(path, port string) {
   // fileserver := http.FileServer(http.Dir("./media"))
   // mux.Handle("GET /media/", http.StripPrefix("/media", fileserver))
   mux.HandleFunc("GET /media/", getMedia(&dbConn))
-  mux.HandleFunc("POST /media/{$}", postMedia(&dbConn))
+  // mux.HandleFunc("POST /media/{$}", postMedia(&dbConn))
 
 	corsMux := middlewareCors(mux)
 	srv := &http.Server{
