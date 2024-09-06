@@ -1233,7 +1233,7 @@
         }
       },
       "identifier": {
-        "label": "Identificatore variante",
+        "label": "Codice interno",
         "placeholder": "Inserisci id della variante",
         "validation": {
           "empty": "L'identificate non puo essere vuoto",
@@ -1245,6 +1245,16 @@
       "variants": {
         "validation": {
           "general": "Errore nell'analisi dei dati"
+        }
+      },
+      "database": {
+        "validation": {
+          "empty": "La richiesta era vuota.",
+          "autentication": "Non sei autorizzato ad eseguire questa azione.",
+          "client": "Errore nella formulazione della richiesta.",
+          "server": "Errore nella risposta alla richiesta.",
+          "not_found": "Non ho trovato la risorsa richiesta.",
+          "unknown": "Errore generico sconosciuto: contatta l'amministratore."
         }
       }
     },

@@ -1,10 +1,10 @@
 import { AlertCircle } from "lucide-react"
 
-interface FormSuccessProps {
+interface FormErrorProps {
   message: string,
 }
 
-export default function FormError(props: FormSuccessProps) {
+export default function FormError(props: FormErrorProps) {
   return (
     <>
       {props.message && (

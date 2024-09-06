@@ -1,5 +1,8 @@
 "use client";
 
+/** React hooks */
+import { useState, useEffect } from "react";
+
 import { Label } from "@/components/label";
 import { ComboboxSelect } from "@/app/ui/general/form/select/combobox";
 import { Supplier } from "@/app/lib/types";
@@ -16,8 +19,7 @@ export default function SelectSupplier({
   supplier,
   setSupplier,
   dict_supplier_select, 
-  }: SelectSupplierProps) {
-
+}: SelectSupplierProps) {
   return (
     <>
       <div className="w-full">

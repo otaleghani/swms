@@ -10,9 +10,16 @@ import DescriptionInput from "../../general/form/input/description";
 import NameInput from "../../general/form/input/name";
 import WidthInput from "../../general/form/input/width";
 import LengthInput from "../../general/form/input/length";
-import HeightInput from "../../general/form/input/heigth";
+import HeightInput from "../../general/form/input/height";
 import WeightInput from "../../general/form/input/weight";
+import IdentifierInput from "../../general/form/input/identifier";
+import QuantityInput from "../../general/form/input/quantity";
 import SelectTags from "../../general/form/select/tags/field";
+import SelectPosition from "../../general/form/select/position/field";
+import FormSuccess from "../../general/form/success";
+import FormError from "../../general/form/error_form";
+
+/** Types */
 import { 
   Category, 
   Subcategory,
@@ -21,8 +28,6 @@ import {
   Rack,
   Shelf
 } from "@/app/lib/types";
-import SelectPosition from "../../general/form/select/position/field";
-
 
 interface FormAddItemProps {
   locale: string;
@@ -95,6 +100,7 @@ export default function FormAddItem({
       aisle: [],
       rack: [],
       shelf: [],
+      identifier: [],
       quantity: [],
       width: [],
       height: [],
@@ -120,10 +126,12 @@ export default function FormAddItem({
           <NameInput 
             dict={dict_general_fields.fields.name}
             className="pb-2"
+            error_messages={state.errorMessages.name}
           />
           <DescriptionInput 
             dict={dict_general_fields.fields.description}
             className="pb-2"
+            error_messages={state.errorMessages.description}
           />
           <SelectTags 
             categories={categories}
@@ -133,28 +141,46 @@ export default function FormAddItem({
             dict_subcategory_select={dict_subcategory_select}
             dict_category_add_dialog={dict_category_add_dialog}
             dict_subcategory_add_dialog={dict_subcategory_add_dialog}
+            description_category={state.errorMessages.category}
+            description_subcategory={state.errorMessages.subcategory}
           />
         </div>
       </div>
 
       <div className="py-4">
-        <h3 className="font-semibold pb-2">Dimensione</h3>
+        <h3 className="font-semibold pb-2">Variante principale</h3>
+          <div className="grid xl:grid-cols-2 gap-2 p-5 bg-gray-50 rounded">
+            <IdentifierInput 
+              dict={dict_general_fields.fields.identifier}
+              className=""
+              error_messages={state.errorMessages.identifier}
+            />
+            <QuantityInput
+              dict={dict_general_fields.fields.quantity}
+              className=""
+              error_messages={state.errorMessages.quantity}
+            />
+          </div>
         <div className="grid xl:grid-cols-4 gap-2 p-5 bg-gray-50 rounded">
           <WidthInput 
             dict={dict_general_fields.fields.width}
             className=""
+            error_messages={state.errorMessages.width}
           />
           <LengthInput 
             dict={dict_general_fields.fields.length}
             className=""
+            error_messages={state.errorMessages.length}
           />
           <HeightInput 
             dict={dict_general_fields.fields.height}
             className=""
+            error_messages={state.errorMessages.height}
           />
           <WeightInput 
             dict={dict_general_fields.fields.weight}
             className=""
+            error_messages={state.errorMessages.weight}
           />
         </div>
       </div>
@@ -179,7 +205,13 @@ export default function FormAddItem({
             dict_zone_add_dialog={dict_zone_add_dialog}
             dict_aisle_add_dialog={dict_aisle_add_dialog}
             dict_rack_add_dialog={dict_rack_add_dialog}
-            dict_shelf_add_dialog={dict_shelf_add_dialog} />
+            dict_shelf_add_dialog={dict_shelf_add_dialog}
+
+            description_zone={state.errorMessages.zone}
+            description_aisle={state.errorMessages.aisle}
+            description_rack={state.errorMessages.rack}
+            description_shelf={state.errorMessages.shelf}
+          />
         </div>
       </div>
 
@@ -188,11 +220,20 @@ export default function FormAddItem({
         <div className="bg-gray-50 p-5 rounded">
           <UploadImageField 
             dict_upload_image={dict_upload_image}
+            description={state.errorMessages.images}
           />
         </div>
       </div>
       <input type="hidden" name="variants" value={variantsJSON} />
       <input type="hidden" name="locale" value={locale} />
+
+      {state.error ? (
+        <FormError 
+          message={state.message!} />
+      ) 
+      : (
+        <FormSuccess message={state.message!} />
+      )}
     </form>
   )
 }

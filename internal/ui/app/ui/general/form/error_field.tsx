@@ -5,7 +5,7 @@ interface FormErrorProps {
   id: string,
 }
 
-export default function FormError(props: FormErrorProps) {
+export default function FormFieldError(props: FormErrorProps) {
   return (
     <>
       {props.description.length != 0 && (

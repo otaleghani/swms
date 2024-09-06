@@ -2,7 +2,6 @@
 
 import * as React from "react"
 import { PlusIcon } from "lucide-react";
-
 import { Supplier, Item, Variant } from "@/app/lib/types";
 
 export interface AddNewSupplierCodeDialogProps {

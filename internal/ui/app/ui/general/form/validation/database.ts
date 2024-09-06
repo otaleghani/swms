@@ -1,6 +1,7 @@
 "use server";
 
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 interface ValidateDatabaseParameters {
   collection: "items" 
@@ -40,13 +41,14 @@ export default async function validateDatabase({
   }
 
   if (id === "" || id === undefined) {
-    errors.push(dict.error.request);
+    errors.push(dict.empty);
     return errors;
   }
 
   const jwt = cookies().get("access")?.value
   if (!jwt) {
-    errors.push("anvedioh");
+    errors.push(dict.authentication);
+    redirect("/login?error=true");
     return errors
   }
 
@@ -63,7 +65,7 @@ export default async function validateDatabase({
   const response = await request.json();
 
   if (response.code === undefined) {
-    errors.push(dict.error.request);
+    errors.push(dict.client);
     return errors;
   }
 
@@ -72,25 +74,25 @@ export default async function validateDatabase({
   }
 
   if (response.code === 401) {
-    errors.push(dict.error.auth);
+    errors.push(dict.auth);
     return errors;
   }
 
   if (response.code === 404) {
-    errors.push(dict.error.not_found);
+    errors.push(dict.not_found);
     return errors;
   }
 
   if (response.code === 400) {
-    errors.push(dict.error.request);
+    errors.push(dict.client);
     return errors;
   }
 
   if (response.code === 500) {
-    errors.push(dict.error.server);
+    errors.push(dict.server);
     return errors;
   }
 
-  errors.push(dict.error.unknown);
+  errors.push(dict.unknown);
   return errors;
 }

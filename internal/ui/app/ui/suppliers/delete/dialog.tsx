@@ -39,7 +39,8 @@ export function DeleteSupplierDialog({
   locale, 
   item, 
   suppliers, 
-  dict_supplier_select }: DeleteSupplierDialogProps) {
+  dict_supplier_select 
+}: DeleteSupplierDialogProps) {
 
   const [open, setOpen] = React.useState(false)
   const isDesktop = useMediaQuery("(min-width: 768px)")
@@ -98,4 +99,4 @@ export function DeleteSupplierDialog({
       </DrawerContent>
     </Drawer>
   )
-}
+

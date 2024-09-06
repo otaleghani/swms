@@ -89,6 +89,7 @@ export default function AddItemPageComponent({
 
 }: AddItemPageLayoutProps) {
   const [ variantsJSON, setVariantsJSON ] = useState("[{}]");
+  const [ supplierCodesJSON, setSupplierCodesJSON ] = useState("[{}]")
 
   return (
     <>
@@ -137,6 +138,8 @@ export default function AddItemPageComponent({
             dict_variant_edit_dialog={dict_variant_edit_dialog}
             setVariantsJSON={setVariantsJSON}
             variantsJSON={variantsJSON}
+            supplierCodesJSON={supplierCodesJSON}
+            setSupplierCodesJSON={setSupplierCodesJSON}
           />
         </ScrollArea>
       </div>

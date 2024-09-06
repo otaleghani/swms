@@ -4,7 +4,7 @@ interface FormSuccessProps {
   message: string,
 }
 
-export default function FormSuccessMessage(props: FormSuccessProps) {
+export default function FormSuccess(props: FormSuccessProps) {
   return (
     <>
       {props.message && (

@@ -1,14 +1,17 @@
 import { Label } from "@/components/label";
 import { Input } from "@/components/input";
+import FormFieldError from "@/app/ui/general/form/error_field";
 
 interface WidthInputProps {
   dict: any;
   className: string;
+  error_messages: string[];
 }
 
 export default function WidthInput({
   dict,
-  className
+  className,
+  error_messages
 }: WidthInputProps ) {
   return (
     <div className={className}>
@@ -18,6 +21,10 @@ export default function WidthInput({
         name="width"
         id="width"
         placeholder={dict.placeholder}
+      />
+      <FormFieldError 
+        id="width-error" 
+        description={error_messages} 
       />
     </div>
   )

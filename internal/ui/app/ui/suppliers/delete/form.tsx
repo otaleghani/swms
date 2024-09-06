@@ -6,7 +6,7 @@ import { DeleteSupplierState, DeleteSupplierAction } from "./action";
 import FormFieldError from "@/app/ui/general/form/error_field";
 import FormError from "@/app/ui/general/form/error_form";
 import FormSuccess from "@/app/ui/general/form/success";
-import SelectSupplier from "../../general/form/select/supplier/field";
+import SelectSupplier from "../../general/form/select/fields/supplier/field";
 import { Input } from "@/components/input";
 import { Button } from "@/components/button";
 
@@ -31,7 +31,7 @@ export default function DeleteSupplierForm({
     message: "",
   }
   const [state, action] = useActionState(DeleteSupplierAction, initialState);
-  const [supplier, setSupplier] = useState({id: "", name: "", description: ""});
+  const [supplier, setSupplier] = useState({id: "", name: "", description: ""} as Supplier);
 
   return (
     <>

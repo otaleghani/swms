@@ -1,14 +1,17 @@
 import { Label } from "@/components/label";
 import { Input } from "@/components/input";
+import FormFieldError from "@/app/ui/general/form/error_field";
 
 interface IdentifierInputProps {
   dict: any;
   className: string;
+  error_messages: string[];
 }
 
 export default function IdentifierInput({
   dict,
-  className
+  className,
+  error_messages
 }: IdentifierInputProps ) {
   return (
     <div className={className}>
@@ -18,6 +21,10 @@ export default function IdentifierInput({
         name="identifier"
         id="identifier"
         placeholder={dict.placeholder}
+      />
+      <FormFieldError 
+        id="identifier-error" 
+        description={error_messages} 
       />
     </div>
   )

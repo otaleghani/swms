@@ -13,6 +13,7 @@
 import { useState, useRef, useEffect } from "react"
 import { Upload, XIcon } from "lucide-react";
 import { clientSideImageCompression } from "./optimization";
+import FormFieldError from "../../error_field";
 
 interface Image {
   file: File;
@@ -22,20 +23,22 @@ interface Image {
 
 interface UploadImageFieldProps {
   dict_upload_image: any;
+  description: string[];
 }
 
 export default function UploadImageField({ 
-  dict_upload_image 
-  }: UploadImageFieldProps) {
+  dict_upload_image,
+  description
+}: UploadImageFieldProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [images, setImages] = useState<Image[]>([]);
   const [files, setFiles] = useState<File[]>([]);
   const allFilesRef = useRef<File[]>([]);
 
   useEffect(() => {
-    console.log('Updated images:', images);
-    console.log('Updated files:', files);
-    console.log('The input', fileInputRef.current?.files);
+    // console.log('Updated images:', images);
+    // console.log('Updated files:', files);
+    // console.log('The input', fileInputRef.current?.files);
   }, [images, files]);
 
   /**
@@ -147,6 +150,10 @@ export default function UploadImageField({
           </div>
         ))}
       </div>
+      <FormFieldError
+        id="imaages-error"
+        description={description}
+      />
     </div>
   )
 }

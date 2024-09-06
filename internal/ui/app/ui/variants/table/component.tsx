@@ -32,8 +32,6 @@ export default function VariantsTable({
   dict_variant_delete_dialog,
   dict_variant_edit_dialog,
 }: VariantsTableProps) {
-  console.log(variants)
-
   return (
     <Table className="border">
       <TableHeader>
@@ -46,7 +44,7 @@ export default function VariantsTable({
         </TableRow>
       </TableHeader>
       <TableBody>
-        {variants.length === 0 ? (
+        {variants.length === 0 || variants[0] === undefined ? (
           <TableRow className="!bg-white">
             <TableCell>Nessuna variante</TableCell>
             <TableCell></TableCell>
@@ -55,7 +53,7 @@ export default function VariantsTable({
             <TableCell></TableCell>
           </TableRow>) : (
           variants.map((variant: Variant) => (
-            <TableRow className="!bg-white">
+            <TableRow className="!bg-white" key={variant.identifier + variant.name}>
               <TableCell className="font-medium">{variant.name}</TableCell>
               <TableCell>{variant.identifier}</TableCell>
               <TableCell>{variant.quantity}</TableCell>

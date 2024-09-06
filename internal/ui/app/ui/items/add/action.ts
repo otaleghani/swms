@@ -31,6 +31,7 @@ export type AddItemFormState = {
 
     // Default variant
     // No name, description and id because they will all be "default"
+    identifier: string[];
     quantity: string[];
     width: string[];
     height: string[];
@@ -60,6 +61,7 @@ export async function AddItemFormAction(
       aisle: [],
       rack: [],
       shelf: [],
+      identifier: [],
       quantity: [],
       width: [],
       height: [],
@@ -88,6 +90,7 @@ export async function AddItemFormAction(
     name: "default",
     description: "default",
     defaultVariant: true,
+    identifier: formData.get("identifier") as string,
     quantity: formData.get("quantity") as string,
     width: formData.get("width") as string,
     height: formData.get("height") as string,
@@ -105,74 +108,74 @@ export async function AddItemFormAction(
   (state.errorMessages.name = validateString(
     itemData.name, 
     dict.forms.fields.name.validation, 2, 20
-  )).length != 0 ? (state.error = true) : (state.error = false);
+  )).length != 0 && (state.error = true);
 
   (state.errorMessages.description = validateString(
     itemData.description, 
     dict.forms.fields.description.validation, 2, 20
-  )).length != 0 ? (state.error = true) : (state.error = false);
+  )).length != 0 && (state.error = true);
 
   // Database validation
-  if (itemData.category != "") {
+  if (itemData.category != "" && itemData.category !== null) {
     const errors = await validateDatabase({
       collection: "categories",
       id: itemData.category,
-      dict: dict.forms.fields.categories.validation,
+      dict: dict.forms.fields.database.validation,
     });
     if (errors.length != 0) {
       state.error = true;
       state.errorMessages.category = errors;
     }
   }
-  if (itemData.subcategory != "") {
+  if (itemData.subcategory != "" && itemData.subcategory !== null) {
     const errors = await validateDatabase({
       collection: "subcategories",
       id: itemData.subcategory,
-      dict: dict.forms.fields.subcategories.validation,
+      dict: dict.forms.fields.database.validation,
     });
     if (errors.length != 0) {
       state.error = true;
       state.errorMessages.subcategory = errors;
     }
   }
-  if (itemData.zone != "") {
+  if (itemData.zone != "" && itemData.zone !== null) {
     const errors = await validateDatabase({
       collection: "zones",
       id: itemData.zone,
-      dict: dict.forms.fields.zones.validation,
+      dict: dict.forms.fields.database.validation,
     });
     if (errors.length != 0) {
       state.error = true;
       state.errorMessages.zone = errors;
     }
   }
-  if (itemData.aisle != "") {
+  if (itemData.aisle != "" && itemData.aisle !== null) {
     const errors = await validateDatabase({
       collection: "aisles",
       id: itemData.aisle,
-      dict: dict.forms.fields.aisle.validation,
+      dict: dict.forms.fields.database.validation,
     });
     if (errors.length != 0) {
       state.error = true;
       state.errorMessages.aisle = errors;
     }
   }
-  if (itemData.rack != "") {
+  if (itemData.rack != "" && itemData.rack !== null) {
     const errors = await validateDatabase({
       collection: "racks",
       id: itemData.rack,
-      dict: dict.forms.fields.rack.validation,
+      dict: dict.forms.fields.database.validation,
     });
     if (errors.length != 0) {
       state.error = true;
       state.errorMessages.rack = errors;
     }
   }
-  if (itemData.shelf != "") {
+  if (itemData.shelf != "" && itemData.shelf !== null) {
     const errors = await validateDatabase({
       collection: "shelfs",
       id: itemData.shelf,
-      dict: dict.forms.fields.shelf.validation,
+      dict: dict.forms.fields.database.validation,
     });
     if (errors.length != 0) {
       state.error = true;
@@ -181,87 +184,94 @@ export async function AddItemFormAction(
   }
 
   /** Default variant validation */
+  (state.errorMessages.identifier = validateString(
+    dVariantData.identifier, 
+    dict.forms.fields.description.validation, 2, 20
+  )).length != 0 && (state.error = true);
+
   (state.errorMessages.quantity = validateNumbers(
     dVariantData.quantity, 
     dict.forms.fields.quantity.validation, -1, 9999999
-  )).length != 0 ? (state.error = true) : (state.error = false);
+  )).length != 0 && (state.error = true);
 
   (state.errorMessages.width = validateNumbers(
     dVariantData.width, 
     dict.forms.fields.width.validation, -1, 9999999
-  )).length != 0 ? (state.error = true) : (state.error = false);
+  )).length != 0 && (state.error = true);
 
   (state.errorMessages.height = validateNumbers(
     dVariantData.height, 
     dict.forms.fields.height.validation, -1, 9999999
-  )).length != 0 ? (state.error = true) : (state.error = false);
+  )).length != 0 && (state.error = true);
 
   (state.errorMessages.length = validateNumbers(
     dVariantData.length, 
     dict.forms.fields.length.validation, -1, 9999999
-  )).length != 0 ? (state.error = true) : (state.error = false);
+  )).length != 0 && (state.error = true);
 
   (state.errorMessages.weight = validateNumbers(
     dVariantData.weight, 
     dict.forms.fields.weight.validation, -1, 9999999
-  )).length != 0 ? (state.error = true) : (state.error = false);
+  )).length != 0 && (state.error = true);
 
-  /** Variant validation */
+  /** Variants validation */
   let encodedVariants: Variant[] = [];
-  try {
-    const variants: Variant[] = JSON.parse(variantsData);
+  if (variantsData !== "[{}]") {
+    try {
+      const variants: Variant[] = JSON.parse(variantsData);
 
-    for (let i = 0; i < variants.length; i++) {
-      (state.errorMessages.variants = validateString(
-        variants[i].name,
-        dict.forms.fields.name.validation, 2, 20
-      )).length != 0 ? (state.error = true) : (state.error = false);
+      for (let i = 0; i < variants.length; i++) {
+        (state.errorMessages.variants = validateString(
+          variants[i].name,
+          dict.forms.fields.name.validation, 2, 20
+        )).length != 0 && (state.error = true);
 
-      (state.errorMessages.variants = validateString(
-        variants[i].identifier,
-        dict.forms.fields.identifier.validation, 2, 20
-      )).length != 0 ? (state.error = true) : (state.error = false);
+        (state.errorMessages.variants = validateString(
+          variants[i].identifier,
+          dict.forms.fields.identifier.validation, 2, 20
+        )).length != 0 && (state.error = true);
 
-      (state.errorMessages.variants = validateString(
-        variants[i].description,
-        dict.forms.fields.description.validation, 2, 20
-      )).length != 0 ? (state.error = true) : (state.error = false);
+        (state.errorMessages.variants = validateString(
+          variants[i].description,
+          dict.forms.fields.description.validation, 2, 20
+        )).length != 0 && (state.error = true);
 
-      (state.errorMessages.variants = validateNumbers(
-        String(variants[i].quantity),
-        dict.forms.fields.quantity.validation, -1, 9999999
-      )).length != 0 ? (state.error = true) : (state.error = false);
+        (state.errorMessages.variants = validateNumbers(
+          String(variants[i].quantity),
+          dict.forms.fields.quantity.validation, -1, 9999999
+        )).length != 0 && (state.error = true);
 
-      (state.errorMessages.variants = validateNumbers(
-        String(variants[i].width),
-        dict.forms.fields.width.validation, -1, 9999999
-      )).length != 0 ? (state.error = true) : (state.error = false);
+        (state.errorMessages.variants = validateNumbers(
+          String(variants[i].width),
+          dict.forms.fields.width.validation, -1, 9999999
+        )).length != 0 && (state.error = true);
 
-      (state.errorMessages.variants = validateNumbers(
-        String(variants[i].heigth),
-        dict.forms.fields.height.validation, -1, 9999999
-      )).length != 0 ? (state.error = true) : (state.error = false);
+        (state.errorMessages.variants = validateNumbers(
+          String(variants[i].heigth),
+          dict.forms.fields.height.validation, -1, 9999999
+        )).length != 0 && (state.error = true);
 
-      (state.errorMessages.variants = validateNumbers(
-        String(variants[i].length),
-        dict.forms.fields.length.validation, -1, 9999999
-      )).length != 0 ? (state.error = true) : (state.error = false);
+        (state.errorMessages.variants = validateNumbers(
+          String(variants[i].length),
+          dict.forms.fields.length.validation, -1, 9999999
+        )).length != 0 && (state.error = true);
 
-      (state.errorMessages.variants = validateNumbers(
-        String(variants[i].weight),
-        dict.forms.fields.weight.validation, -1, 9999999
-      )).length != 0 ? (state.error = true) : (state.error = false);
+        (state.errorMessages.variants = validateNumbers(
+          String(variants[i].weight),
+          dict.forms.fields.weight.validation, -1, 9999999
+        )).length != 0 && (state.error = true);
+      }
+      encodedVariants = variants;
+    } catch(err) {
+      state.error = true;
+      state.errorMessages.variants.push(dict.fields.variants.validation.general);
     }
-    encodedVariants = variants;
-  } catch(err) {
-    state.error = true;
-    state.errorMessages.variants.push(dict.fields.variants.validation.general);
   }
   
 
   /** Images validation */
   let encodedImages: string[] = [];
-  if (images.length != 0) {
+  if (images.length !== 0 && images[0].size !== 0) {
     const imagesResult = await validateImages(images);
 
     if (imagesResult.errors.length != 0) {
@@ -299,9 +309,34 @@ export async function AddItemFormAction(
     return state;
   }
   
+  /** Post default variant */
+  const variant: Variant = {
+    name: dVariantData.name,
+    description: dVariantData.description,
+    defaultVariant: dVariantData.defaultVariant,
+    identifier: dVariantData.identifier,
+    quantity: Number(dVariantData.quantity),
+    width: Number(dVariantData.width),
+    heigth: Number(dVariantData.height),
+    length: Number(dVariantData.length),
+    weight: Number(dVariantData.weight),
+    item: resultAddItem.data.UUID,
+  }
+  const resultAddDefaultVariant = await postVariant(variant);
+  const validationVariant = validateResponse({
+    dict: dict.forms.messages,
+    response: resultAddDefaultVariant,
+  });
+  if (!validationVariant.error) {
+    state.error = true;
+    state.message = validation.message;
+
+    // here I should delete early created item
+  }
+  
   /** Post variants */
   for (let i = 0; i < encodedVariants.length; i++) {
-    encodedVariants[i].item = resultAddItem.UUID;
+    encodedVariants[i].item = resultAddItem.data.UUID;
     const resultAddVariant = await postVariant(encodedVariants[i]);
     const validation = validateResponse({
       dict: dict.forms.messages,
@@ -311,14 +346,14 @@ export async function AddItemFormAction(
       state.error = true;
       state.message = validation.message;
       
-      // here I should delete the early created item
+      // here I should delete the early created item and default variant
     }
   }
 
   /** Post images */
   for (let i = 0; i < encodedImages.length; i++) {
     const mediaPost: MediaPost = {
-      item: resultAddItem.UUID,
+      item: resultAddItem.data.UUID,
       blob: encodedImages[i]
     }
     const resultAddImage = await postImages(mediaPost);

@@ -2,10 +2,11 @@
 
 import { useState, useEffect } from "react";
 import { Category, Subcategory } from "@/app/lib/types";
-import SelectCategory from "../category/field";
-import SelectSubcategory from "../subcategory/field";
+import SelectCategory from "../fields/category/field";
+import SelectSubcategory from "../fields/subcategory/field";
 import DialogAddSubcategory from "../../add/subcategory/dialog";
 import DialogAddCategory from "../../add/category/dialog";
+import FormFieldError from "../../error_field";
 
 interface SelectCategoryProps {
   locale: string;
@@ -17,6 +18,9 @@ interface SelectCategoryProps {
 
   dict_category_add_dialog: any;
   dict_subcategory_add_dialog: any;
+
+  description_category: string[];
+  description_subcategory: string[];
 }
 
 export default function SelectTags({ 
@@ -27,13 +31,15 @@ export default function SelectTags({
   dict_subcategory_select,
   dict_category_add_dialog,
   dict_subcategory_add_dialog,
+  description_category,
+  description_subcategory,
 }: SelectCategoryProps) {
 
   const [category, setCategory] = useState({
     id: "", 
     name: "", 
     description: "",
-  })
+  } as Category)
   const [categoryList, setCategoryList] = useState(categories)
   
   const [subcategory, setSubcategory] = useState({
@@ -41,7 +47,7 @@ export default function SelectTags({
     name: "", 
     description: "",
     category: "",
-  })
+  } as Subcategory)
   const [subcategoryList, setSubcategoryList] = useState(subcategories)
   const [subcategoryFilteredList, setSubcategoryFilteredList] 
     = useState(subcategories)
@@ -91,12 +97,18 @@ export default function SelectTags({
             category={category}
             categories={categories}
             setCategory={setCategory}
-            dict_category_select={dict_category_select} />
+            dict_category_select={dict_category_select} 
+          />
           <DialogAddCategory 
             handleAddCategory={handleNewCategory} 
             locale={locale} 
-            dict_add_dialog={dict_category_add_dialog} />
+            dict_add_dialog={dict_category_add_dialog} 
+          />
         </div>
+        <FormFieldError
+          id="category-errors"
+          description={description_category}
+        />
       </div>
       { category.id !== "" && (
         <div className="w-full mb-2">
@@ -112,6 +124,10 @@ export default function SelectTags({
               category={category}
               dict_add_dialog={dict_subcategory_add_dialog} />
           </div>
+          <FormFieldError
+            id="category-errors"
+            description={description_category}
+          />
         </div>
       )}
     </>
