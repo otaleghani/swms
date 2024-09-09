@@ -91,7 +91,7 @@ export default function AddVariantsField({
         <h3 className="font-semibold pb-2"> 
           {dict_variant_add_form.table.title} 
         </h3>
-        <div className="">
+        <div className="mb-4">
           <VariantsTable 
             variants={variants}
             dict={dict_variant_add_form.table}
@@ -99,83 +99,86 @@ export default function AddVariantsField({
             dict_variant_edit_dialog={dict_variant_edit_dialog}
           />
         </div>
+
+        <Sheet>
+          <SheetTrigger className="w-full">
+            <Button className="" variant="ghost" asChild>
+              <div className="w-full flex align-start">
+                <CirclePlusIcon className="h-[1.2rem] w-[1.2rem] mr-2"/>
+                <span>{dict_variant_add_form.header.title}</span>
+              </div>
+            </Button>
+          </SheetTrigger>
+          <SheetContent className="bg-gray-100 w-[100%] p-0">
+            <SheetHeader className="p-4">
+              <SheetTitle className="text-left">
+                {dict_variant_add_form.header.title}
+              </SheetTitle>
+            </SheetHeader>
+            <ScrollArea
+              className="h-[calc(100dvh_-_57px)] overflow-auto p-4"
+              type="always"
+            >
+              <div className="grid gap-2 p-5 bg-white rounded my-2">
+                <NameInput 
+                  dict={dict_general_fields.fields.name}
+                  className=""
+                  error_messages={state.errorMessages.name}
+                />
+                <DescriptionInput 
+                  dict={dict_general_fields.fields.description}
+                  className=""
+                  error_messages={state.errorMessages.description}
+                />
+              </div>
+              <div className="grid xl:grid-cols-1 gap-2 p-5 bg-white rounded my-2">
+                <IdentifierInput 
+                  dict={dict_general_fields.fields.identifier}
+                  className=""
+                  error_messages={state.errorMessages.identifier}
+                />
+                <QuantityInput
+                  dict={dict_general_fields.fields.quantity}
+                  className=""
+                  error_messages={state.errorMessages.quantity}
+                />
+              </div>
+
+              <div className="grid xl:grid-cols-1 gap-2 p-5 bg-white rounded my-2">
+                <WidthInput 
+                  dict={dict_general_fields.fields.width}
+                  className=""
+                  error_messages={state.errorMessages.width}
+                />
+                <LengthInput 
+                  dict={dict_general_fields.fields.length}
+                  className=""
+                  error_messages={state.errorMessages.length}
+                />
+                <HeightInput 
+                  dict={dict_general_fields.fields.height}
+                  className=""
+                  error_messages={state.errorMessages.height}
+                />
+                <WeightInput 
+                  dict={dict_general_fields.fields.weight}
+                  className=""
+                  error_messages={state.errorMessages.weight}
+                />
+              </div>
+
+              <div className="grid gap-2 p-5 bg-white rounded">
+                <SubmitButton 
+                  dict={dict_general_fields.buttons.add}
+                  isPending={isPending}
+                  className="pt-4"
+                  form={formName}
+                />
+              </div>
+            </ScrollArea>
+          </SheetContent>
+        </Sheet>
       </div>
-
-      <Sheet>
-        <SheetTrigger>
-          <Button variant="outline" asChild>
-            <span><CirclePlusIcon className="h-[1.2rem] w-[1.2rem] mr-2"/>Apri</span>
-          </Button>
-        </SheetTrigger>
-        <SheetContent className="bg-gray-100 w-[100%] p-0">
-          <SheetHeader className="p-4">
-            <SheetTitle className="text-left">
-              {dict_variant_add_form.header.title}
-            </SheetTitle>
-          </SheetHeader>
-          <ScrollArea
-            className="h-[calc(100dvh_-_57px)] overflow-auto p-4"
-            type="always"
-          >
-            <div className="grid gap-2 p-5 bg-white rounded my-2">
-              <NameInput 
-                dict={dict_general_fields.fields.name}
-                className=""
-                error_messages={state.errorMessages.name}
-              />
-              <DescriptionInput 
-                dict={dict_general_fields.fields.description}
-                className=""
-                error_messages={state.errorMessages.description}
-              />
-            </div>
-            <div className="grid xl:grid-cols-2 gap-2 p-5 bg-white rounded my-2">
-              <IdentifierInput 
-                dict={dict_general_fields.fields.identifier}
-                className=""
-                error_messages={state.errorMessages.identifier}
-              />
-              <QuantityInput
-                dict={dict_general_fields.fields.quantity}
-                className=""
-                error_messages={state.errorMessages.quantity}
-              />
-            </div>
-
-            <div className="grid xl:grid-cols-4 gap-2 p-5 bg-white rounded my-2">
-              <WidthInput 
-                dict={dict_general_fields.fields.width}
-                className=""
-                error_messages={state.errorMessages.width}
-              />
-              <LengthInput 
-                dict={dict_general_fields.fields.length}
-                className=""
-                error_messages={state.errorMessages.length}
-              />
-              <HeightInput 
-                dict={dict_general_fields.fields.height}
-                className=""
-                error_messages={state.errorMessages.height}
-              />
-              <WeightInput 
-                dict={dict_general_fields.fields.weight}
-                className=""
-                error_messages={state.errorMessages.weight}
-              />
-            </div>
-
-            <div className="grid gap-2 p-5 bg-white rounded">
-              <SubmitButton 
-                dict={dict_general_fields.buttons.add}
-                isPending={isPending}
-                className="pt-4"
-                form={formName}
-              />
-            </div>
-          </ScrollArea>
-        </SheetContent>
-      </Sheet>
 
 
       <input type="hidden" name="locale" value={locale} />
