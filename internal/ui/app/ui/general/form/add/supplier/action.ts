@@ -52,13 +52,13 @@ export async function AddSupplierAction(
       name: data.name,
       description: data.description,
     }
-    const response = await postSupplier(data)
+    const response = await postSupplier(supplier)
     const validation = validateResponse({
       dict: dict.forms.messages,
       response: response,
     });
 
-    if (!validation.error) {
+    if (validation.error) {
       state.error = true;
       state.message = validation.message;
       return state;

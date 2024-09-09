@@ -29,7 +29,7 @@ export default function SelectSupplier({
           id="supplier" 
           name="supplier" 
           value={supplier.id} />
-        <Label>{dict_supplier_select.name}</Label>
+        <Label>{dict_supplier_select.label}</Label>
         <ComboboxSelect 
           list={suppliers}
           element={supplier} 

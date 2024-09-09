@@ -2,12 +2,14 @@
 
 /** Types */
 import { 
-    Aisle,
+  Aisle,
   Category,
   Rack,
   Shelf,
   Subcategory, 
-  Zone} from "@/app/lib/types";
+  Zone,
+  Supplier
+} from "@/app/lib/types";
 
 /** Components*/
 import FormAddItem from "@/app/ui/items/add/form";
@@ -17,6 +19,7 @@ import AddVariantsField from "@/app/ui/variants/add/field_form_items";
 
 /** Hooks */
 import { useState } from "react";
+import AddVariantComponent from "../../suppliers-codes/add_new_variant_form/component";
 
 interface AddItemPageLayoutProps {
   formName: string;
@@ -33,6 +36,7 @@ interface AddItemPageLayoutProps {
   dict_aisle_add_dialog: any;
   dict_rack_add_dialog: any;
   dict_shelf_add_dialog: any;
+  dict_supplier_add_dialog: any;
 
   dict_variant_delete_dialog: any;
   dict_variant_edit_dialog: any;
@@ -51,6 +55,7 @@ interface AddItemPageLayoutProps {
   aisles: Aisle[];
   racks: Rack[];
   shelfs: Shelf[];
+  suppliers: Supplier[];
 }
 
 export default function AddItemPageComponent({
@@ -68,6 +73,7 @@ export default function AddItemPageComponent({
   dict_aisle_add_dialog,
   dict_rack_add_dialog,
   dict_shelf_add_dialog,
+  dict_supplier_add_dialog,
 
   dict_variant_delete_dialog,
   dict_variant_edit_dialog,
@@ -86,10 +92,9 @@ export default function AddItemPageComponent({
   aisles,
   racks,
   shelfs,
-
+  suppliers,
 }: AddItemPageLayoutProps) {
   const [ variantsJSON, setVariantsJSON ] = useState("[{}]");
-  const [ supplierCodesJSON, setSupplierCodesJSON ] = useState("[{}]")
 
   return (
     <>
@@ -97,8 +102,8 @@ export default function AddItemPageComponent({
         dict_header={dict_header}
         dict_general_fields={dict_general_fields}
         formName={formName} />
-      <div className="grid xl:grid-cols-2">
-        <ScrollArea className="h-[calc(100vh_-_57px)] p-4" type="always">
+      <div className="grid bg-gray-100 w-full">
+        <div className="w-dvw xl:max-w-prose p-4 m-auto">
           <FormAddItem 
             locale={locale}
             formName={formName}
@@ -128,20 +133,19 @@ export default function AddItemPageComponent({
             shelfs={shelfs}
             variantsJSON={variantsJSON}
           />
-        </ScrollArea>
-        <ScrollArea className="h-[calc(100vh_-_57px)] p-4" type="always">
-          <AddVariantsField
-            dict_variant_add_form={dict_variant_add_form}
+          <AddVariantComponent 
             locale={locale}
+
             dict_general_fields={dict_general_fields}
+            dict_variant_add_form={dict_variant_add_form}
             dict_variant_delete_dialog={dict_variant_delete_dialog}
             dict_variant_edit_dialog={dict_variant_edit_dialog}
+            dict_supplier_add_dialog={dict_supplier_add_dialog}
+
+            suppliers={suppliers}
             setVariantsJSON={setVariantsJSON}
-            variantsJSON={variantsJSON}
-            supplierCodesJSON={supplierCodesJSON}
-            setSupplierCodesJSON={setSupplierCodesJSON}
           />
-        </ScrollArea>
+        </div>
       </div>
     </>
   )

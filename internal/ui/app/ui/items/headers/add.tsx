@@ -12,13 +12,13 @@ export default function ItemHeaderAdd({
   formName,
 }: ItemHeaderAddProps) {
   return (
-    <header className="border-b p-4 h-[57px] flex items-center justify-between bg-background z-10">
+    <header className="sticky top-0 bg-gray-50 border-b p-4 h-[57px] flex items-center justify-between bg-background z-10">
       <h1 className="font-semibold text-xl leading-none tracking-tight">{dict_header.title}</h1>
     
       <SubmitButton 
         isPending={false}
         dict={dict_general_fields.buttons.submit}
-        className="pt-2"
+        className=""
         form={formName}
       />
     </header>

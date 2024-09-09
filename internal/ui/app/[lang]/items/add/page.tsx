@@ -6,6 +6,7 @@ import { getZones } from "@/app/lib/requests/zones/get";
 import { getAisles } from "@/app/lib/requests/aisles/get";
 import { getRacks } from "@/app/lib/requests/racks/get";
 import { getShelfs } from "@/app/lib/requests/shelfs/get";
+import { getSuppliers } from "@/app/lib/requests/suppliers/get";
 
 /** Components */
 import AddItemPageComponent from "@/app/ui/items/add/component";
@@ -29,6 +30,7 @@ export default async function AddItemPage({
   const pAisles = getAisles();
   const pRacks = getRacks();
   const pShelfs = getShelfs();
+  const pSuppliers = getSuppliers();
 
   const [
     categories, 
@@ -37,6 +39,7 @@ export default async function AddItemPage({
     aisles,
     racks,
     shelfs,
+    suppliers,
   ] = await Promise.all([
     pCategories, 
     pSubcategories,
@@ -44,6 +47,7 @@ export default async function AddItemPage({
     pAisles,
     pRacks,
     pShelfs,
+    pSuppliers,
   ]);
 
   return (
@@ -65,6 +69,7 @@ export default async function AddItemPage({
       dict_aisle_add_dialog={dict.aisles.add_dialog}
       dict_rack_add_dialog={dict.racks.add_dialog}
       dict_shelf_add_dialog={dict.shelfs.add_dialog}
+      dict_supplier_add_dialog={dict.suppliers.add_dialog}
 
       dict_variant_delete_dialog={dict.variants.delete_dialog}
       dict_variant_edit_dialog={dict.variants.edit_dialog}
@@ -83,6 +88,7 @@ export default async function AddItemPage({
       aisles={aisles}
       racks={racks}
       shelfs={shelfs}
+      suppliers={suppliers}
     />
   )
 }

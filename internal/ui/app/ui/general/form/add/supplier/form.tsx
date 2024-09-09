@@ -26,11 +26,12 @@ export default function AddSupplierForm({
       description: [],
     }
   }
+
   const [state, action, isPending] 
   = useActionState(AddSupplierAction, initialState);
 
   useEffect(() => {
-    if (!state.error && state.message) {
+    if (state.result != undefined) {
       setOpen(false)
       handleAddSupplier(state.result as Supplier)
     }

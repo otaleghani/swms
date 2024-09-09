@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { GeistSans } from 'geist/font/sans';
 import "@/app/globals.css";
 import { getDictionary, Locale } from "@/lib/dictionaries";
@@ -9,6 +9,14 @@ export const metadata: Metadata = {
   title: "swms",
   description: "anvedi oh",
 };
+// <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+export const viewport: Viewport = {
+  initialScale: 1.0,
+  maximumScale: 1.0,
+  width: "device-width",
+  viewportFit: "cover",
+}
 
 interface LayoutProps {
   params: {

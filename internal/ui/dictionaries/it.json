@@ -1256,6 +1256,26 @@
           "not_found": "Non ho trovato la risorsa richiesta.",
           "unknown": "Errore generico sconosciuto: contatta l'amministratore."
         }
+      },
+      "suppliers": {
+        "select": {
+          "label": "Fornitore",
+          "combobox": {
+            "select": "Seleziona un fornitore...",
+            "search": "Cerca un fornitore...",
+            "empty": "Nessun fornitore"
+          }
+        }
+      },
+      "codes": {
+        "label": "Codice fornitore",
+        "placeholder": "Inserisci codice del fornitore",
+        "validation": {
+          "empty": "Il codice fornitore non puo essere vuoto",
+          "max": "Il codice fornitore deve essere al massimo di {{max}} di caratter.",
+          "min": "Il codice fornitore deve essere di minimo {{min}} di caratteri.",
+          "type": "Il codice fornitore deve essere una stringa."
+        }
       }
     },
     "buttons": {

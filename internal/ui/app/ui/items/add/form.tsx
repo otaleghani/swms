@@ -120,9 +120,9 @@ export default function FormAddItem({
 
   return (
     <form className="" id={formName} action={action}>
-      <div className="pb-4">
+      <div className="mb-4 bg-white rounded p-5">
         <h3 className="font-semibold pb-2">Informazioni di base</h3>
-        <div className="xl:grid-cols-4 gap-2 p-5 bg-gray-50 rounded">
+        <div className="xl:grid-cols-4 gap-2">
           <NameInput 
             dict={dict_general_fields.fields.name}
             className="pb-2"
@@ -147,21 +147,22 @@ export default function FormAddItem({
         </div>
       </div>
 
-      <div className="py-4">
+      <div className="my-4 p-5 bg-white rounded">
         <h3 className="font-semibold pb-2">Variante principale</h3>
-          <div className="grid xl:grid-cols-2 gap-2 p-5 bg-gray-50 rounded">
-            <IdentifierInput 
-              dict={dict_general_fields.fields.identifier}
-              className=""
-              error_messages={state.errorMessages.identifier}
-            />
-            <QuantityInput
-              dict={dict_general_fields.fields.quantity}
-              className=""
-              error_messages={state.errorMessages.quantity}
-            />
-          </div>
-        <div className="grid xl:grid-cols-4 gap-2 p-5 bg-gray-50 rounded">
+        <div className="grid xl:grid-cols-2 gap-2">
+          <IdentifierInput 
+            dict={dict_general_fields.fields.identifier}
+            className=""
+            error_messages={state.errorMessages.identifier}
+          />
+          <QuantityInput
+            dict={dict_general_fields.fields.quantity}
+            className=""
+            error_messages={state.errorMessages.quantity}
+          />
+        </div>
+
+        <div className="grid xl:grid-cols-4 gap-2 mt-4">
           <WidthInput 
             dict={dict_general_fields.fields.width}
             className=""
@@ -185,10 +186,9 @@ export default function FormAddItem({
         </div>
       </div>
 
-      <div className="pt-4">
+      <div className="my-4 p-5 bg-white rounded">
         <h3 className="font-semibold pb-2">Posizione</h3>
-        <div className="grid xl:grid-cols-1 
-                        gap-2 p-5 bg-gray-50 rounded">
+        <div className="grid xl:grid-cols-1 gap-2">
           <SelectPosition
             locale={locale}
 
@@ -215,9 +215,9 @@ export default function FormAddItem({
         </div>
       </div>
 
-      <div className="pt-4">
+      <div className="my-4 p-5 bg-white rounded">
         <h3 className="font-semibold pb-2">Immagini</h3>
-        <div className="bg-gray-50 p-5 rounded">
+        <div className="">
           <UploadImageField 
             dict_upload_image={dict_upload_image}
             description={state.errorMessages.images}

@@ -14,7 +14,6 @@ import FormFieldError from "../../../error_field";
 interface SelectSupplierWithAddProps {
   locale: string;
   suppliers: Supplier[];
-  dict_supplier_select: any;
   dict_form_fields: any;
   dict_add_dialog: any;
   error_messages: string[];
@@ -23,13 +22,17 @@ interface SelectSupplierWithAddProps {
 export default function SelectSupplierWithAdd({
   locale,
   suppliers,
-  dict_supplier_select,
   dict_form_fields,
   dict_add_dialog,
   error_messages,
 }: SelectSupplierWithAddProps) {
+
   const [suppliersList, setSuppliersList] = useState(suppliers);
-  const [supplier, setSupplier] = useState({id: ""} as Supplier);
+  const [supplier, setSupplier] = useState({
+    id: "", 
+    name: "",
+    description: "",
+  } as Supplier);
 
   async function addNewSupplier(item: Supplier) {
     const list = suppliersList;
@@ -45,7 +48,7 @@ export default function SelectSupplierWithAdd({
           suppliers={suppliersList}
           supplier={supplier}
           setSupplier={setSupplier}
-          dict_supplier_select={dict_supplier_select}
+          dict_supplier_select={dict_form_fields.fields.suppliers.select}
         />
         <DialogAddSupplier 
           handleAddSupplier={addNewSupplier}
