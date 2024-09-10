@@ -29,6 +29,7 @@ import { Button } from "@/components/button";
 import { CirclePlusIcon, DeleteIcon, EditIcon, Trash2 } from "lucide-react";
 import AddCodeVariant from "../../suppliers-codes/add_new_variant_form/field";
 import { Separator } from "@/components/separator";
+import { EditSupplierCodeVariantDialog } from "../../suppliers-codes/edit_variant/dialog";
 
 interface AddVariantsFieldProps {
   locale: string;
@@ -38,6 +39,7 @@ interface AddVariantsFieldProps {
   dict_variant_delete_dialog: any;
   dict_variant_edit_dialog: any;
   dict_supplier_add_dialog: any;
+  dict_supplier_code_edit_dialog: any;
 
   setVariantsJSON: React.Dispatch<React.SetStateAction<string>>;
   suppliers: Supplier[];
@@ -54,6 +56,7 @@ export default function AddVariantsField({
   dict_variant_delete_dialog,
   dict_variant_edit_dialog,
   dict_supplier_add_dialog,
+  dict_supplier_code_edit_dialog,
 
   setVariantsJSON,
   suppliers,
@@ -198,7 +201,6 @@ export default function AddVariantsField({
                   setCodes={setCodes}
                 />
 
-
                 {codes.map((code: SupplierCode) => (
                   <>
                     <Separator className="my-2" />
@@ -210,6 +212,12 @@ export default function AddVariantsField({
                         {suppliers.find(obj => obj.id == code.supplier)?.name}
                       </div>
                       <div className="flex justify-end gap-1">
+                        <EditSupplierCodeVariantDialog 
+                          locale={locale}
+                          dict={dict_supplier_code_edit_dialog}
+                          supplierCode={code}
+                          setCodes={setCodes}
+                        />
                         <Button variant="outline" className="h-8 aspect-square p-0">
                           <EditIcon className="h-[1.2rem] w-[1.2rem]"/>
                         </Button>

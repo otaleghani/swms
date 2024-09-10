@@ -37,10 +37,13 @@ interface AddItemPageLayoutProps {
   dict_rack_add_dialog: any;
   dict_shelf_add_dialog: any;
   dict_supplier_add_dialog: any;
+  dict_variant_add_form: any;
+
+
+  dict_supplier_code_edit_dialog: any;
+  dict_variant_edit_dialog: any;
 
   dict_variant_delete_dialog: any;
-  dict_variant_edit_dialog: any;
-  dict_variant_add_form: any;
 
   dict_category_select: any;
   dict_subcategory_select: any;
@@ -74,10 +77,12 @@ export default function AddItemPageComponent({
   dict_rack_add_dialog,
   dict_shelf_add_dialog,
   dict_supplier_add_dialog,
+  dict_variant_add_form,
+
+  dict_variant_edit_dialog,
+  dict_supplier_code_edit_dialog,
 
   dict_variant_delete_dialog,
-  dict_variant_edit_dialog,
-  dict_variant_add_form,
 
   dict_category_select,
   dict_subcategory_select,
@@ -141,6 +146,7 @@ export default function AddItemPageComponent({
             dict_variant_delete_dialog={dict_variant_delete_dialog}
             dict_variant_edit_dialog={dict_variant_edit_dialog}
             dict_supplier_add_dialog={dict_supplier_add_dialog}
+            dict_supplier_code_edit_dialog={dict_supplier_code_edit_dialog}
 
             suppliers={suppliers}
             setVariantsJSON={setVariantsJSON}

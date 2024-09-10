@@ -18,6 +18,7 @@ interface AddVariantComponentProps {
   dict_variant_delete_dialog: any;
   dict_variant_edit_dialog: any;
   dict_supplier_add_dialog: any;
+  dict_supplier_code_edit_dialog: any;
 
   suppliers: Supplier[];
 
@@ -32,6 +33,7 @@ export default function AddVariantComponent({
   dict_variant_delete_dialog,
   dict_variant_edit_dialog,
   dict_supplier_add_dialog,
+  dict_supplier_code_edit_dialog,
 
   suppliers,
 
@@ -50,6 +52,7 @@ export default function AddVariantComponent({
         dict_variant_delete_dialog={dict_variant_delete_dialog}
         dict_variant_edit_dialog={dict_variant_edit_dialog}
         dict_supplier_add_dialog={dict_supplier_add_dialog}
+        dict_supplier_code_edit_dialog={dict_supplier_code_edit_dialog}
 
         error_messages_supplier={[]}
         error_messages_codes={[]}
