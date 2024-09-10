@@ -19,7 +19,7 @@ import AddVariantsField from "@/app/ui/variants/add/field_form_items";
 
 /** Hooks */
 import { useState } from "react";
-import AddVariantComponent from "../../suppliers-codes/add_new_variant_form/component";
+import AddVariantComponent from "../../variants/add/component";
 
 interface AddItemPageLayoutProps {
   formName: string;

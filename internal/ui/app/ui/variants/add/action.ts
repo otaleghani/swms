@@ -57,6 +57,7 @@ export async function AddVariantFieldAction(
     item: formData.get("item") as string,
     locale: formData.get("locale") as string,
   }
+  console.log(data)
 
   const dictPromise = getDictionary(data.locale as Locale);
   const [ dict ] = await Promise.all([ dictPromise ]);

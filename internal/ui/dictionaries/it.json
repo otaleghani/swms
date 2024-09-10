@@ -1285,7 +1285,7 @@
       },
       "add": {
         "active": "Aggiungi",
-        "pending": "Sto aggiungend..."
+        "pending": "Sto aggiungendo..."
       }
     }
   } 

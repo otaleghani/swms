@@ -41,8 +41,11 @@ export type AddItemFormState = {
     // Images
     images: string[];
 
-    // Here we have the JSON of the different variants
+    // Variants JSON
     variants: string[];
+
+    // Supplier codes JSON
+    // codes: string[];
   };
   message?: string;
   result?: Item;
@@ -336,6 +339,9 @@ export async function AddItemFormAction(
   
   /** Post variants */
   for (let i = 0; i < encodedVariants.length; i++) {
+    // let id = encodedVariants[i].id
+    // delete encodedVariants[i].id
+    // Controll if the backend actually creates a new id, making this step useless
     encodedVariants[i].item = resultAddItem.data.UUID;
     const resultAddVariant = await postVariant(encodedVariants[i]);
     const validation = validateResponse({
@@ -348,6 +354,10 @@ export async function AddItemFormAction(
       
       // here I should delete the early created item and default variant
     }
+
+    // Here we will post ALSO che codes
+    // taking the id of the variant 
+    // for ... where codes.variant = id { add new code } 
   }
 
   /** Post images */

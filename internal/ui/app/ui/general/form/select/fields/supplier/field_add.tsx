@@ -14,6 +14,8 @@ import FormFieldError from "../../../error_field";
 interface SelectSupplierWithAddProps {
   locale: string;
   suppliers: Supplier[];
+  supplier: Supplier;
+  setSupplier: React.Dispatch<React.SetStateAction<Supplier>>;
   dict_form_fields: any;
   dict_add_dialog: any;
   error_messages: string[];
@@ -22,17 +24,15 @@ interface SelectSupplierWithAddProps {
 export default function SelectSupplierWithAdd({
   locale,
   suppliers,
+  supplier,
+  setSupplier,
   dict_form_fields,
   dict_add_dialog,
   error_messages,
 }: SelectSupplierWithAddProps) {
 
   const [suppliersList, setSuppliersList] = useState(suppliers);
-  const [supplier, setSupplier] = useState({
-    id: "", 
-    name: "",
-    description: "",
-  } as Supplier);
+
 
   async function addNewSupplier(item: Supplier) {
     const list = suppliersList;

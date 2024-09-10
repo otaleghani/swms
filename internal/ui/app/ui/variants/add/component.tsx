@@ -7,8 +7,8 @@ import { useState } from "react";
 import { Supplier } from "@/app/lib/types";
 
 /** Components */
-import AddVariantsField from "../../variants/add/field_form_items";
-import AddCodeVariant from "./field";
+import AddVariantsField from "./field_form_items";
+import AddCodeVariant from "../../suppliers-codes/add_new_variant_form/field";
 
 interface AddVariantComponentProps {
   locale: string;
@@ -49,11 +49,17 @@ export default function AddVariantComponent({
         dict_variant_add_form={dict_variant_add_form}
         dict_variant_delete_dialog={dict_variant_delete_dialog}
         dict_variant_edit_dialog={dict_variant_edit_dialog}
+        dict_supplier_add_dialog={dict_supplier_add_dialog}
 
+        error_messages_supplier={[]}
+        error_messages_codes={[]}
+
+        suppliers={suppliers}
         setVariantsJSON={setVariantsJSON}
       />
       <div>
         <div className="grid gap-2 p-5 bg-gray-50 rounded">
+        {/* 
           <AddCodeVariant 
             locale={locale}
             suppliers={suppliers}
@@ -62,7 +68,6 @@ export default function AddVariantComponent({
             error_messages_supplier={[]}
             error_messages_codes={[]}
           />
-        {/* 
           Here supplier logic 
 
           table field -> Shows codes, gives you edit and delete capabilities
