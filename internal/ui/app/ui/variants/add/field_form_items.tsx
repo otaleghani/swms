@@ -30,6 +30,7 @@ import { CirclePlusIcon, DeleteIcon, EditIcon, Trash2 } from "lucide-react";
 import AddCodeVariant from "../../suppliers-codes/add_new_variant_form/field";
 import { Separator } from "@/components/separator";
 import { EditSupplierCodeVariantDialog } from "../../suppliers-codes/edit_variant/dialog";
+import { DeleteCodeVariantDialog } from "../../suppliers-codes/delete_variant/dialog";
 
 interface AddVariantsFieldProps {
   locale: string;
@@ -215,15 +216,23 @@ export default function AddVariantsField({
                         <EditSupplierCodeVariantDialog 
                           locale={locale}
                           dict={dict_supplier_code_edit_dialog}
-                          supplierCode={code}
+                          dict_form_fields={dict_general_fields}
+                          dict_add_dialog={dict_supplier_add_dialog}
+                          code={code}
+                          codes={codes}
+                          supplier={
+                            suppliers.find(obj => obj.id == code.supplier) as Supplier
+                          }
+                          suppliers={suppliers}
                           setCodes={setCodes}
                         />
-                        <Button variant="outline" className="h-8 aspect-square p-0">
-                          <EditIcon className="h-[1.2rem] w-[1.2rem]"/>
-                        </Button>
-                        <Button variant="outline" className="h-8 aspect-square p-0">
-                          <Trash2 className="h-[1.2rem] w-[1.2rem]"/>
-                        </Button>
+                        <DeleteCodeVariantDialog 
+                          dict={{}}
+                          locale={locale}
+                          code={code}
+                          codes={codes}
+                          setCodes={setCodes}
+                        />
                       </div>
                     </div>
                   </>

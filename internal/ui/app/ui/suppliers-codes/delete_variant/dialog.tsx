@@ -1,6 +1,8 @@
 "use client";
 
-import { EditIcon, PencilIcon } from "lucide-react";
+import { SupplierCode } from "@/app/lib/types";
+import { useState, useEffect } from "react";
+
 import * as React from "react"
 import { useMediaQuery } from "usehooks-ts";
 import { Button } from "@/components/button"
@@ -22,41 +24,43 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/drawer"
-import { SupplierCode, Supplier } from "@/app/lib/types";
-import { EditSupplierCodeVariantForm } from "./form";
+import { Trash2 } from "lucide-react";
 
-export interface EditSupplierCodeDialogProps {
+// import DeleteSupplierCodeForm from "./form";
+
+export interface DeleteCodeVariantDialogProps {
   dict: any;
-  dict_form_fields: any;
-  dict_add_dialog: any;
   locale: string;
   code: SupplierCode;
   codes: SupplierCode[];
-  supplier: Supplier;
-  suppliers: Supplier[];
   setCodes: React.Dispatch<React.SetStateAction<SupplierCode[]>>;
 }
 
-export function EditSupplierCodeVariantDialog({ 
+export function DeleteCodeVariantDialog({
   dict, 
-  dict_add_dialog,
-  dict_form_fields,
   locale, 
-  code, 
-  codes, 
-  supplier,
-  suppliers,
-  setCodes, 
-}: EditSupplierCodeDialogProps ) {
-  const [open, setOpen] = React.useState(false)
-  const isDesktop = useMediaQuery("(min-width: 768px)")
+  code,
+  codes,
+  setCodes,
+}: DeleteCodeVariantDialogProps) {
+
+  const [open, setOpen] = React.useState(false);
+  const [deleteItem, setDeleteItem] = React.useState(false);
+  const isDesktop = useMediaQuery("(min-width: 768px)");
+
+  useEffect(() => {
+    if (deleteItem) {
+      setCodes(prev => prev.filter(item => item !== code));
+      setDeleteItem(false);
+    }
+  }, [deleteItem])
 
   if (isDesktop) {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button variant="outline" className="p-0 w-8 h-8">
-            <EditIcon className="w-[1.2rem] h-[1.2rem]"/>
+          <Button variant="outline" className="aspect-square p-0 w-8 h-8">
+            <Trash2 className="w-[1.2rem] h-[1.2rem]"/>
           </Button>
        </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
@@ -64,18 +68,8 @@ export function EditSupplierCodeVariantDialog({
             <DialogTitle>{dict.title}</DialogTitle>
             <DialogDescription>{dict.description}</DialogDescription>
           </DialogHeader>
-          <EditSupplierCodeVariantForm 
-            dict={dict}
-            dict_form_fields={dict_form_fields}
-            dict_add_dialog={dict_add_dialog}
-            locale={locale}
-            code={code}
-            codes={codes}
-            supplier={supplier}
-            suppliers={suppliers}
-            setOpen={setOpen} 
-            setCodes={setCodes}
-          />
+
+          <Button type="button" onClick={() => setDeleteItem(true)}>{dict.button_label}</Button>
         </DialogContent>
       </Dialog>
     )
@@ -84,8 +78,8 @@ export function EditSupplierCodeVariantDialog({
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <Button variant="outline" className="p-0 w-8 h-8">
-          <EditIcon className="w-[1.2rem] h-[1.2rem]"/>
+        <Button variant="outline" className="aspect-square p-0 w-8 h-8">
+          <Trash2 className="w-[1.2rem] h-[1.2rem]"/>
         </Button>
       </DrawerTrigger>
       <DrawerContent>
@@ -94,18 +88,7 @@ export function EditSupplierCodeVariantDialog({
           <DrawerDescription>{dict.description}</DrawerDescription>
         </DrawerHeader>
         <div className="px-4">
-          <EditSupplierCodeVariantForm 
-            dict={dict}
-            dict_form_fields={dict_form_fields}
-            dict_add_dialog={dict_add_dialog}
-            locale={locale}
-            code={code}
-            codes={codes}
-            supplier={supplier}
-            suppliers={suppliers}
-            setOpen={setOpen} 
-            setCodes={setCodes}
-          />
+          <Button type="button" onClick={() => setDeleteItem(true)}>{dict.button_label}</Button>
         </div>
         <DrawerFooter className="pt-2">
           <DrawerClose asChild>

@@ -1,15 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react"
-import { EditSupplierCodeAction, EditSupplierCodeState } from "./action";
 import FormFieldError from "@/app/ui/general/form/error_field";
 import FormError from "@/app/ui/general/form/error_form";
-import FormSuccess from "@/app/ui/general/form/success";
 import { Input } from "@/components/input";
 import { Label } from "@/components/label";
 import { Button } from "@/components/button";
-import { Supplier, Item, Variant } from "@/app/lib/types";
+import { Supplier, Item, Variant, SupplierCode } from "@/app/lib/types";
 import { EditSupplierCodeDialogProps } from "./dialog";
+import SelectSupplierWithAdd from "../../general/form/select/fields/supplier/field_add";
 
 interface EditSupplierCodeFormProps extends EditSupplierCodeDialogProps {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -17,38 +16,66 @@ interface EditSupplierCodeFormProps extends EditSupplierCodeDialogProps {
 
 export function EditSupplierCodeVariantForm({ 
   dict, 
+  dict_form_fields,
+  dict_add_dialog,
   locale, 
-  supplierCode,
+  code,
+  codes,
+  supplier,
+  suppliers,
   setOpen,
   setCodes,
 }: EditSupplierCodeFormProps ) {
-  const initialState: EditSupplierCodeState = {
-    error: false,
-    errorMessages: { 
-      id: [], 
-      code: [], 
-      supplier: [], 
-      item: [], 
-      variant: [], 
-    },
-    message: "",
-  }
-  const [fire, setFire] = useState(false);
-  const [code, setCode] = useState(supplierCode.code);
-  const [supplier, setSupplier] = useState(supplierCode.supplier);
+  const [edit, setEdit] = useState(false);
+  const [currentCode, setCurrentCode] = useState(code.code);
+  const [currentSupplier, setCurrentSupplier] = useState(supplier);
 
   const [codeErrors, setCodeErrors] = useState([] as string[]);
   const [supplierErrors, setSupplierErrors] = useState([] as string[]);
 
   const handleInputChange = (event:any) => {
-    setCode(event.target.value); 
+    setCurrentCode(event.target.value); 
   };
 
   useEffect(() => {
-    if (fire) {
-      setCodes([])
+    if (edit) {
+      const currentCodeErrors = [] as string[];
+      const currentSupplierErrors = [] as string[];
+
+      if (currentCode == undefined || currentCode == null || currentCode == "") {
+        currentCodeErrors.push("Non pote essere vuoto");
+      };
+      if (currentCode.length < 0 && currentCode.length > 50) {
+        currentCodeErrors.push("Non pote essere vuoto");
+      };
+
+      // Validation for supplier
+      if (currentSupplier == undefined || currentSupplier == null || currentSupplier.id == "") {
+        currentSupplierErrors.push("Supplier non pote esseere nullo");
+      };
+      if (currentSupplier.id?.length != 36) {
+        currentSupplierErrors.push("Sembra che non sia un uuid");
+      };
+
+      setSupplierErrors(currentSupplierErrors);
+      setCodeErrors(currentCodeErrors);
+
+      // Adds the new item to the codes array
+      if (codeErrors.length == 0 && supplierErrors.length == 0) {
+        setCodes(prev => (
+          prev.map(item => 
+            item === code ? { 
+              ...item, 
+              code: currentCode,
+              supplier: currentSupplier.id as string,
+            } : item
+          )
+        ));
+        setOpen(false);
+      }
+      setEdit(false);
     }
-  }, [fire])
+  }, [edit])
 
   return (
     <>
@@ -57,22 +84,32 @@ export function EditSupplierCodeVariantForm({
           <Label>{dict.fields.name.label}</Label>
           <Input 
             name="code"
-            value={code}
+            value={currentCode}
             onChange={handleInputChange}
-            defaultValue={supplierCode.code}
-            placeholder={supplierCode.code}
+            defaultValue={code.code}
+            placeholder={code.code}
           />
           <FormFieldError 
             id="supplier-error" 
-            description={supplierErrors} />
+            description={supplierErrors} 
+          />
         </div>
 
+        <SelectSupplierWithAdd 
+          locale={locale}
+          suppliers={suppliers}
+          supplier={currentSupplier}
+          setSupplier={setCurrentSupplier}
+          dict_form_fields={dict_form_fields}
+          dict_add_dialog={dict_add_dialog}
+          error_messages={[]}
+        />
         <input type="hidden" value={locale} name="locale" />
-        <Input type="hidden" value={supplierCode.supplier} name="supplier" />
+        <Input type="hidden" value={code.supplier} name="supplier" />
         <Button 
           type="button" 
           className="w-full mt-2"
-          onClick={() => {setFire(true)}}
+          onClick={() => {setEdit(true)}}
         >
           {dict.button}
         </Button>

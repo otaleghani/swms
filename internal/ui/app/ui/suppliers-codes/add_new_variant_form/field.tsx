@@ -43,18 +43,18 @@ export default function AddCodeVariant({
 
       if (code == undefined || code == null || code == "") {
         currentCodeErrors.push("Non pote essere vuoto");
-      }
+      };
       if (code.length < 0 && code.length > 50) {
         currentCodeErrors.push("Non pote essere vuoto");
-      }
+      };
 
       // Validation for supplier
       if (supplier == undefined || supplier == null || supplier.id == "") {
         currentSupplierErrors.push("Supplier non pote esseere nullo");
-      }
+      };
       if (supplier.id?.length != 36) {
         currentSupplierErrors.push("Sembra che non sia un uuid");
-      }
+      };
 
       setSupplierErrors(currentSupplierErrors);
       setCodeErrors(currentCodeErrors);
@@ -63,9 +63,9 @@ export default function AddCodeVariant({
       if (codeErrors.length == 0 && supplierErrors.length == 0) {
         const currentCode = { code: code, supplier: supplier.id } as SupplierCode;
         setCodes(prev => [...prev, currentCode])
-      }
+      };
 
-      setOpen(false)
+      setOpen(false);
     }
     
   }, [open])
