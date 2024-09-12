@@ -63,6 +63,8 @@ export default function AddCodeVariant({
       if (codeErrors.length == 0 && supplierErrors.length == 0) {
         const currentCode = { code: code, supplier: supplier.id } as SupplierCode;
         setCodes(prev => [...prev, currentCode])
+        setSupplier({id: "", name: ""} as Supplier);
+        setCode("");
       };
 
       setOpen(false);

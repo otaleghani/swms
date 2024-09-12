@@ -6,17 +6,20 @@ interface LengthInputProps {
   dict: any;
   className: string;
   error_messages: string[];
+  value?: number;
 }
 
 export default function LengthInput({
   dict,
   className,
-  error_messages
+  error_messages,
+  value,
 }: LengthInputProps ) {
   return (
     <div className={className}>
       <Label htmlFor="length">{dict.label}</Label>
       <Input 
+        defaultValue={value}
         type="number"
         name="length"
         id="length"

@@ -6,17 +6,20 @@ interface HeightInputProps {
   dict: any;
   className: string;
   error_messages: string[];
+  value?: number;
 }
 
 export default function HeightInput({
   dict,
   className,
-  error_messages
+  error_messages,
+  value,
 }: HeightInputProps ) {
   return (
     <div className={className}>
       <Label htmlFor="height">{dict.label}</Label>
       <Input 
+        defaultValue={value}
         type="number"
         name="height"
         id="height"

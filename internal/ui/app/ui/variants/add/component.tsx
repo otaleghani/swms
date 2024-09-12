@@ -18,11 +18,13 @@ interface AddVariantComponentProps {
   dict_variant_delete_dialog: any;
   dict_variant_edit_dialog: any;
   dict_supplier_add_dialog: any;
+  dict_supplier_code_delete_dialog: any;
   dict_supplier_code_edit_dialog: any;
 
   suppliers: Supplier[];
 
   setVariantsJSON: React.Dispatch<React.SetStateAction<string>>;
+  setCodesJSON: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export default function AddVariantComponent({
@@ -33,14 +35,15 @@ export default function AddVariantComponent({
   dict_variant_delete_dialog,
   dict_variant_edit_dialog,
   dict_supplier_add_dialog,
+  dict_supplier_code_delete_dialog,
   dict_supplier_code_edit_dialog,
 
   suppliers,
 
   setVariantsJSON,
+  setCodesJSON,
 }: AddVariantComponentProps) {
 
-  const [ supplierCodesJSON, setSupplierCodesJSON ] = useState("[{}]")
 
   return (
     <>
@@ -52,42 +55,13 @@ export default function AddVariantComponent({
         dict_variant_delete_dialog={dict_variant_delete_dialog}
         dict_variant_edit_dialog={dict_variant_edit_dialog}
         dict_supplier_add_dialog={dict_supplier_add_dialog}
+        dict_supplier_code_delete_dialog={dict_supplier_code_delete_dialog}
         dict_supplier_code_edit_dialog={dict_supplier_code_edit_dialog}
-
-        error_messages_supplier={[]}
-        error_messages_codes={[]}
 
         suppliers={suppliers}
         setVariantsJSON={setVariantsJSON}
+        setCodesJSON={setCodesJSON}
       />
-      <div>
-        <div className="grid gap-2 p-5 bg-gray-50 rounded">
-        {/* 
-          <AddCodeVariant 
-            locale={locale}
-            suppliers={suppliers}
-            dict_add_dialog={dict_supplier_add_dialog}
-            dict_form_fields={dict_general_fields}
-            error_messages_supplier={[]}
-            error_messages_codes={[]}
-          />
-          Here supplier logic 
-
-          table field -> Shows codes, gives you edit and delete capabilities
-
-          form add new
-            add new supplier
-            add new code field
-
-
-          dialog add new
-          dialog edit
-          dialog delete
-        */}
-          
-
-        </div>
-      </div>
     </>
   )
 } 

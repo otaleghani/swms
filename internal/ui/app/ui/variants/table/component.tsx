@@ -1,4 +1,7 @@
-import { MoreHorizontal } from "lucide-react";
+/** Types */
+import { Variant, SupplierCode, Supplier } from "@/app/lib/types";
+
+/** components */
 import {
   Table,
   TableBody,
@@ -7,31 +10,48 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/table"
-
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/dropdown-menu"
-
-import { Variant } from "@/app/lib/types";
+import VariantEditSheet from "../edit/sheet";
 
 interface VariantsTableProps {
+  locale: string;
   variants: Variant[];
+
   dict: any;
+  dict_form_fields: any;
   dict_variant_delete_dialog: any;
   dict_variant_edit_dialog: any;
+  dict_supplier_add_dialog: any;
+  dict_supplier_code_delete_dialog: any;
+  dict_supplier_code_edit_dialog: any;
+
+  suppliers: Supplier[];
+
+  setVariants: React.Dispatch<React.SetStateAction<Variant[]>>;
+  setCodes: React.Dispatch<React.SetStateAction<SupplierCode[]>>;
+
+  codes: SupplierCode[];
 }
 
 export default function VariantsTable({
+  locale,
   variants,
+
   dict,
+  dict_form_fields,
   dict_variant_delete_dialog,
   dict_variant_edit_dialog,
+  dict_supplier_add_dialog,
+  dict_supplier_code_delete_dialog,
+  dict_supplier_code_edit_dialog,
+
+  suppliers,
+
+  setVariants,
+  setCodes,
+
+  codes,
 }: VariantsTableProps) {
+  console.log(codes)
   return (
     <Table className="border">
       <TableHeader>
@@ -59,18 +79,24 @@ export default function VariantsTable({
               <TableCell>{variant.quantity}</TableCell>
               <TableCell>{variant.width} x {variant.length} x {variant.heigth}, {variant.weight}</TableCell>
               <TableCell>
-                <DropdownMenu>
-                  <DropdownMenuTrigger>
-                    <div className="aspect-square p-2 rounded borde">
-                      <MoreHorizontal className="h-4 w-4" />
-                      <span className="sr-only">Toggle menu</span>
-                    </div>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent>
-                    <DropdownMenuItem>Modifica qui il component</DropdownMenuItem>
-                    <DropdownMenuItem>Elimina qui il component</DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
+                <div>
+                  <VariantEditSheet 
+                    locale={locale}
+
+                    dict_form_fields={dict_form_fields}
+                    dict_variant_edit_dialog={dict_variant_edit_dialog}
+                    dict_supplier_add_dialog={dict_supplier_add_dialog}
+                    dict_supplier_code_delete_dialog={dict_supplier_code_delete_dialog}
+                    dict_supplier_code_edit_dialog={dict_supplier_code_edit_dialog}
+
+                    suppliers={suppliers}
+                    setVariants={setVariants}
+                    setCodes={setCodes}
+
+                    variant={variant}
+                    codes={codes.filter(code => code.variant === variant.id)}
+                  />
+                </div>
               </TableCell>
             </TableRow>
           ))

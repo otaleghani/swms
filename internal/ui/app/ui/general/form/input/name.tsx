@@ -6,17 +6,20 @@ interface NameInputProps {
   dict: any;
   className: string;
   error_messages: string[];
+  value?: string;
 }
 
 export default function NameInput({
   dict,
   className,
-  error_messages
+  error_messages,
+  value,
 }: NameInputProps ) {
   return (
     <div className={className}>
       <Label htmlFor="name">{dict.label}</Label>
       <Input 
+        defaultValue={value}
         className={`${error_messages.length != 0 
         ? "border-red-500" 
         : ""}`}

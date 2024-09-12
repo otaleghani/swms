@@ -69,7 +69,7 @@ export function DeleteCodeVariantDialog({
             <DialogDescription>{dict.description}</DialogDescription>
           </DialogHeader>
 
-          <Button type="button" onClick={() => setDeleteItem(true)}>{dict.button_label}</Button>
+          <Button type="button" onClick={() => setDeleteItem(true)}>{dict.button}</Button>
         </DialogContent>
       </Dialog>
     )
@@ -92,7 +92,7 @@ export function DeleteCodeVariantDialog({
         </div>
         <DrawerFooter className="pt-2">
           <DrawerClose asChild>
-            <Button variant="outline">{dict.clear_button}</Button>
+            <Button variant="outline">{dict.button}</Button>
           </DrawerClose>
         </DrawerFooter>
       </DrawerContent>

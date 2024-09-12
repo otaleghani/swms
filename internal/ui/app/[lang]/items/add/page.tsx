@@ -72,10 +72,12 @@ export default async function AddItemPage({
       dict_supplier_add_dialog={dict.suppliers.add_dialog}
       dict_variant_add_form={dict.variants.add_form}
 
+    
       dict_variant_edit_dialog={dict.variants.edit_dialog}
       dict_supplier_code_edit_dialog={dict.supplier_codes.edit_dialog}
 
       dict_variant_delete_dialog={dict.variants.delete_dialog}
+      dict_supplier_code_delete_dialog={dict.supplier_codes.delete_dialog}
 
       dict_category_select={dict.categories.select_field}
       dict_subcategory_select={dict.subcategories.select_field}

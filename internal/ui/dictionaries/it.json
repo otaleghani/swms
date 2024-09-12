@@ -423,7 +423,11 @@
       }
     },
     "delete_dialog": "",
-    "edit_dialog": ""
+    "edit_dialog": {
+      "header": {
+        "title": "Modifica variante"
+      }
+    }
   },
 
   "zones": {

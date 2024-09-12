@@ -6,17 +6,20 @@ interface IdentifierInputProps {
   dict: any;
   className: string;
   error_messages: string[];
+  value?: string;
 }
 
 export default function IdentifierInput({
   dict,
   className,
-  error_messages
+  error_messages,
+  value,
 }: IdentifierInputProps ) {
   return (
     <div className={className}>
       <Label htmlFor="identifier">{dict.label}</Label>
       <Input 
+        defaultValue={value}
         type="text"
         name="identifier"
         id="identifier"
