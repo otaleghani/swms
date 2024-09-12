@@ -104,9 +104,6 @@ export default function VariantEditSheet({
       setCodes(prev => prev.filter(item => item.variant !== variant.id));
       currentCodes.map(code => {code.variant = variant.id as string})
       setCodes(prev => [...prev, ...currentCodes]);
-
-      // Clears the current codes
-      //setCurrentCodes([]);
     }
   }, [state])
 

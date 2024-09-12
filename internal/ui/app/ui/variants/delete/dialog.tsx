@@ -1,7 +1,7 @@
 "use client";
 
-import { SupplierCode } from "@/app/lib/types";
-import { useState, useEffect } from "react";
+import { SupplierCode, Variant } from "@/app/lib/types";
+import { useEffect, useState } from "react";
 
 import * as React from "react"
 import { useMediaQuery } from "usehooks-ts";
@@ -26,31 +26,28 @@ import {
 } from "@/components/drawer"
 import { Trash2 } from "lucide-react";
 
-// import DeleteSupplierCodeForm from "./form";
-
-export interface DeleteCodeVariantDialogProps {
+export interface DeleteVariantDialogProps {
   dict: any;
-  locale: string;
-  code: SupplierCode;
-  codes: SupplierCode[];
+  variant: Variant;
   setCodes: React.Dispatch<React.SetStateAction<SupplierCode[]>>;
+  setVariants: React.Dispatch<React.SetStateAction<Variant[]>>;
 }
 
 export function DeleteCodeVariantDialog({
   dict, 
-  locale, 
-  code,
-  codes,
+  variant,
   setCodes,
-}: DeleteCodeVariantDialogProps) {
+  setVariants,
+}: DeleteVariantDialogProps) {
 
-  const [open, setOpen] = React.useState(false);
-  const [deleteItem, setDeleteItem] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [deleteItem, setDeleteItem] = useState(false);
   const isDesktop = useMediaQuery("(min-width: 768px)");
 
   useEffect(() => {
     if (deleteItem) {
-      setCodes(prev => prev.filter(item => item !== code));
+      setCodes(prev => prev.filter(item => item.id !== variant.id));
+      setVariants(prev => prev.filter(item => item.id !== variant.id));
       setDeleteItem(false);
     }
   }, [deleteItem])
