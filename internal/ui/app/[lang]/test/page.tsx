@@ -3,6 +3,7 @@ import { getRacks } from "@/app/lib/requests/racks/get";
 import { getShelfs } from "@/app/lib/requests/shelfs/get";
 import { getZones } from "@/app/lib/requests/zones/get";
 import SelectPosition from "@/app/ui/general/form/select/position/field";
+import { AddVariantDialogForm, AddVariantOfItemFormDialogTrigger, TestDialog, TestFormWrapper } from "@/app/ui/test_variant/TestPassComponents";
 import { getDictionary } from "@/lib/dictionaries";
 import { Locale } from "@/lib/dictionaries";
 
@@ -18,22 +19,7 @@ export default async function TestingPage( {params}: {params: {lang: string}}) {
 
   return (
     <main>
-      <SelectPosition
-        locale={params.lang}
-        zones={zones}
-        aisles={aisles}
-        racks={racks}
-        shelfs={shelfs}
-
-        dict_zone_select={dict.zones.select_field}
-        dict_aisle_select={dict.aisles.select_field}
-        dict_rack_select={dict.racks.select_field}
-        dict_shelf_select={dict.shelfs.select_field}
-
-        dict_zone_add_dialog={dict.zones.add_dialog}
-        dict_aisle_add_dialog={dict.aisles.add_dialog}
-        dict_rack_add_dialog={dict.racks.add_dialog}
-        dict_shelf_add_dialog={dict.shelfs.add_dialog}
+      <TestFormWrapper 
       />
     </main>
   )

@@ -418,11 +418,15 @@
           "name": "Nome",
           "identifier": "Id",
           "quantity": "Quantita",
-          "dimensions": "Dimensioni"
+          "dimensions": "Dimensioni",
+          "actions": "Azioni"
         }
       }
     },
-    "delete_dialog": "",
+    "delete_dialog": {
+      "title": "Eliminare questa variante?",
+      "description": "L'operazione non è reversibile."
+    },
     "edit_dialog": {
       "header": {
         "title": "Modifica variante"
@@ -1290,6 +1294,13 @@
       "add": {
         "active": "Aggiungi",
         "pending": "Sto aggiungendo..."
+      },
+      "delete": {
+        "active": "Elimina",
+        "pending": "Sto eliminando..."
+      },
+      "clear": {
+        "active": "Annulla"
       }
     }
   } 
