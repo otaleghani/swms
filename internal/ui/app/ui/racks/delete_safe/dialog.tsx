@@ -81,7 +81,7 @@ import {
 } from "@/components/drawer"
 import { Input } from "@/components/input";
 import { Trash2 } from "lucide-react";
-import SelectRack from "../../general/form/select/rack/field";
+import SelectRack from "../../general/form/select/fields/rack/field";
 
 export function DeleteAndSubRackDialog({
   dict, 

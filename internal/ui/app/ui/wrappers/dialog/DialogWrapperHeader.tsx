@@ -1,8 +1,9 @@
+/** Local components */
 import { 
   DialogHeader,
   DialogTitle,
   DialogDescription
-} from "../../components/dialog"
+} from "@/app/ui/components/dialog"
 
 interface DialogWrapperHeaderProps {
   title: string;

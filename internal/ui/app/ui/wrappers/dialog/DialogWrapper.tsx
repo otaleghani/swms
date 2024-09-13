@@ -1,17 +1,22 @@
+"use client";
+
+/** Third-party imports */
 import { useMediaQuery } from "usehooks-ts";
+
+/** Local components */
 import {
   Dialog,
   DialogContent,
   DialogTrigger,
-} from "../../components/dialog"
+} from "@/app/ui/components/dialog"
 import {
   Drawer,
   DrawerClose,
   DrawerContent,
   DrawerFooter,
   DrawerTrigger,
-} from "../../components/drawer"
-import { Button } from "../../components/button";
+} from "@/app/ui/components/drawer"
+import { Button } from "@/app/ui/components/button";
 
 interface DialogWrapperProps {
   Trigger: React.FunctionComponent;
@@ -21,6 +26,9 @@ interface DialogWrapperProps {
   dict: any;
 }
 
+/**
+  * Wrapper function for the dialog component from shadcn/ui
+  * */
 export default function DialogWrapper({
   Trigger,
   Body,
