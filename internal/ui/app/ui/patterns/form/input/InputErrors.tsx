@@ -5,7 +5,7 @@ interface InputWrapperErrorsProps {
   id: string,
 }
 
-export default function InputWrapperErrors({
+export default function InputPatternErrors({
   errorMessages,
   id
 }: InputWrapperErrorsProps) {
