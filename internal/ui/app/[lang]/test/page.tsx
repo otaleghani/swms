@@ -3,9 +3,12 @@ import { getRacks } from "@/app/lib/requests/racks/get";
 import { getShelfs } from "@/app/lib/requests/shelfs/get";
 import { getZones } from "@/app/lib/requests/zones/get";
 import SelectPosition from "@/app/ui/general/form/select/position/field";
+import ZoneSelectField from "@/app/ui/modules/zones/misc/ZoneSelectField";
 //import { AddVariantDialogForm, AddVariantOfItemFormDialogTrigger, TestDialog, TestFormWrapper } from "@/app/ui/test_variant/TestPassComponents";
 import { getDictionary } from "@/lib/dictionaries";
 import { Locale } from "@/lib/dictionaries";
+import ComponentTesting from "./Component";
+import ZoneAddFormDialog from "@/app/ui/modules/zones/add/ZoneAddFormDialog"
 
 export default async function TestingPage( {params}: {params: {lang: string}}) {
   const dict = await getDictionary(params.lang as Locale);
@@ -19,6 +22,14 @@ export default async function TestingPage( {params}: {params: {lang: string}}) {
 
   return (
     <main>
+      <ComponentTesting 
+        list={zones}
+        dict={dict.zones.select_field}
+      />
+      <ZoneAddFormDialog 
+        dict={dict.forms}
+        locale={params.lang}
+      />
     </main>
   )
 }

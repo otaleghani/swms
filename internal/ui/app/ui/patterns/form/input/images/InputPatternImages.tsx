@@ -15,7 +15,7 @@ interface PreviewImage {
   id: string;
 }
 
-interface InputImagesProps {
+interface InputPatternImagesProps {
   dict: any;
 }
 /**
@@ -30,7 +30,7 @@ interface InputImagesProps {
  */
 export default function InputImages({ 
   dict,
-}: InputImagesProps) {
+}: InputPatternImagesProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [previewImages, setPreviewImages] = useState<PreviewImage[]>([]);
   const [files, setFiles] = useState<File[]>([]);

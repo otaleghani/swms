@@ -1,14 +1,14 @@
 import { AlertCircle } from "lucide-react";
 
-interface InputWrapperErrorsProps {
+interface FormFieldErrorsPatternProps {
   errorMessages: string[],
   id: string,
 }
 
-export default function InputPatternErrors({
+export default function FormFieldErrorsPattern({
   errorMessages,
   id
-}: InputWrapperErrorsProps) {
+}: FormFieldErrorsPatternProps) {
   return (
     <>
       {errorMessages.length != 0 && (

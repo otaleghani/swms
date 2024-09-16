@@ -1,4 +1,4 @@
-import GetItems from "@/app/lib/items/get";
+//import GetItems from "@/app/lib/items/get";
 import { getCategory, getSubcategory } from "@/lib/reqs";
 import { getDictionary, Locale } from "@/lib/dictionaries";
 import FormItemsAdd from "@/app/ui/general/form/add/items/form";
@@ -12,10 +12,10 @@ interface HomeProps {
 export default async function Home({ params }: HomeProps ) {
   const dict = await getDictionary(params.lang as Locale);
 
-  const data = GetItems()
+  //const data = GetItems()
   const category = getCategory()
   const subcategory = getSubcategory()
-  const [ parsedData, parsedCategory, parsedSubcategory ] = await Promise.all([data, category, subcategory])
+  const [ parsedData, parsedCategory, parsedSubcategory ] = await Promise.all([category, subcategory])
 
   return (
     <main className="w-full p-4">

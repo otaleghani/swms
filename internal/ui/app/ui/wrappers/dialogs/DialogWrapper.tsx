@@ -2,6 +2,8 @@
 
 /** Third-party imports */
 import { useMediaQuery } from "usehooks-ts";
+import { useEffect } from "react"
+
 
 /** Local components */
 import {
@@ -36,15 +38,12 @@ export default function DialogWrapper({
   setOpen,
   dict,
 }: DialogWrapperProps) {
-
   const isDesktop = useMediaQuery("(min-width: 768px)")
 
   if (isDesktop) {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger asChild>
-          <Trigger />
-        </DialogTrigger>
+        <Trigger />
         <DialogContent className="sm:max-w-[425px]">
           <Body />
         </DialogContent>
@@ -54,9 +53,7 @@ export default function DialogWrapper({
 
   return (
     <Drawer open={open} onOpenChange={setOpen}>
-      <DrawerTrigger asChild>
         <Trigger />
-      </DrawerTrigger>
       <DrawerContent>
 
         <DrawerFooter className="pt-2">

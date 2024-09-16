@@ -5,8 +5,11 @@ import { useRef } from "react";
 import { Label } from "@/app/ui/components/label";
 import { Input } from "@/app/ui/components/input";
 import { Textarea } from "@/app/ui/components/textarea";
-import InputPatternErrors from "./InputErrors";
-import InputImages from "./images/InputImages";
+import FormFieldErrorsPattern from "../FormFieldErrorsPattern";
+import InputPatternImages from "./images/InputPatternImages";
+
+/** Types and interfaces */
+import { DictionaryInputField } from "@/app/lib/types/dictionary/form";
 
 interface InputPatternProps {
   field: 
@@ -21,7 +24,7 @@ interface InputPatternProps {
     "quantity" |
     "images";
   errorMessages: string[];
-  dict: any;
+  dict: DictionaryInputField;
   defaultValue?: string;
   className?: string;
   label?: boolean;
@@ -35,7 +38,8 @@ export default function InputPattern({
   label,
   dict
 }: InputPatternProps) {
-  const inputId = useRef(`id-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`);
+  // const inputId = useRef(`-id${Date.now()}-${Math.random().toString(36).substring(2, 9)}`);
+  const inputId = "sandeo"
   const InputPatternField = () => {
     switch (field) {
       case "name":
@@ -85,7 +89,9 @@ export default function InputPattern({
         );
       case "images": 
         return (
-          <InputImages />
+          <InputPatternImages 
+            dict={dict}
+          />
         );
     };
   };
@@ -94,7 +100,7 @@ export default function InputPattern({
     <div className={className}>
       {label && (<Label htmlFor={`${field}-${inputId}`}>{dict.label}</Label>)}
       <InputPatternField />
-      <InputPatternErrors 
+      <FormFieldErrorsPattern 
         errorMessages={errorMessages}
         id={`${field}-${inputId}-errors`}
       />

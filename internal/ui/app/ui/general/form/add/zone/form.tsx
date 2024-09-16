@@ -20,7 +20,8 @@ export default function AddZoneDialogForm({
   handleAddZone, 
   dict_zone_add_dialog,
   lang,
-  setOpen }: AddZoneDialogFormProps) {
+  setOpen 
+}: AddZoneDialogFormProps) {
   const initialState: AddZoneDialogState = {
     error: false,
     errorMessages: {
