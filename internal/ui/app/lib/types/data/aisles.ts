@@ -1,3 +1,5 @@
+import { FormState, Response } from "./misc";
+
 export type Aisle = {
   id?: string;
   name: string;
@@ -5,8 +7,29 @@ export type Aisle = {
 };
 export type Aisles = Aisle[];
 
-export type AisleExtended = Aisle & {
+export type AisleWithExtra = Aisle & {
   racksCount: number;
   itemsCount: number;
 };
-export type AislesExtended = AislesExtended[];
+export type AislesWithExtra = AislesWithExtra[];
+
+export type AisleFormState = FormState<Aisle>
+export const defaultAisleFormState: AisleFormState = {
+  error: false,
+  message: "",
+  errorMessages: {
+    id: [],
+    name: [],
+    zone: [],
+  }
+}
+
+export type AisleRP = Promise<Response<Aisle>>;
+export type AislesRP = Promise<Response<Aisles>>;
+export type AisleWithExtraRP = Promise<Response<AisleWithExtra>>;
+export type AislesWithExtraRP = Promise<Response<AislesWithExtra>>;
+
+export type BulkAislesRequest = {
+  number: number;
+  zone: string;
+}

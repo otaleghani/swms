@@ -1,15 +1,18 @@
 "use server";
 
-import fetchData from "../fetch";
+import fetchData from "../../fetch";
 import { Response } from "@/app/lib/types/data/misc";
 import { 
   Zone,
+  ZoneRP,
   Zones, 
-  ZonesExtended
+  ZonesRP,
+  ZonesWithExtra,
+  ZonesWithExtraRP,
 } from "@/app/lib/types/data/zones";
-import { zonesTag as tag } from "../tags";
+import { zonesTag as tag } from "../../tags";
 
-export async function getZones(): Promise<Response<Zones>> {
+export async function getZones(): ZonesRP {
   const response = await fetchData<Zones>({
     path: "zones/",
     method: "GET",
@@ -19,8 +22,8 @@ export async function getZones(): Promise<Response<Zones>> {
   return response;
 }
 
-export async function getZonesExtended(): Promise<Response<ZonesExtended>> {
-  const response = await fetchData<ZonesExtended>({
+export async function getZonesWithExtra(): ZonesWithExtraRP {
+  const response = await fetchData<ZonesWithExtra>({
     path: "zones/extra/",
     method: "GET",
     tag: tag,
@@ -29,7 +32,7 @@ export async function getZonesExtended(): Promise<Response<ZonesExtended>> {
   return response;
 }
 
-export async function getZonesById(id: string): Promise<Response<Zone>> {
+export async function getZonesById(id: string): ZoneRP {
   const response = await fetchData<Zone>({
     path: `zones/${id}`,
     method: "GET",
@@ -39,7 +42,7 @@ export async function getZonesById(id: string): Promise<Response<Zone>> {
   return response;
 }
 
-export async function getZonesByAisle(id: string): Promise<Response<Zone>> {
+export async function getZonesByAisle(id: string): ZoneRP {
   const response = await fetchData<Zone>({
     path: `aisles/${id}/zone`,
     method: "GET",
@@ -49,7 +52,7 @@ export async function getZonesByAisle(id: string): Promise<Response<Zone>> {
   return response;
 }
 
-export async function getZonesByRack(id: string): Promise<Response<Zone>> {
+export async function getZonesByRack(id: string): ZoneRP {
   const response = await fetchData<Zone>({
     path: `racks/${id}/zone`,
     method: "GET",
@@ -59,7 +62,7 @@ export async function getZonesByRack(id: string): Promise<Response<Zone>> {
   return response;
 }
 
-export async function getZonesByShelf(id: string): Promise<Response<Zone>> {
+export async function getZonesByShelf(id: string): ZoneRP {
   const response = await fetchData<Zone>({
     path: `shelf/${id}/zone`,
     method: "GET",

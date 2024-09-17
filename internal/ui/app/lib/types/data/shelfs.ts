@@ -7,7 +7,7 @@ export type Shelf = {
 };
 export type Shelfs = Shelf[];
 
-export type ShelfExtended = Shelf & {
+export type ShelfWithExtra = Shelf & {
   itemsCount: number;
 };
-export type ShelfsExtended = ShelfExtended[];
+export type ShelfsWithExtra = ShelfWithExtra[];

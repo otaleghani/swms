@@ -5,8 +5,8 @@ export type Supplier = {
 }
 export type Suppliers = Supplier[];
 
-export type SupplierExtended = Supplier & {
+export type SupplierWithExtra = Supplier & {
   codesCount: number;
 }
-export type SuppliersExtended = SupplierExtended[];
+export type SuppliersWithExtra = SupplierWithExtra[];
 

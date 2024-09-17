@@ -26,7 +26,11 @@ export default async function zoneAddFormAction(
 
   // Post the zone and validate it
   const response = await postZone(formStateValidatedFields.result as Zone);
-  const formStateValidatedResponse = await validateResponse(response, formStateValidatedFields, locale as string)
+  const formStateValidatedResponse = await validateResponse(
+    response, 
+    formStateValidatedFields, 
+    locale as string
+  );
 
   return formStateValidatedResponse;
 }

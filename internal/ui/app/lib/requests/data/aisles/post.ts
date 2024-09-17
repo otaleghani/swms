@@ -5,22 +5,18 @@ import fetchData from "../../fetch";
 import { revalidateTag } from "next/cache";
 
 /** Consts */
-import { zonesTag as tag } from "../../tags";
+import { aislesTag as tag } from "../../tags";
 
-/** Types and iterfaces */
 import { 
   ResponseDataPost,
   PostRP,
   EmptyRP,
-} from "@/app/lib/types/misc";
-import { 
-  Zone,
-  BulkZonesRequest
-} from "@/app/lib/types/data/zones";
+} from "@/app/lib/types/data/misc";
+import { Aisle, BulkAislesRequest } from "@/app/lib/types/data/aisles";
 
-export async function postZone(body: Zone): PostRP {
+export async function postAisle(body: Aisle): PostRP {
   const response = await fetchData<ResponseDataPost>({
-    path: "zones/",
+    path: "aisles/",
     method: "POST",
     tag: tag,
     payload: body,
@@ -33,9 +29,9 @@ export async function postZone(body: Zone): PostRP {
   return response;
 }
 
-export async function postZonesBulk(body: BulkZonesRequest): EmptyRP {
+export async function postAislesBulk(body: BulkAislesRequest): EmptyRP {
   const response = await fetchData<undefined>({
-    path: "zones/bulk/",
+    path: "aisles/bulk/",
     method: "POST",
     tag: tag,
     payload: body,

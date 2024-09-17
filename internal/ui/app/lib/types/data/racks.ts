@@ -6,8 +6,8 @@ export type Rack = {
 };
 export type Racks = Rack[];
 
-export type RackExtended = Rack & {
+export type RackWithExtra = Rack & {
   shelfsCount: number;
   itemsCount: number;
 };
-export type RacksExtended = RackExtended[];
+export type RacksWithExtra = RackWithExtra[];

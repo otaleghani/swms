@@ -8,6 +8,11 @@ export type ResponseDataPost = {
   uuid: string;
 }
 
+export type EmptyRP = Promise<Response<undefined>>;
+
+/** General type for a response coming from a POST. */
+export type PostRP = Promise<Response<ResponseDataPost>>;
+
 export type MediaPost = {
   item: string;
   blob: string;
@@ -20,4 +25,10 @@ export interface FormState<Type> {
   errorMessages: {
     [K in keyof Type]: string[];
   }
+}
+
+export type RequestOptions<TypeMap, T> = {
+  path: string;
+  tag: string;
+  type: keyof TypeMap;
 }
