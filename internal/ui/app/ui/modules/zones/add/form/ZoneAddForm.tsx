@@ -24,14 +24,12 @@ import { Zone, ZoneFormState, defaultZoneFormState } from "@/app/lib/types/data/
 interface ZoneAddFormProps {
   notifyFormSent?: Dispatch<SetStateAction<boolean>>;
   refreshItemList?: (item: Zone) => Promise<void>;
-  locale: string;
   dict: any;
 }
 
 export default function ZoneAddForm({
   notifyFormSent,
   refreshItemList,
-  locale,
   dict
 }: ZoneAddFormProps) {
   const formName = "zone-select-field";
@@ -40,12 +38,7 @@ export default function ZoneAddForm({
     zoneAddFormAction,
     initialState
   );
-  const pathName = usePathname();
-  console.log(pathName);
-
-  useEffect(() => {
-    console.log(pathName);
-  }, [dict])
+  const locale = usePathname().split("/")[1];
 
   return (
     <form id={formName} action={action}>
@@ -58,6 +51,7 @@ export default function ZoneAddForm({
           label={true}
           errorMessages={state.errorMessages.name}
         />
+        <input type="hidden" name="locale" value={locale} />
         <SubmitFormButtonPattern 
           formName={formName}
           isPending={isPending}

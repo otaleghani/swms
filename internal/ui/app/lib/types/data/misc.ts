@@ -1,7 +1,11 @@
-export type Response = {
+export type Response<Entity> = {
   code: number;
   message?: string;
-  data?: any;
+  data?: Entity;
+}
+
+export type ResponseDataPost = {
+  uuid: string;
 }
 
 export type MediaPost = {
