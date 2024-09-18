@@ -4,7 +4,7 @@
 import { cookies } from "next/headers"
 
 /** Types and interfaces */
-import { Response } from "../../types/data/misc";
+import { Response } from "../types/misc";
 
 export type RequestAttributes = {
   path: string;
