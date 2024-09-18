@@ -27,7 +27,3 @@ export interface FormState<Type> {
   }
 }
 
-export type RequestOptions<TypeMap> = {
-  path: string;
-  type: keyof TypeMap;
-}

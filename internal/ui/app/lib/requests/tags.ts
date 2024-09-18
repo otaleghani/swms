@@ -1,23 +1,20 @@
-// export const zonesTag = "zones";
-// export const aislesTag = "aisles";
-// export const racksTag = "racks";
-// export const shelfsTag = "shelfs";
-// export const itemsTag = "items";
-// export const variantsTag = "variants";
-// export const categoriesTag = "categories";
-// export const subcategoriesTag = "subcategories";
+import { TypeMap } from "../types/requests"
 
-// This are the unique tags that are used as identifiers to 
-// revalidate the cache
-export enum tags {
-  zones           = "zones",
-  aisles          = "aisles",
-  racks           = "racks",
-  shelfs          = "shelfs",
-  categories      = "categories",
-  subcategories   = "subcategories",
-  images          = "images",
-  items           = "items",
-  variants        = "variants"
-  // add more if needed
+/** Maps keyof TypeMap to the string used to tag every request,
+  * so that it can be used to revalidate if needed after a request.
+  */
+export const revalidateTags: Record<keyof TypeMap, string> = {
+  "Zone":             "zones",
+  "Zones":            "zones",
+  "ZoneWithExtra":    "zones",
+  "ZonesWithExtra":   "zones",
+
+  "Aisle":            "aisles",
+  "Aisles":           "aisles",
+  "AisleWithExtra":   "aisles",
+  "AislesWithExtra":  "aisles",
+
+  "Racks":            "racks",
 }
+
+//export const asdf: Record<keyof TypeMap, >

@@ -5,6 +5,7 @@ import { cookies } from "next/headers"
 
 /** Types and interfaces */
 import { Response } from "../types/misc";
+import { TypeMap } from "../types/requests";
 
 export type RequestAttributes = {
   path: string;
@@ -26,7 +27,6 @@ export default async function fetchData<Entity>(
       message: "Not authorized",
     } as Response<Entity>;
   }
-
   const apiPath = "http://localhost:8080/api/v1/";
   const endpoint = apiPath + path;
 
