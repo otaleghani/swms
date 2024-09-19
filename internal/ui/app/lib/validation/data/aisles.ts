@@ -3,31 +3,27 @@
 /** Actions */
 import validateString from "../strings";
 import { getDictionary, Locale } from "@/lib/dictionaries";
-import { validateExisting } from "../database";
+import { validateExisting, checkExisting } from "../database";
 
 /** Types and interfaces */
-import { Zone } from "../../types/data/zones";
+import { Aisle } from "../../types/data/aisles";
 import { FormState } from "../../types/misc";
 
-/** Helper function used to validate the fields of a zone to be added or 
-  * updated.
-  * */
-export async function validateZone(
-  state: FormState<Zone>,
+export async function validateAisle(
+  state: FormState<Aisle>,
   locale: string,
-): Promise<FormState<Zone>> {
+): Promise<FormState<Aisle>> {
   const dictPromise = getDictionary(locale as Locale);
   const [ dict ] = await Promise.all([ dictPromise ]);
-  
+
   if (!state.result) {
     state.error = true;
     state.errorMessages = dict.forms.messages.errors.general;
     return state;
   }
 
-  // In the case of a put request you will also have the id to check
   if (state.result.id) {
-    state = await validateExisting("Zone", state, state.result.id, locale);
+    state = await validateExisting("Aisle", state, state.result.id, locale);
   }
 
   if (!state.result) {
@@ -43,9 +39,17 @@ export async function validateZone(
     /* Max */ 20
   )).length != 0 && (state.error = true);
 
-  if (state.error) {
-    state.message = dict.forms.messages.errors.general;
+  (state.errorMessages.zone = validateString(
+    state.result.zone as string, 
+    dict.forms.fields.zone.validation, 
+    /* Min */ 36, 
+    /* Max */ 36
+  )).length != 0 && (state.error = true);
+
+  if (await checkExisting("Zone", state.result.zone)) {
+    state.errorMessages = dict.forms.fields.zone.validation.non_existing;
+    state.error = true;
   }
-  
+
   return state;
 }

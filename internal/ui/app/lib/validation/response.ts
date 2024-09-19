@@ -4,13 +4,13 @@
 import { getDictionary, Locale } from "@/lib/dictionaries";
 
 /** Types and interfaces */
-import { Response, FormState } from "../types/data/misc";
+import { Response, FormState } from "../types/misc";
 
 export default async function validateResponse<Entity, Type>(
   response: Response<Entity>,
   state: FormState<Type>,
   locale: string,
-) {
+): Promise<FormState<Type>> {
   const dictPromise = getDictionary(locale as Locale);
   const [ dict ] = await Promise.all([ dictPromise ]);
 

@@ -9,7 +9,7 @@ import { getDictionary } from "@/lib/dictionaries";
 import { Locale } from "@/lib/dictionaries";
 import ComponentTesting from "./Component";
 import ZoneAddFormDialog from "@/app/ui/modules/zones/add/ZoneAddFormDialog"
-import getListByForeignKey from "@/app/lib/requests/generics/getListByForeignKey";
+//import getListByForeignKey from "@/app/lib/requests/generics/getListByForeignKey";
 
 export default async function TestingPage( {params}: {params: {lang: string}}) {
   const dict = await getDictionary(params.lang as Locale);
@@ -19,11 +19,11 @@ export default async function TestingPage( {params}: {params: {lang: string}}) {
   //const pRacks = getRacks();
   //const pShelfs = getShelfs();
 
-  const pZoneByAisles = getListByForeignKey("Zone", "Aisle", "99207782-3e36-4fe6-9be8-1a659094bded");
+ // const pZoneByAisles = getListByForeignKey("Zone", "Aisle", "99207782-3e36-4fe6-9be8-1a659094bded");
 
   //const [zones, aisles, racks, shelfs, theZone] = await Promise.all([pZones, pAisles, pRacks, pShelfs, pZoneByAisles]);
-  const [theZone] = await Promise.all([pZoneByAisles]);
-  console.log(theZone.data)
+  //const [theZone] = await Promise.all([pZoneByAisles]);
+  //console.log(theZone.data)
 
 
   return (
