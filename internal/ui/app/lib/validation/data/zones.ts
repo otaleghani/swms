@@ -21,7 +21,7 @@ export async function validateZone(
   
   if (!state.result) {
     state.error = true;
-    state.errorMessages = dict.forms.messages.errors.general;
+    state.errorMessages = dict.forms.messages.errors.empty;
     return state;
   }
 
@@ -32,7 +32,7 @@ export async function validateZone(
 
   if (!state.result) {
     state.error = true;
-    state.errorMessages = dict.forms.messages.errors.general;
+    state.errorMessages = dict.forms.messages.errors.empty_after;
     return state;
   }
 

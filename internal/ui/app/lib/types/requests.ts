@@ -90,6 +90,7 @@ import {
   Variant, 
   Variants 
 } from "./data/variants";
+import { Client, Clients } from "./data/clients";
 
 /** Maps every type that can be the body of the return of Response<Entity>
   */
@@ -161,6 +162,9 @@ export type TypeMap = {
   ProductImage: ProductImage;
   ProductImages: ProductImages;
 
+  Client: Client;
+  Clients: Clients;
+
   // User
   User: User;
   Users: Users;
@@ -202,6 +206,7 @@ export type TypeMapFilterSingles = {
     "TicketState" |
     "Product" |
     "ProductImage" |
+    "Client" |
     "User"
   >]: null;
 }

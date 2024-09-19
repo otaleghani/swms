@@ -3,27 +3,32 @@
 /** Actions */
 import validateString from "../strings";
 import { getDictionary, Locale } from "@/lib/dictionaries";
-import { validateExisting, checkExisting } from "../database";
+import { validateExisting } from "../database";
 
 /** Types and interfaces */
-import { Aisle } from "../../types/data/aisles";
+import { Category } from "../../types/data/categories";
 import { FormState } from "../../types/misc";
 
-export async function validateAisle(
-  state: FormState<Aisle>,
+export async function validateCategory(
+  state: FormState<Category>,
   locale: string,
-): Promise<FormState<Aisle>> {
+): Promise<FormState<Category>> {
   const dictPromise = getDictionary(locale as Locale);
   const [ dict ] = await Promise.all([ dictPromise ]);
 
   if (!state.result) {
     state.error = true;
-    state.errorMessages = dict.forms.messages.errors.emtpy;
+    state.errorMessages = dict.forms.messages.errors.empty;
     return state;
   }
 
   if (state.result.id) {
-    state = await validateExisting("Aisle", state, state.result.id, locale);
+    state = await validateExisting(
+      "Category", 
+      state, 
+      state.result.id, 
+      locale
+    );
   }
 
   if (!state.result) {
@@ -39,18 +44,12 @@ export async function validateAisle(
     /* Max */ 20
   )).length != 0 && (state.error = true);
 
-  (state.errorMessages.zone = validateString(
-    state.result.zone as string, 
-    dict.forms.fields.zones.validation, 
-    /* Min */ 36, 
-    /* Max */ 36
+  (state.errorMessages.description = validateString(
+    state.result.description as string, 
+    dict.forms.fields.description.validation, 
+    /* Min */ -1, 
+    /* Max */ 200
   )).length != 0 && (state.error = true);
-
-  if (await checkExisting("Zone", state.result.zone)) {
-    state.errorMessages.zone.push(
-      dict.forms.fields.zones.validation.not_found)
-    state.error = true;
-  }
 
   return state;
 }

@@ -18,36 +18,37 @@ type RetrieveByIdMapOptions = {
 }
 
 const options: RetrieveByIdMapOptions = {
-  "Zone":           { path: "zones/",       type: "Zones" },
-  "ZoneWithExtra":  { path: "zones/extra",  type: "ZonesWithExtra" },
-  "Aisle":          { path: "aisles/",      type: "Aisles" },
-  "AisleWithExtra": { path: "aisles/extra", type: "AisleWithExtra" },
-  "Rack":           { path: "racks/",       type: "Racks" },
-  "RackWithExtra":  { path: "racks/extra",  type: "RackWithExtra" },
-  "Shelf":          { path: "shelfs/",      type: "Shelfs" },
-  "ShelfWithExtra": { path: "shelfs/extra", type: "ShelfWithExtra" },
-  "Category":       { path: "catories/",    type: "Category" },
-  "Subcategory":    { path: "subcategory/", type: "Subcategory" },
+  "Zone":           { path: "zones/{{id}}",       type: "Zones" },
+  "ZoneWithExtra":  { path: "zones/{{id}}/extra",  type: "ZonesWithExtra" },
+  "Aisle":          { path: "aisles/{{id}}",      type: "Aisles" },
+  "AisleWithExtra": { path: "aisles/{{id}}/extra", type: "AisleWithExtra" },
+  "Rack":           { path: "racks/{{id}}",       type: "Racks" },
+  "RackWithExtra":  { path: "racks/{{id}}/extra",  type: "RackWithExtra" },
+  "Shelf":          { path: "shelfs/{{id}}",      type: "Shelfs" },
+  "ShelfWithExtra": { path: "shelfs/{{id}}/extra", type: "ShelfWithExtra" },
+  "Category":       { path: "catories/{{id}}",    type: "Category" },
+  "Subcategory":    { path: "subcategory/{{id}}", type: "Subcategory" },
   "Supplier": { 
-    path: "suppliers/",       
+    path: "suppliers/{{id}}",       
     type: "SupplierWithExtra" 
   },
-  "SupplierWithExtra":  { path: "suppliers/extra", type: "Supplier" },
-  "SupplierCode":       { path: "supplier-codes/", type: "SupplierCode" },
+  "SupplierWithExtra":  { path: "suppliers/{{id}}/extra", type: "Supplier" },
+  "SupplierCode":       { path: "supplier-codes/{{id}}", type: "SupplierCode" },
   "SupplierCodeWithExtra": { 
-    path: "supplier-codes/extra",  
+    path: "supplier-codes/{{id}}/extra",  
     type: "SupplierCodeWithExtra" 
   },
-  "Item":           { path: "items/",          type: "Item" },
-  "ItemImage":      { path: "item-images/",    type: "ItemImage" },
-  "Transition":     { path: "transition/",     type: "Transition" },
-  "Variant":        { path: "variants/",       type: "Variant" },
-  "Ticket":         { path: "tickets/",        type: "Ticket" },
-  "TicketType":     { path: "ticket-types/",   type: "TicketType" },
-  "TicketState":    { path: "aisles-states/",  type: "TicketState" },
-  "Product":        { path: "products/",       type: "Product" },
-  "ProductImage":   { path: "product-images/", type: "ProductImage" },
-  "User":           { path: "users/",          type: "User" },
+  "Item":           { path: "items/{{id}}",          type: "Item" },
+  "ItemImage":      { path: "item-images/{{id}}",    type: "ItemImage" },
+  "Transition":     { path: "transition/{{id}}",     type: "Transition" },
+  "Variant":        { path: "variants/{{id}}",       type: "Variant" },
+  "Ticket":         { path: "tickets/{{id}}",        type: "Ticket" },
+  "TicketType":     { path: "ticket-types/{{id}}",   type: "TicketType" },
+  "TicketState":    { path: "aisles-states/{{id}}",  type: "TicketState" },
+  "Product":        { path: "products/{{id}}",       type: "Product" },
+  "ProductImage":   { path: "product-images/{{id}}", type: "ProductImage" },
+  "Client":         { path: "clients/{{id}}",         type: "Client" },
+  "User":           { path: "users/{{id}}",          type: "User" },
 }
 
 export async function retrieveById<T extends keyof RetrieveByIdMapOptions>(
@@ -57,7 +58,7 @@ export async function retrieveById<T extends keyof RetrieveByIdMapOptions>(
   const option = options[request];
 
   const response = await fetchData<TypeMap[T]>({
-    path: option.path.replace(/{{id}}/g, id),
+    path: option.path.replace(/{{id}}{{id}}/g, id),
     method: "GET",
     tag: revalidateTags[option.type],
   })

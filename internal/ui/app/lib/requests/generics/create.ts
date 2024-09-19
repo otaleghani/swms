@@ -43,6 +43,7 @@ const options: CreateMapOptions = {
   "TicketState":    { path: "aisles-states/",   type: "TicketState" },
   "Product":        { path: "products/",        type: "Product" },
   "ProductImage":   { path: "product-images/",  type: "ProductImage" },
+  "Client":         { path: "clients/",         type: "Client" },
   "User":           { path: "users/",           type: "User" },
 }
 

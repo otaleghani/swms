@@ -42,6 +42,7 @@ const options: RetrieveMapOptions = {
   "TicketStates":           { path: "ticket-states/",       type: "TicketStates" },
   "Products":               { path: "products/",            type: "Products" },
   "ProductImages":          { path: "product-images/",      type: "ProductImage" },
+  "Clients":                { path: "clients/",         type: "Clients" },
   "Users":                  { path: "users/",               type: "Users" },
 };
 

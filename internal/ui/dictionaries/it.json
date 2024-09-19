@@ -1161,9 +1161,12 @@
         "delete": "Eliminato correttamente"
       },
       "errors": {
-        "general": "Correggi gli errori prima di inviare di nuovo i dati"
+        "general": "Correggi gli errori prima di inviare di nuovo i dati",
+        "emtpy": "Non puoi inviare un form vuoto",
+        "emtpy_after": "Errore dopo la validazione. Chiedi aiuto all'amministratore."
       }
     },
+
     "fields": {
       "name": {
         "label": "Nome",
@@ -1250,11 +1253,6 @@
           "type": "L'identificate deve essere una stringa."
         }
       },
-      "variants": {
-        "validation": {
-          "general": "Errore nell'analisi dei dati"
-        }
-      },
       "database": {
         "validation": {
           "empty": "La richiesta era vuota.",
@@ -1263,16 +1261,6 @@
           "server": "Errore nella risposta alla richiesta.",
           "not_found": "Non ho trovato la risorsa richiesta.",
           "unknown": "Errore generico sconosciuto: contatta l'amministratore."
-        }
-      },
-      "suppliers": {
-        "select": {
-          "label": "Fornitore",
-          "combobox": {
-            "select": "Seleziona un fornitore...",
-            "search": "Cerca un fornitore...",
-            "empty": "Nessun fornitore"
-          }
         }
       },
       "codes": {
@@ -1284,8 +1272,144 @@
           "min": "Il codice fornitore deve essere di minimo {{min}} di caratteri.",
           "type": "Il codice fornitore deve essere una stringa."
         }
+      },
+      "suppliers": {
+        "select": {
+          "label": "Fornitore",
+          "combobox": {
+            "select": "Seleziona un fornitore...",
+            "search": "Cerca un fornitore...",
+            "empty": "Nessun fornitore"
+          }
+        },
+        "validation": {
+          "not_found": "Il fornitore selezionato non esiste."
+        }
+      },
+      "zones": {
+        "select": {
+          "label": "Zone",
+          "combobox": {
+            "select": "Seleziona un fornitore...",
+            "search": "Cerca un fornitore...",
+            "empty": "Nessun fornitore"
+          }
+        },
+        "validation": {
+          "not_found": "La zona selezionata non esiste."
+        }
+      },
+      "aisles": {
+        "select": {
+          "label": "Corridoi",
+          "combobox": {
+            "select": "Seleziona un corridoio...",
+            "search": "Cerca un corridoio...",
+            "empty": "Nessun corridoio"
+          }
+        },
+        "validation": {
+          "not_found": "Il corridoio selezionato non esiste."
+        }
+      },
+      "racks": {
+        "select": {
+          "label": "Scaffali",
+          "combobox": {
+            "select": "Seleziona uno scaffale...",
+            "search": "Cerca uno scaffale...",
+            "empty": "Nessun scaffale"
+          }
+        },
+        "validation": {
+          "not_found": "Lo scaffale selezionato non esiste."
+        }
+      },
+      "shelfs": {
+        "select": {
+          "label": "Ripiani",
+          "combobox": {
+            "select": "Seleziona un ripiano...",
+            "search": "Cerca un ripiano...",
+            "empty": "Nessun ripiano"
+          }
+        },
+        "validation": {
+          "not_found": "Il ripiano selezionato non esiste."
+        }
+      },
+      "variants": {
+        "select": {
+          "label": "Variante",
+          "combobox": {
+            "select": "Seleziona una variante...",
+            "search": "Cerca una variante...",
+            "empty": "Nessuna variante"
+          }
+        },
+        "validation": {
+          "not_found": "La variante selezionata non esiste.",
+          "general": "Errore nell'analisi dei dati"
+        }
+      },
+      "products": {
+        "select": {
+          "label": "Macchina",
+          "combobox": {
+            "select": "Seleziona una macchina...",
+            "search": "Cerca una macchina...",
+            "empty": "Nessuna macchina"
+          }
+        },
+        "validation": {
+          "not_found": "La macchina selezionata non esiste.",
+          "general": "Errore nell'analisi dei dati"
+        }
+      },
+      "client": {
+        "select": {
+          "label": "Cliente",
+          "combobox": {
+            "select": "Seleziona un cliente...",
+            "search": "Cerca un cliente...",
+            "empty": "Nessun cliente"
+          }
+        },
+        "validation": {
+          "not_found": "Il cliente selezionato non esiste.",
+          "general": "Errore nell'analisi dei dati"
+        }
+      },
+      "categories": {
+        "select": {
+          "label": "Categoria",
+          "combobox": {
+            "select": "Seleziona una categoria...",
+            "search": "Cerca una categoria...",
+            "empty": "Nessuna categoria"
+          }
+        },
+        "validation": {
+          "not_found": "La categoria selezionata non esiste.",
+          "general": "Errore nell'analisi dei dati"
+        }
+      },
+      "items": {
+        "select": {
+          "label": "Oggetti",
+          "combobox": {
+            "select": "Seleziona un oggetto...",
+            "search": "Cerca un oggetto...",
+            "empty": "Nessun oggetto"
+          }
+        },
+        "validation": {
+          "not_found": "L'oggetto selezionato non esiste.",
+          "general": "Errore nell'analisi dei dati"
+        }
       }
     },
+
     "buttons": {
       "submit": {
         "active": "Invia",

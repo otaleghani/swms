@@ -6,13 +6,13 @@ import { getDictionary, Locale } from "@/lib/dictionaries";
 import { validateExisting, checkExisting } from "../database";
 
 /** Types and interfaces */
-import { Aisle } from "../../types/data/aisles";
+import { ProductImage } from "../../types/data/images";
 import { FormState } from "../../types/misc";
 
-export async function validateAisle(
-  state: FormState<Aisle>,
+export async function validateProductImage(
+  state: FormState<ProductImage>,
   locale: string,
-): Promise<FormState<Aisle>> {
+): Promise<FormState<ProductImage>> {
   const dictPromise = getDictionary(locale as Locale);
   const [ dict ] = await Promise.all([ dictPromise ]);
 
@@ -23,7 +23,12 @@ export async function validateAisle(
   }
 
   if (state.result.id) {
-    state = await validateExisting("Aisle", state, state.result.id, locale);
+    state = await validateExisting(
+      "ProductImage", 
+      state, 
+      state.result.id, 
+      locale
+    );
   }
 
   if (!state.result) {
@@ -32,23 +37,19 @@ export async function validateAisle(
     return state;
   }
 
-  (state.errorMessages.name = validateString(
-    state.result.name as string, 
-    dict.forms.fields.name.validation, 
-    /* Min */ 2, 
-    /* Max */ 20
+  // For the validation uri is left befind. Check the ./itemImages.ts
+  // for the full explaination.
+
+  (state.errorMessages.product = validateString(
+    state.result.product as string, 
+    dict.forms.fields.products.validation, 
+    /* Min */ -1, 
+    /* Max */ 36,
   )).length != 0 && (state.error = true);
 
-  (state.errorMessages.zone = validateString(
-    state.result.zone as string, 
-    dict.forms.fields.zones.validation, 
-    /* Min */ 36, 
-    /* Max */ 36
-  )).length != 0 && (state.error = true);
-
-  if (await checkExisting("Zone", state.result.zone)) {
-    state.errorMessages.zone.push(
-      dict.forms.fields.zones.validation.not_found)
+  if (await checkExisting("Product", state.result.product)) {
+    state.errorMessages.product.push(
+      dict.forms.fields.products.validation.not_found)
     state.error = true;
   }
 

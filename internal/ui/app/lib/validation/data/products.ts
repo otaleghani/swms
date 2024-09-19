@@ -6,13 +6,13 @@ import { getDictionary, Locale } from "@/lib/dictionaries";
 import { validateExisting, checkExisting } from "../database";
 
 /** Types and interfaces */
-import { Aisle } from "../../types/data/aisles";
+import { Product } from "../../types/data/products";
 import { FormState } from "../../types/misc";
 
-export async function validateAisle(
-  state: FormState<Aisle>,
+export async function validateProduct(
+  state: FormState<Product>,
   locale: string,
-): Promise<FormState<Aisle>> {
+): Promise<FormState<Product>> {
   const dictPromise = getDictionary(locale as Locale);
   const [ dict ] = await Promise.all([ dictPromise ]);
 
@@ -23,7 +23,12 @@ export async function validateAisle(
   }
 
   if (state.result.id) {
-    state = await validateExisting("Aisle", state, state.result.id, locale);
+    state = await validateExisting(
+      "Product", 
+      state, 
+      state.result.id, 
+      locale
+    );
   }
 
   if (!state.result) {
@@ -35,20 +40,27 @@ export async function validateAisle(
   (state.errorMessages.name = validateString(
     state.result.name as string, 
     dict.forms.fields.name.validation, 
-    /* Min */ 2, 
-    /* Max */ 20
+    /* Min */ 1, 
+    /* Max */ 20,
   )).length != 0 && (state.error = true);
 
-  (state.errorMessages.zone = validateString(
-    state.result.zone as string, 
-    dict.forms.fields.zones.validation, 
+  (state.errorMessages.description = validateString(
+    state.result.description as string, 
+    dict.forms.fields.description.validation, 
+    /* Min */ -1, 
+    /* Max */ 20,
+  )).length != 0 && (state.error = true);
+
+  (state.errorMessages.client = validateString(
+    state.result.client as string, 
+    dict.forms.fields.client.validation, 
     /* Min */ 36, 
-    /* Max */ 36
+    /* Max */ 36,
   )).length != 0 && (state.error = true);
 
-  if (await checkExisting("Zone", state.result.zone)) {
-    state.errorMessages.zone.push(
-      dict.forms.fields.zones.validation.not_found)
+  if (await checkExisting("Client", state.result.client)) {
+    state.errorMessages.client.push(
+      dict.forms.fields.client.validation.not_found)
     state.error = true;
   }
 
