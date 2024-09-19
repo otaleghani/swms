@@ -4,17 +4,78 @@ import { TypeMap } from "../types/requests"
   * so that it can be used to revalidate if needed after a request.
   */
 export const revalidateTags: Record<keyof TypeMap, string> = {
-  "Zone":             "zones",
-  "Zones":            "zones",
-  "ZoneWithExtra":    "zones",
-  "ZonesWithExtra":   "zones",
+  // Positions
+  "Zone": "zones",
+  "Zones": "zones",
+  "ZoneWithExtra": "zones",
+  "ZonesWithExtra": "zones",
 
-  "Aisle":            "aisles",
-  "Aisles":           "aisles",
-  "AisleWithExtra":   "aisles",
-  "AislesWithExtra":  "aisles",
+  "Aisle": "aisles",
+  "Aisles": "aisles",
+  "AisleWithExtra": "aisles",
+  "AislesWithExtra": "aisles",
 
-  "Racks":            "racks",
+  "Rack": "racks",
+  "Racks": "racks",
+  "RackWithExtra": "racks",
+  "RacksWithExtra": "racks",
+
+  "Shelf": "shelfs",
+  "Shelfs": "shelfs",
+  "ShelfWithExtra": "shelfs",
+  "ShelfsWithExtra": "shelfs",
+
+  // Tag
+  "Category": "categories",
+  "Categories": "categories",
+
+  "Subcategory": "subcategories",
+  "Subcategories": "subcategories",
+
+  // Supplier
+  "Supplier": "suppliers",
+  "Suppliers": "suppliers",
+  "SupplierWithExtra": "suppliers",
+  "SuppliersWithExtra": "suppliers",
+  
+  "SupplierCode": "supplier-codes",
+  "SupplierCodes": "supplier-codes",
+  "SupplierCodeWithExtra": "supplier-codes",
+  "SupplierCodesWithExtra": "supplier-codes",
+  "ItemWithSupplierCodes": "supplier-codes",
+
+  // Item
+  "Item": "items",
+  "Items": "items",
+
+  "ItemImage": "item-images",
+  "ItemImages": "item-images",
+
+  "Transition": "transitions",
+  "Transitions": "transitions",
+
+  "Variant": "variants",
+  "Variants": "variants",
+
+  // Tickets
+  "Ticket": "tickets",
+  "Tickets": "tickets",
+
+  "TicketType": "ticket-types",
+  "TicketTypes": "ticket-types",
+
+  "TicketState": "ticket-states",
+  "TicketStates": "ticket-states",
+
+  "Product": "products",
+  "Products": "products",
+
+  "ProductImage": "product-images",
+  "ProductImages": "product-images",
+
+  // User
+  "User": "users",
+  "Users": "users",
 }
 
 //export const asdf: Record<keyof TypeMap, >

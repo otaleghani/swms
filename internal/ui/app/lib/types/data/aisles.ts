@@ -1,4 +1,4 @@
-import { FormState, Response } from "./misc";
+import { FormState, Response } from "../misc";
 
 export type Aisle = {
   id?: string;
@@ -29,7 +29,7 @@ export type AislesRP = Promise<Response<Aisles>>;
 export type AisleWithExtraRP = Promise<Response<AisleWithExtra>>;
 export type AislesWithExtraRP = Promise<Response<AislesWithExtra>>;
 
-export type BulkAislesRequest = {
+export type AislesBulkPostRequestBody = {
   number: number;
   zone: string;
 }

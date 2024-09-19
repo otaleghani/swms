@@ -4,3 +4,4 @@ export type Subcategory = {
   description: string;
   category: string;
 }
+export type Subcategories = Subcategory[];

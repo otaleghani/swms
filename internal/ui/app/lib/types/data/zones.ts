@@ -27,7 +27,6 @@ export type ZonesRP = Promise<Response<Zones>>;
 export type ZoneWithExtraRP = Promise<Response<ZoneWithExtra>>;
 export type ZonesWithExtraRP = Promise<Response<ZonesWithExtra>>;
 
-export type BulkZonesRequest = {
+export type ZonesBulkPostRequestBody = {
   number: number;
 }
-

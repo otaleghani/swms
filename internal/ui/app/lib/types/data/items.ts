@@ -10,3 +10,4 @@ export type Item = {
   category: string;
   subcategory: string;
 }
+export type Items = Item[];

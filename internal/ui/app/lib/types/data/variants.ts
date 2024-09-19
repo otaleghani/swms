@@ -11,3 +11,4 @@ export type Variant = {
   defaultVariant: boolean;
   item: string;
 }
+export type Variants = Variant[];
