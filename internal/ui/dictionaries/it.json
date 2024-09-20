@@ -1178,6 +1178,16 @@
           "type": "Il nome deve essere una stringa."
         }
       },
+      "surname": {
+        "label": "Cognome",
+        "placeholder": "Inserisci il cognome",
+        "validation": {
+          "empty": "Il cognome non puo essere vuoto",
+          "max": "Il cognome deve essere al massimo di {{max}} di caratter.",
+          "min": "Il cognome deve essere di minimo {{min}} di caratteri.",
+          "type": "Il cognome deve essere una stringa."
+        }
+      },
       "description": {
         "label": "Descrizione",
         "placeholder": "Inserisci la descrizione",
@@ -1406,6 +1416,31 @@
         "validation": {
           "not_found": "L'oggetto selezionato non esiste.",
           "general": "Errore nell'analisi dei dati"
+        }
+      },
+      "users": {
+        "select": {
+          "label": "Utenti",
+          "combobox": {
+            "select": "Seleziona un utente...",
+            "search": "Cerca un utente...",
+            "empty": "Nessun utente"
+          }
+        },
+        "validation": {
+          "not_found": "L'utente selezionato non esiste.",
+          "general": "Errore nell'analisi dei dati"
+        }
+      },
+      "date": {
+        "label": "Data",
+        "placeholder": "Inserisci la data",
+        "validation": {
+          "empty": "La data non puo essere vuoto",
+          "max": "La data deve essere al massimo di {{max}} di caratter.",
+          "min": "La data deve essere di minimo {{min}} di caratteri.",
+          "type": "La data deve essere una stringa.",
+          "valid": "La data inserita non è valida."
         }
       }
     },

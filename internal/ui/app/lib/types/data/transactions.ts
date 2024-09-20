@@ -1,6 +1,6 @@
-export type Transition = {
+export type Transaction = {
   id?: string;
-  date: Date;
+  date: string; // date
   quantity: number;
 
   user: string;
@@ -8,4 +8,4 @@ export type Transition = {
   variant: string;
   ticket: string;
 }
-export type Transitions = Transition[];
+export type Transactions = Transaction[];

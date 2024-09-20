@@ -36,7 +36,7 @@ const options: CreateMapOptions = {
   "SupplierCode":   { path: "supplier-codes/",  type: "SupplierCode" },
   "Item":           { path: "items/",           type: "Item" },
   "ItemImage":      { path: "item-images/",     type: "ItemImage" },
-  "Transition":     { path: "transition/",      type: "Transition" },
+  "Transaction":    { path: "transition/",      type: "Transaction" },
   "Variant":        { path: "variants/",        type: "Variant" },
   "Ticket":         { path: "tickets/",         type: "Ticket" },
   "TicketType":     { path: "ticket-types/",    type: "TicketType" },

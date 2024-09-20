@@ -6,13 +6,13 @@ import { getDictionary, Locale } from "@/lib/dictionaries";
 import { validateExisting, checkExisting } from "../database";
 
 /** Types and interfaces */
-import { Subcategory } from "../../types/data/subcategories";
+import { User } from "../../types/data/users";
 import { FormState } from "../../types/misc";
 
-export async function validateSubcategory(
-  state: FormState<Subcategory>,
+export async function validateUser(
+  state: FormState<User>,
   locale: string,
-): Promise<FormState<Subcategory>> {
+): Promise<FormState<User>> {
   const dictPromise = getDictionary(locale as Locale);
   const [ dict ] = await Promise.all([ dictPromise ]);
 
@@ -24,7 +24,7 @@ export async function validateSubcategory(
 
   if (state.result.id) {
     state = await validateExisting(
-      "Subcategory", 
+      "User", 
       state, 
       state.result.id, 
       locale
@@ -40,29 +40,16 @@ export async function validateSubcategory(
   (state.errorMessages.name = validateString(
     state.result.name as string, 
     dict.forms.fields.name.validation, 
-    /* Min */ 2, 
+    /* Min */ 1, 
     /* Max */ 20
   )).length != 0 && (state.error = true);
 
-  (state.errorMessages.description = validateString(
-    state.result.description as string, 
-    dict.forms.fields.description.validation, 
+  (state.errorMessages.surname = validateString(
+    state.result.surname as string, 
+    dict.forms.fields.surname.validation, 
     /* Min */ -1, 
-    /* Max */ 200
+    /* Max */ 20
   )).length != 0 && (state.error = true);
-
-  (state.errorMessages.category = validateString(
-    state.result.category as string, 
-    dict.forms.fields.categories.validation, 
-    /* Min */ 36, 
-    /* Max */ 36
-  )).length != 0 && (state.error = true);
-
-  if (await checkExisting("Category", state.result.category)) {
-    state.errorMessages.category.push(
-      dict.forms.fields.categories.validation.not_found);
-    state.error = true;
-  }
 
   return state;
 }

@@ -40,7 +40,7 @@ const options: RetrieveByIdMapOptions = {
   },
   "Item":           { path: "items/{{id}}",          type: "Item" },
   "ItemImage":      { path: "item-images/{{id}}",    type: "ItemImage" },
-  "Transition":     { path: "transition/{{id}}",     type: "Transition" },
+  "Transaction":     { path: "transition/{{id}}",     type: "Transaction" },
   "Variant":        { path: "variants/{{id}}",       type: "Variant" },
   "Ticket":         { path: "tickets/{{id}}",        type: "Ticket" },
   "TicketType":     { path: "ticket-types/{{id}}",   type: "TicketType" },

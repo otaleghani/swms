@@ -1,4 +1,4 @@
-export default function validateNumbers(
+export default function validateNumber(
   field: string,
   dict: any,
   min: number,

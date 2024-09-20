@@ -35,7 +35,7 @@ const options: RetrieveMapOptions = {
   "ItemWithSupplierCodes":  { path: "items/supplier-codes", type: "SupplierCodes" },
   "Items":                  { path: "items/",               type: "Items" },
   "ItemImages":             { path: "item-images/",         type: "ItemImage" },
-  "Transitions":            { path: "transitions/",         type: "Transitions" },
+  "Transactions":            { path: "transitions/",         type: "Transactions" },
   "Variants":               { path: "variants/",            type: "Variants" },
   "Tickets":                { path: "tickets/",             type: "Tickets" },
   "TicketTypes":            { path: "ticket-types/",        type: "TicketTypes" },

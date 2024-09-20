@@ -77,9 +77,9 @@ import {
 } from "./data/subcategories";
 
 import { 
-  Transition, 
-  Transitions 
-} from "./data/transitions";
+  Transaction, 
+  Transactions 
+} from "./data/transactions";
 
 import { 
   User, 
@@ -142,8 +142,8 @@ export type TypeMap = {
   ItemImage: ItemImage;
   ItemImages: ItemImages;
 
-  Transition: Transition;
-  Transitions: Transitions;
+  Transaction: Transaction;
+  Transactions: Transactions;
 
   Variant: Variant;
   Variants: Variants;
@@ -199,7 +199,7 @@ export type TypeMapFilterSingles = {
     "SupplierCodeWithExtra" |
     "Item" |
     "ItemImage" |
-    "Transition" |
+    "Transaction" |
     "Variant" |
     "Ticket" |
     "TicketType" |
