@@ -435,6 +435,7 @@
   },
 
   "zones": {
+
     "add_dialog": {
       "name": "Zona",
       "title": "Aggiungi una nuova zona",
@@ -464,6 +465,7 @@
         }
       }
     },
+
     "select_field": {
       "name": "Zona",
       "combobox": {
@@ -472,6 +474,7 @@
         "empty": "Nessuna zona"
       }
     },
+
     "header_single": {
       "title": "Zone",
       "breadcrumbs": {
@@ -481,9 +484,11 @@
         "rack": "Scaffale"
       }
     },
+
     "header_collection": {
       "title": "Zone"
     },
+
     "card": {
       "labels": {
         "aisles": "Corridoi",
@@ -492,12 +497,14 @@
         "view": "Guarda"
       }
     },
+
     "delete_form": {
       "title": "Elimina zona",
       "description": "Vuoi eliminare questa zona? L'operazione non può essere reversibile",
       "button": "Elimina",
       "clear_button": "Ci ho ripensato"
     },
+
     "edit_form": {
       "dialog_button": "Modifica",
       "title": "Modifica zone",
@@ -528,6 +535,7 @@
         }
       }
     },
+
     "bulk_form": {
       "dialog_button": "Aggiungi zone",
       "title": "Quante zone vuoi aggiungere?",
@@ -1163,19 +1171,38 @@
       "errors": {
         "general": "Correggi gli errori prima di inviare di nuovo i dati",
         "emtpy": "Non puoi inviare un form vuoto",
-        "emtpy_after": "Errore dopo la validazione. Chiedi aiuto all'amministratore."
+        "emtpy_after": "Errore dopo la validazione. Chiedi aiuto all'amministratore.",
+        "auth": "Non sei autorizzato ad eseguire questa azione.",
+        "not_found": "Non ho trovato la risorsa richiesta.",
+        "client": "Errore nella formulazione della richiesta.",
+        "server": "Errore nella risposta alla richiesta.",
+        "unknown": "Errore generico sconosciuto: contatta l'amministratore."
       }
     },
 
     "fields": {
+
+      "//INPUT FIELDS": "",
+      "date": {
+        "label": "Data",
+        "placeholder": "Inserisci la data",
+        "validation": {
+          "empty": "La data non puo essere vuoto",
+          "max": "La data deve essere al massimo di {{max}} di caratter.",
+          "min": "La data deve essere di minimo {{min}} di caratteri.",
+          "type": "La data deve essere una stringa.",
+          "valid": "La data inserita non è valida."
+        }
+      },
       "name": {
         "label": "Nome",
         "placeholder": "Inserisci il nome",
         "validation": {
           "empty": "Il nome non puo essere vuoto",
-          "max": "Il nome deve essere al massimo di {{max}} di caratter.",
+          "max": "Il nome deve essere al massimo di {{max}} di caratteri.",
           "min": "Il nome deve essere di minimo {{min}} di caratteri.",
-          "type": "Il nome deve essere una stringa."
+          "type": "Il nome deve essere una stringa.",
+          "valid": "Il nome inserito non è valido."
         }
       },
       "surname": {
@@ -1183,9 +1210,10 @@
         "placeholder": "Inserisci il cognome",
         "validation": {
           "empty": "Il cognome non puo essere vuoto",
-          "max": "Il cognome deve essere al massimo di {{max}} di caratter.",
+          "max": "Il cognome deve essere al massimo di {{max}} di caratteri.",
           "min": "Il cognome deve essere di minimo {{min}} di caratteri.",
-          "type": "Il cognome deve essere una stringa."
+          "type": "Il cognome deve essere una stringa.",
+          "valid": "Il cognome inserito non è valido."
         }
       },
       "description": {
@@ -1195,18 +1223,21 @@
           "empty": "La descrizione non puo essere vuota.",
           "max": "La descrizione deve essere al massimo di {{max}} di caratter.",
           "min": "La descrizione deve essere al minimo {{min}} di caratteri.",
-          "type": "La descrizione deve essere una stringa."
+          "type": "La descrizione deve essere una stringa.",
+          "valid": "La descrizione inserita non è valida."
         }
       },
+
+      "//DIMENSIONS FIELDS": "",
       "width": {
         "label": "Larghezza",
         "placeholder": "La larghezza dell'oggetto",
         "validation": {
           "empty": "La larghezza non puo essere vuota.",
-          "not_valid": "La larghezza non puo essere vuota.",
           "max": "La larghezza deve essere al massimo {{max}}.",
           "min": "La larghezza deve essere al minimo {{min}}.",
-          "type": "La larghezza deve essere un numero."
+          "type": "La larghezza deve essere un numero.",
+          "valid": "La larghezza inserita non è valida."
         }
       },
       "height": {
@@ -1214,10 +1245,10 @@
         "placeholder": "L'altezza dell'oggetto",
         "validation": {
           "empty": "L'altezza non puo essere vuota.",
-          "not_valid": "L'altezza non puo essere vuota.",
           "max": "L'altezza deve essere al massimo {{max}}.",
           "min": "L'altezza deve essere al minimo {{min}}.",
-          "type": "L'altezza deve essere un numero."
+          "type": "L'altezza deve essere un numero.",
+          "valid": "L'altezza inserita non è valida."
         }
       },
       "weight": {
@@ -1225,10 +1256,10 @@
         "placeholder": "Il peso dell'oggetto",
         "validation": {
           "empty": "Il peso non puo essere vuoto.",
-          "not_valid": "Il peso non puo essere vuota.",
           "max": "Il peso deve essere al massimo {{max}}.",
           "min": "Il peso deve essere al minimo {{min}}.",
-          "type": "Il peso deve essere un numero."
+          "type": "Il peso deve essere un numero.",
+          "valid": "Il peso inserito non è valido."
         }
       },
       "length": {
@@ -1236,18 +1267,19 @@
         "placeholder": "La lunghezza dell'oggetto",
         "validation": {
           "empty": "Lo spessore non puo essere vuoto.",
-          "not_valid": "Lo spessore non puo essere vuota.",
           "max": "Lo spessore deve essere al massimo {{max}}.",
           "min": "Lo spessore deve essere al minimo {{min}}.",
-          "type": "Lo spessore deve essere un numero."
+          "type": "Lo spessore deve essere un numero.",
+          "valid": "Lo spessore inserito non è valido"
         }
       },
+
+      "//OTHER FIELDS": "",
       "quantity": {
         "label": "Quantità",
         "placeholder": "La quantità in question",
         "validation": {
           "empty": "La quantità non puo essere vuota.",
-          "not_valid": "La quantità non puo essere vuota.",
           "max": "La quantità deve essere al massimo {{max}}.",
           "min": "La quantità deve essere al minimo {{min}}.",
           "type": "La quantità deve essere un numero."
@@ -1263,16 +1295,6 @@
           "type": "L'identificate deve essere una stringa."
         }
       },
-      "database": {
-        "validation": {
-          "empty": "La richiesta era vuota.",
-          "autentication": "Non sei autorizzato ad eseguire questa azione.",
-          "client": "Errore nella formulazione della richiesta.",
-          "server": "Errore nella risposta alla richiesta.",
-          "not_found": "Non ho trovato la risorsa richiesta.",
-          "unknown": "Errore generico sconosciuto: contatta l'amministratore."
-        }
-      },
       "codes": {
         "label": "Codice fornitore",
         "placeholder": "Inserisci codice del fornitore",
@@ -1283,19 +1305,8 @@
           "type": "Il codice fornitore deve essere una stringa."
         }
       },
-      "suppliers": {
-        "select": {
-          "label": "Fornitore",
-          "combobox": {
-            "select": "Seleziona un fornitore...",
-            "search": "Cerca un fornitore...",
-            "empty": "Nessun fornitore"
-          }
-        },
-        "validation": {
-          "not_found": "Il fornitore selezionato non esiste."
-        }
-      },
+
+      "//SELECT FIELDS": "",
       "zones": {
         "select": {
           "label": "Zone",
@@ -1348,6 +1359,34 @@
           "not_found": "Il ripiano selezionato non esiste."
         }
       },
+
+      "suppliers": {
+        "select": {
+          "label": "Fornitore",
+          "combobox": {
+            "select": "Seleziona un fornitore...",
+            "search": "Cerca un fornitore...",
+            "empty": "Nessun fornitore"
+          }
+        },
+        "validation": {
+          "not_found": "Il fornitore selezionato non esiste."
+        }
+      },
+
+      "items": {
+        "select": {
+          "label": "Oggetti",
+          "combobox": {
+            "select": "Seleziona un oggetto...",
+            "search": "Cerca un oggetto...",
+            "empty": "Nessun oggetto"
+          }
+        },
+        "validation": {
+          "not_found": "L'oggetto selezionato non esiste."
+        }
+      },
       "variants": {
         "select": {
           "label": "Variante",
@@ -1358,8 +1397,21 @@
           }
         },
         "validation": {
-          "not_found": "La variante selezionata non esiste.",
-          "general": "Errore nell'analisi dei dati"
+          "not_found": "La variante selezionata non esiste."
+        }
+      },
+
+      "tickets": {
+        "select": {
+          "label": "Ticket",
+          "combobox": {
+            "select": "Seleziona un ticket...",
+            "search": "Cerca un ticket...",
+            "empty": "Nessun ticket"
+          }
+        },
+        "validation": {
+          "not_found": "Il ticket selezionata non esiste."
         }
       },
       "products": {
@@ -1372,8 +1424,7 @@
           }
         },
         "validation": {
-          "not_found": "La macchina selezionata non esiste.",
-          "general": "Errore nell'analisi dei dati"
+          "not_found": "La categoria selezionata non esiste."
         }
       },
       "client": {
@@ -1386,10 +1437,10 @@
           }
         },
         "validation": {
-          "not_found": "Il cliente selezionato non esiste.",
-          "general": "Errore nell'analisi dei dati"
+          "not_found": "La categoria selezionata non esiste."
         }
       },
+
       "categories": {
         "select": {
           "label": "Categoria",
@@ -1400,24 +1451,23 @@
           }
         },
         "validation": {
-          "not_found": "La categoria selezionata non esiste.",
-          "general": "Errore nell'analisi dei dati"
+          "not_found": "La categoria selezionata non esiste."
         }
       },
-      "items": {
+      "subcategories": {
         "select": {
-          "label": "Oggetti",
+          "label": "Tipologie",
           "combobox": {
-            "select": "Seleziona un oggetto...",
-            "search": "Cerca un oggetto...",
-            "empty": "Nessun oggetto"
+            "select": "Seleziona una tipologia...",
+            "search": "Cerca una tipologia...",
+            "empty": "Nessuna tipologia"
           }
         },
         "validation": {
-          "not_found": "L'oggetto selezionato non esiste.",
-          "general": "Errore nell'analisi dei dati"
+          "not_found": "La tipologia selezionata non esiste."
         }
       },
+
       "users": {
         "select": {
           "label": "Utenti",
@@ -1428,19 +1478,7 @@
           }
         },
         "validation": {
-          "not_found": "L'utente selezionato non esiste.",
-          "general": "Errore nell'analisi dei dati"
-        }
-      },
-      "date": {
-        "label": "Data",
-        "placeholder": "Inserisci la data",
-        "validation": {
-          "empty": "La data non puo essere vuoto",
-          "max": "La data deve essere al massimo di {{max}} di caratter.",
-          "min": "La data deve essere di minimo {{min}} di caratteri.",
-          "type": "La data deve essere una stringa.",
-          "valid": "La data inserita non è valida."
+          "not_found": "L'utente selezionato non esiste."
         }
       }
     },
@@ -1457,6 +1495,10 @@
       "delete": {
         "active": "Elimina",
         "pending": "Sto eliminando..."
+      },
+      "modify": {
+        "active": "Modifica",
+        "pending": "Sto modificando..."
       },
       "clear": {
         "active": "Annulla"

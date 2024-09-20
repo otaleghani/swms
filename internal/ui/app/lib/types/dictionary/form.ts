@@ -1,64 +1,99 @@
-export interface DictionarySelectField {
-  name: string;
-  combobox: DictionarySelectFieldCombobox;
+export interface DictForms {
+  messages: DictFormMessages;
+  fields:   DictFormFields;
+  buttons:  DictFormButtons;
 }
 
-export interface DictionarySelectFieldCombobox {
-    select: string;
-    search: string;
-    empty: string;
-}
-
-export interface DictionaryInputField {
-  label: string;
-  placeholder: string;
-  validation: {
-    empty: string;
-    not_valid: string;
-    max: string;
-    min: string;
-    type: string;
-  };
-}
-
-export interface DictionaryMessages {
+export interface DictFormMessages {
   success: {
-    post: string;
-    get: string;
+    post:   string;
+    get:    string;
     update: string;
     delete: string;
   };
   errors: {
-    general: string;
+    general:      string,
+    emtpy:        string,
+    emtpy_after:  string,
+    auth:         string,
+    not_found:    string,
+    client:       string,
+    server:       string,
+    unknown:      string,
   };
 }
 
-export interface DictionaryFormButton {
-  active: string;
-  pending: string;
+export interface DictFormFields {
+  date:           DictInputField;
+  name:           DictInputField;
+  surname:        DictInputField;
+  description:    DictInputField;
+
+  width:          DictInputField;
+  height:         DictInputField;
+  weight:         DictInputField;
+  length:         DictInputField;
+
+  quantity:       DictInputField;
+  identifier:     DictInputField;
+  codes:          DictInputField;
+
+  zones:          DictSelectField;
+  aisles:         DictSelectField;
+  racks:          DictSelectField;
+  shelfs:         DictSelectField;
+
+  suppliers:      DictSelectField;
+
+  items:          DictSelectField;
+  variants:       DictSelectField;
+
+  tickets:        DictSelectField;
+  products:       DictSelectField;
+  clients:        DictSelectField;
+
+  categories:     DictSelectField;
+  subcategories:  DictSelectField;
+
+  users:          DictSelectField;
 }
 
-export interface DictionaryFormButtons {
-  submit: DictionaryFormButton;
-  add: DictionaryFormButton;
-  delete: DictionaryFormButton;
-  clear: DictionaryFormButton;
-}
-
-export interface DictionaryForms {
-  messages: DictionaryMessages;
-  fields: {
-    name: DictionaryInputField;
-    description: DictionaryInputField;
-    width: DictionaryInputField;
-    height: DictionaryInputField;
-    weight: DictionaryInputField;
-    length: DictionaryInputField;
-    quantity: DictionaryInputField;
-    identifier: DictionaryInputField;
-    variants: DictionaryInputField;
-    database: DictionaryInputField;
-    suppliers: DictionaryInputField;
-    codes: DictionaryInputField;
+export interface DictInputField {
+  label:        string;
+  placeholder:  string;
+  validation: {
+    empty:      string;
+    max:        string;
+    min:        string;
+    type:       string;
+    valid:      string;
   };
+}
+
+export interface DictSelectField {
+  select: {
+    label: string;
+    combobox: DictSelectFieldCombobox;
+  };
+  validation: {
+    not_found: string;
+  }
+}
+export interface DictSelectFieldCombobox {
+    select: string;
+    search: string;
+    empty:  string;
+}
+
+
+export interface DictFormButton {
+  active:   string;
+  pending:  string;
+}
+
+export interface DictFormButtons {
+  submit: DictFormButton;
+  add:    DictFormButton;
+  delete: DictFormButton;
+  clear:  DictFormButton;
 }

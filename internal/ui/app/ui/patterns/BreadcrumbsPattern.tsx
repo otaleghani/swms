@@ -21,8 +21,8 @@ interface BreadcrumbsPatternProps {
 }
 
 export function BreadcrumbsPattern({ 
-  items, 
-  current_item 
+  itemsList, 
+  currentItem 
 }: BreadcrumbsPatternProps) {
   return (
     <Breadcrumb>
@@ -35,7 +35,7 @@ export function BreadcrumbsPattern({
           </BreadcrumbItem>
           <BreadcrumbSeparator />
         </>
-        {items.length < 2 ? items.map((item: any) => (
+        {itemsList.length < 2 ? itemsList.map((item: any) => (
           <>
             <BreadcrumbItem>
               <BreadcrumbLink asChild>
@@ -52,14 +52,14 @@ export function BreadcrumbsPattern({
             <BreadcrumbSeparator />
             <BreadcrumbItem>
               <BreadcrumbLink asChild>
-                <Link href={items[items.length-1].url}>{items[items.length-1].label}</Link>
+                <Link href={itemsList[itemsList.length-1].url}>{itemsList[itemsList.length-1].label}</Link>
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
           </>
         )}
         <BreadcrumbItem>
-          <BreadcrumbPage>{current_item}</BreadcrumbPage>
+          <BreadcrumbPage>{currentItem}</BreadcrumbPage>
         </BreadcrumbItem>
       </BreadcrumbList>
     </Breadcrumb>

@@ -3,7 +3,7 @@ import { useRef } from "react";
 
 /** Local components */
 import { Label } from "@/app/ui/components/label";
-import { SelectPatternCombobox } from "./SelectPatternCombobox";
+import { SelectPatternCombobox } from "./SelectFieldPatternCombobox";
 
 /** Types and interfaces */
 import { DictionarySelectField } from "@/app/lib/types/dictionary/form";

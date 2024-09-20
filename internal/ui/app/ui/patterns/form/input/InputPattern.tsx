@@ -38,8 +38,8 @@ export default function InputPattern({
   label,
   dict
 }: InputPatternProps) {
-  // const inputId = useRef(`-id${Date.now()}-${Math.random().toString(36).substring(2, 9)}`);
-  const inputId = "sandeo"
+  const inputId = useRef(`-${Math.random().toString(36).substring(2, 9)}`);
+  //const inputId = "sandeo"
   const InputPatternField = () => {
     switch (field) {
       case "name":

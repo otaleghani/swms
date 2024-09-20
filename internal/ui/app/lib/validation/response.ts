@@ -15,12 +15,12 @@ export default async function validateResponse<Entity, Type>(
   const [ dict ] = await Promise.all([ dictPromise ]);
 
   if (response.code === 200) {
-    state.message = dict.forms.messages.success.ok;
+    state.message = dict.forms.messages.success.get;
     state.error = false;
     return state;
   }
   if (response.code === 201) {
-    state.message = dict.forms.messages.success.created;
+    state.message = dict.forms.messages.success.post;
     state.error = false;
     return state;
   }
@@ -34,7 +34,7 @@ export default async function validateResponse<Entity, Type>(
     return state;
   }
   if (response.code === 400) {
-    state.message = dict.forms.messages.errors.request;
+    state.message = dict.forms.messages.errors.client;
     return state;
   }
   if (response.code === 500) {

@@ -10,6 +10,21 @@ import ZoneAddForm from "./form/ZoneAddForm";
 import { Button } from "@/app/ui/components/button"
 import { DialogTrigger } from "@/app/ui/components/dialog";
 
+interface DialogWrapperHeaderDict {
+  title: string;
+  description: string;
+}
+
+// interface ZoneAddForm {
+//
+// }
+
+interface ZoneAddDialogDict {
+  DialogWrapperHeader: DialogWrapperHeaderDict;
+}
+// dict.header
+// dict.form
+// dict.trigger
 
 interface ZoneAddDialog {
   locale: string;
@@ -17,7 +32,6 @@ interface ZoneAddDialog {
 }
 
 export default function ZoneAddFormDialog({
-  locale,
   dict,
 }: ZoneAddDialog) {
   const [open, setOpen] = useState(false);
@@ -30,12 +44,12 @@ export default function ZoneAddFormDialog({
           description="asdf"
         />
         <ZoneAddForm 
-          locale={locale}
           dict={dict}
         />
       </>
     )
   }
+
   const ZoneAddFormDialogTrigger = () => {
     return (
       <>
@@ -45,6 +59,7 @@ export default function ZoneAddFormDialog({
       </>
     )
   }
+
   return (
     <>
       <DialogWrapper 
