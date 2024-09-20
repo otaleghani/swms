@@ -1,5 +1,8 @@
 "use server";
 
+/** Constants */
+import { VALIDATION_SETTINGS } from "../validation.config";
+
 /** Actions */
 import validateString from "../strings";
 import validateNumber from "../number";
@@ -42,64 +45,74 @@ export async function validateVariant(
   (state.errorMessages.name = validateString(
     state.result.name as string, 
     dict.forms.fields.name.validation, 
-    /* Min */ 2, 
-    /* Max */ 20
+    VALIDATION_SETTINGS.shortString.minLength,
+    VALIDATION_SETTINGS.shortString.maxLength,
   )).length != 0 && (state.error = true);
 
-  (state.errorMessages.description = validateString(
-    state.result.description as string, 
-    dict.forms.fields.description.validation, 
-    /* Min */ -1, 
-    /* Max */ 200
-  )).length != 0 && (state.error = true);
+  if (state.result.description) {
+    (state.errorMessages.description = validateString(
+      state.result.description as string, 
+      dict.forms.fields.description.validation, 
+      VALIDATION_SETTINGS.longString.minLength,
+      VALIDATION_SETTINGS.longString.maxLength,
+    )).length != 0 && (state.error = true);
+  }
 
   (state.errorMessages.identifier = validateString(
     state.result.identifier as string, 
     dict.forms.fields.identifier.validation, 
-    /* Min */ -1, 
-    /* Max */ 200
+    VALIDATION_SETTINGS.mediumString.minLength,
+    VALIDATION_SETTINGS.mediumString.maxLength,
   )).length != 0 && (state.error = true);
 
   (state.errorMessages.quantity = validateNumber(
     String(state.result.quantity), 
     dict.forms.fields.categories.validation, 
-    /* Min */ -20000, 
-    /* Max */ 20000
+    VALIDATION_SETTINGS.bigSignedNumber.minLength,
+    VALIDATION_SETTINGS.bigSignedNumber.maxLength,
   )).length != 0 && (state.error = true);
 
-  (state.errorMessages.length = validateNumber(
-    String(state.result.length), 
-    dict.forms.fields.length.validation, 
-    /* Min */ -20000, 
-    /* Max */ 20000
-  )).length != 0 && (state.error = true);
+  if (state.result.length) {
+    (state.errorMessages.length = validateNumber(
+      String(state.result.length), 
+      dict.forms.fields.length.validation, 
+      VALIDATION_SETTINGS.bigUnsignedNumber.minLength,
+      VALIDATION_SETTINGS.bigUnsignedNumber.maxLength,
+    )).length != 0 && (state.error = true);
+  }
 
-  (state.errorMessages.width = validateNumber(
-    String(state.result.width), 
-    dict.forms.fields.width.validation, 
-    /* Min */ -20000, 
-    /* Max */ 20000
-  )).length != 0 && (state.error = true);
+  if (state.result.width) {
+    (state.errorMessages.width = validateNumber(
+      String(state.result.width), 
+      dict.forms.fields.width.validation, 
+      VALIDATION_SETTINGS.bigUnsignedNumber.minLength,
+      VALIDATION_SETTINGS.bigUnsignedNumber.maxLength,
+    )).length != 0 && (state.error = true);
+  }
 
-  (state.errorMessages.heigth = validateNumber(
-    String(state.result.heigth), 
-    dict.forms.fields.heigth.validation, 
-    /* Min */ -20000, 
-    /* Max */ 20000
-  )).length != 0 && (state.error = true);
+  if (state.result.heigth) {
+    (state.errorMessages.heigth = validateNumber(
+      String(state.result.heigth), 
+      dict.forms.fields.heigth.validation, 
+      VALIDATION_SETTINGS.bigUnsignedNumber.minLength,
+      VALIDATION_SETTINGS.bigUnsignedNumber.maxLength,
+    )).length != 0 && (state.error = true);
+  }
 
-  (state.errorMessages.weight = validateNumber(
-    String(state.result.weight), 
-    dict.forms.fields.weight.validation, 
-    /* Min */ -20000, 
-    /* Max */ 20000
-  )).length != 0 && (state.error = true);
+  if (state.result.weight) {
+    (state.errorMessages.weight = validateNumber(
+      String(state.result.weight), 
+      dict.forms.fields.weight.validation, 
+      VALIDATION_SETTINGS.bigUnsignedNumber.minLength,
+      VALIDATION_SETTINGS.bigUnsignedNumber.maxLength,
+    )).length != 0 && (state.error = true);
+  }
 
   (state.errorMessages.item = validateString(
     state.result.item as string, 
     dict.forms.fields.items.validation, 
-    /* Min */ 36, 
-    /* Max */ 36
+    VALIDATION_SETTINGS.foreignKeys.minLength,
+    VALIDATION_SETTINGS.foreignKeys.maxLength,
   )).length != 0 && (state.error = true);
 
   if (await checkExisting("Item", state.result.item)) {

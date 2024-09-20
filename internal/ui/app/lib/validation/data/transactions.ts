@@ -1,5 +1,8 @@
 "use server";
 
+/** Constants */
+import { VALIDATION_SETTINGS } from "../validation.config";
+
 /** Actions */
 import validateString from "../strings";
 import validateDate from "../dates";
@@ -47,15 +50,15 @@ export async function validateTransaction(
   (state.errorMessages.quantity = validateNumber(
     String(state.result.quantity), 
     dict.forms.fields.quantity.validation, 
-    /* Min */ -20000, 
-    /* Max */ 20000
+    VALIDATION_SETTINGS.bigUnsignedNumber.minLength,
+    VALIDATION_SETTINGS.bigUnsignedNumber.maxLength,
   )).length != 0 && (state.error = true);
 
   (state.errorMessages.user = validateString(
     state.result.user as string, 
     dict.forms.fields.users.validation, 
-    /* Min */ 36, 
-    /* Max */ 36
+    VALIDATION_SETTINGS.foreignKeys.minLength,
+    VALIDATION_SETTINGS.foreignKeys.maxLength,
   )).length != 0 && (state.error = true);
 
   if (await checkExisting("User", state.result.user)) {
@@ -67,8 +70,8 @@ export async function validateTransaction(
   (state.errorMessages.item = validateString(
     state.result.item as string, 
     dict.forms.fields.items.validation, 
-    /* Min */ 36, 
-    /* Max */ 36
+    VALIDATION_SETTINGS.foreignKeys.minLength,
+    VALIDATION_SETTINGS.foreignKeys.maxLength,
   )).length != 0 && (state.error = true);
 
   if (await checkExisting("Item", state.result.item)) {
@@ -80,8 +83,8 @@ export async function validateTransaction(
   (state.errorMessages.variant = validateString(
     state.result.variant as string, 
     dict.forms.fields.variants.validation, 
-    /* Min */ 36, 
-    /* Max */ 36
+    VALIDATION_SETTINGS.foreignKeys.minLength,
+    VALIDATION_SETTINGS.foreignKeys.maxLength,
   )).length != 0 && (state.error = true);
 
   if (await checkExisting("Variant", state.result.variant)) {
@@ -90,17 +93,19 @@ export async function validateTransaction(
     state.error = true;
   }
 
-  (state.errorMessages.ticket = validateString(
-    state.result.ticket as string, 
-    dict.forms.fields.tickets.validation, 
-    /* Min */ 36, 
-    /* Max */ 36
-  )).length != 0 && (state.error = true);
+  if (state.result.ticket) {
+    (state.errorMessages.ticket = validateString(
+      state.result.ticket as string, 
+      dict.forms.fields.tickets.validation, 
+      VALIDATION_SETTINGS.foreignKeys.minLength,
+      VALIDATION_SETTINGS.foreignKeys.maxLength,
+    )).length != 0 && (state.error = true);
 
-  if (await checkExisting("Ticket", state.result.ticket)) {
-    state.errorMessages.ticket.push(
-      dict.forms.fields.tickets.validation.not_found);
-    state.error = true;
+    if (await checkExisting("Ticket", state.result.ticket)) {
+      state.errorMessages.ticket.push(
+        dict.forms.fields.tickets.validation.not_found);
+      state.error = true;
+    }
   }
 
   return state;

@@ -1,3 +1,5 @@
+import { VALIDATION_SETTINGS } from "./validation.config";
+
 export default function validateDate(
   field: string,
   dict: any,
@@ -7,6 +9,10 @@ export default function validateDate(
   if (typeof field === "string") {
     if (field === "" || field === undefined) {
       errors.push(dict.empty);
+    }
+
+    if (field.length !== VALIDATION_SETTINGS.dateString.minLength) {
+      errors.push(dict.invalid);
     }
 
     const date: Date = new Date(field);

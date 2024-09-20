@@ -1,5 +1,8 @@
 "use server";
 
+/** Constants */
+import { VALIDATION_SETTINGS } from "../validation.config";
+
 /** Actions */
 import validateString from "../strings";
 import { getDictionary, Locale } from "@/lib/dictionaries";
@@ -35,15 +38,15 @@ export async function validateRack(
   (state.errorMessages.name = validateString(
     state.result.name as string, 
     dict.forms.fields.name.validation, 
-    /* Min */ 2, 
-    /* Max */ 20
+    VALIDATION_SETTINGS.shortString.minLength,
+    VALIDATION_SETTINGS.shortString.maxLength,
   )).length != 0 && (state.error = true);
 
   (state.errorMessages.zone = validateString(
     state.result.zone as string, 
     dict.forms.fields.zones.validation, 
-    /* Min */ 36, 
-    /* Max */ 36
+    VALIDATION_SETTINGS.foreignKeys.minLength,
+    VALIDATION_SETTINGS.foreignKeys.maxLength,
   )).length != 0 && (state.error = true);
 
   if (await checkExisting("Zone", state.result.zone)) {
@@ -55,8 +58,8 @@ export async function validateRack(
   (state.errorMessages.aisle = validateString(
     state.result.aisle as string, 
     dict.forms.fields.aisles.validation, 
-    /* Min */ 36, 
-    /* Max */ 36
+    VALIDATION_SETTINGS.foreignKeys.minLength,
+    VALIDATION_SETTINGS.foreignKeys.maxLength,
   )).length != 0 && (state.error = true);
 
   if (await checkExisting("Aisle", state.result.aisle)) {

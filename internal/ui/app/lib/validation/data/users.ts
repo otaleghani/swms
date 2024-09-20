@@ -1,5 +1,8 @@
 "use server";
 
+/** Constants */
+import { VALIDATION_SETTINGS } from "../validation.config";
+
 /** Actions */
 import validateString from "../strings";
 import { getDictionary, Locale } from "@/lib/dictionaries";
@@ -40,16 +43,18 @@ export async function validateUser(
   (state.errorMessages.name = validateString(
     state.result.name as string, 
     dict.forms.fields.name.validation, 
-    /* Min */ 1, 
-    /* Max */ 20
+    VALIDATION_SETTINGS.shortString.minLength,
+    VALIDATION_SETTINGS.shortString.maxLength,
   )).length != 0 && (state.error = true);
 
-  (state.errorMessages.surname = validateString(
-    state.result.surname as string, 
-    dict.forms.fields.surname.validation, 
-    /* Min */ -1, 
-    /* Max */ 20
-  )).length != 0 && (state.error = true);
+  if (state.result.surname) {
+    (state.errorMessages.surname = validateString(
+      state.result.surname as string, 
+      dict.forms.fields.surname.validation, 
+      VALIDATION_SETTINGS.shortString.minLength,
+      VALIDATION_SETTINGS.shortString.maxLength,
+    )).length != 0 && (state.error = true);
+  }
 
   return state;
 }

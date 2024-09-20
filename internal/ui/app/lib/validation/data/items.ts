@@ -13,7 +13,7 @@ import { Item } from "../../types/data/items";
 import { FormState } from "../../types/misc";
 
 /** @todo Validation for archive: boolean */
-export async function validateSubcategory(
+export async function validateItem(
   state: FormState<Item>,
   locale: string,
 ): Promise<FormState<Item>> {

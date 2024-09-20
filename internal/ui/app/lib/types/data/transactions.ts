@@ -6,6 +6,6 @@ export type Transaction = {
   user: string;
   item: string;
   variant: string;
-  ticket: string;
+  ticket?: string;
 }
 export type Transactions = Transaction[];

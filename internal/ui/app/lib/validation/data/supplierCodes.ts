@@ -1,5 +1,8 @@
 "use server";
 
+/** Constants */
+import { VALIDATION_SETTINGS } from "../validation.config";
+
 /** Actions */
 import validateString from "../strings";
 import { getDictionary, Locale } from "@/lib/dictionaries";
@@ -40,15 +43,15 @@ export async function validateSupplierCode(
   (state.errorMessages.code = validateString(
     state.result.code as string, 
     dict.forms.fields.codes.validation, 
-    /* Min */ 2, 
-    /* Max */ 50
+    VALIDATION_SETTINGS.mediumString.minLength,
+    VALIDATION_SETTINGS.mediumString.maxLength,
   )).length != 0 && (state.error = true);
 
   (state.errorMessages.supplier = validateString(
     state.result.supplier as string, 
     dict.forms.fields.suppliers.validation, 
-    /* Min */ 36, 
-    /* Max */ 36
+    VALIDATION_SETTINGS.foreignKeys.minLength,
+    VALIDATION_SETTINGS.foreignKeys.maxLength,
   )).length != 0 && (state.error = true);
 
   if (await checkExisting("Supplier", state.result.supplier)) {
@@ -60,8 +63,8 @@ export async function validateSupplierCode(
   (state.errorMessages.item = validateString(
     state.result.item as string, 
     dict.forms.fields.items.validation, 
-    /* Min */ 36, 
-    /* Max */ 36
+    VALIDATION_SETTINGS.foreignKeys.minLength,
+    VALIDATION_SETTINGS.foreignKeys.maxLength,
   )).length != 0 && (state.error = true);
 
   if (await checkExisting("Item", state.result.item)) {
@@ -73,8 +76,8 @@ export async function validateSupplierCode(
   (state.errorMessages.variant = validateString(
     state.result.variant as string, 
     dict.forms.fields.variants.validation, 
-    /* Min */ 36, 
-    /* Max */ 36
+    VALIDATION_SETTINGS.foreignKeys.minLength,
+    VALIDATION_SETTINGS.foreignKeys.maxLength,
   )).length != 0 && (state.error = true);
 
   if (await checkExisting("Variant", state.result.variant)) {

@@ -1,5 +1,8 @@
 "use server";
 
+/** Constants */
+import { VALIDATION_SETTINGS } from "../validation.config";
+
 /** Actions */
 import validateString from "../strings";
 import { getDictionary, Locale } from "@/lib/dictionaries";
@@ -10,7 +13,7 @@ import validateDate from "../dates";
 import { Ticket } from "../../types/data/tickets";
 import { FormState } from "../../types/misc";
 
-export async function validateSubcategory(
+export async function validateTicket(
   state: FormState<Ticket>,
   locale: string,
 ): Promise<FormState<Ticket>> {
@@ -41,32 +44,38 @@ export async function validateSubcategory(
   (state.errorMessages.name = validateString(
     state.result.name as string, 
     dict.forms.fields.name.validation, 
-    /* Min */ 2, 
-    /* Max */ 20
+    VALIDATION_SETTINGS.shortString.minLength,
+    VALIDATION_SETTINGS.shortString.maxLength,
   )).length != 0 && (state.error = true);
 
-  (state.errorMessages.description = validateString(
-    state.result.description as string, 
-    dict.forms.fields.description.validation, 
-    /* Min */ -1, 
-    /* Max */ 200
-  )).length != 0 && (state.error = true);
+  if (state.result.description) {
+    (state.errorMessages.description = validateString(
+      state.result.description as string, 
+      dict.forms.fields.description.validation, 
+      VALIDATION_SETTINGS.longString.minLength,
+      VALIDATION_SETTINGS.longString.maxLength,
+    )).length != 0 && (state.error = true);
+  }
 
-  (state.errorMessages.open = validateDate(
-    state.result.open as string, 
-    dict.forms.fields.date.validation, 
-  )).length != 0 && (state.error = true);
+  if (state.result.open) {
+    (state.errorMessages.open = validateDate(
+      state.result.open as string, 
+      dict.forms.fields.date.validation, 
+    )).length != 0 && (state.error = true);
+  }
 
-  (state.errorMessages.close = validateDate(
-    state.result.close as string, 
-    dict.forms.fields.date.validation, 
-  )).length != 0 && (state.error = true);
+  if (state.result.close) {
+    (state.errorMessages.close = validateDate(
+      state.result.close as string, 
+      dict.forms.fields.date.validation, 
+    )).length != 0 && (state.error = true);
+  }
 
   (state.errorMessages.client = validateString(
     state.result.client as string, 
     dict.forms.fields.clients.validation, 
-    /* Min */ -1, 
-    /* Max */ 2000
+    VALIDATION_SETTINGS.foreignKeys.minLength,
+    VALIDATION_SETTINGS.foreignKeys.maxLength,
   )).length != 0 && (state.error = true);
 
   if (await checkExisting("Client", state.result.client)) {
@@ -78,8 +87,8 @@ export async function validateSubcategory(
   (state.errorMessages.product = validateString(
     state.result.product as string, 
     dict.forms.fields.products.validation, 
-    /* Min */ -1, 
-    /* Max */ 2000
+    VALIDATION_SETTINGS.foreignKeys.minLength,
+    VALIDATION_SETTINGS.foreignKeys.maxLength,
   )).length != 0 && (state.error = true);
 
   if (await checkExisting("Product", state.result.product)) {
@@ -91,8 +100,8 @@ export async function validateSubcategory(
   (state.errorMessages.type = validateString(
     state.result.type as string, 
     dict.forms.fields.types.validation, 
-    /* Min */ -1, 
-    /* Max */ 2000
+    VALIDATION_SETTINGS.foreignKeys.minLength,
+    VALIDATION_SETTINGS.foreignKeys.maxLength,
   )).length != 0 && (state.error = true);
 
   if (await checkExisting("TicketType", state.result.type)) {
@@ -104,8 +113,8 @@ export async function validateSubcategory(
   (state.errorMessages.state = validateString(
     state.result.state as string, 
     dict.forms.fields.states.validation, 
-    /* Min */ -1, 
-    /* Max */ 2000
+    VALIDATION_SETTINGS.foreignKeys.minLength,
+    VALIDATION_SETTINGS.foreignKeys.maxLength,
   )).length != 0 && (state.error = true);
 
   if (await checkExisting("TicketState", state.result.state)) {
