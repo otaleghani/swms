@@ -1,5 +1,8 @@
 "use server";
 
+/** Constants */
+import { VALIDATION_SETTINGS } from "../validation.config";
+
 /** Actions */
 import validateString from "../strings";
 import { getDictionary, Locale } from "@/lib/dictionaries";
@@ -43,8 +46,8 @@ export async function validateProductImage(
   (state.errorMessages.product = validateString(
     state.result.product as string, 
     dict.forms.fields.products.validation, 
-    /* Min */ -1, 
-    /* Max */ 36,
+    VALIDATION_SETTINGS.shortString.minLength,
+    VALIDATION_SETTINGS.shortString.maxLength,
   )).length != 0 && (state.error = true);
 
   if (await checkExisting("Product", state.result.product)) {

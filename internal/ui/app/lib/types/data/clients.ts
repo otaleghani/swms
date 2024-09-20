@@ -3,6 +3,6 @@ export type Client = {
   id?: string;
   name: string;
   surname: string;
-  isBusiness: boolean;
+  isBusiness?: boolean;
 }
 export type Clients = Client[];

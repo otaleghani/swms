@@ -1,5 +1,8 @@
 "use server";
 
+/** Constants */
+import { VALIDATION_SETTINGS } from "../validation.config";
+
 /** Actions */
 import validateString from "../strings";
 import { getDictionary, Locale } from "@/lib/dictionaries";
@@ -40,16 +43,18 @@ export async function validateCategory(
   (state.errorMessages.name = validateString(
     state.result.name as string, 
     dict.forms.fields.name.validation, 
-    /* Min */ 2, 
-    /* Max */ 20
+    VALIDATION_SETTINGS.shortString.minLength,
+    VALIDATION_SETTINGS.shortString.maxLength,
   )).length != 0 && (state.error = true);
 
-  (state.errorMessages.description = validateString(
-    state.result.description as string, 
-    dict.forms.fields.description.validation, 
-    /* Min */ -1, 
-    /* Max */ 200
-  )).length != 0 && (state.error = true);
+  if (state.result.description) {
+    (state.errorMessages.description = validateString(
+      state.result.description as string, 
+      dict.forms.fields.description.validation, 
+      VALIDATION_SETTINGS.longString.minLength,
+      VALIDATION_SETTINGS.longString.maxLength,
+    )).length != 0 && (state.error = true);
+  }
 
   return state;
 }

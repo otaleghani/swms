@@ -1,9 +1,9 @@
 export type Ticket = {
   id?: string;
   name: string;
-  description: string;
-  open: string;   // date
-  close: string;  // date
+  description?: string;
+  open?: string;   // date
+  close?: string;  // date
   client: string;
   product: string;
   type: string;

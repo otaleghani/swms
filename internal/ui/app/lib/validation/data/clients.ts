@@ -1,5 +1,8 @@
 "use server";
 
+/** Constants */
+import { VALIDATION_SETTINGS } from "../validation.config";
+
 /** Actions */
 import validateString from "../strings";
 import { getDictionary, Locale } from "@/lib/dictionaries";
@@ -10,7 +13,7 @@ import { Client } from "../../types/data/clients";
 import { FormState } from "../../types/misc";
 
 /** @todo Add boolean validation if necessary */
-export async function validateCategory(
+export async function validateClient(
   state: FormState<Client>,
   locale: string,
 ): Promise<FormState<Client>> {
@@ -41,15 +44,15 @@ export async function validateCategory(
   (state.errorMessages.name = validateString(
     state.result.name as string, 
     dict.forms.fields.name.validation, 
-    /* Min */ 2, 
-    /* Max */ 20
+    VALIDATION_SETTINGS.shortString.minLength,
+    VALIDATION_SETTINGS.shortString.maxLength,
   )).length != 0 && (state.error = true);
 
   (state.errorMessages.surname = validateString(
     state.result.surname as string, 
     dict.forms.fields.surname.validation, 
-    /* Min */ -1, 
-    /* Max */ 20
+    VALIDATION_SETTINGS.shortString.minLength,
+    VALIDATION_SETTINGS.shortString.maxLength,
   )).length != 0 && (state.error = true);
 
   return state;

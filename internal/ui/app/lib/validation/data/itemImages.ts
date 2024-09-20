@@ -1,5 +1,8 @@
 "use server";
 
+/** Constants */
+import { VALIDATION_SETTINGS } from "../validation.config";
+
 /** Actions */
 import validateString from "../strings";
 import { getDictionary, Locale } from "@/lib/dictionaries";
@@ -45,8 +48,8 @@ export async function validateItemImage(
   (state.errorMessages.variant = validateString(
     state.result.variant as string, 
     dict.forms.fields.variants.validation, 
-    /* Min */ -1, 
-    /* Max */ 36,
+    VALIDATION_SETTINGS.foreignKeys.minLength,
+    VALIDATION_SETTINGS.foreignKeys.maxLength,
   )).length != 0 && (state.error = true);
 
   if (await checkExisting("Variant", state.result.variant)) {

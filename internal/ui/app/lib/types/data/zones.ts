@@ -1,4 +1,4 @@
-import { FormState, Response } from "./misc";
+import { FormState, Response } from "../misc";
 
 export type Zone = {
   id?: string;

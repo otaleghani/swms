@@ -1,13 +1,13 @@
 export type Variant = {
   id?: string;
   name: string;
-  description: string;
+  description?: string;
   quantity: number;
   identifier: string;
-  length: number;
-  width: number;
-  heigth: number;
-  weight: number;
+  length?: number;
+  width?: number;
+  heigth?: number;
+  weight?: number;
   defaultVariant: boolean;
   item: string;
 }
