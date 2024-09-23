@@ -20,6 +20,7 @@ import {
   DictInputField,
   DictFormButton,
 } from "@/app/lib/types/dictionary/form";
+import FormSuccessPattern from "@/app/ui/patterns/form/FormSuccessPattern";
 
 export interface DictZoneForm {
   name: DictInputField;
@@ -76,6 +77,9 @@ export default function ZoneForm({
           dict={dict.button}
         />
         <input type="hidden" name="locale" value={locale} />
+        <FormSuccessPattern 
+          message={state.message}
+        />
       </div>
     </form>
   )

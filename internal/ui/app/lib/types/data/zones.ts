@@ -22,6 +22,15 @@ export const defaultZoneFormState: ZoneFormState = {
   }
 }
 
+export type ZoneBulkFormState = FormState<ZonesBulkPostRequestBody>;
+export const defaultZoneBulkFormState: ZoneBulkFormState = {
+  error: false,
+  message: "",
+  errorMessages: {
+    number: [],
+  }
+}
+
 export type ZoneRP = Promise<Response<Zone>>;
 export type ZonesRP = Promise<Response<Zones>>;
 export type ZoneWithExtraRP = Promise<Response<ZoneWithExtra>>;

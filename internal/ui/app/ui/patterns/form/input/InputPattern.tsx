@@ -10,6 +10,7 @@ import InputPatternImages from "./images/InputPatternImages";
 
 /** Types and interfaces */
 import { DictInputField } from "@/app/lib/types/dictionary/form";
+import { InputPatternNumberWithButtons } from "./InputPatternTransaction";
 
 interface InputPatternProps {
   field: 
@@ -22,6 +23,7 @@ interface InputPatternProps {
     "weight" |
     "length" |
     "quantity" |
+    "quantityWithButtons" |
     "images";
   errorMessages: string[];
   dict: DictInputField;
@@ -38,7 +40,7 @@ export default function InputPattern({
   label,
   dict
 }: InputPatternProps) {
-  const inputId = useRef(`-${Math.random().toString(36).substring(2, 9)}`);
+  const inputId = `${Math.random().toString(36).substring(2, 9)}`;
   //const inputId = "sandeo"
   const InputPatternField = () => {
     switch (field) {
@@ -85,6 +87,13 @@ export default function InputPattern({
             id={`${field}-${inputId}`}
             placeholder={dict.placeholder}
             step="1"
+          />
+        );
+      case "quantityWithButtons":
+        return (
+          <InputPatternNumberWithButtons 
+            name={field}
+            id={`${field}-${inputId}`}
           />
         );
       case "images": 

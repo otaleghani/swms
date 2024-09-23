@@ -3,12 +3,14 @@ import { Locale } from "@/lib/dictionaries";
 import { dateToISOString, dateToLocaleDateString, dateToLocaleString, dateToLocaleTimeString } from "@/app/lib/validation/dates";
 import SelectFieldPattern from "@/app/ui/patterns/form/select/SelectFieldPattern";
 import { retrieve } from "@/app/lib/requests/generics/retrieve";
-import { defaultZoneFormState, Zones } from "@/app/lib/types/data/zones";
+import { defaultZoneBulkFormState, defaultZoneFormState, Zones } from "@/app/lib/types/data/zones";
 import { Zone } from "@/app/lib/types";
 import ZoneSelectField from "@/app/ui/modules/zones/misc/ZoneSelectField";
 import TestSelect from "@/app/ui/modules/zones/test/SelectTest";
-import ZoneForm from "@/app/ui/modules/zones/misc/form/ZoneForm";
+import ZoneForm from "@/app/ui/modules/zones/misc/ZoneForm";
 import zoneAddFormAction from "@/app/ui/modules/zones/create/single/actionCreate";
+import ZoneBulkForm from "@/app/ui/modules/zones/misc/ZoneBulkCreateForm";
+import zoneAddBulkFormAction from "@/app/ui/modules/zones/create/bulk/actionCreateBulk";
 
 export default async function TestingPage( {params}: {params: {lang: string}}) {
   const dict = await getDictionary(params.lang as Locale);
@@ -17,7 +19,7 @@ export default async function TestingPage( {params}: {params: {lang: string}}) {
   const [zones] = await Promise.all([pZones])
 
   const stringDate = "2024-08-15";
-  console.log(dateToISOString(stringDate))
+  // console.log(dateToISOString(stringDate))
 
   return (
     <main>
@@ -42,14 +44,12 @@ export default async function TestingPage( {params}: {params: {lang: string}}) {
           />
         )
       }
+
       <ZoneForm 
         form={{
           formName:"gennarone",
           initialState: defaultZoneFormState,
           formAction: zoneAddFormAction,
-          //notifyFormSent?: Dispatch<SetStateAction<boolean>>;
-          //refreshItemList?: (item: Entity) => Promise<void>;
-          //FormFields: React.FunctionComponent;
         }}
         dict={{
           name: {
@@ -68,6 +68,30 @@ export default async function TestingPage( {params}: {params: {lang: string}}) {
             pending: "pesoso"
           }
 
+        }}
+      />
+      <ZoneBulkForm
+        form={{
+          formName:"gennarone2",
+          initialState: defaultZoneBulkFormState,
+          formAction: zoneAddBulkFormAction,
+        }}
+        dict={{
+          number: {
+            label:"sandrone",
+            placeholder: "daje",
+            validation: {
+              empty:"empty",
+              max:"max",
+              min:"min",
+              type:"type",
+              valid:"valid",
+            },
+          },
+          button: {
+            active: "prememe",
+            pending: "pesoso"
+          }
         }}
       />
     </main>

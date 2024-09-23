@@ -1194,6 +1194,17 @@
           "valid": "La data inserita non è valida."
         }
       },
+      "number": {
+        "label": "Numero",
+        "placeholder": "Inserisci il numero da inserire",
+        "validation": {
+          "empty": "La data non puo essere vuoto",
+          "max": "La data deve essere al massimo di {{max}} di caratter.",
+          "min": "La data deve essere di minimo {{min}} di caratteri.",
+          "type": "La data deve essere una stringa.",
+          "valid": "La data inserita non è valida."
+        }
+      },
       "name": {
         "label": "Nome",
         "placeholder": "Inserisci il nome",

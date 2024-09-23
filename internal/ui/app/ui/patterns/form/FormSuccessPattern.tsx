@@ -7,7 +7,7 @@ interface FormSuccessPatternProps {
 
 export default function FormSuccessPattern({
   message,
-}: FormSuccessProps) {
+}: FormSuccessPatternProps) {
   return (
     <>
       {message && (
