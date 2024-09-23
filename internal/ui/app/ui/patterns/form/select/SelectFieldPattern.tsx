@@ -6,7 +6,7 @@ import { Label } from "@/app/ui/components/label";
 import { SelectPatternCombobox } from "./SelectFieldPatternCombobox";
 
 /** Types and interfaces */
-import { DictionarySelectField } from "@/app/lib/types/dictionary/form";
+import { DictSelectField } from "@/app/lib/types/dictionary/form";
 import FormFieldErrorsPattern from "../FormFieldErrorsPattern";
 
 export interface SelectableItem {
@@ -19,7 +19,7 @@ export interface SelectFieldPatternProps<Entity extends SelectableItem>{
   element: Entity;
   setElement: React.Dispatch<React.SetStateAction<Entity>>;
   errors: string[];
-  dict: DictionarySelectField;
+  dict: DictSelectField;
 }
 
 export default function SelectFieldPattern<Entity extends SelectableItem>({
@@ -30,8 +30,7 @@ export default function SelectFieldPattern<Entity extends SelectableItem>({
   errors,
   dict 
 }: SelectFieldPatternProps<Entity>) {
-  //const inputId = useRef(`id-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`);
-  const inputId = "sandeo"
+  const inputId = (`${Math.random().toString(36).substring(2, 9)}`);
 
   return (
     <div className="w-full">
@@ -42,7 +41,7 @@ export default function SelectFieldPattern<Entity extends SelectableItem>({
         name={name}
         value={element.id} 
       />
-      <Label>{dict.name}</Label>
+      <Label>{dict.select.label}</Label>
       <SelectPatternCombobox 
         name={name}
         list={list}

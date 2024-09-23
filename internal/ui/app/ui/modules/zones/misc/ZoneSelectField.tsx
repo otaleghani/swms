@@ -1,9 +1,11 @@
 /** Local compontens */
-import SelectFieldPattern from "@/app/ui/patterns/form/select/SelectFieldPattern";
+import 
+  SelectFieldPattern, 
+  { SelectFieldPatternProps } 
+from "@/app/ui/patterns/form/select/SelectFieldPattern";
 
 /** Types and interfaces */
 import { Zone } from "@/app/lib/types/data/zones";
-import { SelectFieldPatternProps } from "@/app/ui/patterns/form/select/SelectFieldPattern";
 
 export default function ZoneSelectField({
   list,

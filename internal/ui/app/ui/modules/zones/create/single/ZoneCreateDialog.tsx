@@ -6,32 +6,29 @@ import { useState } from "react";
 /** Local components */
 import DialogWrapper from "@/app/ui/wrappers/dialogs/DialogWrapper"
 import DialogWrapperHeader from "@/app/ui/wrappers/dialogs/DialogWrapperHeader"
-import ZoneAddForm from "./form/ZoneAddForm";
+import ZoneCreateForm, { DictZoneForm } from "../../misc/form/ZoneForm";
 import { Button } from "@/app/ui/components/button"
 import { DialogTrigger } from "@/app/ui/components/dialog";
+
+/** Types and interfaces */
+import { 
+  ZoneFormState, 
+  defaultZoneFormState 
+} from "@/app/lib/types/data/zones";
+
 
 interface DialogWrapperHeaderDict {
   title: string;
   description: string;
 }
 
-// interface ZoneAddForm {
-//
-// }
-
 interface ZoneAddDialogDict {
-  DialogWrapperHeader: DialogWrapperHeaderDict;
-}
-// dict.header
-// dict.form
-// dict.trigger
-
-interface ZoneAddDialog {
-  locale: string;
-  dict: any;
+  header: DialogWrapperHeaderDict;
+  form: DictZoneForm;
+  trigger: any;
 }
 
-export default function ZoneAddFormDialog({
+export default function ZoneAddDialog({
   dict,
 }: ZoneAddDialog) {
   const [open, setOpen] = useState(false);
@@ -43,7 +40,7 @@ export default function ZoneAddFormDialog({
           title="suckit"
           description="asdf"
         />
-        <ZoneAddForm 
+        <ZoneCreateForm 
           dict={dict}
         />
       </>

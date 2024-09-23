@@ -26,7 +26,7 @@ import {
 import { cn } from "@/lib/utils"
 
 /** Types and interfaces */
-import { SelectableItem, SelectFieldPatternProps } from "./SelectPattern";
+import { SelectableItem, SelectFieldPatternProps } from "./SelectFieldPattern";
 
 export function SelectPatternCombobox<Entity extends SelectableItem>({
   list, 
@@ -47,26 +47,26 @@ export function SelectPatternCombobox<Entity extends SelectableItem>({
             className="w-full justify-between"
           >
             {element.name != '' 
-              ? list.find((item: any) => item.name === element.name)?.name
-              : dict.combobox.select }
+              ? list.find((item: any) => item.id === element.id)?.name
+              : dict.select.combobox.select }
             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-[--radix-popover-trigger-width] p-0">
           <Command>
-            <CommandInput placeholder={dict.combobox.search} />
-            <CommandEmpty>{dict.combobox.empty}</CommandEmpty>
+            <CommandInput placeholder={dict.select.combobox.search} />
+            <CommandEmpty>{dict.select.combobox.empty}</CommandEmpty>
             <CommandList>
             <CommandGroup>
               {list.map((item: Entity) => (
                 <CommandItem
                   key={item.id}
-                  value={item.name}
+                  value={item.id}
                   onSelect={(currentValue) => {
-                    setElement(currentValue === element.name 
+                    setElement(currentValue === element.id 
                     ? { id: "", name: "" } as Entity
                     : {
-                        id: list.find((item: Entity) => item.name === currentValue)?.id, 
+                        id: list.find((item: Entity) => item.id === currentValue)?.id, 
                         name: currentValue
                     } as Entity)
                     setOpen(false)

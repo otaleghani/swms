@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from "react";
+
 export type Response<Entity> = {
   code: number;
   message?: string;
@@ -27,3 +29,14 @@ export interface FormState<Type> {
   }
 }
 
+export interface FormProps<Type> {
+  formName: string;
+  initialState: FormState<Type>;
+  formAction: (
+    currentState: FormState<Type>,
+    formData: FormData,
+  ) => Promise<FormState<Type>>;
+  notifyFormSent?: Dispatch<SetStateAction<boolean>>;
+  refreshItemList?: (item: Type) => Promise<void>;
+  //FormFields?: React.FunctionComponent;
+}

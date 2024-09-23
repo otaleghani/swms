@@ -21,7 +21,7 @@ export default function FormFieldErrorsPattern({
           <AlertCircle className="h-4 w-4" />
           <div className="text-sm">
             {errorMessages.map((error) => (
-              <span className="block text-left">{error}</span>
+              <span key={error} className="block text-left">{error}</span>
             ))}
           </div>
         </div>

@@ -1,6 +1,6 @@
 export type User = {
   id?: string;
   name: string;
-  surname: string;
+  surname?: string;
 }
 export type Users = User[];

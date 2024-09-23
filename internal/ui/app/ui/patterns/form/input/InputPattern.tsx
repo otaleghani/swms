@@ -9,7 +9,7 @@ import FormFieldErrorsPattern from "../FormFieldErrorsPattern";
 import InputPatternImages from "./images/InputPatternImages";
 
 /** Types and interfaces */
-import { DictionaryInputField } from "@/app/lib/types/dictionary/form";
+import { DictInputField } from "@/app/lib/types/dictionary/form";
 
 interface InputPatternProps {
   field: 
@@ -24,7 +24,7 @@ interface InputPatternProps {
     "quantity" |
     "images";
   errorMessages: string[];
-  dict: DictionaryInputField;
+  dict: DictInputField;
   defaultValue?: string;
   className?: string;
   label?: boolean;
