@@ -7,13 +7,16 @@ from "@/app/ui/patterns/form/select/SelectFieldPattern";
 /** Types and interfaces */
 import { Zone } from "@/app/lib/types/data/zones";
 
+export type ZoneSelectField = SelectFieldPatternProps<Zone>;
+
 export default function ZoneSelectField({
   list,
   element,
   setElement,
   errors,
   dict,
-}: SelectFieldPatternProps<Zone>) {
+}: ZoneSelectField) {
+
   return (
     <SelectFieldPattern 
       name="zone"

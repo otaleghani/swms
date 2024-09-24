@@ -6,6 +6,11 @@ export type Aisle = {
   zone: string;
 };
 export type Aisles = Aisle[];
+export const emptyAisle: Aisle = {
+  id: "",
+  name: "",
+  zone: "",
+}
 
 export type AisleWithExtra = Aisle & {
   racksCount: number;

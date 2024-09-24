@@ -35,6 +35,7 @@ export default function SelectFieldPattern<Entity extends SelectableItem>({
   return (
     <div className="w-full">
       <input 
+        suppressHydrationWarning
         required
         type="hidden" 
         id={`${name}-${inputId}`}

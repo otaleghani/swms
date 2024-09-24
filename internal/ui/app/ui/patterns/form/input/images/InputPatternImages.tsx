@@ -119,6 +119,7 @@ export default function InputImages({
         <div className="text-sm">{dict.label}</div>
       </label>
       <input 
+        suppressHydrationWarning
         ref={fileInputRef}
         onChange={handleAddImage}
         type="file" 

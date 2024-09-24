@@ -57,7 +57,9 @@ function AddBulkZonesForm({ dict, locale }: AddBulkZonesProps) {
             onFocus={(e) => e.target.select()}
             className={`${GeistSans.className} font-bold text-8xl block text-foreground w-full text-center leading-none tracking-tighter`}
           />
-          <Button className="flex rounded-full w-12 h-12" variant="secondary" onClick={addOne} type="button"><PlusIcon className="w-4 h-4"/></Button>
+          <Button className="flex rounded-full w-12 h-12" variant="secondary" onClick={addOne} type="button">
+            <PlusIcon className="w-4 h-4"/>
+            </Button>
         </div>
         <FormFieldError 
           id="quantity-error" 

@@ -8,6 +8,13 @@ export type Shelf = {
   rack: string;
 };
 export type Shelfs = Shelf[];
+export const emptyShelf: Shelf = {
+  id: "",
+  name: "",
+  zone: "",
+  aisle: "",
+  rack: "",
+}
 
 export type ShelfWithExtra = Shelf & {
   itemsCount: number;

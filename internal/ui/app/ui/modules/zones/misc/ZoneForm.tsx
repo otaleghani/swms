@@ -12,9 +12,7 @@ import { FormProps } from "@/app/lib/types/misc";
 import SubmitFormButtonPattern from "@/app/ui/patterns/form/buttons/SubmitFormButtonPattern";
 
 /** Types and interfaces */
-import { 
-  Zone, 
-} from "@/app/lib/types/data/zones";
+import { Zone } from "@/app/lib/types/data/zones";
 
 import { 
   DictInputField,
@@ -28,26 +26,27 @@ export interface DictZoneForm {
 }
 
 export interface ZoneFormProps {
-  form: FormProps<Zone>;
-  dict: DictZoneForm;
+  self: {
+    dict: DictZoneForm;
+    form: FormProps<Zone>;
+  }
 }
 
-export default function ZoneForm({
-  form,
-  dict,
+export default function ZoneForm({ 
+  self
 }: ZoneFormProps) {
   const locale = usePathname().split("/")[1];
   const [state, action, isPending] = useActionState(
-    form.formAction,
-    form.initialState,
+    self.form.formAction,
+    self.form.initialState,
   );
 
   useEffect(() => {
     if (!state.error && state.result) {
-      if (form.notifyFormSent) {
-        form.notifyFormSent(true);
-        if (form.refreshItemList) {
-          form.refreshItemList(state.result);
+      if (self.form.notifyFormSent) {
+        self.form.notifyFormSent(true);
+        if (self.form.refreshItemList) {
+          self.form.refreshItemList(state.result);
         }
       }
     }
@@ -57,7 +56,7 @@ export default function ZoneForm({
     return (
       <InputPattern 
         field="name"
-        dict={dict.name}
+        dict={self.dict.name}
         defaultValue={state.result?.name}
         className=""
         label={true}
@@ -67,14 +66,14 @@ export default function ZoneForm({
   }
 
   return (
-    <form id={form.formName} action={action}>
+    <form id={self.form.formName} action={action}>
       <div className="grid gap-4 py-4">
         <FormFields />
         <SubmitFormButtonPattern 
-          formName={form.formName}
+          formName={self.form.formName}
           isPending={isPending}
           className=""
-          dict={dict.button}
+          dict={self.dict.button}
         />
         <input type="hidden" name="locale" value={locale} />
         <FormSuccessPattern 

@@ -5,6 +5,10 @@ export type Zone = {
   name: string;
 };
 export type Zones = Zone[];
+export const emptyZone: Zone = {
+  id: "",
+  name: "",
+}
 
 export type ZoneWithExtra = Zone & {
   aislesCount: number;

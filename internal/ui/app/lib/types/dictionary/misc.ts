@@ -4,6 +4,7 @@ export interface DictDialog {
   trigger: {
     label: string;
   };
+  clear: string;
 };
 
 export type DictDialogs<List extends string> = {

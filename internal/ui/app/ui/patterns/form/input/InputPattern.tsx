@@ -1,5 +1,5 @@
 /** React hooks */
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 
 /** Local components */
 import { Label } from "@/app/ui/components/label";
@@ -40,8 +40,12 @@ export default function InputPattern({
   label,
   dict
 }: InputPatternProps) {
-  const inputId = `${Math.random().toString(36).substring(2, 9)}`;
-  //const inputId = "sandeo"
+  let inputId = "";
+  useEffect(() => {
+    inputId = `${Math.random().toString(36).substring(2, 9)}`;
+  }, [])
+  
+
   const InputPatternField = () => {
     switch (field) {
       case "name":
@@ -54,6 +58,7 @@ export default function InputPattern({
             name={field}
             id={`${field}-${inputId}`}
             placeholder={dict.placeholder}
+            suppressHydrationWarning
           />
         );
       case "description":
@@ -63,6 +68,7 @@ export default function InputPattern({
             name={field}
             id={`${field}-${inputId}`}
             placeholder={dict.placeholder}
+            suppressHydrationWarning
           />
         );
       case "width":
@@ -76,6 +82,7 @@ export default function InputPattern({
             name={field}
             id={`${field}-${inputId}`}
             placeholder={dict.placeholder}
+            suppressHydrationWarning
           />
         );
       case "quantity":
@@ -87,6 +94,7 @@ export default function InputPattern({
             id={`${field}-${inputId}`}
             placeholder={dict.placeholder}
             step="1"
+            suppressHydrationWarning
           />
         );
       case "quantityWithButtons":

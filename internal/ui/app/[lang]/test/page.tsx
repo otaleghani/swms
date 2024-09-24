@@ -8,15 +8,19 @@ import { Zone } from "@/app/lib/types";
 import ZoneSelectField from "@/app/ui/modules/zones/misc/ZoneSelectField";
 import TestSelect from "@/app/ui/modules/zones/test/SelectTest";
 import ZoneForm from "@/app/ui/modules/zones/misc/ZoneForm";
-import zoneAddFormAction from "@/app/ui/modules/zones/create/single/actionCreate";
+import { zoneAddFormAction } from "@/app/ui/modules/zones/create/actions";
 import ZoneBulkForm from "@/app/ui/modules/zones/misc/ZoneBulkCreateForm";
-import zoneAddBulkFormAction from "@/app/ui/modules/zones/create/bulk/actionCreateBulk";
+import { zoneAddBulkFormAction } from "@/app/ui/modules/zones/create/actions";
+import AisleForm from "@/app/ui/modules/aisles/misc/AisleForm";
+import { Aisles, defaultAisleFormState } from "@/app/lib/types/data/aisles";
+import {aisleCreateFormAction} from "@/app/ui/modules/aisles/create/actions";
 
 export default async function TestingPage( {params}: {params: {lang: string}}) {
   const dict = await getDictionary(params.lang as Locale);
 
   const pZones = retrieve("Zones");
-  const [zones] = await Promise.all([pZones])
+  const pAisles = retrieve("Aisles");
+  const [zones, aisles] = await Promise.all([pZones, pAisles])
 
   const stringDate = "2024-08-15";
   // console.log(dateToISOString(stringDate))
@@ -46,53 +50,135 @@ export default async function TestingPage( {params}: {params: {lang: string}}) {
       }
 
       <ZoneForm 
-        form={{
-          formName:"gennarone",
-          initialState: defaultZoneFormState,
-          formAction: zoneAddFormAction,
-        }}
-        dict={{
-          name: {
-            label:"sandrone",
-            placeholder: "daje",
-            validation: {
-              empty:"empty",
-              max:"max",
-              min:"min",
-              type:"type",
-              valid:"valid",
+        self={{
+          dict: {
+            name: {
+              label:"sandrone",
+              placeholder: "daje",
+              validation: {
+                empty:"empty",
+                max:"max",
+                min:"min",
+                type:"type",
+                valid:"valid",
+              },
             },
+            button: {
+              active: "prememe",
+              pending: "pesoso"
+            }
           },
-          button: {
-            active: "prememe",
-            pending: "pesoso"
+          form: {
+            formName:"gennarone",
+            initialState: defaultZoneFormState,
+            formAction: zoneAddFormAction,
           }
-
         }}
       />
       <ZoneBulkForm
-        form={{
-          formName:"gennarone2",
-          initialState: defaultZoneBulkFormState,
-          formAction: zoneAddBulkFormAction,
-        }}
-        dict={{
-          number: {
-            label:"sandrone",
-            placeholder: "daje",
-            validation: {
-              empty:"empty",
-              max:"max",
-              min:"min",
-              type:"type",
-              valid:"valid",
-            },
+        self={{
+          form: {
+            formName:"gennarone2",
+            initialState: defaultZoneBulkFormState,
+            formAction: zoneAddBulkFormAction,
           },
-          button: {
-            active: "prememe",
-            pending: "pesoso"
+          dict: {
+            number: {
+              label:"sandrone",
+              placeholder: "daje",
+              validation: {
+                empty:"empty",
+                max:"max",
+                min:"min",
+                type:"type",
+                valid:"valid",
+              },
+            },
+            button: {
+              active: "prememe",
+              pending: "pesoso"
+            }
           }
         }}
+      />
+      <h1 className="text-2xl">AisleForm</h1>
+
+      <AisleForm 
+
+        self={{
+          dict: {
+            name: {
+              label:"sandrone",
+              placeholder: "daje",
+              validation: {
+                empty:"empty",
+                max:"max",
+                min:"min",
+                type:"type",
+                valid:"valid",
+              },
+            },
+            button: {
+              active: "prememe",
+              pending: "pesoso"
+            }
+          },
+          form: {
+            formName:"gennarone3",
+            initialState: defaultAisleFormState,
+            formAction: aisleCreateFormAction,
+          }
+        }}
+
+        propsPositionSelect={{
+          fields: {
+            zone: {
+              dict: {
+                select: {
+                  select: {
+                    label: "sandrone",
+                    combobox: {
+                      select: "seleziona",
+                      search: "cercar",
+                      empty: "fottiti"
+                    },
+                  },
+                  validation: { 
+                    not_found: "fottiti di buovo" 
+                  },
+                },
+                dialog: {
+                  dialog: {
+                    title: "sandro",
+                    description: "pertini",
+                    trigger: {
+                      label: "sandro"
+                    }
+                  },
+                  form: {
+                    name: {
+                      label:"sandrone",
+                      placeholder: "daje",
+                      validation: {
+                        empty:"empty",
+                        max:"max",
+                        min:"min",
+                      type:"type",
+                      valid:"valid",
+                    },
+                  },
+                  button: {
+                    active: "prememe",
+                    pending: "pesoso"
+                  }
+                }
+              },
+            },
+            errors: [],
+            list: zones.data as Zones,
+          }}
+        }}
+
       />
     </main>
   )

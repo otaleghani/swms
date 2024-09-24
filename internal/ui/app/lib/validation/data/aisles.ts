@@ -47,12 +47,12 @@ export async function validateAisle(
     VALIDATION_SETTINGS.shortString.maxLength,
   )).length != 0 && (state.error = true);
 
-  (state.errorMessages.zone = validateString(
-    state.result.zone, 
-    dict.forms.fields.zones.validation, 
-    VALIDATION_SETTINGS.foreignKeys.minLength,
-    VALIDATION_SETTINGS.foreignKeys.maxLength,
-  )).length != 0 && (state.error = true);
+  // (state.errorMessages.zone = validateString(
+  //   state.result.zone, 
+  //   dict.forms.fields.zones.validation, 
+  //   VALIDATION_SETTINGS.foreignKeys.minLength,
+  //   VALIDATION_SETTINGS.foreignKeys.maxLength,
+  // )).length != 0 && (state.error = true);
 
   if (await checkExisting("Zone", state.result.zone)) {
     state.errorMessages.zone.push(

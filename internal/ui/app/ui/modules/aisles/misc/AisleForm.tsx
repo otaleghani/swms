@@ -12,33 +12,37 @@ import { FormProps } from "@/app/lib/types/misc";
 import SubmitFormButtonPattern from "@/app/ui/patterns/form/buttons/SubmitFormButtonPattern";
 
 /** Types and interfaces */
-import { 
-  Zone,
-  ZonesBulkPostRequestBody, 
-} from "@/app/lib/types/data/zones";
+import { Aisle } from "@/app/lib/types/data/aisles";
 
 import { 
   DictInputField,
   DictFormButton,
 } from "@/app/lib/types/dictionary/form";
 import FormSuccessPattern from "@/app/ui/patterns/form/FormSuccessPattern";
-import FormErrorPattern from "@/app/ui/patterns/form/FormErrorPatter";
+import PositionSelectField, { PositionSelectFieldProps, SelectFieldWithAddProps } from "../../positions/PositionSelectField";
+import { Zone } from "@/app/lib/types";
 
-export interface DictBulkZoneForm {
-  number: DictInputField;
+export interface DictAisleForm {
+  name: DictInputField;
   button: DictFormButton;
 }
 
-export interface ZoneFormProps {
+export interface AisleFormProps {
   self: {
-    form: FormProps<ZonesBulkPostRequestBody>;
-    dict: DictBulkZoneForm;
+    form: FormProps<Aisle>;
+    dict: DictAisleForm;
+  }
+  propsPositionSelect: {
+    fields: {
+      zone: SelectFieldWithAddProps<Zone, "Zone">;
+    }
   }
 }
 
-export default function ZoneBulkForm({
+export default function AisleForm({ 
   self,
-}: ZoneFormProps) {
+  propsPositionSelect
+}: AisleFormProps) {
   const locale = usePathname().split("/")[1];
   const [state, action, isPending] = useActionState(
     self.form.formAction,
@@ -58,14 +62,19 @@ export default function ZoneBulkForm({
 
   const FormFields = () => {
     return (
-      <InputPattern 
-        field="quantityWithButtons"
-        dict={self.dict.number}
-        defaultValue={String(state.result?.number)}
-        className=""
-        label={true}
-        errorMessages={state.errorMessages.number}
-      />
+      <>
+        <InputPattern 
+          field="name"
+          dict={self.dict.name}
+          defaultValue={state.result?.name}
+          className=""
+          label={true}
+          errorMessages={state.errorMessages.name}
+        />
+        <PositionSelectField 
+          fields={propsPositionSelect.fields}
+        />
+      </>
     )
   }
 
@@ -80,10 +89,9 @@ export default function ZoneBulkForm({
           dict={self.dict.button}
         />
         <input type="hidden" name="locale" value={locale} />
-        {!state.error
-          ? (<FormSuccessPattern message={state.message}/>)
-          : (<FormErrorPattern message={state.message} />)
-        }
+        <FormSuccessPattern 
+          message={state.message}
+        />
       </div>
     </form>
   )

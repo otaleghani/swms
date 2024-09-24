@@ -7,6 +7,12 @@ export type Rack = {
   aisle: string;
 };
 export type Racks = Rack[];
+export const emptyRack: Rack = {
+  id: "",
+  name: "",
+  zone: "",
+  aisle: "",
+}
 
 export type RackWithExtra = Rack & {
   shelfsCount: number;

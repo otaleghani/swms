@@ -23,10 +23,10 @@ type CreateInBulkMapOptions = {
 }
 
 const options: CreateInBulkMapOptions = {
-  "Zones":  { path: "zones/bulk",   type: "Zones" },
-  "Aisles": { path: "aisles/bulk",  type: "Aisles" },
-  "Racks":  { path: "racks/bulk",   type: "Racks" },
-  "Shelfs": { path: "shelfs/bulk",  type: "Shelfs" },
+  "Zones":  { path: "zones/bulk/",   type: "Zones" },
+  "Aisles": { path: "aisles/bulk/",  type: "Aisles" },
+  "Racks":  { path: "racks/bulk/",   type: "Racks" },
+  "Shelfs": { path: "shelfs/bulk/",  type: "Shelfs" },
 }
 
 type BulkPostRequestBody = {
