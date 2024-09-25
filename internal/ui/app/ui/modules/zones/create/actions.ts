@@ -56,7 +56,6 @@ export async function zoneAddBulkFormAction(
   let state = currentState;
   const { quantityWithButtons, locale } = Object.fromEntries(formData.entries());
   const number = quantityWithButtons;
-  console.log(quantityWithButtons)
   if (typeof number !== "string" || typeof locale !== "string") {
     state.error = true;
     state.message = "Mess with the best, die like the rest.";

@@ -22,7 +22,6 @@ import { zoneAddFormAction } from "./actions";
 import { defaultZoneFormState } from "@/app/lib/types/data/zones";
 
 /** Props */
-
 export interface ZoneCreateDialogProps {
   self: {
     triggerType: "button" | "icon";

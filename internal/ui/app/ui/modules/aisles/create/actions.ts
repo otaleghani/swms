@@ -1,12 +1,13 @@
 "use server";
 
 /** Actons */
-import { validateAisle } from "@/app/lib/validation/data/aisles";
+import { validateAisle, validateAisleBulk } from "@/app/lib/validation/data/aisles";
 import validateResponse from "@/app/lib/validation/response";
 import { create } from "@/app/lib/requests/generics/create";
+import { createInBulk } from "@/app/lib/requests/generics/createInBulk";
 
 /** Types and interfaces */
-import { Aisle } from "@/app/lib/types/data/aisles";
+import { Aisle, AislesBulkPostRequestBody } from "@/app/lib/types/data/aisles";
 import { FormState } from "@/app/lib/types/misc";
 
 export async function aisleCreateFormAction(
@@ -37,6 +38,44 @@ export async function aisleCreateFormAction(
 
   // Create the actual item with the validated fields
   const response = await create("Aisle", state.result);
+  const responseValidation = await validateResponse(
+    response, 
+    state, 
+    locale as string
+  );
+
+  return responseValidation;
+}
+
+export async function aisleAddBulkFormAction(
+  currentState: FormState<AislesBulkPostRequestBody>,
+  formData: FormData
+) {
+  // Get data from the form
+  let state = currentState;
+  const { 
+    quantityWithButtons, 
+    zone,
+    locale 
+  } = Object.fromEntries(formData.entries());
+  const number = quantityWithButtons;
+  if (typeof number !== "string" || typeof locale !== "string") {
+    state.error = true;
+    state.message = "Mess with the best, die like the rest.";
+    return state;
+  }
+
+  // Craft the new state of the form
+  state.result = { number: Number(number), zone: String(zone) };
+
+  // Validate the passed fields
+  let fieldValidation = await validateAisleBulk(state, locale as string)
+  if (fieldValidation.error) {
+    return fieldValidation;
+  }
+
+  // Create the actual item with the validated fields
+  const response = await createInBulk("Aisles", state.result);
   const responseValidation = await validateResponse(
     response, 
     state, 

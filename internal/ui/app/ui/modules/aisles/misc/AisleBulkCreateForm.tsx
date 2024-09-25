@@ -12,33 +12,42 @@ import { FormProps } from "@/app/lib/types/misc";
 import SubmitFormButtonPattern from "@/app/ui/patterns/form/buttons/SubmitFormButtonPattern";
 
 /** Types and interfaces */
-import { 
-  Zone,
-  ZonesBulkPostRequestBody, 
-} from "@/app/lib/types/data/zones";
+import { AislesBulkPostRequestBody } from "@/app/lib/types/data/aisles";
 
 import { 
   DictInputField,
   DictFormButton,
+  DictSelectField,
 } from "@/app/lib/types/dictionary/form";
 import FormSuccessPattern from "@/app/ui/patterns/form/FormSuccessPattern";
 import FormErrorPattern from "@/app/ui/patterns/form/FormErrorPatter";
+import SelectPosition from "@/app/ui/general/form/select/position/field";
+import PositionSelectField from "../../positions/PositionSelectField";
+import { SelectFieldWithAddProps } from "../../positions/PositionSelectField";
+import { Zone } from "@/app/lib/types/data/zones";
 
-export interface DictBulkZoneForm {
+export interface DictBulkAisleForm {
   number: DictInputField;
   button: DictFormButton;
+  //zone: DictSelectField;
 }
 
-export interface ZoneBulkFormProps {
+export interface AisleBulkFormProps {
   self: {
-    form: FormProps<ZonesBulkPostRequestBody>;
-    dict: DictBulkZoneForm;
+    form: FormProps<AislesBulkPostRequestBody>;
+    dict: DictBulkAisleForm;
+  }
+  propsPositionSelect: {
+    fields: {
+      zone: SelectFieldWithAddProps<Zone, "Zone">;
+    }
   }
 }
 
-export default function ZoneBulkCreateForm({
+export default function AisleBulkCreateForm({
   self,
-}: ZoneBulkFormProps) {
+  propsPositionSelect
+}: AisleBulkFormProps) {
   const locale = usePathname().split("/")[1];
   const [state, action, isPending] = useActionState(
     self.form.formAction,
@@ -58,14 +67,19 @@ export default function ZoneBulkCreateForm({
 
   const FormFields = () => {
     return (
-      <InputPattern 
-        field="quantityWithButtons"
-        dict={self.dict.number}
-        defaultValue={String(state.result?.number)}
-        className=""
-        label={true}
-        errorMessages={state.errorMessages.number}
-      />
+      <>
+        <InputPattern 
+          field="quantityWithButtons"
+          dict={self.dict.number}
+          defaultValue={String(state.result?.number)}
+          className=""
+          label={true}
+          errorMessages={state.errorMessages.number}
+        />
+        <PositionSelectField 
+          fields={propsPositionSelect.fields}
+        />
+      </>
     )
   }
 

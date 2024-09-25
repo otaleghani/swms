@@ -133,29 +133,26 @@ export default async function TestingPage( {params}: {params: {lang: string}}) {
         propsPositionSelect={{
           fields: {
             zone: {
-              dict: {
-                select: {
+              propsSelectField: {
+                dict: {
                   select: {
-                    label: "sandrone",
+                    label: "sandro",
                     combobox: {
                       select: "seleziona",
                       search: "cercar",
                       empty: "fottiti"
                     },
                   },
-                  validation: { 
-                    not_found: "fottiti di buovo" 
-                  },
+                  validation: {
+                    not_found: "sus",
+                  }
                 },
-                dialog: {
-                  dialog: {
-                    title: "sandro",
-                    description: "pertini",
-                    trigger: {
-                      label: "sandro"
-                    }
-                  },
-                  form: {
+                errors: [],
+                list: zones.data as Zones,
+              },
+              propsAddDialog: {
+                propsForm: {
+                  dict: {
                     name: {
                       label:"sandrone",
                       placeholder: "daje",
@@ -163,20 +160,30 @@ export default async function TestingPage( {params}: {params: {lang: string}}) {
                         empty:"empty",
                         max:"max",
                         min:"min",
-                      type:"type",
-                      valid:"valid",
+                        type:"type",
+                        valid:"valid",
+                      },
                     },
+                    button: {
+                      active: "sus",
+                      pending: "sis",
+                    }
                   },
-                  button: {
-                    active: "prememe",
-                    pending: "pesoso"
+                },
+                self: {
+                  triggerType: "icon",
+                  dict: {
+                    title: "Titolone",
+                    description: "descriziazione",
+                    clear: "sas",
+                    trigger: {
+                      label: "sus",
+                    }
                   }
                 }
               },
-            },
-            errors: [],
-            list: zones.data as Zones,
-          }}
+            }
+          }
         }}
 
       />

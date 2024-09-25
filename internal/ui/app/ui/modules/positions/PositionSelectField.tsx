@@ -17,7 +17,6 @@ import
   ZoneAddDialog, 
   { ZoneCreateDialogProps } from "../zones/create/ZoneCreateDialog";
 import { addNewItemToList, filterList } from "../../patterns/form/select/action";
-import { list } from "postcss";
 import { DictDialog } from "@/app/lib/types/dictionary/misc";
 import { DictZoneForm } from "../zones/misc/ZoneForm";
 
@@ -36,7 +35,6 @@ export type SelectFieldWithAddProps<T, K extends keyof DictForms> = {
     };
     propsForm: {
       dict: DictForms[K];
-      //refreshItemList?: (item: T) => void;
     }
   };
   propsSelectField: {
