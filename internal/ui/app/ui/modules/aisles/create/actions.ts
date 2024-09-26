@@ -24,7 +24,7 @@ export async function aisleCreateFormAction(
     ) {
     state.error = true;
     state.message = "Mess with the best, die like the rest.";
-    return state;
+    return state as any;
   }
 
   // Craft the new state of the form
@@ -33,7 +33,7 @@ export async function aisleCreateFormAction(
   // Validate the passed fields
   let fieldValidation = await validateAisle(state, locale as string)
   if (fieldValidation.error) {
-    return fieldValidation;
+    return fieldValidation as any;
   }
 
   // Create the actual item with the validated fields
@@ -44,7 +44,7 @@ export async function aisleCreateFormAction(
     locale as string
   );
 
-  return responseValidation;
+  return responseValidation as any;
 }
 
 export async function aisleAddBulkFormAction(
@@ -62,16 +62,21 @@ export async function aisleAddBulkFormAction(
   if (typeof number !== "string" || typeof locale !== "string") {
     state.error = true;
     state.message = "Mess with the best, die like the rest.";
-    return state;
+    return state as any;
   }
 
   // Craft the new state of the form
-  state.result = { number: Number(number), zone: String(zone) };
+  state.result = { number: Number(number), zone: 
+    { 
+      id: String(zone), 
+      name: "",
+    }
+  };
 
   // Validate the passed fields
   let fieldValidation = await validateAisleBulk(state, locale as string)
   if (fieldValidation.error) {
-    return fieldValidation;
+    return fieldValidation as any;
   }
 
   // Create the actual item with the validated fields
@@ -82,5 +87,5 @@ export async function aisleAddBulkFormAction(
     locale as string
   );
 
-  return responseValidation;
+  return responseValidation as any;
 }

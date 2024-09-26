@@ -35,8 +35,7 @@ export interface FormProps<Type> {
   formAction: (
     currentState: FormState<Type>,
     formData: FormData,
-  ) => Promise<FormState<Type>>;
+  ) => Promise<FormState<any>>;
   notifyFormSent?: Dispatch<SetStateAction<boolean>>;
   refreshItemList?: (item: Type) => void;
-  //FormFields?: React.FunctionComponent;
 }

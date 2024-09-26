@@ -25,7 +25,7 @@ export async function zoneAddFormAction(
   if (typeof name !== "string" || typeof locale !== "string") {
     state.error = true;
     state.message = "Mess with the best, die like the rest.";
-    return state;
+    return state as any;
   }
 
   // Craft the new state of the form
@@ -34,7 +34,7 @@ export async function zoneAddFormAction(
   // Validate the passed fields
   let fieldValidation = await validateZone(state, locale as string)
   if (fieldValidation.error) {
-    return fieldValidation;
+    return fieldValidation as any;
   }
 
   // Create the actual item with the validated fields
@@ -45,7 +45,7 @@ export async function zoneAddFormAction(
     locale as string
   );
 
-  return responseValidation;
+  return responseValidation as any;
 }
 
 export async function zoneAddBulkFormAction(
@@ -59,7 +59,7 @@ export async function zoneAddBulkFormAction(
   if (typeof number !== "string" || typeof locale !== "string") {
     state.error = true;
     state.message = "Mess with the best, die like the rest.";
-    return state;
+    return state as any;
   }
 
   // Craft the new state of the form
@@ -68,7 +68,7 @@ export async function zoneAddBulkFormAction(
   // Validate the passed fields
   let fieldValidation = await validateZoneBulk(state, locale as string)
   if (fieldValidation.error) {
-    return fieldValidation;
+    return fieldValidation as any;
   }
 
   // Create the actual item with the validated fields
@@ -79,5 +79,5 @@ export async function zoneAddBulkFormAction(
     locale as string
   );
 
-  return responseValidation;
+  return responseValidation as any;
 }

@@ -43,3 +43,22 @@ export type ZonesWithExtraRP = Promise<Response<ZonesWithExtra>>;
 export type ZonesBulkPostRequestBody = {
   number: number;
 }
+
+import { FormProps } from "../misc";
+import { DictBulkZoneForm, DictZoneForm } from "../dictionary/data/zone";
+import { SelectFieldWithAddProps } from "@/app/ui/modules/positions/PositionSelectField";
+export interface ZoneBulkFormProps {
+  self: {
+    form: FormProps<ZonesBulkPostRequestBody>;
+    dict: DictBulkZoneForm;
+  }
+}
+
+export interface ZoneFormProps {
+  self: {
+    dict: DictZoneForm;
+    fields: any;
+  }
+  type: string;
+  form: FormProps<Zone>;
+}

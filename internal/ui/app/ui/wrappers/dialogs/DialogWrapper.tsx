@@ -59,7 +59,10 @@ export default function DialogWrapper({
         <DrawerFooter className="pt-2">
           <DrawerClose asChild>
             <Button variant="outline">
-              {dict.buttons.clear.active}
+
+              {
+                //dict.buttons.clear.active
+              }
             </Button>
           </DrawerClose>
         </DrawerFooter>

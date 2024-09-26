@@ -39,3 +39,56 @@ export type AislesBulkPostRequestBody = {
   number: number;
   zone: Zone;
 }
+
+import { FormProps } from "../misc";
+import { DictAisleForm, DictBulkAisleForm } from "../dictionary/data/aisle";
+import { SelectFieldWithAddProps } from "@/app/ui/modules/positions/PositionSelectField";
+import { DictInputField } from "../dictionary/form";
+export interface AislesBulkFormProps {
+  self: {
+    form: FormProps<AislesBulkPostRequestBody>;
+    dict: DictBulkAisleForm;
+  }
+  propsPositionSelect: {
+    fields: {
+      zone: SelectFieldWithAddProps<Zone, "Zone">;
+    }
+  }
+}
+
+export interface AisleFormProps {
+  self: {
+    dict: DictAisleForm;
+    fields: AisleFormFieldsProps;
+  }
+  form: FormProps<Aisle>;
+  type: string;
+}
+
+// I need to differentiate the props of the FORM with the FIELDS
+
+// Generic
+export interface TestAisleFormProps {
+  type: string;             // Aisle
+  form: FormProps<Aisle>;   
+}
+
+
+// FIELDS
+export interface AisleFormFieldsProps {
+  name: {
+    dict: DictInputField;
+    defaultValue: string;
+    errorMessages: string[];
+  },
+  position: {
+    fields: {
+      zone: {
+        data: SelectFieldWithAddProps<Zone, "Zone">;
+        defaultValue: string;
+        errorMessages: string[];
+      }
+    }
+  }
+}
+
