@@ -1,71 +1,94 @@
 "use client";
 
 /** React hooks */
-import { createElement, useActionState, useEffect } from "react";
+import { useActionState, useEffect } from "react";
 
 /** Next hooks */
 import { usePathname } from "next/navigation";
 
 /** Local components */
 import SubmitFormButtonPattern from "@/app/ui/patterns/form/buttons/SubmitFormButtonPattern";
-
-/** Types and interfaces */
 import FormSuccessPattern from "@/app/ui/patterns/form/FormSuccessPattern";
 import FormErrorPattern from "@/app/ui/patterns/form/FormErrorPatter";
-
 import { 
-  ListFormProps ,
-  AisleForm,
-  ZoneForm,
-  AisleFormFields
+  ZoneFormFields,
+  AisleFormFields 
 } from "./FormPatternFields";
 
-import { AisleFormProps } from "@/app/lib/types/data/aisles";
-import { ZoneFormProps } from "@/app/lib/types/data/zones";
+/** Types and interfaces */
+import { 
+  FormPropsMap,
+} from "@/app/lib/types/form/form";
 
-export default function FormPattern<K extends keyof ListFormProps>({
-  props,
-}: ListFormProps[K]) {
+import { 
+  ZoneFormFieldsProps,
+  AisleFormFieldsProps,
+} from "@/app/lib/types/form/fields";
+
+export default function FormPattern<K extends keyof FormPropsMap>({
+  self,
+  form,
+  type
+}: FormPropsMap[K]) {
   const locale = usePathname().split("/")[1];
   const [state, action, isPending] = useActionState(
-    props.form.formAction,
-    props.form.initialState,
+    form.formAction,
+    form.initialState,
   );
 
   useEffect(() => {
     if (!state.error && state.result) {
-      if (props.form.notifyFormSent) {
-        props.form.notifyFormSent(true);
-        if (props.form.refreshItemList) {
-          props.form.refreshItemList(state.result);
+      if (form.notifyFormSent) {
+        form.notifyFormSent(true);
+        if (form.refreshItemList) {
+          form.refreshItemList(state.result);
         }
       }
     }
   }, [state])
 
   return (
-    <form id={props.form.formName} action={action}>
+    <form id={form.formName} action={action}>
       <div className="grid gap-4 py-4">
-        { props.type === "Aisle" && (
-          <AisleFormFields
-            {...props.self.fields}
-            name={{
-              ...props.self.fields.name,
-              errorMessages: state.errorMessages.name,
-              defaultValue: state.result?.name,
-            }}
+        { type === "Zone" && (
+          <ZoneFormFields
+            fields={{
+              ...self.fields, 
+              name: {
+                //...self.fields.yOw7RpfUso4aSvzvINbEname,
+                dict: self.fields.name.dict,
+                defaultValue: state.result.name as string,
+                errorMessages: state.errorMessages.name,
+              },
+            } as ZoneFormFieldsProps}
           />
         )}
-        { props.type === "Zone" && (
-          <ZoneForm
-            props={props as ZoneFormProps}
+        { type === "Aisle" && (
+          <AisleFormFields
+            fields={{
+              ...self.fields,
+              name: {
+                ...self.fields.name,
+                errorMessages: state.errorMessages.name,
+                defaultValue: state.result?.name,
+              },
+              zone: {
+                ...self.fields.zone,
+                SelectField: {
+                  ...self.fields.zone.SelectField,
+                  errorMessages: state.errorMessages.zone,
+                  defaultValue: state.result?.zone,
+                }
+              }
+            } as AisleFormFieldsProps}
+            //dict={{...self.dict}}
           />
         )}
         <SubmitFormButtonPattern 
-          formName={props.form.formName}
+          formName={form.formName}
           isPending={isPending}
           className=""
-          dict={props.self.dict.button}
+          dict={self.fields.button}
         />
         <input type="hidden" name="locale" value={locale} />
         {!state.error

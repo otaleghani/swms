@@ -39,3 +39,8 @@ export interface FormProps<Type> {
   notifyFormSent?: Dispatch<SetStateAction<boolean>>;
   refreshItemList?: (item: Type) => void;
 }
+
+export interface TestFormProps<Type> {
+  initialState: FormState<Type>;
+
+}

@@ -15,50 +15,41 @@ import FormPattern from "@/app/ui/patterns/form/FormPattern";
 
 /** Types and interfaces */
 import { DictDialog } from "@/app/lib/types/dictionary/misc";
-import { Zone } from "@/app/lib/types/data/zones";
 
 /** Actions */
-import { zoneAddFormAction } from "./actions";
-import { defaultZoneFormState } from "@/app/lib/types/data/zones";
-import { FormFieldsPropsWithDictMap } from "@/app/lib/types/form/fields";
 import { FormPropsMap } from "@/app/lib/types/form/form";
 
 /** Props */
-export interface ZoneCreateDialogProps {
+export interface DialogFormPatternProps<T extends keyof FormPropsMap> {
   self: {
     triggerType: "button" | "icon";
     dict: DictDialog;
   }
-  formPattern: FormPropsMap["Zone"];
+  formPattern: FormPropsMap[T];
 }
 
-export default function ZoneAddDialog({
+export default function DialogFormPattern<T extends keyof FormPropsMap>({
   self,
   formPattern
-}: ZoneCreateDialogProps) {
+}: DialogFormPatternProps<T>) {
   const [open, setOpen] = useState(false);
-  const formName = "AddZoneDialog";
+  //const formName = "AddZoneDialog";
 
-  const ZoneAddFormDialogBody = () => {
+  const DialogFormPatternBody = () => {
     return (
       <>
         <DialogWrapperHeader 
           title={self.dict.title}
           description={self.dict.description}
         />
-        <FormPattern<"Zone"> 
-          form={{
-            ...formPattern.form,
-            formName: formName,
-          }}
-          self={formPattern.self}
-          type={formPattern.type}
+        <FormPattern<T> 
+          {...formPattern}
         />
       </>
     )
   }
 
-  const ZoneAddFormDialogTrigger = () => {
+  const DialogFormPatternTrigger = () => {
     return (
       <>
         {self.triggerType === "button" 
@@ -82,8 +73,8 @@ export default function ZoneAddDialog({
   return (
     <>
       <DialogWrapper 
-        Body={ZoneAddFormDialogBody}
-        Trigger={ZoneAddFormDialogTrigger}
+        Body={DialogFormPatternBody}
+        Trigger={DialogFormPatternTrigger}
         open={open}
         setOpen={setOpen}
         dict={self.dict}

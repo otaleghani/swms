@@ -19,6 +19,8 @@ import
 import { addNewItemToList, filterList } from "../../patterns/form/select/action";
 import { DictDialog } from "@/app/lib/types/dictionary/misc";
 import { DictZoneForm } from "../zones/misc/ZoneForm";
+import { FieldSelectProps } from "@/app/lib/types/form/fields";
+import FormPattern from "../../patterns/form/FormPattern";
 
 type DictForms = {
   Zone: DictZoneForm;
@@ -27,29 +29,30 @@ type DictForms = {
   Shelf: ZoneCreateDialogProps;
 }
 
-export type SelectFieldWithAddProps<T, K extends keyof DictForms> = {
-  propsAddDialog: {
-    self: {
-      triggerType: "icon";
-      dict: DictDialog;
-    };
-    propsForm: {
-      dict: DictForms[K];
-    }
-  };
-  propsSelectField: {
-    dict: DictSelectField;
-    errors: string[];
-    list: T[];
-  }
-} 
+// export type SelectFieldWithAddProps<T, K extends keyof DictForms> = {
+//   propsAddDialog: {
+//     self: {
+//       triggerType: "icon";
+//       dict: DictDialog;
+//     };
+//     propsForm: {
+//       dict: DictForms[K];
+//     }
+//   };
+//   propsSelectField: {
+//     dict: DictSelectField;
+//     errors: string[];
+//     list: T[];
+//   }
+// } 
+
 
 export interface PositionSelectFieldProps {
   fields: {
-    zone?: SelectFieldWithAddProps<Zone, "Zone">;
-    aisle?: SelectFieldWithAddProps<Aisle, "Aisle">;
-    rack?: SelectFieldWithAddProps<Rack, "Rack">;
-    shelf?: SelectFieldWithAddProps<Shelf, "Shelf">;
+    zone?: FieldSelectProps<"Zone">;
+    aisle?: FieldSelectProps<"Aisle">;
+    rack?: FieldSelectProps<"Rack">;
+    shelf?: FieldSelectProps<"Shelf">; 
   }
   // dict: DictSelectField;
 }
@@ -63,14 +66,14 @@ export default function PositionSelectField({
   const [selectedRack, setSelectedRack] = useState(emptyRack);
   const [selectedShelf, setSelectedShelf] = useState(emptyShelf);
 
-  const [listZone, setListZone] = useState(fields.zone?.propsSelectField.list);
-  const [listAisles, setListAisles] = useState(fields.aisle?.propsSelectField.list);
-  const [listRacks, setListRacks] = useState(fields.rack?.propsSelectField.list);
-  const [listShelfs, setListShelfs] = useState(fields.shelf?.propsSelectField.list);
+  const [listZone, setListZone] = useState(fields.zone?.SelectField.list);
+  const [listAisles, setListAisles] = useState(fields.aisle?.SelectField.list);
+  const [listRacks, setListRacks] = useState(fields.rack?.SelectField.list);
+  const [listShelfs, setListShelfs] = useState(fields.shelf?.SelectField.list);
 
-  const [filteredAisles, setFilteredAisles] = useState(fields.aisle?.propsSelectField.list);
-  const [filteredRacks, setFilteredRacks] = useState(fields.rack?.propsSelectField.list);
-  const [filteredShelfs, setFilteredShelfs] = useState(fields.shelf?.propsSelectField.list);
+  const [filteredAisles, setFilteredAisles] = useState(fields.aisle?.SelectField.list);
+  const [filteredRacks, setFilteredRacks] = useState(fields.rack?.SelectField.list);
+  const [filteredShelfs, setFilteredShelfs] = useState(fields.shelf?.SelectField.list);
 
   const refreshZoneList = (item: Zone) => {
     addNewItemToList(item, listZone, setListZone);
@@ -127,24 +130,25 @@ export default function PositionSelectField({
               list={listZone}
               element={selectedZone}
               setElement={setSelectedZone}
-              dict={fields.zone.propsSelectField.dict}
-              errors={fields.zone.propsSelectField.errors}
+              dict={fields.zone.SelectField.dict}
+              errors={fields.zone.SelectField.errorMessages}
             />
-            <ZoneAddDialog
-              self={{
-                triggerType: "icon",
-                dict: fields.zone.propsAddDialog.self.dict
-              }}
-              propsZoneForm={{
-                refreshItemList: refreshZoneList,
-                dict: fields.zone.propsAddDialog.propsForm.dict
-              }}
-            />
+
+            {
+            //<ZoneAddDialog
+            //  self={{
+            //    triggerType: "icon",
+            //    dict: fields.zone.AddDialog.self.dict
+            //  }}
+            //  propsZoneForm={{
+            //    refreshItemList: refreshZoneList,
+            //    dict: fields.zone.AddDialog.FormPattern.form.
+            //  }}
+            //   
+            ///>
+            }
           </div>
         )}
-
-
-
       </div>
     </div>
   )

@@ -62,15 +62,7 @@ export interface AisleFormProps {
     fields: AisleFormFieldsProps;
   }
   form: FormProps<Aisle>;
-  type: string;
-}
-
-// I need to differentiate the props of the FORM with the FIELDS
-
-// Generic
-export interface TestAisleFormProps {
-  type: string;             // Aisle
-  form: FormProps<Aisle>;   
+  type: "Aisle";
 }
 
 
@@ -91,4 +83,3 @@ export interface AisleFormFieldsProps {
     }
   }
 }
-

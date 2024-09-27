@@ -1,44 +1,39 @@
-import { Aisle, AisleFormProps, AisleFormState } from "@/app/lib/types/data/aisles";
-import { ZoneFormProps } from "@/app/lib/types/data/zones";
-
-/** Local components */
 import InputPattern from "./input/InputPattern";
 import PositionSelectField from "../../modules/positions/PositionSelectField";
+import { FormFieldsPropsWithDictMap } from "@/app/lib/types/form/fields";
 
-
-export type ListFormConstants = "Aisle" | "Zone";
-export interface ListFormProps {
-  Aisle: {
-    props: AisleFormProps;
-  },
-  Zone: {
-    props: ZoneFormProps;
-  }
-}
-
-import { AisleFormFieldsProps } from "@/app/lib/types/data/aisles";
-
-export const AisleFormFields = (
-  props: AisleFormFieldsProps) => { return (
+export const ZoneFormFields = ({
+  fields,
+}: FormFieldsPropsWithDictMap["Zone"]) => {
+  return (
     <>
       <InputPattern 
         field="name"
-        dict={props.name.dict}
-        defaultValue={props.name.defaultValue}
+        dict={fields.name.dict}
+        defaultValue={fields.name.defaultValue as string}
         className=""
         label={true}
-        errorMessages={props.name.errorMessages}
-      />
-      <PositionSelectField 
-        fields={{ zone: props.position.fields.zone.data }}
+        errorMessages={fields.name.errorMessages}
       />
     </>
   )
 }
-export const ZoneForm = (props: ListFormProps["Zone"]) => {
-  return (
+
+export const AisleFormFields = ({
+  fields,
+}: FormFieldsPropsWithDictMap["Aisle"]) => { return (
     <>
-      got here, zone
+      <InputPattern 
+        field="name"
+        dict={fields.name.dict}
+        defaultValue={fields.name.defaultValue as string}
+        className=""
+        label={true}
+        errorMessages={fields.name.errorMessages}
+      />
+      <PositionSelectField 
+        fields={{ zone: fields.zone }}
+      />
     </>
   )
 }
