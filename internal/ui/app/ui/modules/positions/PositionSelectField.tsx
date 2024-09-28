@@ -21,6 +21,10 @@ import { DictDialog } from "@/app/lib/types/dictionary/misc";
 import { DictZoneForm } from "../zones/misc/ZoneForm";
 import { FieldSelectProps } from "@/app/lib/types/form/fields";
 import FormPattern from "../../patterns/form/FormPattern";
+import DialogFormPattern from "../../patterns/dialog/DialogFormPattern";
+import { fieldsDefaultProps } from "@/app/lib/types/form/fields";
+import { defaultZoneFormState } from "@/app/lib/types/data/zones";
+import { zoneAddFormAction } from "../zones/create/actions";
 
 type DictForms = {
   Zone: DictZoneForm;
@@ -77,21 +81,25 @@ export default function PositionSelectField({
 
   const refreshZoneList = (item: Zone) => {
     addNewItemToList(item, listZone, setListZone);
+    setSelectedZone(item);
   };
 
   const refreshAisleList = (item: Aisle) => {
     addNewItemToList(item, listAisles, setListAisles);
     filterList(listAisles, "zone", selectedZone.id, setFilteredAisles);
+    setSelectedAisle(item);
   }
 
   const refreshRackList = (item: Rack) => {
     addNewItemToList(item, listRacks, setListRacks);
     filterList(listRacks, "aisle", selectedAisle.id, setFilteredRacks);
+    setSelectedRack(item);
   }
 
   const refreshShelfList = (item: Shelf) => {
     addNewItemToList(item, listShelfs, setListShelfs);
     filterList(listShelfs, "rack", selectedRack.id, setFilteredShelfs);
+    setSelectedShelf(item);
   }
 
   useEffect(() => {
@@ -132,6 +140,53 @@ export default function PositionSelectField({
               setElement={setSelectedZone}
               dict={fields.zone.SelectField.dict}
               errors={fields.zone.SelectField.errorMessages}
+            />
+
+            <DialogFormPattern<"Zone"> 
+              self={{
+                triggerType: "icon",
+                dict: {
+                  title: "Some dialog",
+                  description: "PREMIMI TUTTO",
+                  trigger: {label: "ANVEDI"},
+                  clear: "NANDO"
+                }
+              }}
+              formPattern={{
+                type: "Zone",
+                form: {
+                  formName: "NOMEFORMTREQUADDTO",
+                  initialState: defaultZoneFormState,
+                  formAction: zoneAddFormAction,
+                  refreshItemList: refreshZoneList,
+                  // notifyFormSent
+                  // refreshItemList
+                },
+                self: {
+                  fields: {
+                    ...fieldsDefaultProps,
+                    name: {
+                      dict: {
+                        label: "sandrone",
+                        placeholder: "daje",
+                        validation: {
+                          empty:"empty",
+                          max:"max",
+                          min:"min",
+                          type:"type",
+                          valid:"valid",
+                        },
+                      },
+                      defaultValue: "sandroneDefaultValue",
+                      errorMessages: [],
+                    },
+                    button: {
+                      active: "attivo",
+                      pending: "pendivo"
+                    },
+                  }
+                } 
+              }}
             />
 
             {

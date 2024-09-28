@@ -34,7 +34,7 @@ interface FormProps<T extends keyof FormMap> {
     formData: FormData,
   ) => Promise<FormState<any>>;
   notifyFormSent?: Dispatch<SetStateAction<boolean>>;
-  refreshItemList?: (item: T) => void;
+  refreshItemList?: (item: FormMap[T]) => void;
 }
 
 export type FormPropsMap = {

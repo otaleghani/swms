@@ -19,7 +19,7 @@ import {
   DictFormButton,
 } from "@/app/lib/types/dictionary/form";
 import FormSuccessPattern from "@/app/ui/patterns/form/FormSuccessPattern";
-import PositionSelectField, { PositionSelectFieldProps, SelectFieldWithAddProps } from "../../positions/PositionSelectField";
+import PositionSelectField, { PositionSelectFieldProps } from "../../positions/PositionSelectField";
 import { Zone } from "@/app/lib/types";
 
 export interface DictAisleForm {

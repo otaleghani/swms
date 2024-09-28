@@ -39,7 +39,8 @@ export default function FormPattern<K extends keyof FormPropsMap>({
   useEffect(() => {
     if (!state.error && state.result) {
       if (form.notifyFormSent) {
-        form.notifyFormSent(true);
+      //console.log(form.formName)
+        form.notifyFormSent(false);
         if (form.refreshItemList) {
           form.refreshItemList(state.result);
         }
@@ -55,9 +56,8 @@ export default function FormPattern<K extends keyof FormPropsMap>({
             fields={{
               ...self.fields, 
               name: {
-                //...self.fields.yOw7RpfUso4aSvzvINbEname,
                 dict: self.fields.name.dict,
-                defaultValue: state.result.name as string,
+                defaultValue: state.result?.name,
                 errorMessages: state.errorMessages.name,
               },
             } as ZoneFormFieldsProps}
@@ -75,7 +75,7 @@ export default function FormPattern<K extends keyof FormPropsMap>({
               zone: {
                 ...self.fields.zone,
                 SelectField: {
-                  ...self.fields.zone.SelectField,
+                  ...self.fields.zone?.SelectField,
                   errorMessages: state.errorMessages.zone,
                   defaultValue: state.result?.zone,
                 }

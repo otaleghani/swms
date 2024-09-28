@@ -44,7 +44,6 @@ export default function InputPattern({
   useEffect(() => {
     inputId = `${Math.random().toString(36).substring(2, 9)}`;
   }, [])
-  
 
   const InputPatternField = () => {
     switch (field) {
@@ -54,10 +53,10 @@ export default function InputPattern({
         return (
           <Input
             type="text"
-            defaultValue={defaultValue}
             name={field}
             id={`${field}-${inputId}`}
             placeholder={dict.placeholder}
+            defaultValue={defaultValue}
             suppressHydrationWarning
           />
         );

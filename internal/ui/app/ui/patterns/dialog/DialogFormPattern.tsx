@@ -44,6 +44,10 @@ export default function DialogFormPattern<T extends keyof FormPropsMap>({
         />
         <FormPattern<T> 
           {...formPattern}
+          form={{
+            ...formPattern.form,
+            notifyFormSent: setOpen,
+          }}
         />
       </>
     )

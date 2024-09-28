@@ -16,6 +16,7 @@ import { Aisles, defaultAisleFormState } from "@/app/lib/types/data/aisles";
 import {aisleCreateFormAction} from "@/app/ui/modules/aisles/create/actions";
 import FormPattern from "@/app/ui/patterns/form/FormPattern";
 import DialogFormPattern from "@/app/ui/patterns/dialog/DialogFormPattern";
+import { fieldsDefaultProps } from "@/app/lib/types/form/fields";
 
 export default async function TestingPage( {params}: {params: {lang: string}}) {
   const dict = await getDictionary(params.lang as Locale);
@@ -25,7 +26,6 @@ export default async function TestingPage( {params}: {params: {lang: string}}) {
   const [zones, aisles] = await Promise.all([pZones, pAisles])
 
   const stringDate = "2024-08-15";
-  // console.log(dateToISOString(stringDate))
 
   return (
     <main>
@@ -51,32 +51,77 @@ export default async function TestingPage( {params}: {params: {lang: string}}) {
         )
       }
 
-      <ZoneForm 
-        self={{
-          dict: {
-            name: {
-              label:"sandrone",
-              placeholder: "daje",
-              validation: {
-                empty:"empty",
-                max:"max",
-                min:"min",
-                type:"type",
-                valid:"valid",
-              },
-            },
-            button: {
-              active: "prememe",
-              pending: "pesoso"
+      <FormPattern<"Zone"> 
+        type="Zone"
+        form={{
+          formName: "NOMEFORM",
+          initialState: {
+            ...defaultZoneFormState,
+            result: {
+              ...defaultZoneFormState.result,
+              name: "default value"
             }
           },
-          form: {
-            formName:"gennarone",
-            initialState: defaultZoneFormState,
-            formAction: zoneAddFormAction,
+          formAction: zoneAddFormAction,
+          // notifyFormSent
+          // refreshItemList
+        }}
+        self={{
+          fields: {
+            ...fieldsDefaultProps,
+            name: {
+              dict: {
+                label: "sandrone",
+                placeholder: "dajes",
+                validation: {
+                  empty:"empty",
+                  max:"max",
+                  min:"min",
+                  type:"type",
+                  valid:"valid",
+                },
+              },
+              defaultValue: "",
+              errorMessages: [],
+            },
+            button: {
+              active: "attivo",
+              pending: "pendivo"
+            },
           }
         }}
       />
+
+
+      {
+      //<ZoneForm 
+      //  self={{
+      //    dict: {
+      //      name: {
+      //        label:"sandrone",
+      //        placeholder: "daje",
+      //        validation: {
+      //          empty:"empty",
+      //          max:"max",
+      //          min:"min",
+      //          type:"type",
+      //          valid:"valid",
+      //        },
+      //      },
+      //      button: {
+      //        active: "prememe",
+      //        pending: "pesoso"
+      //      }
+      //    },
+      //    form: {
+      //      formName:"gennarone",
+      //      initialState: defaultZoneFormState,
+      //      formAction: zoneAddFormAction,
+      //    }
+      //  }}
+      ///>
+      }
+
       <ZoneBulkForm
         self={{
           form: {
@@ -105,87 +150,202 @@ export default async function TestingPage( {params}: {params: {lang: string}}) {
       />
       <h1 className="text-2xl">AisleForm</h1>
 
-      <AisleForm 
-
+      {
+      //<AisleForm 
+      //  self={{
+      //    dict: {
+      //      name: {
+      //        label:"sandrone",
+      //        placeholder: "daje",
+      //        validation: {
+      //          empty:"empty",
+      //          max:"max",
+      //          min:"min",
+      //          type:"type",
+      //          valid:"valid",
+      //        },
+      //      },
+      //      button: {
+      //        active: "prememe",
+      //        pending: "pesoso"
+      //      }
+      //    },
+      //    form: {
+      //      formName:"gennarone3",
+      //      initialState: defaultAisleFormState,
+      //      formAction: aisleCreateFormAction,
+      //    }
+      //  }}
+      //  propsPositionSelect={{
+      //    fields: {
+      //      zone: {
+      //        propsSelectField: {
+      //          dict: {
+      //            select: {
+      //              label: "sandro",
+      //              combobox: {
+      //                select: "seleziona",
+      //                search: "cercar",
+      //                empty: "fottiti"
+      //              },
+      //            },
+      //            validation: {
+      //              not_found: "sus",
+      //            }
+      //          },
+      //          errors: [],
+      //          list: zones.data as Zones,
+      //        },
+      //        propsAddDialog: {
+      //          propsForm: {
+      //            dict: {
+      //              name: {
+      //                label:"sandrone",
+      //                placeholder: "daje",
+      //                validation: {
+      //                  empty:"empty",
+      //                  max:"max",
+      //                  min:"min",
+      //                  type:"type",
+      //                  valid:"valid",
+      //                },
+      //              },
+      //              button: {
+      //                active: "sus",
+      //                pending: "sis",
+      //              }
+      //            },
+      //          },
+      //          self: {
+      //            triggerType: "icon",
+      //            dict: {
+      //              title: "Titolone",
+      //              description: "descriziazione",
+      //              clear: "sas",
+      //              trigger: {
+      //                label: "sus",
+      //              }
+      //            }
+      //          }
+      //        },
+      //      }
+      //    }
+      //  }}
+      ///>
+      }
+      
+      <DialogFormPattern<"Aisle">
         self={{
+          triggerType: "icon",
           dict: {
-            name: {
-              label:"sandrone",
-              placeholder: "daje",
-              validation: {
-                empty:"empty",
-                max:"max",
-                min:"min",
-                type:"type",
-                valid:"valid",
-              },
-            },
-            button: {
-              active: "prememe",
-              pending: "pesoso"
-            }
-          },
-          form: {
-            formName:"gennarone3",
-            initialState: defaultAisleFormState,
-            formAction: aisleCreateFormAction,
+            title: "Some dialog",
+            description: "PREMIMI TUTTO",
+            trigger: {label: "ANVEDI"},
+            clear: "NANDO"
           }
         }}
-
-        propsPositionSelect={{
-          fields: {
-            zone: {
-              propsSelectField: {
+        formPattern={{
+          type: "Aisle",
+          form: {
+            formName: "TESTDIALOGAISLE",
+            initialState: defaultAisleFormState,
+            formAction: aisleCreateFormAction,
+            // notifyFormSent
+            // refreshItemList
+          },
+          self: {
+            fields: {
+              ...fieldsDefaultProps,
+              name: {
                 dict: {
-                  select: {
-                    label: "sandro",
-                    combobox: {
-                      select: "seleziona",
-                      search: "cercar",
-                      empty: "fottiti"
+                  label: "sandrone",
+                  placeholder: "daje",
+                  validation: {
+                    empty:"empty",
+                    max:"max",
+                    min:"min",
+                    type:"type",
+                    valid:"valid",
+                  },
+                },
+                defaultValue: "sandroneDefaultValue",
+                errorMessages: [],
+              },
+              zone: {
+                AddDialog: {
+                  self: {
+                    triggerType: "icon",
+                    dict: {
+                      title: "zone aggiungi ",
+                      description: "uga buga",
+                      trigger: { label: "inutilizzazo" },
+                      clear: "clearami",
                     },
                   },
-                  validation: {
-                    not_found: "sus",
+                  FormPattern: {
+                    type:"Zone",
+                    form: {
+                      formName: "TESTDIALOGZONEasdfasdf",
+                      initialState: {
+                        ...defaultZoneFormState,
+                        result: {
+                          ...defaultZoneFormState.result,
+                          name: "default value"
+                        }
+                      },
+                      formAction: zoneAddFormAction,
+                      // notifyFormSent
+                      // refreshItemList
+                    },
+                    self: {
+                      fields: {
+                        ...fieldsDefaultProps,
+                        name: {
+                          dict: {
+                            label: "sandrone",
+                            placeholder: "dajes",
+                            validation: {
+                              empty:"empty",
+                              max:"max",
+                              min:"min",
+                              type:"type",
+                              valid:"valid",
+                            },
+                          },
+                          defaultValue: "",
+                          errorMessages: [],
+                        },
+                        button: {
+                          active: "attivo",
+                          pending: "pendivo"
+                        },
+                      }
+                    }
                   }
                 },
-                errors: [],
-                list: zones.data as Zones,
-              },
-              propsAddDialog: {
-                propsForm: {
+                SelectField: {
                   dict: {
-                    name: {
-                      label:"sandrone",
-                      placeholder: "daje",
-                      validation: {
-                        empty:"empty",
-                        max:"max",
-                        min:"min",
-                        type:"type",
-                        valid:"valid",
+                    select: {
+                      label: "selezionatore",
+                      combobox: {
+                        select: "selezioname",
+                        search: "cercame",
+                        empty: "vuotos",
                       },
                     },
-                    button: {
-                      active: "sus",
-                      pending: "sis",
-                    }
+                    validation: { not_found: "NUN l'HO TROVATO"},
                   },
-                },
-                self: {
-                  triggerType: "icon",
-                  dict: {
-                    title: "Titolone",
-                    description: "descriziazione",
-                    clear: "sas",
-                    trigger: {
-                      label: "sus",
-                    }
-                  }
+                  errorMessages: [],
+                  defaultValue: "",
+                  list: zones.data as Zones,
                 }
               },
+              button: {
+                active: "attivo",
+                pending: "pendivo"
+              },
             }
-          }
+          } 
         }}
       />
 
@@ -202,7 +362,7 @@ export default async function TestingPage( {params}: {params: {lang: string}}) {
         formPattern={{
           type: "Zone",
           form: {
-            formName: "NOMEFORM",
+            formName: "TESTDIALOGZONEDUE",
             initialState: defaultZoneFormState,
             formAction: zoneAddFormAction,
             // notifyFormSent
@@ -210,6 +370,7 @@ export default async function TestingPage( {params}: {params: {lang: string}}) {
           },
           self: {
             fields: {
+              ...fieldsDefaultProps,
               name: {
                 dict: {
                   label: "sandrone",
@@ -229,11 +390,6 @@ export default async function TestingPage( {params}: {params: {lang: string}}) {
                 active: "attivo",
                 pending: "pendivo"
               },
-              description: null,
-              zone: null,
-              aisle: null,
-              rack: null,
-              shelf: null,
             }
           } 
         }}

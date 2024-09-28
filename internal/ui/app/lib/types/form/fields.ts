@@ -29,7 +29,7 @@ export interface FieldSelectProps<T extends keyof FormMap> {
 /** Maps every field */
 export type FieldsPropsMap = {
   name: FieldInputProps;
-  //surname: FieldInputProps;
+  surname: FieldInputProps;
   description: FieldInputProps;
   
 
@@ -41,6 +41,19 @@ export type FieldsPropsMap = {
 
   // Button
   button: DictFormButton;
+}
+type FieldsPropsNullMap = {
+  [K in keyof FieldsPropsMap]: null;
+}
+export const fieldsDefaultProps: FieldsPropsNullMap = {
+  name: null,
+  surname: null,
+  description: null,
+  zone: null,
+  aisle: null,
+  rack: null,
+  shelf: null,
+  button: null,
 }
 
 
@@ -56,7 +69,7 @@ export type AisleFormFieldsProps = {
     K extends "name" ? FieldsPropsMap[K] :
     K extends "zone" ? FieldsPropsMap[K] :
     K extends "button" ? FieldsPropsMap[K] :
-    never;
+    null;
 }
 
 /** Maps every fields for each type */
