@@ -25,21 +25,23 @@ export interface FieldSelectPropsWithAdd<T extends keyof FormMap> {
     list: FormMap[T][];
   };
 };
-export interface FieldSelectProps<T extends keyof FormMap> {
-  // AddDialog: {
-  //   self: {
-  //     triggerType: "icon";
-  //     dict: DictDialog;
-  //   };
-  //   FormPattern: FormPropsMap[T];
-  // };
-  SelectField: {
-    dict: DictSelectField;
-    errorMessages: string[];
-    defaultValue: string;
+
+export interface SelectFieldProps<T extends keyof Omit<FormMap, "Item">> 
+{
+  SelectField?: {
+    name: T;
+    element: FormMap[T];
+    setElement: React.Dispatch<React.SetStateAction<FormMap[T]>>;
+
     list: FormMap[T][];
+    defaultValue: string;
+    errorMessages: string[];
+    dict: DictSelectField;
   };
 };
+
+const Selalal: SelectFieldProps<"Aisle"> = {}
+console.log(Selalal)
 
 /** Maps every field */
 export type FieldsPropsMap = {

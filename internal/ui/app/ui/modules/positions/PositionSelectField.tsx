@@ -110,14 +110,6 @@ export default function PositionSelectField({
       <div>
         {fields.zone && listZone && (
           <div className="flex gap-4 items-end">
-            <ZoneSelectField 
-              list={listZone}
-              element={selectedZone}
-              setElement={setSelectedZone}
-              dict={fields.zone.SelectField.dict}
-              errors={fields.zone.SelectField.errorMessages}
-            />
-
 
             <DialogFormPattern<"Zone"> 
               self={{

@@ -9,10 +9,13 @@ import { SelectPatternCombobox } from "./SelectFieldPatternCombobox";
 import { DictSelectField } from "@/app/lib/types/dictionary/form";
 import FormFieldErrorsPattern from "../FormFieldErrorsPattern";
 
+
+
 export interface SelectableItem {
   id?: string,
   name: string,
 }
+
 export interface SelectFieldPatternProps<Entity extends SelectableItem>{
   name?: string;
   list: Entity[];
