@@ -10,7 +10,7 @@ interface FieldInputProps {
 }
 
 /** Defines the props for an select field */
-export interface FieldSelectProps<T extends keyof FormMap> {
+export interface FieldSelectPropsWithAdd<T extends keyof FormMap> {
   AddDialog: {
     self: {
       triggerType: "icon";
@@ -18,6 +18,21 @@ export interface FieldSelectProps<T extends keyof FormMap> {
     };
     FormPattern: FormPropsMap[T];
   };
+  SelectField: {
+    dict: DictSelectField;
+    errorMessages: string[];
+    defaultValue: string;
+    list: FormMap[T][];
+  };
+};
+export interface FieldSelectProps<T extends keyof FormMap> {
+  // AddDialog: {
+  //   self: {
+  //     triggerType: "icon";
+  //     dict: DictDialog;
+  //   };
+  //   FormPattern: FormPropsMap[T];
+  // };
   SelectField: {
     dict: DictSelectField;
     errorMessages: string[];
@@ -39,6 +54,12 @@ export type FieldsPropsMap = {
   rack: FieldSelectProps<"Rack">;
   shelf: FieldSelectProps<"Shelf">;
 
+  // Foreign keys with add
+  zoneWithAdd: FieldSelectPropsWithAdd<"Zone">;
+  aisleWithAdd: FieldSelectPropsWithAdd<"Aisle">;
+  rackWithAdd: FieldSelectPropsWithAdd<"Rack">;
+  shelfWithAdd: FieldSelectPropsWithAdd<"Shelf">;
+
   // Button
   button: DictFormButton;
 }
@@ -49,10 +70,17 @@ export const fieldsDefaultProps: FieldsPropsNullMap = {
   name: null,
   surname: null,
   description: null,
+
   zone: null,
   aisle: null,
   rack: null,
   shelf: null,
+
+  zoneWithAdd: null,
+  aisleWithAdd: null,
+  rackWithAdd: null,
+  shelfWithAdd: null,
+
   button: null,
 }
 
@@ -71,12 +99,31 @@ export type AisleFormFieldsProps = {
     K extends "button" ? FieldsPropsMap[K] :
     null;
 }
+export type RackFormFieldsProps = {
+  [K in keyof FieldsPropsMap]:
+    K extends "name" ? FieldsPropsMap[K] :
+    K extends "zone" ? FieldsPropsMap[K] :
+    K extends "aisle" ? FieldsPropsMap[K] :
+    K extends "button" ? FieldsPropsMap[K] :
+    null;
+}
+export type ShelfFormFieldsProps = {
+  [K in keyof FieldsPropsMap]:
+    K extends "name" ? FieldsPropsMap[K] :
+    K extends "zone" ? FieldsPropsMap[K] :
+    K extends "aisle" ? FieldsPropsMap[K] :
+    K extends "rack" ? FieldsPropsMap[K] :
+    K extends "button" ? FieldsPropsMap[K] :
+    null;
+}
 
 /** Maps every fields for each type */
 type FormFieldsPropsMap = {
   [K in keyof FormMap]: 
     K extends "Zone" ? ZoneFormFieldsProps :
     K extends "Aisle" ? AisleFormFieldsProps :
+    K extends "Rack" ? RackFormFieldsProps :
+    K extends "Shelf" ? ShelfFormFieldsProps :
     never;
 }
 

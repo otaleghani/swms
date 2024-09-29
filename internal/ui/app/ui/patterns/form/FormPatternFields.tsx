@@ -37,3 +37,7 @@ export const AisleFormFields = ({
     </>
   )
 }
+
+export const RackFormFields = ({
+  fields,
+}: FormFieldsPropsWithDictMap["Rack"]) => {}
