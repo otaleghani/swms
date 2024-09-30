@@ -26,14 +26,18 @@ import {
 import { cn } from "@/lib/utils"
 
 /** Types and interfaces */
-import { SelectableItem, SelectFieldPatternProps } from "./SelectFieldPattern";
+import { 
+  SelectableItem, 
+  SelectFieldPatternProps 
+} from "@/app/lib/types/form/fields";
+import { FormMap } from "@/app/lib/types/form/form";
 
-export function SelectPatternCombobox<Entity extends SelectableItem>({
+export function SelectFieldPatternCombobox<T extends SelectableItem>({
   list, 
   element, 
   setElement, 
-  dict 
-}: SelectFieldPatternProps<Entity>) {
+  dict,
+}: SelectFieldPatternProps<T>) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -47,7 +51,7 @@ export function SelectPatternCombobox<Entity extends SelectableItem>({
             className="w-full justify-between"
           >
             {element.name != '' 
-              ? list.find((item: any) => item.id === element.id)?.name
+              ? list.find((item: any) => (item.name + item.id) === (element.name + element.id))?.name
               : dict.select.combobox.select }
             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
@@ -58,17 +62,23 @@ export function SelectPatternCombobox<Entity extends SelectableItem>({
             <CommandEmpty>{dict.select.combobox.empty}</CommandEmpty>
             <CommandList>
             <CommandGroup>
-              {list.map((item: Entity) => (
+              {list.map((item: any) => (
                 <CommandItem
                   key={item.id}
-                  value={item.id}
+                  value={item.name + item.id}
                   onSelect={(currentValue) => {
-                    setElement(currentValue === element.id 
-                    ? { id: "", name: "" } as Entity
+                    setElement(currentValue === element.name + element.id
+                    ? { id: "", name: "" } as any
                     : {
-                        id: list.find((item: Entity) => item.id === currentValue)?.id, 
-                        name: currentValue
-                    } as Entity)
+                        id: 
+                          list.find(
+                            (item: any) => item.name + item.id === currentValue
+                        )?.id, 
+                        name: 
+                          list.find(
+                            (item: any) => item.name + item.id === currentValue
+                        )?.name,
+                    } as any)
                     setOpen(false)
                   }}
                 >

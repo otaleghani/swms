@@ -5,11 +5,8 @@ import SelectFieldPattern from "@/app/ui/patterns/form/select/SelectFieldPattern
 import { retrieve } from "@/app/lib/requests/generics/retrieve";
 import { defaultZoneBulkFormState, defaultZoneFormState, Zones } from "@/app/lib/types/data/zones";
 import { Zone } from "@/app/lib/types";
-import ZoneSelectField from "@/app/ui/modules/zones/misc/ZoneSelectField";
 import TestSelect from "@/app/ui/modules/zones/test/SelectTest";
-import ZoneForm from "@/app/ui/modules/zones/misc/ZoneForm";
 import { zoneAddFormAction } from "@/app/ui/modules/zones/create/actions";
-import ZoneBulkForm from "@/app/ui/modules/zones/misc/ZoneBulkCreateForm";
 import { zoneAddBulkFormAction } from "@/app/ui/modules/zones/create/actions";
 import AisleForm from "@/app/ui/modules/aisles/misc/AisleForm";
 import { Aisles, defaultAisleFormState } from "@/app/lib/types/data/aisles";
@@ -17,6 +14,7 @@ import {aisleCreateFormAction} from "@/app/ui/modules/aisles/create/actions";
 import FormPattern from "@/app/ui/patterns/form/FormPattern";
 import DialogFormPattern from "@/app/ui/patterns/dialog/DialogFormPattern";
 import { fieldsDefaultProps } from "@/app/lib/types/form/fields";
+import PositionSelectField from "@/app/ui/modules/positions/PositionSelectField";
 
 export default async function TestingPage( {params}: {params: {lang: string}}) {
   const dict = await getDictionary(params.lang as Locale);
@@ -120,34 +118,34 @@ export default async function TestingPage( {params}: {params: {lang: string}}) {
       //    }
       //  }}
       ///>
+      //
+      // <ZoneBulkForm
+      //   self={{
+      //     form: {
+      //       formName:"gennarone2",
+      //       initialState: defaultZoneBulkFormState,
+      //       formAction: zoneAddBulkFormAction,
+      //     },
+      //     dict: {
+      //       number: {
+      //         label:"sandrone",
+      //         placeholder: "daje",
+      //         validation: {
+      //           empty:"empty",
+      //           max:"max",
+      //           min:"min",
+      //           type:"type",
+      //           valid:"valid",
+      //         },
+      //       },
+      //       button: {
+      //         active: "prememe",
+      //         pending: "pesoso"
+      //       }
+      //     }
+      //   }}
+      // />
       }
-
-      <ZoneBulkForm
-        self={{
-          form: {
-            formName:"gennarone2",
-            initialState: defaultZoneBulkFormState,
-            formAction: zoneAddBulkFormAction,
-          },
-          dict: {
-            number: {
-              label:"sandrone",
-              placeholder: "daje",
-              validation: {
-                empty:"empty",
-                max:"max",
-                min:"min",
-                type:"type",
-                valid:"valid",
-              },
-            },
-            button: {
-              active: "prememe",
-              pending: "pesoso"
-            }
-          }
-        }}
-      />
       <h1 className="text-2xl">AisleForm</h1>
 
       {
@@ -234,6 +232,7 @@ export default async function TestingPage( {params}: {params: {lang: string}}) {
       ///>
       }
       
+      
       <DialogFormPattern<"Aisle">
         self={{
           triggerType: "icon",
@@ -272,120 +271,74 @@ export default async function TestingPage( {params}: {params: {lang: string}}) {
                 errorMessages: [],
               },
               zone: {
-                AddDialog: {
-                  self: {
-                    triggerType: "icon",
-                    dict: {
-                      title: "zone aggiungi ",
-                      description: "uga buga",
-                      trigger: { label: "inutilizzazo" },
-                      clear: "clearami",
-                    },
-                  },
-                  FormPattern: {
-                    type:"Zone",
-                    form: {
-                      formName: "TESTDIALOGZONEasdfasdf",
-                      initialState: {
-                        ...defaultZoneFormState,
-                        result: {
-                          ...defaultZoneFormState.result,
-                          name: "default value"
-                        }
-                      },
-                      formAction: zoneAddFormAction,
-                      // notifyFormSent
-                      // refreshItemList
-                    },
-                    self: {
-                      fields: {
-                        ...fieldsDefaultProps,
-                        name: {
-                          dict: {
-                            label: "sandrone",
-                            placeholder: "dajes",
-                            validation: {
-                              empty:"empty",
-                              max:"max",
-                              min:"min",
-                              type:"type",
-                              valid:"valid",
-                            },
-                          },
-                          defaultValue: "",
-                          errorMessages: [],
-                        },
-                        button: {
-                          active: "attivo",
-                          pending: "pendivo"
-                        },
-                      }
-                    }
-                  }
-                },
-                SelectField: {
-                  dict: {
-                    select: {
-                      label: "selezionatore",
-                      combobox: {
-                        select: "selezioname",
-                        search: "cercame",
-                        empty: "vuotos",
-                      },
-                    },
-                    validation: { not_found: "NUN l'HO TROVATO"},
-                  },
-                  errorMessages: [],
-                  defaultValue: "",
-                  list: zones.data as Zones,
-                }
-              },
-              button: {
-                active: "attivo",
-                pending: "pendivo"
-              },
-            }
-          } 
-        }}
-      />
-
-      <DialogFormPattern<"Zone"> 
-        self={{
-          triggerType: "icon",
-          dict: {
-            title: "Some dialog",
-            description: "PREMIMI TUTTO",
-            trigger: {label: "ANVEDI"},
-            clear: "NANDO"
-          }
-        }}
-        formPattern={{
-          type: "Zone",
-          form: {
-            formName: "TESTDIALOGZONEDUE",
-            initialState: defaultZoneFormState,
-            formAction: zoneAddFormAction,
-            // notifyFormSent
-            // refreshItemList
-          },
-          self: {
-            fields: {
-              ...fieldsDefaultProps,
-              name: {
+                //AddDialog: {
+                //  self: {
+                //    triggerType: "icon",
+                //    dict: {
+                //      title: "zone aggiungi ",
+                //      description: "uga buga",
+                //      trigger: { label: "inutilizzazo" },
+                //      clear: "clearami",
+                //    },
+                //  },
+                //  FormPattern: {
+                //    type:"Zone",
+                //    form: {
+                //      formName: "TESTDIALOGZONEasdfasdf",
+                //      initialState: {
+                //        ...defaultZoneFormState,
+                //        result: {
+                //          ...defaultZoneFormState.result,
+                //          name: "default value"
+                //        }
+                //      },
+                //      formAction: zoneAddFormAction,
+                //      // notifyFormSent
+                //      // refreshItemList
+                //    },
+                //    self: {
+                //      fields: {
+                //        ...fieldsDefaultProps,
+                //        name: {
+                //          dict: {
+                //            label: "sandrone",
+                //            placeholder: "dajes",
+                //            validation: {
+                //              empty:"empty",
+                //              max:"max",
+                //              min:"min",
+                //              type:"type",
+                //              valid:"valid",
+                //            },
+                //          },
+                //          defaultValue: "",
+                //          errorMessages: [],
+                //        },
+                //        button: {
+                //          active: "attivo",
+                //          pending: "pendivo"
+                //        },
+                //      }
+                //    }
+                //  }
+                //},
+                
+                name: "Zone",
                 dict: {
-                  label: "sandrone",
-                  placeholder: "daje",
-                  validation: {
-                    empty:"empty",
-                    max:"max",
-                    min:"min",
-                    type:"type",
-                    valid:"valid",
+                  select: {
+                    label: "selezionatore",
+                    combobox: {
+                      select: "selezioname",
+                      search: "cercame",
+                      empty: "vuotos",
+                    },
                   },
+                  validation: { not_found: "NUN l'HO TROVATO"},
                 },
-                defaultValue: "sandroneDefaultValue",
                 errorMessages: [],
+                list: zones.data as Zones,
               },
+
               button: {
                 active: "attivo",
                 pending: "pendivo"
@@ -394,6 +347,55 @@ export default async function TestingPage( {params}: {params: {lang: string}}) {
           } 
         }}
       />
+      
+
+      {
+      //<DialogFormPattern<"Zone"> 
+      //  self={{
+      //    triggerType: "icon",
+      //    dict: {
+      //      title: "Some dialog",
+      //      description: "PREMIMI TUTTO",
+      //      trigger: {label: "ANVEDI"},
+      //      clear: "NANDO"
+      //    }
+      //  }}
+      //  formPattern={{
+      //    type: "Zone",
+      //    form: {
+      //      formName: "TESTDIALOGZONEDUE",
+      //      initialState: defaultZoneFormState,
+      //      formAction: zoneAddFormAction,
+      //      // notifyFormSent
+      //      // refreshItemList
+      //    },
+      //    self: {
+      //      fields: {
+      //        ...fieldsDefaultProps,
+      //        name: {
+      //          dict: {
+      //            label: "sandrone",
+      //            placeholder: "daje",
+      //            validation: {
+      //              empty:"empty",
+      //              max:"max",
+      //              min:"min",
+      //              type:"type",
+      //              valid:"valid",
+      //            },
+      //          },
+      //          defaultValue: "sandroneDefaultValue",
+      //          errorMessages: [],
+      //        },
+      //        button: {
+      //          active: "attivo",
+      //          pending: "pendivo"
+      //        },
+      //      }
+      //    } 
+      //  }}
+      ///>
+      }
 
       {
       // <FormPattern<"Aisle"> props={{
@@ -479,6 +481,47 @@ export default async function TestingPage( {params}: {params: {lang: string}}) {
       //   }
       // }}/>
       }
+
+      <PositionSelectField 
+        fields={{
+          zone: {
+            name: "Zone",
+            list: zones.data as Zones,
+            errorMessages: [],
+            dict: {
+              select: {
+                label: "selezioname",
+                combobox: {
+                  select: "selezizizo",
+                  search: "cercatoceccato",
+                  empty: "vuotosvuotatopalle",
+                }
+              },
+              validation: {
+                not_found: "trovava",
+              }
+            }
+          },
+          aisle: {
+            name: "Aisle",
+            list: aisles.data as Aisles,
+            errorMessages: [],
+            dict: {
+              select: {
+                label: "selezioname",
+                combobox: {
+                  select: "selezizizo",
+                  search: "cercatoceccato",
+                  empty: "vuotosvuotatopalle",
+                }
+              },
+              validation: {
+                not_found: "trovava",
+              }
+            }
+          }
+        }}
+      />
 
     </main>
   )

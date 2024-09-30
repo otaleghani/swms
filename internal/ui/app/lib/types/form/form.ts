@@ -1,11 +1,22 @@
 import { Dispatch, SetStateAction } from "react";
 import { FormFieldsPropsWithDictMap } from "./fields";
 
-import { Zone } from "../data/zones";
-import { Aisle } from "../data/aisles";
-import { Rack } from "../data/racks";
-import { Shelf } from "../data/shelfs";
+import { Zone, ZonesBulkPostRequestBody } from "../data/zones";
+import { Aisle, AislesBulkPostRequestBody } from "../data/aisles";
+import { Rack, RacksBulkPostRequestBody } from "../data/racks";
+import { Shelf, ShelfsBulkPostRequestBody } from "../data/shelfs";
 import { Item } from "../data/items";
+import { Category } from "../data/categories";
+import { Subcategory } from "../data/subcategories";
+import { Client } from "../data/clients";
+import { ItemImage, ProductImage } from "../data/images";
+import { Product } from "../data/products";
+import { Supplier } from "../data/suppliers";
+import { SupplierCode } from "../data/supplierCodes";
+import { Ticket } from "../data/tickets";
+import { Transaction } from "../data/transactions";
+import { User } from "../data/users";
+import { Variant } from "../data/variants";
 
 
 // Lists all the possible forms
@@ -14,7 +25,27 @@ export interface FormMap {
   Aisle: Aisle;
   Rack: Rack;
   Shelf: Shelf;
+
+  ZonesBulk: ZonesBulkPostRequestBody;
+  AislesBulk: AislesBulkPostRequestBody;
+  RacksBulk: RacksBulkPostRequestBody;
+  ShelfsBulk: ShelfsBulkPostRequestBody;
+  
   Item: Item;
+  Variant: Variant;
+  ItemImage: ItemImage;
+
+  Category: Category;
+  Subcategory: Subcategory;
+
+  Product: Product;
+  ProductImage: ProductImage;
+  Client: Client;
+  Supplier: Supplier;
+  SupplierCode: SupplierCode;
+  Ticket: Ticket;
+  Transaction: Transaction;
+  User: User;
 }
 
 interface FormState<T extends keyof FormMap> {

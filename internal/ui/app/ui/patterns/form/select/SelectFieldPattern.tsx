@@ -1,38 +1,26 @@
 /** React hooks */
-import { useRef } from "react";
+import { Dispatch, SetStateAction } from "react";
 
 /** Local components */
 import { Label } from "@/app/ui/components/label";
-import { SelectPatternCombobox } from "./SelectFieldPatternCombobox";
+import { SelectFieldPatternCombobox } from "./SelectFieldPatternCombobox";
 
 /** Types and interfaces */
-import { DictSelectField } from "@/app/lib/types/dictionary/form";
 import FormFieldErrorsPattern from "../FormFieldErrorsPattern";
+import { 
+  SelectFieldPatternProps, 
+  SelectableItem 
+} from "@/app/lib/types/form/fields";
+import { FormMap } from "@/app/lib/types/form/form";
 
-
-
-export interface SelectableItem {
-  id?: string,
-  name: string,
-}
-
-export interface SelectFieldPatternProps<Entity extends SelectableItem>{
-  name?: string;
-  list: Entity[];
-  element: Entity;
-  setElement: React.Dispatch<React.SetStateAction<Entity>>;
-  errors: string[];
-  dict: DictSelectField;
-}
-
-export default function SelectFieldPattern<Entity extends SelectableItem>({
+export default function SelectFieldPattern<T extends SelectableItem>({
   name,
   list, 
   element, 
   setElement, 
-  errors,
-  dict 
-}: SelectFieldPatternProps<Entity>) {
+  errorMessages,
+  dict,
+}: SelectFieldPatternProps<T>) {
   const inputId = (`${Math.random().toString(36).substring(2, 9)}`);
 
   return (
@@ -46,17 +34,17 @@ export default function SelectFieldPattern<Entity extends SelectableItem>({
         value={element.id} 
       />
       <Label>{dict.select.label}</Label>
-      <SelectPatternCombobox 
+      <SelectFieldPatternCombobox 
         name={name}
         list={list}
         element={element} 
-        setElement={setElement}
+        setElement={setElement as Dispatch<SetStateAction<FormMap[SelectableItem]>>}
         dict={dict} 
-        errors={errors}
+        errorMessages={errorMessages}
       />
       <FormFieldErrorsPattern
         id={`${name}-${inputId}-errors`}
-        errorMessages={errors}
+        errorMessages={errorMessages}
       />
     </div>
   );

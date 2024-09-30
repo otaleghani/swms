@@ -5,6 +5,7 @@ import ZoneSelectField from "../misc/ZoneSelectField";
 //here the select test
 
 import { useState } from "react";
+import SelectFieldPattern from "@/app/ui/patterns/form/select/SelectFieldPattern";
 
 interface props {
   list: Zones;
@@ -20,13 +21,25 @@ export default function TestSelect({
   const [element, setElement] = useState({id: "", name: ""} as Zone)
 
   return (
-    <ZoneSelectField 
-      name={name}
-      list={list as Zone[]}
+    <>
+    <SelectFieldPattern<"Zone"> 
+      list={list}
+      name="Zone"
+      dict={dict}
+      errorMessages={errors}
       element={element}
       setElement={setElement}
-      dict={dict}
-      errors={errors}
     />
+    {
+    //<ZoneSelectField 
+    //  name={name}
+    //  list={list as Zone[]}
+    //  element={element}
+    //  setElement={setElement}
+    //  dict={dict}
+    //  errors={errors}
+    ///>
+    }
+    </>
   )
 }

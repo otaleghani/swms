@@ -1,16 +1,40 @@
-import { DictFormButton, DictInputField, DictSelectField } from "../dictionary/form";
 import { DictDialog } from "../dictionary/misc";
-import { FormMap, FormPropsMap } from "./form";
+import { 
+  DictFormButton, 
+  DictInputField, 
+  DictSelectField 
+} from "../dictionary/form";
+import { 
+  FormMap, 
+  FormPropsMap 
+} from "./form";
 
 /** Defines the props for an input field */
-interface FieldInputProps {
+interface InputFieldProps {
   dict: DictInputField;
   defaultValue: string | number;
   errorMessages: string[];
 }
 
+export type SelectableItem = keyof Omit<FormMap, "Item">;
+
+export interface SelectFieldProps<T extends SelectableItem> {
+  name: T;
+  list: FormMap[T][];
+  errorMessages: string[];
+  dict: DictSelectField;
+}
+export type SelectFieldPatternProps<T extends SelectableItem> = SelectFieldProps<T> & {
+  name: T;
+  element: FormMap[T]; // This would be used as a default value, if needed
+  setElement: React.Dispatch<React.SetStateAction<FormMap[T]>>;
+  list: FormMap[T][];
+  errorMessages: string[];
+  dict: DictSelectField;
+};
+
 /** Defines the props for an select field */
-export interface FieldSelectPropsWithAdd<T extends keyof FormMap> {
+export interface SelectFieldPropsWithAdd<T extends SelectableItem> {
   AddDialog: {
     self: {
       triggerType: "icon";
@@ -18,53 +42,34 @@ export interface FieldSelectPropsWithAdd<T extends keyof FormMap> {
     };
     FormPattern: FormPropsMap[T];
   };
-  SelectField: {
-    dict: DictSelectField;
-    errorMessages: string[];
-    defaultValue: string;
-    list: FormMap[T][];
-  };
+  SelectField: SelectFieldProps<T>;
 };
 
-export interface SelectFieldProps<T extends keyof Omit<FormMap, "Item">> 
-{
-  SelectField?: {
-    name: T;
-    element: FormMap[T];
-    setElement: React.Dispatch<React.SetStateAction<FormMap[T]>>;
-
-    list: FormMap[T][];
-    defaultValue: string;
-    errorMessages: string[];
-    dict: DictSelectField;
-  };
-};
-
-const Selalal: SelectFieldProps<"Aisle"> = {}
-console.log(Selalal)
 
 /** Maps every field */
 export type FieldsPropsMap = {
-  name: FieldInputProps;
-  surname: FieldInputProps;
-  description: FieldInputProps;
+  name: InputFieldProps;
+  surname: InputFieldProps;
+  description: InputFieldProps;
   
 
   // Foreign keys
-  zone: FieldSelectProps<"Zone">;
-  aisle: FieldSelectProps<"Aisle">;
-  rack: FieldSelectProps<"Rack">;
-  shelf: FieldSelectProps<"Shelf">;
+  zone: SelectFieldProps<"Zone">;
+  aisle: SelectFieldProps<"Aisle">;
+  rack: SelectFieldProps<"Rack">;
+  shelf: SelectFieldProps<"Shelf">;
+  category: SelectFieldProps<>
 
   // Foreign keys with add
-  zoneWithAdd: FieldSelectPropsWithAdd<"Zone">;
-  aisleWithAdd: FieldSelectPropsWithAdd<"Aisle">;
-  rackWithAdd: FieldSelectPropsWithAdd<"Rack">;
-  shelfWithAdd: FieldSelectPropsWithAdd<"Shelf">;
+  zoneWithAdd: SelectFieldPropsWithAdd<"Zone">;
+  aisleWithAdd: SelectFieldPropsWithAdd<"Aisle">;
+  rackWithAdd: SelectFieldPropsWithAdd<"Rack">;
+  shelfWithAdd: SelectFieldPropsWithAdd<"Shelf">;
 
   // Button
   button: DictFormButton;
 }
+
 type FieldsPropsNullMap = {
   [K in keyof FieldsPropsMap]: null;
 }
@@ -87,7 +92,7 @@ export const fieldsDefaultProps: FieldsPropsNullMap = {
 }
 
 
-/** Defines the fields for each type */
+/** Defines the fields for each type. */
 export type ZoneFormFieldsProps = {
   [K in keyof FieldsPropsMap]:
     K extends "name" ? FieldsPropsMap[K] :
@@ -118,6 +123,8 @@ export type ShelfFormFieldsProps = {
     K extends "button" ? FieldsPropsMap[K] :
     null;
 }
+//export type 
+
 
 /** Maps every fields for each type */
 type FormFieldsPropsMap = {
@@ -147,6 +154,3 @@ export type FormFieldsPropsWithDictMap = {
     fields: FormFieldsPropsMap[K];
   }
 }
-
-// What about a general dict for the component?
-// I would need that for like the items or variants 
