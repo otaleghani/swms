@@ -1,3 +1,5 @@
+import { FormState } from "../form/form";
+
 export type Variant = {
   id?: string;
   name: string;
@@ -8,7 +10,26 @@ export type Variant = {
   width?: number;
   heigth?: number;
   weight?: number;
-  defaultVariant: boolean;
+  isDefaultVariant: boolean;
   item: string;
 }
 export type Variants = Variant[];
+
+export type VariantFormState = FormState<"Variant">
+export const defaultVariantFormState: VariantFormState = {
+  error: false,
+  message: "",
+  errorMessages: {
+    id: [],
+    name: [],
+    description: [],
+    quantity: [],
+    identifier: [],
+    length: [],
+    width: [],
+    heigth: [],
+    weight: [],
+    isDefaultVariant: [],
+    item: [],
+  }
+}

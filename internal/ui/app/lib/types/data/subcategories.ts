@@ -1,3 +1,5 @@
+import { FormState } from "../form/form";
+
 export type Subcategory = {
   id?: string;
   name: string;
@@ -5,3 +7,14 @@ export type Subcategory = {
   category: string;
 }
 export type Subcategories = Subcategory[];
+
+export type SubcategoryFormState = FormState<"Subcategory">
+export const defaultSubcategoryFormState: SubcategoryFormState = {
+  error: false,
+  message: "",
+  errorMessages: {
+    id: [],
+    name: [],
+    category: [],
+  }
+}

@@ -1,5 +1,6 @@
 import { Item } from "./items";
 import { Variant } from "./variants";
+import { FormState } from "../form/form";
 
 export type SupplierCode = {
   id?: string;
@@ -23,3 +24,16 @@ export type VariantWithSupplierCodes = Variant & {
   supplierCodes: SupplierCodes;
 }
 export type VariantsWithSupplierCodes = VariantWithSupplierCodes[];
+
+export type SupplierCodeFormState = FormState<"SupplierCode">
+export const defaultSupplierCodeFormState: SupplierCodeFormState = {
+  error: false,
+  message: "",
+  errorMessages: {
+    id: [],
+    code: [],
+    supplier: [],
+    item: [],
+    variant: [],
+  }
+}

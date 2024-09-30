@@ -56,6 +56,11 @@ export interface DictFormFields {
   subcategories:  DictSelectField;
 
   users:          DictSelectField;
+
+  isBusiness:     DictCheckboxField;
+
+  openDate:       DictInputField;
+  closeDate:      DictInputField;
 }
 
 export interface DictInputField {
@@ -68,6 +73,14 @@ export interface DictInputField {
     type:       string;
     valid:      string;
   };
+}
+
+export interface DictCheckboxField {
+  label: string;
+  isChecked: boolean;
+  validation: {
+    required: string;
+  }
 }
 
 export interface DictSelectField {

@@ -1,5 +1,3 @@
-import { Dispatch, SetStateAction } from "react";
-
 export type Response<Entity> = {
   code: number;
   message?: string;
@@ -20,27 +18,8 @@ export type MediaPost = {
   blob: string;
 }
 
-export interface FormState<Type> {
-  error: boolean;
-  message: string
-  result?: Type;
-  errorMessages: {
-    [K in keyof Type]: string[];
+export interface DefaultPageProps {
+  params: {
+    lang: string;
   }
-}
-
-export interface FormProps<Type> {
-  formName: string;
-  initialState: FormState<Type>;
-  formAction: (
-    currentState: FormState<Type>,
-    formData: FormData,
-  ) => Promise<FormState<any>>;
-  notifyFormSent?: Dispatch<SetStateAction<boolean>>;
-  refreshItemList?: (item: Type) => void;
-}
-
-export interface TestFormProps<Type> {
-  initialState: FormState<Type>;
-
 }

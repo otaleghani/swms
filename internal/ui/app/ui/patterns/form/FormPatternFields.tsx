@@ -1,82 +1,211 @@
 import InputPattern from "./input/InputPattern";
 import PositionSelectField from "../../modules/positions/PositionSelectField";
-import { FormFieldsPropsWithDictMap } from "@/app/lib/types/form/fields";
+import { FormFieldsPropsWithDictCompleteMap } from "@/app/lib/types/form/fields";
 
 export const ZoneFormFields = ({
   fields,
-}: FormFieldsPropsWithDictMap["Zone"]) => {
-  return (
-    <>
-      <InputPattern 
-        field="name"
-        dict={fields.name.dict}
-        defaultValue={fields.name.defaultValue as string}
-        className=""
-        label={true}
-        errorMessages={fields.name.errorMessages}
-      />
-    </>
-  )
-}
+  errorMessages,
+  result
+}: FormFieldsPropsWithDictCompleteMap["Zone"]) => { return (
+  <>
+    <InputPattern 
+      field="name"
+      dict={fields.name.dict}
+      defaultValue={result?.name}
+      className=""
+      label={true}
+      errorMessages={errorMessages.name}
+    />
+  </>
+)}
 
 export const AisleFormFields = ({
   fields,
-}: FormFieldsPropsWithDictMap["Aisle"]) => { return (
-    <>
-      <InputPattern 
-        field="name"
-        dict={fields.name.dict}
-        defaultValue={fields.name.defaultValue as string}
-        className=""
-        label={true}
-        errorMessages={fields.name.errorMessages}
-      />
-      <PositionSelectField 
-        fields={{ zone: fields.zone }}
-      />
-    </>
-  )
-}
+  result,
+  errorMessages
+}: FormFieldsPropsWithDictCompleteMap["Aisle"]) => { return (
+  <>
+    <InputPattern 
+      field="name"
+      dict={fields.name.dict}
+      defaultValue={result?.name}
+      className=""
+      label={true}
+      errorMessages={errorMessages.name}
+    />
+    <PositionSelectField 
+      fields={{ 
+        zone: {
+          select: fields.zone,
+          errorMessages: errorMessages.zone,
+        }
+      }}
+    />
+  </>
+)}
 
 export const RackFormFields = ({
   fields,
-}: FormFieldsPropsWithDictMap["Rack"]) => {
+  result,
+  errorMessages
+}: FormFieldsPropsWithDictCompleteMap["Rack"]) => { return (
   <>
     <InputPattern 
       field="name"
       dict={fields.name.dict}
-      defaultValue={fields.name.defaultValue as string}
+      defaultValue={result?.name}
       className=""
       label={true}
-      errorMessages={fields.name.errorMessages}
+      errorMessages={errorMessages.name}
     />
     <PositionSelectField 
       fields={{ 
-        zone: fields.zone,
-        aisle: fields.aisle 
+        zone: {
+          select: fields.zone,
+          errorMessages: errorMessages.zone,
+        },
+        aisle: {
+          select: fields.aisle,
+          errorMessages: errorMessages.aisle,
+        }
       }}
     />
   </>
-}
+)}
 
 export const ShelfFormFields = ({
   fields,
-}: FormFieldsPropsWithDictMap["Shelf"]) => {
+  result,
+  errorMessages
+}: FormFieldsPropsWithDictCompleteMap["Shelf"]) => { return (
   <>
     <InputPattern 
       field="name"
       dict={fields.name.dict}
-      defaultValue={fields.name.defaultValue as string}
+      defaultValue={result?.name}
       className=""
       label={true}
-      errorMessages={fields.name.errorMessages}
+      errorMessages={errorMessages.name}
     />
     <PositionSelectField 
       fields={{ 
-        zone: fields.zone,
-        aisle: fields.aisle,
-        rack: fields.rack
+        zone: {
+          select: fields.zone,
+          errorMessages: errorMessages.zone,
+        },
+        aisle: {
+          select: fields.aisle,
+          errorMessages: errorMessages.aisle,
+        },
+        rack: {
+          select: fields.rack,
+          errorMessages: errorMessages.rack,
+        }
       }}
     />
   </>
-}
+)}
+
+export const ZonesBulkFormFields = ({
+  fields,
+  result,
+  errorMessages
+}: FormFieldsPropsWithDictCompleteMap["ZonesBulk"]) => { return (
+  <>
+    <InputPattern 
+      field="quantityWithButtons"
+      dict={fields.quantity.dict}
+      defaultValue={String(result?.number)}
+      className=""
+      label={true}
+      errorMessages={errorMessages.number}
+    />
+  </>
+)}
+
+export const AislesBulkFormFields = ({
+  fields,
+  result,
+  errorMessages
+}: FormFieldsPropsWithDictCompleteMap["AislesBulk"]) => { return (
+  <>
+    <InputPattern 
+      field="quantityWithButtons"
+      dict={fields.quantity.dict}
+      defaultValue={String(result?.number)}
+      className=""
+      label={true}
+      errorMessages={errorMessages.number}
+    />
+    <PositionSelectField 
+      fields={{ 
+        zone: {
+          select: fields.zone,
+          errorMessages: errorMessages.zone,
+        },
+      }}
+    />
+  </>
+)}
+
+export const RacksBulkFormFields = ({
+  fields,
+  result,
+  errorMessages
+}: FormFieldsPropsWithDictCompleteMap["RacksBulk"]) => { return (
+  <>
+    <InputPattern 
+      field="quantityWithButtons"
+      dict={fields.quantity.dict}
+      defaultValue={String(result?.number)}
+      className=""
+      label={true}
+      errorMessages={errorMessages.number}
+    />
+    <PositionSelectField 
+      fields={{ 
+        zone: {
+          select: fields.zone,
+          errorMessages: errorMessages.zone,
+        },
+        aisle: {
+          select: fields.aisle,
+          errorMessages: errorMessages.aisle,
+        },
+      }}
+    />
+  </>
+)}
+
+export const ShelfsBulkFormFields = ({
+  fields,
+  result,
+  errorMessages
+}: FormFieldsPropsWithDictCompleteMap["ShelfsBulk"]) => { return (
+  <>
+    <InputPattern 
+      field="quantityWithButtons"
+      dict={fields.quantity.dict}
+      defaultValue={String(result?.number)}
+      className=""
+      label={true}
+      errorMessages={errorMessages.number}
+    />
+    <PositionSelectField 
+      fields={{ 
+        zone: {
+          select: fields.zone,
+          errorMessages: errorMessages.zone,
+        },
+        aisle: {
+          select: fields.aisle,
+          errorMessages: errorMessages.aisle,
+        },
+        rack: {
+          select: fields.rack,
+          errorMessages: errorMessages.rack,
+        },
+      }}
+    />
+  </>
+)}

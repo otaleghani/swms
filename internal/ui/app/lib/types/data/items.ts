@@ -1,8 +1,10 @@
+import { FormState } from "../form/form";
+
 export type Item = {
   id?: string;
   name: string;
   description?: string;
-  archive: boolean;
+  isArchived: boolean;
   zone?: string;
   aisle?: string;
   rack?: string;
@@ -11,3 +13,21 @@ export type Item = {
   subcategory?: string;
 }
 export type Items = Item[];
+
+export type ItemFormState = FormState<"Item">
+export const defaultItemFormState: ItemFormState = {
+  error: false,
+  message: "",
+  errorMessages: {
+    id: [],
+    name: [],
+    description: [],
+    isArchived: [],
+    zone: [],
+    aisle: [],
+    rack: [],
+    shelf: [],
+    category: [],
+    subcategory: [],
+  }
+}

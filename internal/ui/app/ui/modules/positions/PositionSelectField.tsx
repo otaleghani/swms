@@ -16,10 +16,22 @@ import { SelectFieldProps } from "@/app/lib/types/form/fields";
 
 export interface PositionSelectFieldProps {
   fields: {
-    zone?: SelectFieldProps<"Zone">;
-    aisle?: SelectFieldProps<"Aisle">;
-    rack?: SelectFieldProps<"Rack">;
-    shelf?: SelectFieldProps<"Shelf">; 
+    zone?: {
+      errorMessages: string[];
+      select: SelectFieldProps<"Zone">;
+    },
+    aisle?: {
+      errorMessages: string[];
+      select: SelectFieldProps<"Aisle">;
+    }
+    rack?: {
+      errorMessages: string[];
+      select: SelectFieldProps<"Rack">;
+    }
+    shelf?: {
+      errorMessages: string[];
+      select: SelectFieldProps<"Shelf">;
+    }
   }
 }
 
@@ -31,14 +43,14 @@ export default function PositionSelectField({
   const [selectedRack, setSelectedRack] = useState(emptyRack);
   const [selectedShelf, setSelectedShelf] = useState(emptyShelf);
 
-  const [listZone, setListZone] = useState(fields.zone?.list);
-  const [listAisles, setListAisles] = useState(fields.aisle?.list);
-  const [listRacks, setListRacks] = useState(fields.rack?.list);
-  const [listShelfs, setListShelfs] = useState(fields.shelf?.list);
+  const [listZone, setListZone] = useState(fields.zone?.select.list);
+  const [listAisles, setListAisles] = useState(fields.aisle?.select.list);
+  const [listRacks, setListRacks] = useState(fields.rack?.select.list);
+  const [listShelfs, setListShelfs] = useState(fields.shelf?.select.list);
 
-  const [filteredAisles, setFilteredAisles] = useState(fields.aisle?.list);
-  const [filteredRacks, setFilteredRacks] = useState(fields.rack?.list);
-  const [filteredShelfs, setFilteredShelfs] = useState(fields.shelf?.list);
+  const [filteredAisles, setFilteredAisles] = useState(fields.aisle?.select.list);
+  const [filteredRacks, setFilteredRacks] = useState(fields.rack?.select.list);
+  const [filteredShelfs, setFilteredShelfs] = useState(fields.shelf?.select.list);
 
   useEffect(() => {
     if (listAisles) {
@@ -78,7 +90,7 @@ export default function PositionSelectField({
               setElement={setSelectedZone}
               list={listZone}
               errorMessages={fields.zone.errorMessages}
-              dict={fields.zone.dict}
+              dict={fields.zone.select.dict}
             />
           </div>
         )}
@@ -90,7 +102,7 @@ export default function PositionSelectField({
               setElement={setSelectedAisle}
               list={filteredAisles}
               errorMessages={fields.aisle.errorMessages}
-              dict={fields.aisle.dict}
+              dict={fields.aisle.select.dict}
             />
           </div>
         )}
@@ -102,7 +114,7 @@ export default function PositionSelectField({
               setElement={setSelectedRack}
               list={filteredRacks}
               errorMessages={fields.rack.errorMessages}
-              dict={fields.rack.dict}
+              dict={fields.rack.select.dict}
             />
           </div>
         )}
@@ -114,7 +126,7 @@ export default function PositionSelectField({
               setElement={setSelectedShelf}
               list={filteredShelfs}
               errorMessages={fields.shelf.errorMessages}
-              dict={fields.shelf.dict}
+              dict={fields.shelf.select.dict}
             />
           </div>
         )}

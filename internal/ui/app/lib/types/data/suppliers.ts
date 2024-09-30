@@ -1,3 +1,5 @@
+import { FormState } from "../form/form";
+
 export type Supplier = {
   id?: string;
   name: string;
@@ -10,3 +12,13 @@ export type SupplierWithExtra = Supplier & {
 }
 export type SuppliersWithExtra = SupplierWithExtra[];
 
+export type SupplierFormState = FormState<"Supplier">
+export const defaultSupplierFormState: SupplierFormState = {
+  error: false,
+  message: "",
+  errorMessages: {
+    id: [],
+    name: [],
+    description: [],
+  }
+}

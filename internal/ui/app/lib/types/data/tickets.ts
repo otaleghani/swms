@@ -1,3 +1,5 @@
+import { FormState } from "../form/form";
+
 export type Ticket = {
   id?: string;
   name: string;
@@ -24,3 +26,21 @@ export type TicketState = {
   description: string;
 }
 export type TicketStates = TicketState[];
+
+export type TicketFormState = FormState<"Ticket">
+export const defaultTicketFormState: TicketFormState = {
+  error: false,
+  message: "",
+  errorMessages: {
+    id: [],
+    name: [],
+    description: [],
+    open: [],
+    close: [],
+    client: [],
+    product: [],
+    type: [],
+    state: [],
+  }
+}
+

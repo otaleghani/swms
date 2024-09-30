@@ -13,11 +13,10 @@ import { ItemImage, ProductImage } from "../data/images";
 import { Product } from "../data/products";
 import { Supplier } from "../data/suppliers";
 import { SupplierCode } from "../data/supplierCodes";
-import { Ticket } from "../data/tickets";
+import { Ticket, TicketState, TicketType } from "../data/tickets";
 import { Transaction } from "../data/transactions";
 import { User } from "../data/users";
 import { Variant } from "../data/variants";
-
 
 // Lists all the possible forms
 export interface FormMap {
@@ -44,11 +43,13 @@ export interface FormMap {
   Supplier: Supplier;
   SupplierCode: SupplierCode;
   Ticket: Ticket;
+  TicketType: TicketType;
+  TicketState: TicketState;
   Transaction: Transaction;
   User: User;
 }
 
-interface FormState<T extends keyof FormMap> {
+export interface FormState<T extends keyof FormMap> {
   error: boolean;
   message: string
   result?: FormMap[T];

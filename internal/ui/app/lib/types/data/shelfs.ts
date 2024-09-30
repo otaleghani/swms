@@ -1,4 +1,5 @@
-import { FormState, Response } from "../misc";
+import { Response } from "../misc";
+import { FormState } from "../form/form";
 
 export type Shelf = {
   id?: string;
@@ -21,13 +22,25 @@ export type ShelfWithExtra = Shelf & {
 };
 export type ShelfsWithExtra = ShelfWithExtra[];
 
-export type ShelfFormState = FormState<Shelf>
+export type ShelfFormState = FormState<"Shelf">
 export const defaultShelfFormState: ShelfFormState = {
   error: false,
   message: "",
   errorMessages: {
     id: [],
     name: [],
+    zone: [],
+    aisle: [],
+    rack: [],
+  }
+}
+
+export type ShelfsBulkFormState = FormState<"ShelfsBulk">;
+export const defaultShelfsBulkFormState: ShelfsBulkFormState = {
+  error: false,
+  message: "",
+  errorMessages: {
+    number: [],
     zone: [],
     aisle: [],
     rack: [],
@@ -43,4 +56,5 @@ export type ShelfsBulkPostRequestBody = {
   number: number;
   zone: string;
   aisle: string;
+  rack: string;
 }

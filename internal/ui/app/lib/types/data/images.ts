@@ -1,3 +1,5 @@
+import { FormState } from "../form/form";
+
 export type ItemImage = {
   id?: string;
   uri: string;
@@ -12,3 +14,15 @@ export type ProductImage = {
   product: string;
 }
 export type ProductImages = ProductImage[];
+
+export type ItemImagesFormState = FormState<"ItemImage">
+export const defaultItemImagesFormState: ItemImagesFormState = {
+  error: false,
+  message: "",
+  errorMessages: {
+    id: [],
+    uri: [],
+    item: [],
+    variant: [],
+  }
+}

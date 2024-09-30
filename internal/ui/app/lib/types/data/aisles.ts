@@ -1,5 +1,6 @@
-import { FormState, Response } from "../misc";
+import { Response } from "../misc";
 import { Zone } from "./zones";
+import { FormState } from "../form/form";
 
 export type Aisle = {
   id?: string;
@@ -19,13 +20,23 @@ export type AisleWithExtra = Aisle & {
 };
 export type AislesWithExtra = AislesWithExtra[];
 
-export type AisleFormState = FormState<Aisle>
+export type AisleFormState = FormState<"Aisle">
 export const defaultAisleFormState: AisleFormState = {
   error: false,
   message: "",
   errorMessages: {
     id: [],
     name: [],
+    zone: [],
+  }
+}
+
+export type AislesBulkFormState = FormState<"AislesBulk">;
+export const defaultAislesBulkFormState: AislesBulkFormState = {
+  error: false,
+  message: "",
+  errorMessages: {
+    number: [],
     zone: [],
   }
 }
@@ -38,48 +49,4 @@ export type AislesWithExtraRP = Promise<Response<AislesWithExtra>>;
 export type AislesBulkPostRequestBody = {
   number: number;
   zone: Zone;
-}
-
-import { FormProps } from "../misc";
-import { DictAisleForm, DictBulkAisleForm } from "../dictionary/data/aisle";
-import { SelectFieldWithAddProps } from "@/app/ui/modules/positions/PositionSelectField";
-import { DictInputField } from "../dictionary/form";
-export interface AislesBulkFormProps {
-  self: {
-    form: FormProps<AislesBulkPostRequestBody>;
-    dict: DictBulkAisleForm;
-  }
-  propsPositionSelect: {
-    fields: {
-      zone: SelectFieldWithAddProps<Zone, "Zone">;
-    }
-  }
-}
-
-export interface AisleFormProps {
-  self: {
-    dict: DictAisleForm;
-    fields: AisleFormFieldsProps;
-  }
-  form: FormProps<Aisle>;
-  type: "Aisle";
-}
-
-
-// FIELDS
-export interface AisleFormFieldsProps {
-  name: {
-    dict: DictInputField;
-    defaultValue: string;
-    errorMessages: string[];
-  },
-  position: {
-    fields: {
-      zone: {
-        data: SelectFieldWithAddProps<Zone, "Zone">;
-        defaultValue: string;
-        errorMessages: string[];
-      }
-    }
-  }
 }

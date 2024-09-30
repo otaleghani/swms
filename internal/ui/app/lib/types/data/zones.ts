@@ -1,4 +1,5 @@
-import { FormState, Response } from "../misc";
+import { Response } from "../misc";
+import { FormState } from "../form/form";
 
 export type Zone = {
   id?: string;
@@ -16,7 +17,7 @@ export type ZoneWithExtra = Zone & {
 };
 export type ZonesWithExtra = ZoneWithExtra[];
 
-export type ZoneFormState = FormState<Zone>
+export type ZoneFormState = FormState<"Zone">
 export const defaultZoneFormState: ZoneFormState = {
   error: false,
   message: "",
@@ -26,8 +27,8 @@ export const defaultZoneFormState: ZoneFormState = {
   }
 }
 
-export type ZoneBulkFormState = FormState<ZonesBulkPostRequestBody>;
-export const defaultZoneBulkFormState: ZoneBulkFormState = {
+export type ZonesBulkFormState = FormState<"ZonesBulk">;
+export const defaultZonesBulkFormState: ZonesBulkFormState = {
   error: false,
   message: "",
   errorMessages: {
@@ -42,23 +43,4 @@ export type ZonesWithExtraRP = Promise<Response<ZonesWithExtra>>;
 
 export type ZonesBulkPostRequestBody = {
   number: number;
-}
-
-import { FormProps } from "../misc";
-import { DictBulkZoneForm, DictZoneForm } from "../dictionary/data/zone";
-import { SelectFieldWithAddProps } from "@/app/ui/modules/positions/PositionSelectField";
-export interface ZoneBulkFormProps {
-  self: {
-    form: FormProps<ZonesBulkPostRequestBody>;
-    dict: DictBulkZoneForm;
-  }
-}
-
-export interface ZoneFormProps {
-  self: {
-    dict: DictZoneForm;
-    fields: any;
-  }
-  type: string;
-  form: FormProps<Zone>;
 }

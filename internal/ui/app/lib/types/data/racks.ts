@@ -1,4 +1,5 @@
-import { FormState, Response } from "../misc";
+import { Response } from "../misc";
+import { FormState } from "../form/form";
 
 export type Rack = {
   id?: string;
@@ -20,13 +21,24 @@ export type RackWithExtra = Rack & {
 };
 export type RacksWithExtra = RackWithExtra[];
 
-export type RackFormState = FormState<Rack>
+export type RackFormState = FormState<"Rack">
 export const defaultRackFormState: RackFormState = {
   error: false,
   message: "",
   errorMessages: {
     id: [],
     name: [],
+    zone: [],
+    aisle: [],
+  }
+}
+
+export type RacksBulkFormState = FormState<"RacksBulk">;
+export const defaultRacksBulkFormState: RacksBulkFormState = {
+  error: false,
+  message: "",
+  errorMessages: {
+    number: [],
     zone: [],
     aisle: [],
   }

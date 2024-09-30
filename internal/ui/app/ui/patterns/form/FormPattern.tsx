@@ -12,7 +12,9 @@ import FormSuccessPattern from "@/app/ui/patterns/form/FormSuccessPattern";
 import FormErrorPattern from "@/app/ui/patterns/form/FormErrorPatter";
 import { 
   ZoneFormFields,
-  AisleFormFields 
+  AisleFormFields, 
+  ZonesBulkFormFields,
+  AislesBulkFormFields
 } from "./FormPatternFields";
 
 /** Types and interfaces */
@@ -23,7 +25,10 @@ import {
 import { 
   ZoneFormFieldsProps,
   AisleFormFieldsProps,
+  ZonesBulkFormFieldsProps,
+  AislesBulkFormFieldsProps,
 } from "@/app/lib/types/form/fields";
+import { FormMap } from "@/app/lib/types/form/form";
 
 export default function FormPattern<K extends keyof FormPropsMap>({
   self,
@@ -39,7 +44,6 @@ export default function FormPattern<K extends keyof FormPropsMap>({
   useEffect(() => {
     if (!state.error && state.result) {
       if (form.notifyFormSent) {
-      //console.log(form.formName)
         form.notifyFormSent(false);
         if (form.refreshItemList) {
           form.refreshItemList(state.result);
@@ -53,37 +57,40 @@ export default function FormPattern<K extends keyof FormPropsMap>({
       <div className="grid gap-4 py-4">
         { type === "Zone" && (
           <ZoneFormFields
-            fields={{
-              ...self.fields, 
-              name: {
-                dict: self.fields.name.dict,
-                defaultValue: state.result?.name,
-                errorMessages: state.errorMessages.name,
-              },
-            } as ZoneFormFieldsProps}
+            fields={self.fields as ZoneFormFieldsProps}
+            errorMessages={state.errorMessages as {
+              [T in keyof FormMap["Zone"]]: string[]}}
+            result={state.result}
           />
         )}
+
         { type === "Aisle" && (
           <AisleFormFields
-            fields={{
-              ...self.fields,
-              name: {
-                ...self.fields.name,
-                errorMessages: state.errorMessages.name,
-                defaultValue: state.result?.name,
-              },
-              zone: {
-                ...self.fields.zone,
-                SelectField: {
-                  ...self.fields.zone?.SelectField,
-                  errorMessages: state.errorMessages.zone,
-                  defaultValue: state.result?.zone,
-                }
-              }
-            } as AisleFormFieldsProps}
-            //dict={{...self.dict}}
+            fields={self.fields as AisleFormFieldsProps}
+            errorMessages={state.errorMessages as {
+              [T in keyof FormMap["Aisle"]]: string[]}}
+            result={state.result}
           />
         )}
+
+        { type === "ZonesBulk" && (
+          <ZonesBulkFormFields
+            fields={self.fields as ZonesBulkFormFieldsProps}
+            errorMessages={state.errorMessages as {
+              [T in keyof FormMap["ZonesBulk"]]: string[]}}
+            result={state.result}
+          />
+        )}
+
+        { type === "AislesBulk" && (
+          <AislesBulkFormFields
+            fields={self.fields as AislesBulkFormFieldsProps}
+            errorMessages={state.errorMessages as {
+              [T in keyof FormMap["AislesBulk"]]: string[]}}
+            result={state.result}
+          />
+        )}
+
         <SubmitFormButtonPattern 
           formName={form.formName}
           isPending={isPending}
