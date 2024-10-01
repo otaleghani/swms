@@ -78,6 +78,7 @@ export interface DictInputField {
 export interface DictCheckboxField {
   label: string;
   isChecked: boolean;
+  placeholder: string;
   validation: {
     required: string;
   }

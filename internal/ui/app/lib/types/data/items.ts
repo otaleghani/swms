@@ -35,10 +35,6 @@ export const defaultItemFormState: ItemFormState = {
   }
 }
 
-export type ItemComplete = Item & Variant & {
-  //defaultVariant: Variant;
-  //variants: Variants;
-  images: ItemImage;
-  //variants: Variants;
-  //variantsCodes: SupplierCodes;
+export type ItemWithDefaultVariantAndImages = Item & Variant & {
+  images: null;
 }

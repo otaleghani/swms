@@ -1,8 +1,22 @@
+/** Local components */
 import InputPattern from "./input/InputPattern";
 import PositionSelectField from "../../modules/positions/PositionSelectField";
-import { FormFieldsPropsWithDictCompleteMap } from "@/app/lib/types/form/fields";
 import PositionSelectFieldWithAdd from "../../modules/positions/PositionSelectFieldWithAdd";
 import TagsSelectFieldsWithAdd from "../../modules/tags/TagsSelectFieldsWithAdd";
+import ClientSelectFields from "../../modules/clients/ClientSelectField";
+import ClientSelectFieldsWithAdd from "../../modules/clients/ClientSelectFieldsWithAdd";
+import ProductSelectFields from "../../modules/products/ProductSelectField";
+
+/** Types and interfaces */
+import { FormFieldsPropsWithDictCompleteMap } from "@/app/lib/types/form/fields";
+import TagsSelectFields from "../../modules/tags/TagsSelectField";
+import SupplierSelectFieldsWithAdd from "../../modules/suppliers/SupplierSelectFieldsWithAdd";
+
+/** 
+* When to use the "WithAdd" variants?
+* You should use them ONLY if you are constructing a 
+* form that would not be called in a Dialog!
+*/
 
 export const ZoneFormFields = ({
   fields,
@@ -505,11 +519,10 @@ export const SubcategoryFormFields = ({
       label={true}
       errorMessages={errorMessages.description as string[]}
     />
-    <TagsSelectFieldsWithAdd 
+    <TagsSelectFields
       fields={{
         category: {
-          select: fields.categoryWithAdd.selectField,
-          formDialog: fields.categoryWithAdd.addDialog,
+          select: fields.category,
           errorMessages: errorMessages.category as string[],
         },
       }}
@@ -521,7 +534,7 @@ export const ProductFormFields = ({
   fields,
   result,
   errorMessages,
-}: FormFieldsPropsWithDictCompleteMap["Product"] ) => { return (
+}: FormFieldsPropsWithDictCompleteMap["ProductWithImages"] ) => { return (
   <>
     <InputPattern 
       field="name"
@@ -539,5 +552,171 @@ export const ProductFormFields = ({
       label={true}
       errorMessages={errorMessages.description as string[]}
     />
+    <ClientSelectFieldsWithAdd
+      fields={{ 
+        client: {
+          select: fields.clientWithAdd.selectField,
+          formDialog: fields.clientWithAdd.addDialog,
+          errorMessages: errorMessages.client as string[],
+        }
+      }}
+    />
+    <InputPattern 
+      field="images"
+      dict={fields.images.dict}
+      //defaultValue={result?.images}
+      className=""
+      label={true}
+      errorMessages={errorMessages.images as string[]}
+    />
   </>
 )}
+
+export const ProductImagesFormFields = ({
+  fields,
+  result,
+  errorMessages,
+}: FormFieldsPropsWithDictCompleteMap["ProductImage"] ) => { return (
+  <>
+    <ProductSelectFields
+      fields={{
+        product: {
+          select: fields.product,
+          //formDialog: fields.categoryWithAdd.addDialog,
+          errorMessages: errorMessages.product as string[],
+        },
+      }}
+    />
+    <InputPattern 
+      field="images"
+      dict={fields.images.dict}
+      //defaultValue={result?.images}
+      className=""
+      label={true}
+      errorMessages={errorMessages.uri as string[]}
+    />
+  </>
+)}
+
+export const ClientFormFields = ({
+  fields,
+  result,
+  errorMessages,
+}: FormFieldsPropsWithDictCompleteMap["Client"] ) => { return (
+  <>
+    <InputPattern 
+      field="name"
+      dict={fields.name.dict}
+      defaultValue={result?.name}
+      className=""
+      label={true}
+      errorMessages={errorMessages.name as string[]}
+    />
+    <InputPattern 
+      field="surname"
+      dict={fields.surname.dict}
+      defaultValue={result?.surname}
+      className=""
+      label={true}
+      errorMessages={errorMessages.surname as string[]}
+    />
+    <InputPattern 
+      field="isBusiness"
+      dict={fields.isBusiness.dict}
+      //defaultValue={result?.isBusiness}
+      className=""
+      label={true}
+      errorMessages={errorMessages.name as string[]}
+    />
+  </>
+)}
+
+export const SupplierFormFields = ({
+  fields,
+  result,
+  errorMessages,
+}: FormFieldsPropsWithDictCompleteMap["Supplier"] ) => { return (
+  <>
+    <InputPattern 
+      field="name"
+      dict={fields.name.dict}
+      defaultValue={result?.name}
+      className=""
+      label={true}
+      errorMessages={errorMessages.name as string[]}
+    />
+    <InputPattern 
+      field="description"
+      dict={fields.description.dict}
+      defaultValue={result?.description}
+      className=""
+      label={true}
+      errorMessages={errorMessages.description as string[]}
+    />
+  </>
+)}
+
+export const SupplierCodeFormFields = ({
+  fields,
+  result,
+  errorMessages,
+}: FormFieldsPropsWithDictCompleteMap["SupplierCode"] ) => { return (
+  <>
+    <InputPattern 
+      field="code"
+      dict={fields.code.dict}
+      defaultValue={result?.code}
+      className=""
+      label={true}
+      errorMessages={errorMessages.code as string[]}
+    />
+    <SupplierSelectFieldsWithAdd 
+      fields={{ 
+        supplier: {
+          select: fields.supplierWithAdd.selectField,
+          formDialog: fields.supplierWithAdd.addDialog,
+          errorMessages: errorMessages.supplier,
+        }
+      }}
+    />
+  </>
+)}
+
+export const TicketFormFields = ({
+  fields,
+  result,
+  errorMessages,
+}: FormFieldsPropsWithDictCompleteMap["Ticket"] ) => { return (
+  <>
+    <InputPattern 
+      field="name"
+      dict={fields.name.dict}
+      defaultValue={result?.name}
+      className=""
+      label={true}
+      errorMessages={errorMessages.name as string[]}
+    />
+    <InputPattern 
+      field="description"
+      dict={fields.description.dict}
+      defaultValue={result?.description}
+      className=""
+      label={true}
+      errorMessages={errorMessages.description as string[]}
+    />
+    {  
+    /** @todo - Create date field,
+    *   @todo - Finish up forms */
+    //<InputPattern 
+    //  field="open"
+    //  dict={fields.description.dict}
+    //  defaultValue={result?.description}
+    //  className=""
+    //  label={true}
+    //  errorMessages={errorMessages.description as string[]}
+    ///>
+    }
+  </>
+)}
+
+

@@ -5,12 +5,12 @@ import { Zone, ZonesBulkPostRequestBody } from "../data/zones";
 import { Aisle, AislesBulkPostRequestBody } from "../data/aisles";
 import { Rack, RacksBulkPostRequestBody } from "../data/racks";
 import { Shelf, ShelfsBulkPostRequestBody } from "../data/shelfs";
-import { Item, ItemComplete } from "../data/items";
+import { Item, ItemWithDefaultVariantAndImages } from "../data/items";
 import { Category } from "../data/categories";
 import { Subcategory } from "../data/subcategories";
 import { Client } from "../data/clients";
 import { ItemImage, ProductImage } from "../data/images";
-import { Product } from "../data/products";
+import { Product, ProductWithImages } from "../data/products";
 import { Supplier } from "../data/suppliers";
 import { SupplierCode } from "../data/supplierCodes";
 import { Ticket, TicketState, TicketType } from "../data/tickets";
@@ -33,12 +33,13 @@ export interface FormMap {
   Item: Item;
   Variant: Variant;
   ItemImage: ItemImage;
-  ItemComplete: ItemComplete;
+  ItemComplete: ItemWithDefaultVariantAndImages;
 
   Category: Category;
   Subcategory: Subcategory;
 
   Product: Product;
+  ProductWithImages: ProductWithImages;
   ProductImage: ProductImage;
   Client: Client;
   Supplier: Supplier;

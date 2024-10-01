@@ -21,7 +21,7 @@ interface InputFieldProps {
 /** Defines props for checkboxes */
 interface CheckboxFieldProps {
   dict: DictCheckboxField;
-  //errorMessages: string[];
+  errorMessages: string[];
 }
 
 /** Defines props for select inputs */
@@ -94,6 +94,8 @@ export type FieldsPropsMap = {
   item: SelectFieldProps<"Item">;
   variant: SelectFieldProps<"Variant">;
 
+  supplier: SelectFieldProps<"Supplier">;
+  supplierWithAdd: SelectFieldPropsWithAdd<"Supplier">;
 
   client: SelectFieldProps<"Client">;
   product: SelectFieldProps<"Product">;
@@ -171,6 +173,8 @@ export const fieldsDefaultProps: FieldsPropsNullMap = {
   isArchived: null,
   openDate: null,
   closeDate: null,
+  supplier: null,
+  supplierWithAdd: null,
 }
 
 /** Defines the fields for each type. */
@@ -315,7 +319,7 @@ export type SubcategoryFormFieldsProps = {
   [K in keyof FieldsPropsMap]:
     K extends "name" ? FieldsPropsMap[K] :
     K extends "description" ? FieldsPropsMap[K] :
-    K extends "categoryWithAdd" ? FieldsPropsMap[K] :
+    K extends "category" ? FieldsPropsMap[K] :
     K extends "button" ? FieldsPropsMap[K] :
     null;
 }
@@ -337,10 +341,20 @@ export type ItemImageFormFieldsProps = {
 export type ProductImageFormFieldsProps = {
   [K in keyof FieldsPropsMap]:
     K extends "images" ? FieldsPropsMap[K] :
+    K extends "product" ? FieldsPropsMap[K] :
     K extends "button" ? FieldsPropsMap[K] :
     null;
 }
 export type ProductFormFieldsProps = {
+  [K in keyof FieldsPropsMap]:
+    K extends "name" ? FieldsPropsMap[K] :
+    K extends "description" ? FieldsPropsMap[K] :
+    K extends "clientWithAdd" ? FieldsPropsMap[K] :
+    K extends "images" ? FieldsPropsMap[K] :
+    K extends "button" ? FieldsPropsMap[K] :
+    null;
+}
+export type ProductWithImagesFormFieldsProps = {
   [K in keyof FieldsPropsMap]:
     K extends "name" ? FieldsPropsMap[K] :
     K extends "description" ? FieldsPropsMap[K] :
@@ -359,7 +373,7 @@ export type SupplierFormFieldsProps = {
 export type SupplierCodeFormFieldsProps = {
   [K in keyof FieldsPropsMap]:
     K extends "code" ? FieldsPropsMap[K] :
-    K extends "supplier" ? FieldsPropsMap[K] :
+    K extends "supplierWithAdd" ? FieldsPropsMap[K] :
     K extends "item" ? FieldsPropsMap[K] :
     K extends "variant" ? FieldsPropsMap[K] :
     K extends "button" ? FieldsPropsMap[K] :
@@ -415,6 +429,7 @@ type FormFieldsPropsMap = {
     K extends "ItemImage" ? ItemImageFormFieldsProps :
     K extends "ProductImage" ? ProductImageFormFieldsProps :
     K extends "Product" ? ProductFormFieldsProps :
+    K extends "ProductWithImages" ? ProductWithImagesFormFieldsProps :
     K extends "Supplier" ? SupplierFormFieldsProps :
     K extends "SupplierCode" ? SupplierCodeFormFieldsProps :
     K extends "Ticket" ? TicketFormFieldsProps :

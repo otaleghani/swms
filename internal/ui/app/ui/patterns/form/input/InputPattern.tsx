@@ -9,12 +9,14 @@ import FormFieldErrorsPattern from "../FormFieldErrorsPattern";
 import InputPatternImages from "./images/InputPatternImages";
 
 /** Types and interfaces */
-import { DictInputField } from "@/app/lib/types/dictionary/form";
+import { DictCheckboxField, DictInputField } from "@/app/lib/types/dictionary/form";
 import { InputPatternNumberWithButtons } from "./InputPatternTransaction";
+import { Checkbox } from "@/app/ui/components/checkbox";
 
 interface InputPatternProps {
   field: 
     "name" |
+    "surname" |
     "description" |
     "identifier" |
     "code" |
@@ -24,9 +26,10 @@ interface InputPatternProps {
     "length" |
     "quantity" |
     "quantityWithButtons" |
-    "images";
+    "images" |
+    "isBusiness";
   errorMessages: string[];
-  dict: DictInputField;
+  dict: DictInputField | DictCheckboxField;
   defaultValue?: string;
   className?: string;
   label?: boolean;
@@ -48,6 +51,7 @@ export default function InputPattern({
   const InputPatternField = () => {
     switch (field) {
       case "name":
+      case "surname":
       case "identifier":
       case "code":
         return (
@@ -109,12 +113,21 @@ export default function InputPattern({
             dict={dict}
           />
         );
+      case "isBusiness":
+        return (
+          <div className="flex items-center space-x-2">
+            <Checkbox id={`${field}-${inputId}`} />
+            <Label htmlFor={`${field}-${inputId}`}>{dict.label}</Label>
+          </div>
+        );
     };
   };
 
   return (
     <div className={className}>
-      {label && (<Label htmlFor={`${field}-${inputId}`}>{dict.label}</Label>)}
+      {label && field != "isBusiness" && (
+        <Label htmlFor={`${field}-${inputId}`}>{dict.label}</Label>
+      )}
       <InputPatternField />
       <FormFieldErrorsPattern 
         errorMessages={errorMessages}

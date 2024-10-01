@@ -19,3 +19,14 @@ export const defaultProductFormState: ProductFormState = {
     client: [],
   }
 }
+
+export type ProductWithImages = Product & {
+  images: null;
+}
+
+export const emptyProduct: Product = {
+  id: "",
+  name: "",
+  description: "",
+  client: "",
+}

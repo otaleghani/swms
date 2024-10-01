@@ -22,3 +22,9 @@ export const defaultSupplierFormState: SupplierFormState = {
     description: [],
   }
 }
+
+export const emptySupplier: Supplier = {
+  id: "",
+  name: "",
+  description: "",
+}
