@@ -15,6 +15,20 @@ export type Variant = {
 }
 export type Variants = Variant[];
 
+export const emptyVariant: Variant = {
+  id: "",
+  name: "",
+  description: "",
+  quantity: 0,
+  identifier: "",
+  length: 0,
+  width: 0,
+  heigth: 0,
+  weight: 0,
+  isDefaultVariant: false,
+  item: "",
+}
+
 export type VariantFormState = FormState<"Variant">
 export const defaultVariantFormState: VariantFormState = {
   error: false,

@@ -13,6 +13,18 @@ export type Ticket = {
 }
 export type Tickets = Ticket[];
 
+export const emptyTicket: Ticket = {
+  id: "",
+  name: "",
+  description: "",
+  open: "",
+  close: "",
+  client: "",
+  product: "",
+  type: "",
+  state: "",
+}
+
 export type TicketType = {
   id?: string;
   name: string;
@@ -20,12 +32,25 @@ export type TicketType = {
 }
 export type TicketTypes = TicketType[];
 
+export const emptyTicketType: TicketType = {
+  id: "",
+  name: "",
+  description: "",
+}
+
+
 export type TicketState = {
   id?: string;
   name: string;
   description: string;
 }
 export type TicketStates = TicketState[];
+
+export const emptyTicketState: TicketState = {
+  id: "",
+  name: "",
+  description: "",
+}
 
 export type TicketFormState = FormState<"Ticket">
 export const defaultTicketFormState: TicketFormState = {

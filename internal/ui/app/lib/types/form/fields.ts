@@ -33,7 +33,11 @@ export type SelectableItem = keyof Omit<FormMap,
   "ShelfsBulk" |
   "ProductImage" |
   "SupplierCode" |
-  "Transaction"
+  "ItemComplete" |
+  "ItemCompleteFormFieldsProps" |
+  "Transaction" |
+  "ProductWithImages"
+
 >;
 
 export interface SelectFieldProps<T extends SelectableItem> {

@@ -30,7 +30,6 @@ import {
   SelectableItem, 
   SelectFieldPatternProps 
 } from "@/app/lib/types/form/fields";
-import { FormMap } from "@/app/lib/types/form/form";
 
 export function SelectFieldPatternCombobox<T extends SelectableItem>({
   list, 

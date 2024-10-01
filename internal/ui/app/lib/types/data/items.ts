@@ -17,6 +17,19 @@ export type Item = {
 }
 export type Items = Item[];
 
+export const emptyItem: Item = {
+  id: "",
+  name: "",
+  description: "",
+  isArchived: false,
+  zone: "",
+  aisle: "",
+  rack: "",
+  shelf: "",
+  category: "",
+  subcategory: "",
+}
+
 export type ItemFormState = FormState<"Item">
 export const defaultItemFormState: ItemFormState = {
   error: false,

@@ -1,4 +1,4 @@
-"use product" 
+"use client" 
 
 /** React hooks */
 import { useState } from "react";

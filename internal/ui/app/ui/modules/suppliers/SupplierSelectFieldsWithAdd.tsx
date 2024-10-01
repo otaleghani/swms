@@ -1,4 +1,4 @@
-"use supplier" 
+"use client" 
 
 /** React hooks */
 import { useState, useEffect } from "react";

@@ -19,3 +19,10 @@ export const defaultUserFormState: UserFormState = {
     email: [],
   }
 }
+
+export const emptyUser: User = {
+  id: "",
+  name: "",
+  surname: "",
+  email: "",
+}
