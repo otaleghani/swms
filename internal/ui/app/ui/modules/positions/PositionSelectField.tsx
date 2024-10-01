@@ -7,14 +7,14 @@ import { useState, useEffect } from "react";
 import SelectFieldPattern from "../../patterns/form/select/SelectFieldPattern";
 
 /** Types and itnerfaces */
-import { Zone, emptyZone } from "@/app/lib/types/data/zones";
-import { Aisle, emptyAisle } from "@/app/lib/types/data/aisles";
-import { Rack, emptyRack } from "@/app/lib/types/data/racks";
-import { Shelf, emptyShelf } from "@/app/lib/types/data/shelfs";
-import { addNewItemToList, filterList } from "../../patterns/form/select/action";
+import { emptyZone } from "@/app/lib/types/data/zones";
+import { emptyAisle } from "@/app/lib/types/data/aisles";
+import { emptyRack } from "@/app/lib/types/data/racks";
+import { emptyShelf } from "@/app/lib/types/data/shelfs";
+import { filterList } from "../../patterns/form/select/action";
 import { SelectFieldProps } from "@/app/lib/types/form/fields";
 
-export interface PositionSelectFieldProps {
+interface PositionSelectFieldProps {
   fields: {
     zone?: {
       errorMessages: string[];

@@ -5,7 +5,7 @@ import { Zone, ZonesBulkPostRequestBody } from "../data/zones";
 import { Aisle, AislesBulkPostRequestBody } from "../data/aisles";
 import { Rack, RacksBulkPostRequestBody } from "../data/racks";
 import { Shelf, ShelfsBulkPostRequestBody } from "../data/shelfs";
-import { Item } from "../data/items";
+import { Item, ItemComplete } from "../data/items";
 import { Category } from "../data/categories";
 import { Subcategory } from "../data/subcategories";
 import { Client } from "../data/clients";
@@ -33,6 +33,7 @@ export interface FormMap {
   Item: Item;
   Variant: Variant;
   ItemImage: ItemImage;
+  ItemComplete: ItemComplete;
 
   Category: Category;
   Subcategory: Subcategory;

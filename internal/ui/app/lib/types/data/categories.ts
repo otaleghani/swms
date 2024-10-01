@@ -17,3 +17,9 @@ export const defaultCategoryFormState: CategoryFormState = {
     description: [],
   }
 }
+
+export const emptyCategory: Category = {
+  id: "",
+  name: "",
+  description: "",
+}

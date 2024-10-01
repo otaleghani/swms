@@ -5,10 +5,7 @@ import { useState, useEffect } from "react";
 
 /** Local components */
 import SelectFieldPattern from "../../patterns/form/select/SelectFieldPattern";
-import 
-  DialogFormPattern, 
-  {DialogFormPatternProps} 
-from "../../patterns/dialog/DialogFormPattern";
+import DialogFormPattern, { DialogFormPatternProps } from "../../patterns/dialog/DialogFormPattern";
 
 /** Types and itnerfaces */
 import { Zone, emptyZone } from "@/app/lib/types/data/zones";
@@ -18,26 +15,27 @@ import { Shelf, emptyShelf } from "@/app/lib/types/data/shelfs";
 import { SelectFieldProps } from "@/app/lib/types/form/fields";
 
 /** Actions */
-import { 
-  addNewItemToList, 
-  filterList,
-} from "../../patterns/form/select/action";
+import { addNewItemToList, filterList } from "../../patterns/form/select/action";
 
-export interface PositionSelectFieldWithAddProps {
+interface PositionSelectFieldWithAddProps {
   fields: {
     zone?: {
+      errorMessages: string[];
       select: SelectFieldProps<"Zone">;
       formDialog: DialogFormPatternProps<"Zone">;
     };
     aisle?: {
+      errorMessages: string[];
       select: SelectFieldProps<"Aisle">;
       formDialog: DialogFormPatternProps<"Aisle">;
     }
     rack?: {
+      errorMessages: string[];
       select: SelectFieldProps<"Rack">;
       formDialog: DialogFormPatternProps<"Rack">;
     };
     shelf?: {
+      errorMessages: string[];
       select: SelectFieldProps<"Shelf">;
       formDialog: DialogFormPatternProps<"Shelf">;
     };

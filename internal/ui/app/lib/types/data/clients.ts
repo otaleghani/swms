@@ -20,3 +20,10 @@ export const defaultClientFormState: ClientFormState = {
     isBusiness: [],
   }
 }
+
+export const emptyClient: Client = {
+  id: "",
+  name: "",
+  surname: "",
+  isBusiness: false,
+}

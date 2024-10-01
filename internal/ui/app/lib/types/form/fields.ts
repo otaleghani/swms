@@ -53,14 +53,14 @@ export type SelectFieldPatternProps<T extends SelectableItem> = SelectFieldProps
 
 /** Defines the props for an select field */
 export interface SelectFieldPropsWithAdd<T extends SelectableItem> {
-  AddDialog: {
+  addDialog: {
     self: {
       triggerType: "icon";
       dict: DictDialog;
     };
-    FormPattern: FormPropsMap[T];
+    formPattern: FormPropsMap[T];
   };
-  SelectField: SelectFieldProps<T>;
+  selectField: SelectFieldProps<T>;
 };
 
 
@@ -107,6 +107,11 @@ export type FieldsPropsMap = {
   aisleWithAdd: SelectFieldPropsWithAdd<"Aisle">;
   rackWithAdd: SelectFieldPropsWithAdd<"Rack">;
   shelfWithAdd: SelectFieldPropsWithAdd<"Shelf">;
+
+  categoryWithAdd: SelectFieldPropsWithAdd<"Category">;
+  subcategoryWithAdd: SelectFieldPropsWithAdd<"Subcategory">;
+
+  clientWithAdd: SelectFieldPropsWithAdd<"Client">;
 
   // Button
   button: DictFormButton;
@@ -157,6 +162,9 @@ export const fieldsDefaultProps: FieldsPropsNullMap = {
   aisleWithAdd: null,
   rackWithAdd: null,
   shelfWithAdd: null,
+  categoryWithAdd: null,
+  subcategoryWithAdd: null,
+  clientWithAdd: null,
   button: null,
   isBusiness: null,
   isDefaultVariant: null,
@@ -226,6 +234,7 @@ export type ShelfsBulkFormFieldsProps = {
     K extends "button" ? FieldsPropsMap[K] :
     null;
 }
+
 export type ItemFormFieldsProps = {
   [K in keyof FieldsPropsMap]: 
     K extends "name" ? FieldsPropsMap[K] :
@@ -235,9 +244,37 @@ export type ItemFormFieldsProps = {
     K extends "aisleWithAdd" ? FieldsPropsMap[K] :
     K extends "rackWithAdd" ? FieldsPropsMap[K] :
     K extends "shelfWithAdd" ? FieldsPropsMap[K] :
-    K extends "category" ? FieldsPropsMap[K] :
-    K extends "subcategory" ? FieldsPropsMap[K] :
+    K extends "categoryWithAdd" ? FieldsPropsMap[K] :
+    K extends "subcategoryWithAdd" ? FieldsPropsMap[K] :
 
+    // K extends "identifier" ? FieldsPropsMap[K] :
+    // K extends "quantity" ? FieldsPropsMap[K] :
+    // K extends "length" ? FieldsPropsMap[K] :
+    // K extends "width" ? FieldsPropsMap[K] :
+    // K extends "heigth" ? FieldsPropsMap[K] :
+    // K extends "weight" ? FieldsPropsMap[K] :
+    // Used for the default variant
+
+    // How do we handle JSON of Variants?
+    // How do we handle fields for ItemImages?
+    K extends "button" ? FieldsPropsMap[K] :
+    null;
+}
+
+export type ItemCompleteFormFieldsProps = {
+  [K in keyof FieldsPropsMap]: 
+    K extends "name" ? FieldsPropsMap[K] :
+    K extends "description" ? FieldsPropsMap[K] :
+    K extends "isArchived" ? FieldsPropsMap[K] :
+    K extends "zoneWithAdd" ? FieldsPropsMap[K] :
+    K extends "aisleWithAdd" ? FieldsPropsMap[K] :
+    K extends "rackWithAdd" ? FieldsPropsMap[K] :
+    K extends "shelfWithAdd" ? FieldsPropsMap[K] :
+    K extends "categoryWithAdd" ? FieldsPropsMap[K] :
+    K extends "subcategoryWithAdd" ? FieldsPropsMap[K] :
+
+    K extends "images" ? FieldsPropsMap[K] :
+    K extends "identifier" ? FieldsPropsMap[K] :
     K extends "quantity" ? FieldsPropsMap[K] :
     K extends "length" ? FieldsPropsMap[K] :
     K extends "width" ? FieldsPropsMap[K] :
@@ -250,6 +287,7 @@ export type ItemFormFieldsProps = {
     K extends "button" ? FieldsPropsMap[K] :
     null;
 }
+
 export type VariantFormFieldsProps = {
   [K in keyof FieldsPropsMap]: 
     K extends "name" ? FieldsPropsMap[K] :
@@ -277,7 +315,7 @@ export type SubcategoryFormFieldsProps = {
   [K in keyof FieldsPropsMap]:
     K extends "name" ? FieldsPropsMap[K] :
     K extends "description" ? FieldsPropsMap[K] :
-    K extends "category" ? FieldsPropsMap[K] :
+    K extends "categoryWithAdd" ? FieldsPropsMap[K] :
     K extends "button" ? FieldsPropsMap[K] :
     null;
 }
@@ -306,7 +344,7 @@ export type ProductFormFieldsProps = {
   [K in keyof FieldsPropsMap]:
     K extends "name" ? FieldsPropsMap[K] :
     K extends "description" ? FieldsPropsMap[K] :
-    K extends "client" ? FieldsPropsMap[K] :
+    K extends "clientWithAdd" ? FieldsPropsMap[K] :
     K extends "images" ? FieldsPropsMap[K] :
     K extends "button" ? FieldsPropsMap[K] :
     null;
@@ -369,6 +407,7 @@ type FormFieldsPropsMap = {
     K extends "RacksBulk" ? RacksBulkFormFieldsProps:
     K extends "ShelfsBulk" ? ShelfsBulkFormFieldsProps:
     K extends "Item" ? ItemFormFieldsProps :
+    K extends "ItemComplete" ? ItemCompleteFormFieldsProps :
     K extends "Variant" ? VariantFormFieldsProps :
     K extends "Category" ? CategoryFormFieldsProps :
     K extends "Subcategory" ? SubcategoryFormFieldsProps :
@@ -396,13 +435,16 @@ interface DictItemsForm {
 
 interface DictVariantsForm {
   sections: {
+    basics: string;
     codes: string;
+    dimensions: string;
   }
 }
 
 type DictFormMap = {
   [K in keyof FormMap]: 
     K extends "Item" ? DictItemsForm :
+    K extends "ItemComplete" ? DictItemsForm :
     K extends "Variant" ? DictVariantsForm :
     never;
 }

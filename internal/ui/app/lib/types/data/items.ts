@@ -1,4 +1,7 @@
 import { FormState } from "../form/form";
+import { Variant, Variants } from "./variants";
+import { SupplierCodes } from "./supplierCodes";
+import { ItemImage } from "./images";
 
 export type Item = {
   id?: string;
@@ -30,4 +33,12 @@ export const defaultItemFormState: ItemFormState = {
     category: [],
     subcategory: [],
   }
+}
+
+export type ItemComplete = Item & Variant & {
+  //defaultVariant: Variant;
+  //variants: Variants;
+  images: ItemImage;
+  //variants: Variants;
+  //variantsCodes: SupplierCodes;
 }
