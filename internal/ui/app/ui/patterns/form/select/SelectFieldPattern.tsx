@@ -20,7 +20,7 @@ export default function SelectFieldPattern<T extends SelectableItem>({
   setElement, 
   errorMessages,
   dict,
-}: SelectFieldPatternProps<T>) {
+}: SelectFieldPatternProps<T> & {errorMessages: string[]}) {
   const inputId = (`${Math.random().toString(36).substring(2, 9)}`);
 
   return (
@@ -40,7 +40,6 @@ export default function SelectFieldPattern<T extends SelectableItem>({
         element={element} 
         setElement={setElement as Dispatch<SetStateAction<FormMap[SelectableItem]>>}
         dict={dict} 
-        errorMessages={errorMessages}
       />
       <FormFieldErrorsPattern
         id={`${name}-${inputId}-errors`}

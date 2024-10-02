@@ -49,8 +49,8 @@ export function SelectFieldPatternCombobox<T extends SelectableItem>({
             aria-expanded={open}
             className="w-full justify-between"
           >
-            {element.name != '' 
-              ? list.find((item: any) => (item.name + item.id) === (element.name + element.id))?.name
+            {element.name != ''
+              ? list.find((item: any) => (item.name + item.id) === (element.name as string + element.id))?.name
               : dict.select.combobox.select }
             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
@@ -66,7 +66,7 @@ export function SelectFieldPatternCombobox<T extends SelectableItem>({
                   key={item.id}
                   value={item.name + item.id}
                   onSelect={(currentValue) => {
-                    setElement(currentValue === element.name + element.id
+                    setElement(currentValue === element.name as string + element.id
                     ? { id: "", name: "" } as any
                     : {
                         id: 

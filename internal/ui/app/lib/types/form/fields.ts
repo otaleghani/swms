@@ -1,6 +1,6 @@
 import { DictDialog } from "../dictionary/misc";
 import { 
-    DictCheckboxField,
+  DictCheckboxField,
   DictFormButton, 
   DictInputField, 
   DictSelectField 
@@ -9,19 +9,15 @@ import {
   FormMap, 
   FormPropsMap 
 } from "./form";
-import { Zone } from "../../types";
 
 /** Defines props for an input field */
 interface InputFieldProps {
   dict: DictInputField;
-  //defaultValue: string | number;
-  //errorMessages: string[];
 }
 
 /** Defines props for checkboxes */
 interface CheckboxFieldProps {
   dict: DictCheckboxField;
-  errorMessages: string[];
 }
 
 /** Defines props for select inputs */
@@ -43,16 +39,11 @@ export type SelectableItem = keyof Omit<FormMap,
 export interface SelectFieldProps<T extends SelectableItem> {
   name: T;
   list: FormMap[T][];
-  errorMessages: string[];
   dict: DictSelectField;
 }
 export type SelectFieldPatternProps<T extends SelectableItem> = SelectFieldProps<T> & {
   element: FormMap[T]; // This would be used as a default value
   setElement: React.Dispatch<React.SetStateAction<FormMap[T]>>;
-  //name: T;
-  //list: FormMap[T][];
-  //errorMessages: string[];
-  //dict: DictSelectField;
 };
 
 /** Defines the props for an select field */

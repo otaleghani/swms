@@ -13,6 +13,7 @@ import { emptyRack } from "@/app/lib/types/data/racks";
 import { emptyShelf } from "@/app/lib/types/data/shelfs";
 import { filterList } from "../../patterns/form/select/action";
 import { SelectFieldProps } from "@/app/lib/types/form/fields";
+import GenericSelectFields from "../../patterns/form/select/GenericSelectField";
 
 interface PositionSelectFieldProps {
   fields: {
@@ -43,7 +44,7 @@ export default function PositionSelectField({
   const [selectedRack, setSelectedRack] = useState(emptyRack);
   const [selectedShelf, setSelectedShelf] = useState(emptyShelf);
 
-  const [listZone, setListZone] = useState(fields.zone?.select.list);
+  const [listZones, setListZones] = useState(fields.zone?.select.list);
   const [listAisles, setListAisles] = useState(fields.aisle?.select.list);
   const [listRacks, setListRacks] = useState(fields.rack?.select.list);
   const [listShelfs, setListShelfs] = useState(fields.shelf?.select.list);
@@ -82,51 +83,59 @@ export default function PositionSelectField({
   return (
     <div>
       <div>
-        {fields.zone && listZone && (
+        {fields.zone && listZones && (
           <div className="flex gap-4 items-end">
-            <SelectFieldPattern<"Zone"> 
-              name="Zone"
-              element={selectedZone}
-              setElement={setSelectedZone}
-              list={listZone}
+            <GenericSelectFields<"Zone">
+              selectField={{
+                name: "Zone",
+                element: selectedZone,
+                setElement: setSelectedZone,
+                list: listZones,
+                dict: fields.zone.select.dict,
+              }}
               errorMessages={fields.zone.errorMessages}
-              dict={fields.zone.select.dict}
             />
           </div>
         )}
         {fields.aisle && filteredAisles && (selectedZone != emptyZone) && (
           <div className="flex gap-4 items-end">
-            <SelectFieldPattern<"Aisle"> 
-              name="Aisle"
-              element={selectedAisle}
-              setElement={setSelectedAisle}
-              list={filteredAisles}
+            <GenericSelectFields<"Aisle">
+              selectField={{
+                name: "Aisle",
+                element: selectedAisle,
+                setElement: setSelectedAisle,
+                list: filteredAisles,
+                dict: fields.aisle.select.dict,
+              }}
               errorMessages={fields.aisle.errorMessages}
-              dict={fields.aisle.select.dict}
             />
           </div>
         )}
         {fields.rack && filteredRacks && (selectedAisle != emptyAisle) && (
           <div className="flex gap-4 items-end">
-            <SelectFieldPattern<"Rack"> 
-              name="Rack"
-              element={selectedRack}
-              setElement={setSelectedRack}
-              list={filteredRacks}
+            <GenericSelectFields<"Rack">
+              selectField={{
+                name: "Rack",
+                element: selectedRack,
+                setElement: setSelectedRack,
+                list: filteredRacks,
+                dict: fields.rack.select.dict,
+              }}
               errorMessages={fields.rack.errorMessages}
-              dict={fields.rack.select.dict}
             />
           </div>
         )}
         {fields.shelf && filteredShelfs && (selectedRack != emptyRack) && (
           <div className="flex gap-4 items-end">
-            <SelectFieldPattern<"Shelf"> 
-              name="Shelf"
-              element={selectedShelf}
-              setElement={setSelectedShelf}
-              list={filteredShelfs}
+            <GenericSelectFields<"Shelf">
+              selectField={{
+                name: "Shelf",
+                element: selectedShelf,
+                setElement: setSelectedShelf,
+                list: filteredShelfs,
+                dict: fields.shelf.select.dict,
+              }}
               errorMessages={fields.shelf.errorMessages}
-              dict={fields.shelf.select.dict}
             />
           </div>
         )}

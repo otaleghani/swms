@@ -3,7 +3,7 @@ import { Locale } from "@/lib/dictionaries";
 import { dateToISOString, dateToLocaleDateString, dateToLocaleString, dateToLocaleTimeString } from "@/app/lib/validation/dates";
 import SelectFieldPattern from "@/app/ui/patterns/form/select/SelectFieldPattern";
 import { retrieve } from "@/app/lib/requests/generics/retrieve";
-import { defaultZoneBulkFormState, defaultZoneFormState, Zones } from "@/app/lib/types/data/zones";
+import { defaultZoneFormState, Zones } from "@/app/lib/types/data/zones";
 import { Zone } from "@/app/lib/types";
 import TestSelect from "@/app/ui/modules/zones/test/SelectTest";
 import { zoneAddFormAction } from "@/app/ui/modules/zones/create/actions";
@@ -79,8 +79,6 @@ export default async function TestingPage( {params}: {params: {lang: string}}) {
                   valid:"valid",
                 },
               },
-              defaultValue: "",
-              errorMessages: [],
             },
             button: {
               active: "attivo",
@@ -267,8 +265,6 @@ export default async function TestingPage( {params}: {params: {lang: string}}) {
                     valid:"valid",
                   },
                 },
-                defaultValue: "sandroneDefaultValue",
-                errorMessages: [],
               },
               zone: {
                 //AddDialog: {
@@ -335,7 +331,6 @@ export default async function TestingPage( {params}: {params: {lang: string}}) {
                   },
                   validation: { not_found: "NUN l'HO TROVATO"},
                 },
-                errorMessages: [],
                 list: zones.data as Zones,
               },
 
@@ -484,39 +479,43 @@ export default async function TestingPage( {params}: {params: {lang: string}}) {
 
       <PositionSelectField 
         fields={{
-          zone: {
-            name: "Zone",
-            list: zones.data as Zones,
-            errorMessages: [],
-            dict: {
+            zone: {
+              errorMessages: [],
               select: {
-                label: "selezioname",
-                combobox: {
-                  select: "selezizizo",
-                  search: "cercatoceccato",
-                  empty: "vuotosvuotatopalle",
+                name: "Zone",
+                list: zones.data as Zones,
+                dict: {
+                  select: {
+                    label: "selezioname",
+                    combobox: {
+                      select: "selezizizo",
+                      search: "cercatoceccato",
+                      empty: "vuotosvuotatopalle",
+                    }
+                  },
+                  validation: {
+                    not_found: "trovava",
+                  }
                 }
-              },
-              validation: {
-                not_found: "trovava",
               }
-            }
           },
           aisle: {
-            name: "Aisle",
-            list: aisles.data as Aisles,
             errorMessages: [],
-            dict: {
-              select: {
-                label: "selezioname",
-                combobox: {
-                  select: "selezizizo",
-                  search: "cercatoceccato",
-                  empty: "vuotosvuotatopalle",
+            select: {
+              name: "Aisle",
+              list: aisles.data as Aisles,
+              dict: {
+                select: {
+                  label: "selezioname",
+                  combobox: {
+                    select: "selezizizo",
+                    search: "cercatoceccato",
+                    empty: "vuotosvuotatopalle",
+                  }
+                },
+                validation: {
+                  not_found: "trovava",
                 }
-              },
-              validation: {
-                not_found: "trovava",
               }
             }
           }
