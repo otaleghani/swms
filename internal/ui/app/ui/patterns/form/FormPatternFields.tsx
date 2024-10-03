@@ -10,6 +10,8 @@ import TagsSelectFieldsWithAdd from "../../modules/tags/TagsSelectFieldsWithAdd"
 /** Types and interfaces */
 import { FormFieldsPropsWithDictCompleteMap } from "@/app/lib/types/form/fields";
 import TagsSelectFields from "../../modules/tags/TagsSelectField";
+import SelectFieldWithAddPattern from "./select/SelectFieldWithAddPattern";
+import { useState } from "react";
 //import SupplierSelectFieldsWithAdd from "../../modules/suppliers/SupplierSelectFieldsWithAdd";
 
 /** 
@@ -660,7 +662,17 @@ export const SupplierCodeFormFields = ({
   fields,
   result,
   errorMessages,
-}: FormFieldsPropsWithDictCompleteMap["SupplierCode"] ) => { return (
+}: FormFieldsPropsWithDictCompleteMap["SupplierCode"] ) => { 
+
+  // If we have a form with a "WithAdd", we need to have HERE the state management for
+  // the different fields.
+  // So for example this one handles the SupplierCode. Here we are passing the
+  // list as a prop. We then need to take that list and manage here the filtered state.
+  // That's why we have different components for complex form "add".
+  
+  // qconst [list, setState] = useState(fields.supplierWithAdd)
+
+  return (
   <>
     <InputPattern 
       field="code"
@@ -670,15 +682,25 @@ export const SupplierCodeFormFields = ({
       label={true}
       errorMessages={errorMessages.code as string[]}
     />
-    <SupplierSelectFieldsWithAdd 
-      fields={{ 
-        supplier: {
-          select: fields.supplierWithAdd.selectField,
-          formDialog: fields.supplierWithAdd.addDialog,
-          errorMessages: errorMessages.supplier,
-        }
-      }}
+
+    <SelectFieldWithAddPattern<"Supplier"> 
+      addDialog={}
+      selectField={}
+      element={}
+      setElement={}
+      errorMessages={}
     />
+    {
+    //<SupplierSelectFieldsWithAdd 
+    //  fields={{ 
+    //    supplier: {
+    //      select: fields.supplierWithAdd.selectField,
+    //      formDialog: fields.supplierWithAdd.addDialog,
+    //      errorMessages: errorMessages.supplier,
+    //    }
+    //  }}
+    ///>
+    }
   </>
 )}
 

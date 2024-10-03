@@ -1,14 +1,11 @@
-import { DictDialog } from "../dictionary/misc";
 import { 
   DictCheckboxField,
   DictFormButton, 
   DictInputField, 
   DictSelectField 
 } from "../dictionary/form";
-import { 
-  FormMap, 
-  FormPropsMap 
-} from "./form";
+import { FormMap } from "./form";
+import { DialogFormPatternProps } from "@/app/ui/patterns/dialog/DialogFormPattern";
 
 /** Defines props for an input field */
 interface InputFieldProps {
@@ -47,13 +44,7 @@ export type SelectFieldPatternProps<T extends SelectableItem> = SelectFieldProps
 
 /** Defines the props for an select field */
 export interface SelectFieldPropsWithAdd<T extends SelectableItem> {
-  addDialog: {
-    self: {
-      triggerType: "icon";
-      dict: DictDialog;
-    };
-    formPattern: FormPropsMap[T];
-  };
+  addDialog: DialogFormPatternProps<T>,
   selectField: SelectFieldProps<T>;
 };
 

@@ -1,20 +1,16 @@
 import { getDictionary } from "@/lib/dictionaries";
 import { Locale } from "@/lib/dictionaries";
-import { dateToISOString, dateToLocaleDateString, dateToLocaleString, dateToLocaleTimeString } from "@/app/lib/validation/dates";
-import SelectFieldPattern from "@/app/ui/patterns/form/select/SelectFieldPattern";
 import { retrieve } from "@/app/lib/requests/generics/retrieve";
 import { defaultZoneFormState, Zones } from "@/app/lib/types/data/zones";
-import { Zone } from "@/app/lib/types";
 import TestSelect from "@/app/ui/modules/zones/test/SelectTest";
 import { zoneAddFormAction } from "@/app/ui/modules/zones/create/actions";
-import { zoneAddBulkFormAction } from "@/app/ui/modules/zones/create/actions";
-import AisleForm from "@/app/ui/modules/aisles/misc/AisleForm";
 import { Aisles, defaultAisleFormState } from "@/app/lib/types/data/aisles";
 import {aisleCreateFormAction} from "@/app/ui/modules/aisles/create/actions";
 import FormPattern from "@/app/ui/patterns/form/FormPattern";
 import DialogFormPattern from "@/app/ui/patterns/dialog/DialogFormPattern";
 import { fieldsDefaultProps } from "@/app/lib/types/form/fields";
 import PositionSelectField from "@/app/ui/modules/positions/PositionSelectField";
+import PositionSelectFieldWithAdd from "@/app/ui/modules/positions/PositionSelectFieldWithAdd";
 
 export default async function TestingPage( {params}: {params: {lang: string}}) {
   const dict = await getDictionary(params.lang as Locale);
@@ -476,7 +472,53 @@ export default async function TestingPage( {params}: {params: {lang: string}}) {
       //   }
       // }}/>
       }
-
+      <PositionSelectFieldWithAdd
+        fields={{
+            zone: {
+              formDialog: {
+                self: {}
+              },
+              errorMessages: [],
+              select: {
+                name: "Zone",
+                list: zones.data as Zones,
+                dict: {
+                  select: {
+                    label: "selezioname",
+                    combobox: {
+                      select: "selezizizo",
+                      search: "cercatoceccato",
+                      empty: "vuotosvuotatopalle",
+                    }
+                  },
+                  validation: {
+                    not_found: "trovava",
+                  }
+                }
+              }
+          },
+          aisle: {
+            errorMessages: [],
+            select: {
+              name: "Aisle",
+              list: aisles.data as Aisles,
+              dict: {
+                select: {
+                  label: "selezioname",
+                  combobox: {
+                    select: "selezizizo",
+                    search: "cercatoceccato",
+                    empty: "vuotosvuotatopalle",
+                  }
+                },
+                validation: {
+                  not_found: "trovava",
+                }
+              }
+            }
+          }
+        }}
+      />
       <PositionSelectField 
         fields={{
             zone: {

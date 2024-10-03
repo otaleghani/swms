@@ -13,7 +13,6 @@ import { emptyRack } from "@/app/lib/types/data/racks";
 import { emptyShelf } from "@/app/lib/types/data/shelfs";
 import { filterList } from "../../patterns/form/select/action";
 import { SelectFieldProps } from "@/app/lib/types/form/fields";
-//import GenericSelectFields from "../../patterns/form/select/GenericSelectField";
 
 interface PositionSelectFieldProps {
   fields: {

@@ -16,6 +16,7 @@ import { SelectFieldProps } from "@/app/lib/types/form/fields";
 
 /** Actions */
 import { addNewItemToList, filterList } from "../../patterns/form/select/action";
+import SelectFieldWithAddPattern from "../../patterns/form/select/SelectFieldWithAddPattern";
 
 interface PositionSelectFieldWithAddProps {
   fields: {
@@ -114,24 +115,37 @@ export default function PositionSelectFieldWithAdd({
       <div>
         {fields.zone && listZone && (
           <div className="flex gap-4 items-end">
-            <SelectFieldPattern<"Zone"> 
-              name="Zone"
+            <SelectFieldWithAddPattern<"Zone"> 
+              addDialog={{
+                ...fields.zone.formDialog,
+              }}
+              selectField={{
+                ...fields.zone.select,
+              }}
               element={selectedZone}
               setElement={setSelectedZone}
-              list={listZone}
-              errorMessages={fields.zone.select.errorMessages}
-              dict={fields.zone.select.dict}
+              errorMessages={fields.zone.errorMessages}
             />
-            <DialogFormPattern<"Zone"> 
-              self={fields.zone.formDialog.self}
-              formPattern={{
-                ...fields.zone.formDialog.formPattern,
-                form: {
-                  ...fields.zone.formDialog.formPattern.form,
-                  refreshItemList: refreshZoneList,
-                }
-              }}
-            />
+            {
+            // <SelectFieldPattern<"Zone"> 
+            //   name="Zone"
+            //   element={selectedZone}
+            //   setElement={setSelectedZone}
+            //   list={listZone}
+            //   errorMessages={fields.zone.errorMessages}
+            //   dict={fields.zone.select.dict}
+            // />
+            // <DialogFormPattern<"Zone"> 
+            //   self={fields.zone.formDialog.self}
+            //   formPattern={{
+            //     ...fields.zone.formDialog.formPattern,
+            //     form: {
+            //       ...fields.zone.formDialog.formPattern.form,
+            //       refreshItemList: refreshZoneList,
+            //     }
+            //   }}
+            // />
+            }
           </div>
         )}
         {fields.aisle && filteredAisles && (selectedZone != emptyZone) && (
@@ -141,7 +155,7 @@ export default function PositionSelectFieldWithAdd({
               element={selectedAisle}
               setElement={setSelectedAisle}
               list={filteredAisles}
-              errorMessages={fields.aisle.select.errorMessages}
+              errorMessages={fields.aisle.errorMessages}
               dict={fields.aisle.select.dict}
             />
             <DialogFormPattern<"Aisle"> 
@@ -163,7 +177,7 @@ export default function PositionSelectFieldWithAdd({
               element={selectedRack}
               setElement={setSelectedRack}
               list={filteredRacks}
-              errorMessages={fields.rack.select.errorMessages}
+              errorMessages={fields.rack.errorMessages}
               dict={fields.rack.select.dict}
             />
             <DialogFormPattern<"Rack"> 
@@ -185,7 +199,7 @@ export default function PositionSelectFieldWithAdd({
               element={selectedShelf}
               setElement={setSelectedShelf}
               list={filteredShelfs}
-              errorMessages={fields.shelf.select.errorMessages}
+              errorMessages={fields.shelf.errorMessages}
               dict={fields.shelf.select.dict}
             />
             <DialogFormPattern<"Shelf"> 
