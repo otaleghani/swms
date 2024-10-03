@@ -13,7 +13,7 @@ import { emptyRack } from "@/app/lib/types/data/racks";
 import { emptyShelf } from "@/app/lib/types/data/shelfs";
 import { filterList } from "../../patterns/form/select/action";
 import { SelectFieldProps } from "@/app/lib/types/form/fields";
-import GenericSelectFields from "../../patterns/form/select/GenericSelectField";
+//import GenericSelectFields from "../../patterns/form/select/GenericSelectField";
 
 interface PositionSelectFieldProps {
   fields: {
@@ -85,56 +85,48 @@ export default function PositionSelectField({
       <div>
         {fields.zone && listZones && (
           <div className="flex gap-4 items-end">
-            <GenericSelectFields<"Zone">
-              selectField={{
-                name: "Zone",
-                element: selectedZone,
-                setElement: setSelectedZone,
-                list: listZones,
-                dict: fields.zone.select.dict,
-              }}
+            <SelectFieldPattern<"Zone"> 
+              name="Zone"
+              element={selectedZone}
+              setElement={setSelectedZone}
+              list={listZones}
+              dict={fields.zone.select.dict}
               errorMessages={fields.zone.errorMessages}
             />
           </div>
         )}
         {fields.aisle && filteredAisles && (selectedZone != emptyZone) && (
           <div className="flex gap-4 items-end">
-            <GenericSelectFields<"Aisle">
-              selectField={{
-                name: "Aisle",
-                element: selectedAisle,
-                setElement: setSelectedAisle,
-                list: filteredAisles,
-                dict: fields.aisle.select.dict,
-              }}
+            <SelectFieldPattern<"Aisle"> 
+              name="Aisle"
+              element={selectedAisle}
+              setElement={setSelectedAisle}
+              list={filteredAisles}
+              dict={fields.aisle.select.dict}
               errorMessages={fields.aisle.errorMessages}
             />
           </div>
         )}
         {fields.rack && filteredRacks && (selectedAisle != emptyAisle) && (
           <div className="flex gap-4 items-end">
-            <GenericSelectFields<"Rack">
-              selectField={{
-                name: "Rack",
-                element: selectedRack,
-                setElement: setSelectedRack,
-                list: filteredRacks,
-                dict: fields.rack.select.dict,
-              }}
+            <SelectFieldPattern<"Rack"> 
+              name="Rack"
+              element={selectedRack}
+              setElement={setSelectedRack}
+              list={filteredRacks}
+              dict={fields.rack.select.dict}
               errorMessages={fields.rack.errorMessages}
             />
           </div>
         )}
         {fields.shelf && filteredShelfs && (selectedRack != emptyRack) && (
           <div className="flex gap-4 items-end">
-            <GenericSelectFields<"Shelf">
-              selectField={{
-                name: "Shelf",
-                element: selectedShelf,
-                setElement: setSelectedShelf,
-                list: filteredShelfs,
-                dict: fields.shelf.select.dict,
-              }}
+            <SelectFieldPattern<"Shelf"> 
+              name="Shelf"
+              element={selectedShelf}
+              setElement={setSelectedShelf}
+              list={filteredShelfs}
+              dict={fields.shelf.select.dict}
               errorMessages={fields.shelf.errorMessages}
             />
           </div>

@@ -33,7 +33,6 @@ export type SelectableItem = keyof Omit<FormMap,
   "ItemCompleteFormFieldsProps" |
   "Transaction" |
   "ProductWithImages"
-
 >;
 
 export interface SelectFieldProps<T extends SelectableItem> {
@@ -56,6 +55,12 @@ export interface SelectFieldPropsWithAdd<T extends SelectableItem> {
     formPattern: FormPropsMap[T];
   };
   selectField: SelectFieldProps<T>;
+};
+
+export type SelectFieldPatternWithAddProps<T extends SelectableItem> = 
+  SelectFieldPropsWithAdd<T> & {
+  element: FormMap[T]; // This would be used as a default value
+  setElement: React.Dispatch<React.SetStateAction<FormMap[T]>>;
 };
 
 

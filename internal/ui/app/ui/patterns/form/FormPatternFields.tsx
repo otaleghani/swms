@@ -3,14 +3,14 @@ import InputPattern from "./input/InputPattern";
 import PositionSelectField from "../../modules/positions/PositionSelectField";
 import PositionSelectFieldWithAdd from "../../modules/positions/PositionSelectFieldWithAdd";
 import TagsSelectFieldsWithAdd from "../../modules/tags/TagsSelectFieldsWithAdd";
-import ClientSelectFields from "../../modules/clients/ClientSelectField";
-import ClientSelectFieldsWithAdd from "../../modules/clients/ClientSelectFieldsWithAdd";
-import ProductSelectFields from "../../modules/products/ProductSelectField";
+//import ClientSelectFields from "../../modules/clients/ClientSelectField";
+//import ClientSelectFieldsWithAdd from "../../modules/clients/ClientSelectFieldsWithAdd";
+//import ProductSelectFields from "../../modules/products/ProductSelectField";
 
 /** Types and interfaces */
 import { FormFieldsPropsWithDictCompleteMap } from "@/app/lib/types/form/fields";
 import TagsSelectFields from "../../modules/tags/TagsSelectField";
-import SupplierSelectFieldsWithAdd from "../../modules/suppliers/SupplierSelectFieldsWithAdd";
+//import SupplierSelectFieldsWithAdd from "../../modules/suppliers/SupplierSelectFieldsWithAdd";
 
 /** 
 * When to use the "WithAdd" variants?

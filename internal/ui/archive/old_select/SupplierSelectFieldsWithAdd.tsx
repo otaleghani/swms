@@ -1,7 +1,7 @@
 "use client" 
 
 /** React hooks */
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 /** Local components */
 import SelectFieldPattern from "../../patterns/form/select/SelectFieldPattern";
