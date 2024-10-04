@@ -3,16 +3,10 @@ import InputPattern from "./input/InputPattern";
 import PositionSelectField from "../../modules/positions/PositionSelectField";
 import PositionSelectFieldWithAdd from "../../modules/positions/PositionSelectFieldWithAdd";
 import TagsSelectFieldsWithAdd from "../../modules/tags/TagsSelectFieldsWithAdd";
-//import ClientSelectFields from "../../modules/clients/ClientSelectField";
-//import ClientSelectFieldsWithAdd from "../../modules/clients/ClientSelectFieldsWithAdd";
-//import ProductSelectFields from "../../modules/products/ProductSelectField";
 
 /** Types and interfaces */
 import { FormFieldsPropsWithDictCompleteMap } from "@/app/lib/types/form/fields";
 import TagsSelectFields from "../../modules/tags/TagsSelectField";
-import SelectFieldWithAddPattern from "./select/SelectFieldWithAddPattern";
-import { useState } from "react";
-//import SupplierSelectFieldsWithAdd from "../../modules/suppliers/SupplierSelectFieldsWithAdd";
 
 /** 
 * When to use the "WithAdd" variants?
@@ -20,213 +14,11 @@ import { useState } from "react";
 * form that would not be called in a Dialog!
 */
 
-export const ZoneFormFields = ({
-  fields,
-  errorMessages,
-  result
-}: FormFieldsPropsWithDictCompleteMap["Zone"]) => { return (
-  <>
-    <InputPattern 
-      field="name"
-      dict={fields.name.dict}
-      defaultValue={result?.name}
-      className=""
-      label={true}
-      errorMessages={errorMessages.name}
-    />
-  </>
-)}
-
-export const AisleFormFields = ({
-  fields,
-  result,
-  errorMessages
-}: FormFieldsPropsWithDictCompleteMap["Aisle"]) => { return (
-  <>
-    <InputPattern 
-      field="name"
-      dict={fields.name.dict}
-      defaultValue={result?.name}
-      className=""
-      label={true}
-      errorMessages={errorMessages.name}
-    />
-    <PositionSelectField 
-      fields={{ 
-        zone: {
-          select: fields.zone,
-          errorMessages: errorMessages.zone,
-        }
-      }}
-    />
-  </>
-)}
-
-export const RackFormFields = ({
-  fields,
-  result,
-  errorMessages
-}: FormFieldsPropsWithDictCompleteMap["Rack"]) => { return (
-  <>
-    <InputPattern 
-      field="name"
-      dict={fields.name.dict}
-      defaultValue={result?.name}
-      className=""
-      label={true}
-      errorMessages={errorMessages.name}
-    />
-    <PositionSelectField 
-      fields={{ 
-        zone: {
-          select: fields.zone,
-          errorMessages: errorMessages.zone,
-        },
-        aisle: {
-          select: fields.aisle,
-          errorMessages: errorMessages.aisle,
-        }
-      }}
-    />
-  </>
-)}
-
-export const ShelfFormFields = ({
-  fields,
-  result,
-  errorMessages
-}: FormFieldsPropsWithDictCompleteMap["Shelf"]) => { return (
-  <>
-    <InputPattern 
-      field="name"
-      dict={fields.name.dict}
-      defaultValue={result?.name}
-      className=""
-      label={true}
-      errorMessages={errorMessages.name}
-    />
-    <PositionSelectField 
-      fields={{ 
-        zone: {
-          select: fields.zone,
-          errorMessages: errorMessages.zone,
-        },
-        aisle: {
-          select: fields.aisle,
-          errorMessages: errorMessages.aisle,
-        },
-        rack: {
-          select: fields.rack,
-          errorMessages: errorMessages.rack,
-        }
-      }}
-    />
-  </>
-)}
-
-export const ZonesBulkFormFields = ({
-  fields,
-  result,
-  errorMessages
-}: FormFieldsPropsWithDictCompleteMap["ZonesBulk"]) => { return (
-  <>
-    <InputPattern 
-      field="quantityWithButtons"
-      dict={fields.quantity.dict}
-      defaultValue={String(result?.number)}
-      className=""
-      label={true}
-      errorMessages={errorMessages.number}
-    />
-  </>
-)}
-
-export const AislesBulkFormFields = ({
-  fields,
-  result,
-  errorMessages
-}: FormFieldsPropsWithDictCompleteMap["AislesBulk"]) => { return (
-  <>
-    <InputPattern 
-      field="quantityWithButtons"
-      dict={fields.quantity.dict}
-      defaultValue={String(result?.number)}
-      className=""
-      label={true}
-      errorMessages={errorMessages.number}
-    />
-    <PositionSelectField 
-      fields={{ 
-        zone: {
-          select: fields.zone,
-          errorMessages: errorMessages.zone,
-        },
-      }}
-    />
-  </>
-)}
-
-export const RacksBulkFormFields = ({
-  fields,
-  result,
-  errorMessages
-}: FormFieldsPropsWithDictCompleteMap["RacksBulk"]) => { return (
-  <>
-    <InputPattern 
-      field="quantityWithButtons"
-      dict={fields.quantity.dict}
-      defaultValue={String(result?.number)}
-      className=""
-      label={true}
-      errorMessages={errorMessages.number}
-    />
-    <PositionSelectField 
-      fields={{ 
-        zone: {
-          select: fields.zone,
-          errorMessages: errorMessages.zone,
-        },
-        aisle: {
-          select: fields.aisle,
-          errorMessages: errorMessages.aisle,
-        },
-      }}
-    />
-  </>
-)}
-
-export const ShelfsBulkFormFields = ({
-  fields,
-  result,
-  errorMessages
-}: FormFieldsPropsWithDictCompleteMap["ShelfsBulk"]) => { return (
-  <>
-    <InputPattern 
-      field="quantityWithButtons"
-      dict={fields.quantity.dict}
-      defaultValue={String(result?.number)}
-      className=""
-      label={true}
-      errorMessages={errorMessages.number}
-    />
-    <PositionSelectField 
-      fields={{ 
-        zone: {
-          select: fields.zone,
-          errorMessages: errorMessages.zone,
-        },
-        aisle: {
-          select: fields.aisle,
-          errorMessages: errorMessages.aisle,
-        },
-        rack: {
-          select: fields.rack,
-          errorMessages: errorMessages.rack,
-        },
-      }}
-    />
-  </>
-)}
+import { ZoneFormFields, ZonesBulkFormFields } from "./fields/zones";
+export {
+  ZoneFormFields,
+  ZonesBulkFormFields
+}
 
 export const ItemCompleteFormFields = ({
   fields,
@@ -238,6 +30,7 @@ export const ItemCompleteFormFields = ({
 }: FormFieldsPropsWithDictCompleteMap["ItemComplete"] & { 
   codesJSON: string;
   variantsJSON: string;
+  // This are now not needed
 }) => { return (
   <>
     <div className="mb-4 bg-white rounded p-5">
@@ -377,8 +170,14 @@ export const ItemCompleteFormFields = ({
       </div>
     </div>
 
-    <input type="hidden" name="variants" value={variantsJSON} />
-    <input type="hidden" name="variants" value={codesJSON} />
+    <input 
+      type="hidden" 
+      name="variants" 
+      value={fields.variantsJSON.data} />
+    <input 
+      type="hidden" 
+      name="codes" 
+      value={fields.codesJSON.data} />
   </>
 )}
 
@@ -554,15 +353,17 @@ export const ProductFormFields = ({
       label={true}
       errorMessages={errorMessages.description as string[]}
     />
-    <ClientSelectFieldsWithAdd
-      fields={{ 
-        client: {
-          select: fields.clientWithAdd.selectField,
-          formDialog: fields.clientWithAdd.addDialog,
-          errorMessages: errorMessages.client as string[],
-        }
-      }}
-    />
+    {
+    //<ClientSelectFieldsWithAdd
+    //  fields={{ 
+    //    client: {
+    //      select: fields.clientWithAdd.selectField,
+    //      formDialog: fields.clientWithAdd.addDialog,
+    //      errorMessages: errorMessages.client as string[],
+    //    }
+    //  }}
+    ///>
+    }
     <InputPattern 
       field="images"
       dict={fields.images.dict}
@@ -580,15 +381,17 @@ export const ProductImagesFormFields = ({
   errorMessages,
 }: FormFieldsPropsWithDictCompleteMap["ProductImage"] ) => { return (
   <>
-    <ProductSelectFields
-      fields={{
-        product: {
-          select: fields.product,
-          //formDialog: fields.categoryWithAdd.addDialog,
-          errorMessages: errorMessages.product as string[],
-        },
-      }}
-    />
+    {
+    //<ProductSelectFields
+    //  fields={{
+    //    product: {
+    //      select: fields.product,
+    //      //formDialog: fields.categoryWithAdd.addDialog,
+    //      errorMessages: errorMessages.product as string[],
+    //    },
+    //  }}
+    ///>
+    }
     <InputPattern 
       field="images"
       dict={fields.images.dict}
@@ -683,14 +486,16 @@ export const SupplierCodeFormFields = ({
       errorMessages={errorMessages.code as string[]}
     />
 
-    <SelectFieldWithAddPattern<"Supplier"> 
-      addDialog={}
-      selectField={}
-      element={}
-      setElement={}
-      errorMessages={}
-    />
+
     {
+  //  <SelectFieldWithAddPattern<"Supplier"> 
+  //    addDialog={}
+  //    selectField={}
+  //    element={}
+  //    setElement={}
+  //    errorMessages={}
+  //  />
+  //
     //<SupplierSelectFieldsWithAdd 
     //  fields={{ 
     //    supplier: {

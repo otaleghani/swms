@@ -1,59 +1,74 @@
-import { 
+import {
   DictCheckboxField,
-  DictFormButton, 
-  DictInputField, 
-  DictSelectField 
+  DictFormButton,
+  DictInputField,
+  DictSelectField,
 } from "../dictionary/form";
 import { FormMap } from "./form";
 import { DialogFormPatternProps } from "@/app/ui/patterns/dialog/DialogFormPattern";
 
-/** Defines props for an input field */
+/** Defines the props for an input field */
 interface InputFieldProps {
   dict: DictInputField;
 }
 
-/** Defines props for checkboxes */
+/** Defines the props for a JSON field */
+interface JSONHiddenFieldProps {
+  data: string;
+}
+
+/** Defines the props for checkboxes */
 interface CheckboxFieldProps {
   dict: DictCheckboxField;
 }
 
 /** Defines props for select inputs */
-export type SelectableItem = keyof Omit<FormMap, 
-  "ItemImage" |
-  "ZonesBulk" |
-  "AislesBulk" |
-  "RacksBulk" |
-  "ShelfsBulk" |
-  "ProductImage" |
-  "SupplierCode" |
-  "ItemComplete" |
-  "ItemCompleteFormFieldsProps" |
-  "Transaction" |
-  "ProductWithImages"
+export type SelectableItem = keyof Omit<
+  FormMap,
+  | "ItemImage"
+  | "ZonesBulk"
+  | "AislesBulk"
+  | "RacksBulk"
+  | "ShelfsBulk"
+  | "ProductImage"
+  | "SupplierCode"
+  | "ItemComplete"
+  | "ItemCompleteFormFieldsProps"
+  | "Transaction"
+  | "ProductWithImages"
 >;
 
+/**
+ * Usually used by the component that is rendering
+ * <SelectFieldPattern />. The idea is that the parent component would
+ * be the one taking care of the state of the select field.
+ */
 export interface SelectFieldProps<T extends SelectableItem> {
   name: T;
   list: FormMap[T][];
   dict: DictSelectField;
 }
-export type SelectFieldPatternProps<T extends SelectableItem> = SelectFieldProps<T> & {
-  element: FormMap[T]; // This would be used as a default value
-  setElement: React.Dispatch<React.SetStateAction<FormMap[T]>>;
-};
+
+/**
+ * Props used by <SelectFieldPattern />
+ */
+export type SelectFieldPatternProps<T extends SelectableItem> =
+  SelectFieldProps<T> & {
+    element: FormMap[T]; // This would be used as a default value
+    setElement: React.Dispatch<React.SetStateAction<FormMap[T]>>;
+  };
 
 /** Defines the props for an select field */
 export interface SelectFieldPropsWithAdd<T extends SelectableItem> {
-  addDialog: DialogFormPatternProps<T>,
+  addDialog: DialogFormPatternProps<T>;
   selectField: SelectFieldProps<T>;
-};
+}
 
-export type SelectFieldPatternWithAddProps<T extends SelectableItem> = 
+export type SelectFieldPatternWithAddProps<T extends SelectableItem> =
   SelectFieldPropsWithAdd<T> & {
-  element: FormMap[T]; // This would be used as a default value
-  setElement: React.Dispatch<React.SetStateAction<FormMap[T]>>;
-};
-
+    element: FormMap[T]; // This would be used as a default value
+    setElement: React.Dispatch<React.SetStateAction<FormMap[T]>>;
+  };
 
 /** Maps every field */
 export type FieldsPropsMap = {
@@ -115,15 +130,18 @@ export type FieldsPropsMap = {
 
   openDate: DictInputField;
   closeDate: DictInputField;
-}
+
+  variantsJSON: JSONHiddenFieldProps;
+  codesJSON: JSONHiddenFieldProps;
+};
 
 /** Creates a const with default fields that I can pass
-*   to the different FormPattern so that I always have 
-*   a default null on every field except the ones that
-*   I want. */
+ *   to the different FormPattern so that I always have
+ *   a default null on every field except the ones that
+ *   I want. */
 type FieldsPropsNullMap = {
   [K in keyof FieldsPropsMap]: null;
-}
+};
 export const fieldsDefaultProps: FieldsPropsNullMap = {
   name: null,
   surname: null,
@@ -166,52 +184,67 @@ export const fieldsDefaultProps: FieldsPropsNullMap = {
   closeDate: null,
   supplier: null,
   supplierWithAdd: null,
-}
+  codesJSON: null,
+  variantsJSON: null,
+};
 
 /** Defines the fields for each type. */
+// prettier-ignore
 export type ZoneFormFieldsProps = {
-  [K in keyof FieldsPropsMap]:
+  [K in keyof FieldsPropsMap]: 
     K extends "name" ? FieldsPropsMap[K] :
     K extends "button" ? FieldsPropsMap[K] :
     null;
-}
+};
+
+// prettier-ignore
 export type AisleFormFieldsProps = {
-  [K in keyof FieldsPropsMap]:
+  [K in keyof FieldsPropsMap]: 
     K extends "name" ? FieldsPropsMap[K] :
     K extends "zone" ? FieldsPropsMap[K] :
     K extends "button" ? FieldsPropsMap[K] :
     null;
-}
+};
+
+// prettier-ignore
 export type RackFormFieldsProps = {
-  [K in keyof FieldsPropsMap]:
+  [K in keyof FieldsPropsMap]: 
     K extends "name" ? FieldsPropsMap[K] :
     K extends "zone" ? FieldsPropsMap[K] :
     K extends "aisle" ? FieldsPropsMap[K] :
     K extends "button" ? FieldsPropsMap[K] :
     null;
-}
+};
+
+// prettier-ignore
 export type ShelfFormFieldsProps = {
-  [K in keyof FieldsPropsMap]:
+  [K in keyof FieldsPropsMap]: 
     K extends "name" ? FieldsPropsMap[K] :
     K extends "zone" ? FieldsPropsMap[K] :
     K extends "aisle" ? FieldsPropsMap[K] :
     K extends "rack" ? FieldsPropsMap[K] :
     K extends "button" ? FieldsPropsMap[K] :
     null;
-}
+};
+
+// prettier-ignore
 export type ZonesBulkFormFieldsProps = {
   [K in keyof FieldsPropsMap]: 
     K extends "quantity" ? FieldsPropsMap[K] :
     K extends "button" ? FieldsPropsMap[K] :
     null;
-}
+};
+
+// prettier-ignore
 export type AislesBulkFormFieldsProps = {
   [K in keyof FieldsPropsMap]: 
     K extends "quantity" ? FieldsPropsMap[K] :
     K extends "zone" ? FieldsPropsMap[K] :
     K extends "button" ? FieldsPropsMap[K] :
     null;
-}
+};
+
+// prettier-ignore
 export type RacksBulkFormFieldsProps = {
   [K in keyof FieldsPropsMap]: 
     K extends "quantity" ? FieldsPropsMap[K] :
@@ -219,7 +252,9 @@ export type RacksBulkFormFieldsProps = {
     K extends "aisle" ? FieldsPropsMap[K] :
     K extends "button" ? FieldsPropsMap[K] :
     null;
-}
+};
+
+// prettier-ignore
 export type ShelfsBulkFormFieldsProps = {
   [K in keyof FieldsPropsMap]: 
     K extends "quantity" ? FieldsPropsMap[K] :
@@ -228,8 +263,9 @@ export type ShelfsBulkFormFieldsProps = {
     K extends "rack" ? FieldsPropsMap[K] :
     K extends "button" ? FieldsPropsMap[K] :
     null;
-}
+};
 
+// prettier-ignore
 export type ItemFormFieldsProps = {
   [K in keyof FieldsPropsMap]: 
     K extends "name" ? FieldsPropsMap[K] :
@@ -241,21 +277,11 @@ export type ItemFormFieldsProps = {
     K extends "shelfWithAdd" ? FieldsPropsMap[K] :
     K extends "categoryWithAdd" ? FieldsPropsMap[K] :
     K extends "subcategoryWithAdd" ? FieldsPropsMap[K] :
-
-    // K extends "identifier" ? FieldsPropsMap[K] :
-    // K extends "quantity" ? FieldsPropsMap[K] :
-    // K extends "length" ? FieldsPropsMap[K] :
-    // K extends "width" ? FieldsPropsMap[K] :
-    // K extends "heigth" ? FieldsPropsMap[K] :
-    // K extends "weight" ? FieldsPropsMap[K] :
-    // Used for the default variant
-
-    // How do we handle JSON of Variants?
-    // How do we handle fields for ItemImages?
     K extends "button" ? FieldsPropsMap[K] :
     null;
-}
+};
 
+// prettier-ignore
 export type ItemCompleteFormFieldsProps = {
   [K in keyof FieldsPropsMap]: 
     K extends "name" ? FieldsPropsMap[K] :
@@ -267,7 +293,6 @@ export type ItemCompleteFormFieldsProps = {
     K extends "shelfWithAdd" ? FieldsPropsMap[K] :
     K extends "categoryWithAdd" ? FieldsPropsMap[K] :
     K extends "subcategoryWithAdd" ? FieldsPropsMap[K] :
-
     K extends "images" ? FieldsPropsMap[K] :
     K extends "identifier" ? FieldsPropsMap[K] :
     K extends "quantity" ? FieldsPropsMap[K] :
@@ -275,103 +300,119 @@ export type ItemCompleteFormFieldsProps = {
     K extends "width" ? FieldsPropsMap[K] :
     K extends "heigth" ? FieldsPropsMap[K] :
     K extends "weight" ? FieldsPropsMap[K] :
-    // Used for the default variant
-
-    // How do we handle JSON of Variants?
-    // How do we handle fields for ItemImages?
+    K extends "variantsJSON" ? FieldsPropsMap[K] :
+    K extends "codesJSON" ? FieldsPropsMap[K] :
     K extends "button" ? FieldsPropsMap[K] :
     null;
-}
+};
 
+// prettier-ignore
 export type VariantFormFieldsProps = {
   [K in keyof FieldsPropsMap]: 
     K extends "name" ? FieldsPropsMap[K] :
     K extends "description" ? FieldsPropsMap[K] :
     K extends "identifier" ? FieldsPropsMap[K] :
-
     K extends "quantity" ? FieldsPropsMap[K] :
     K extends "length" ? FieldsPropsMap[K] :
     K extends "width" ? FieldsPropsMap[K] :
     K extends "heigth" ? FieldsPropsMap[K] :
-    K extends "weight" ? FieldsPropsMap[K] :
-    
-    // How do we handle JSON of SupplierCode?
+    K extends "weight" ? FieldsPropsMap[K] : // How do we handle JSON of SupplierCode?
     K extends "button" ? FieldsPropsMap[K] :
     null;
-}
+};
+
+// prettier-ignore
 export type CategoryFormFieldsProps = {
-  [K in keyof FieldsPropsMap]:
+  [K in keyof FieldsPropsMap]: 
     K extends "name" ? FieldsPropsMap[K] :
     K extends "description" ? FieldsPropsMap[K] :
     K extends "button" ? FieldsPropsMap[K] :
     null;
-}
+};
+
+// prettier-ignore
 export type SubcategoryFormFieldsProps = {
-  [K in keyof FieldsPropsMap]:
+  [K in keyof FieldsPropsMap]: 
     K extends "name" ? FieldsPropsMap[K] :
     K extends "description" ? FieldsPropsMap[K] :
     K extends "category" ? FieldsPropsMap[K] :
     K extends "button" ? FieldsPropsMap[K] :
     null;
-}
+};
+
+// prettier-ignore
 export type ClientFormFieldsProps = {
-  [K in keyof FieldsPropsMap]:
+  [K in keyof FieldsPropsMap]: 
     K extends "name" ? FieldsPropsMap[K] :
     K extends "surname" ? FieldsPropsMap[K] :
     K extends "isBusiness" ? FieldsPropsMap[K] :
     K extends "button" ? FieldsPropsMap[K] :
     null;
-}
+};
+
+// prettier-ignore
 export type ItemImageFormFieldsProps = {
   // This could be used to add new images in item/[slug]
-  [K in keyof FieldsPropsMap]:
+  [K in keyof FieldsPropsMap]: 
     K extends "images" ? FieldsPropsMap[K] :
     K extends "button" ? FieldsPropsMap[K] :
     null;
-}
+};
+
+// prettier-ignore
 export type ProductImageFormFieldsProps = {
-  [K in keyof FieldsPropsMap]:
+  [K in keyof FieldsPropsMap]: 
     K extends "images" ? FieldsPropsMap[K] :
     K extends "product" ? FieldsPropsMap[K] :
     K extends "button" ? FieldsPropsMap[K] :
     null;
-}
+};
+
+// prettier-ignore
 export type ProductFormFieldsProps = {
-  [K in keyof FieldsPropsMap]:
+  [K in keyof FieldsPropsMap]: 
     K extends "name" ? FieldsPropsMap[K] :
     K extends "description" ? FieldsPropsMap[K] :
     K extends "clientWithAdd" ? FieldsPropsMap[K] :
     K extends "images" ? FieldsPropsMap[K] :
     K extends "button" ? FieldsPropsMap[K] :
     null;
-}
+};
+
+// prettier-ignore
 export type ProductWithImagesFormFieldsProps = {
-  [K in keyof FieldsPropsMap]:
+  [K in keyof FieldsPropsMap]: 
     K extends "name" ? FieldsPropsMap[K] :
     K extends "description" ? FieldsPropsMap[K] :
     K extends "clientWithAdd" ? FieldsPropsMap[K] :
     K extends "images" ? FieldsPropsMap[K] :
     K extends "button" ? FieldsPropsMap[K] :
     null;
-}
+};
+
+// prettier-ignore
 export type SupplierFormFieldsProps = {
-  [K in keyof FieldsPropsMap]:
+  [K in keyof FieldsPropsMap]: 
     K extends "name" ? FieldsPropsMap[K] :
     K extends "description" ? FieldsPropsMap[K] :
     K extends "button" ? FieldsPropsMap[K] :
     null;
-}
+};
+
+// prettier-ignore
 export type SupplierCodeFormFieldsProps = {
-  [K in keyof FieldsPropsMap]:
+  [K in keyof FieldsPropsMap]: 
     K extends "code" ? FieldsPropsMap[K] :
     K extends "supplierWithAdd" ? FieldsPropsMap[K] :
     K extends "item" ? FieldsPropsMap[K] :
     K extends "variant" ? FieldsPropsMap[K] :
     K extends "button" ? FieldsPropsMap[K] :
     null;
-}
+};
+
+// prettier-ignore
 export type TicketFormFieldsProps = {
-  [K in keyof FieldsPropsMap]:
+  [K in keyof FieldsPropsMap]: 
     K extends "name" ? FieldsPropsMap[K] :
     K extends "description" ? FieldsPropsMap[K] :
     K extends "open" ? FieldsPropsMap[K] :
@@ -382,24 +423,29 @@ export type TicketFormFieldsProps = {
     K extends "state" ? FieldsPropsMap[K] :
     K extends "button" ? FieldsPropsMap[K] :
     null;
-}
+};
+
+// prettier-ignore
 export type TransactionFormFieldsProps = {
   // Remember that the transaction type will be unchangeable
-  [K in keyof FieldsPropsMap]:
+  [K in keyof FieldsPropsMap]: 
     K extends "quantity" ? FieldsPropsMap[K] :
     K extends "ticket" ? FieldsPropsMap[K] :
     K extends "button" ? FieldsPropsMap[K] :
     null;
-}
+};
+
+// prettier-ignore
 export type UserFormFieldsProps = {
-  [K in keyof FieldsPropsMap]:
+  [K in keyof FieldsPropsMap]: 
     K extends "name" ? FieldsPropsMap[K] :
     K extends "surname" ? FieldsPropsMap[K] :
     K extends "email" ? FieldsPropsMap[K] :
     K extends "button" ? FieldsPropsMap[K] :
     null;
-}
+};
 
+// prettier-ignore
 /** Maps every fields for each type */
 type FormFieldsPropsMap = {
   [K in keyof FormMap]: 
@@ -409,8 +455,8 @@ type FormFieldsPropsMap = {
     K extends "Shelf" ? ShelfFormFieldsProps :
     K extends "ZonesBulk" ? ZonesBulkFormFieldsProps :
     K extends "AislesBulk" ? AislesBulkFormFieldsProps :
-    K extends "RacksBulk" ? RacksBulkFormFieldsProps:
-    K extends "ShelfsBulk" ? ShelfsBulkFormFieldsProps:
+    K extends "RacksBulk" ? RacksBulkFormFieldsProps :
+    K extends "ShelfsBulk" ? ShelfsBulkFormFieldsProps :
     K extends "Item" ? ItemFormFieldsProps :
     K extends "ItemComplete" ? ItemCompleteFormFieldsProps :
     K extends "Variant" ? VariantFormFieldsProps :
@@ -426,8 +472,8 @@ type FormFieldsPropsMap = {
     K extends "Ticket" ? TicketFormFieldsProps :
     K extends "Transaction" ? TransactionFormFieldsProps :
     K extends "User" ? UserFormFieldsProps :
-    never;
-}
+    null;
+};
 
 interface DictItemsForm {
   sections: {
@@ -436,7 +482,7 @@ interface DictItemsForm {
     position: string;
     images: string;
     variants: string;
-  }
+  };
 }
 
 interface DictVariantsForm {
@@ -444,29 +490,30 @@ interface DictVariantsForm {
     basics: string;
     codes: string;
     dimensions: string;
-  }
+  };
 }
 
+// prettier-ignore
 type DictFormMap = {
   [K in keyof FormMap]: 
     K extends "Item" ? DictItemsForm :
-    K extends "ItemComplete" ? DictItemsForm :
+    K extends "ItemComplete"? DictItemsForm :
     K extends "Variant" ? DictVariantsForm :
     never;
-}
+};
 
 export type FormFieldsPropsWithDictMap = {
   [K in keyof FormMap]: {
     dict?: DictFormMap[K];
     fields: FormFieldsPropsMap[K];
-  }
-}
+  };
+};
 
 export type FormFieldsPropsWithDictCompleteMap = {
   [K in keyof FormMap]: FormFieldsPropsWithDictMap[K] & {
     result?: FormMap[K];
     errorMessages: {
       [T in keyof FormMap[K]]: string[];
-    }
-  }
-}
+    };
+  };
+};
