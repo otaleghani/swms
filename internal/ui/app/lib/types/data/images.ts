@@ -20,9 +20,8 @@ export const defaultItemImagesFormState: ItemImagesFormState = {
   error: false,
   message: "",
   errorMessages: {
-    id: [],
-    uri: [],
-    item: [],
-    variant: [],
+    images: [],
+    //item: [],
+    //variant: [],
   }
 }

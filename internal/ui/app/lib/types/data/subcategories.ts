@@ -13,8 +13,8 @@ export const defaultSubcategoryFormState: SubcategoryFormState = {
   error: false,
   message: "",
   errorMessages: {
-    id: [],
     name: [],
+    description: [],
     category: [],
   }
 }

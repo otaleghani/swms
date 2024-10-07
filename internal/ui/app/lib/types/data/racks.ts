@@ -26,7 +26,6 @@ export const defaultRackFormState: RackFormState = {
   error: false,
   message: "",
   errorMessages: {
-    id: [],
     name: [],
     zone: [],
     aisle: [],
@@ -38,7 +37,7 @@ export const defaultRacksBulkFormState: RacksBulkFormState = {
   error: false,
   message: "",
   errorMessages: {
-    number: [],
+    quantity: [],
     zone: [],
     aisle: [],
   }

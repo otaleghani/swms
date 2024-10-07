@@ -447,7 +447,7 @@ export type UserFormFieldsProps = {
 
 // prettier-ignore
 /** Maps every fields for each type */
-type FormFieldsPropsMap = {
+export type FormFieldsPropsMap = {
   [K in keyof FormMap]: 
     K extends "Zone" ? ZoneFormFieldsProps :
     K extends "Aisle" ? AisleFormFieldsProps :
@@ -509,11 +509,17 @@ export type FormFieldsPropsWithDictMap = {
   };
 };
 
+//type FormFieldsPropsMap = {
 export type FormFieldsPropsWithDictCompleteMap = {
   [K in keyof FormMap]: FormFieldsPropsWithDictMap[K] & {
     result?: FormMap[K];
     errorMessages: {
-      [T in keyof FormMap[K]]: string[];
+      //[T in keyof FormMap[K]]: string[];
+      [T in keyof FormFieldsPropsMap[K] as 
+        FormFieldsPropsMap[K][T] extends null ? never : 
+          T extends "button" ? never :
+          T 
+        ]: string[];
     };
   };
 };

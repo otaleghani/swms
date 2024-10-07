@@ -14,7 +14,6 @@ export const defaultClientFormState: ClientFormState = {
   error: false,
   message: "",
   errorMessages: {
-    id: [],
     name: [],
     surname: [],
     isBusiness: [],

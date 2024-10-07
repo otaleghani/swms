@@ -1,7 +1,5 @@
 import { FormState } from "../form/form";
-import { Variant, Variants } from "./variants";
-import { SupplierCodes } from "./supplierCodes";
-import { ItemImage } from "./images";
+import { Variant } from "./variants";
 
 export type Item = {
   id?: string;
@@ -35,16 +33,15 @@ export const defaultItemFormState: ItemFormState = {
   error: false,
   message: "",
   errorMessages: {
-    id: [],
     name: [],
     description: [],
     isArchived: [],
-    zone: [],
-    aisle: [],
-    rack: [],
-    shelf: [],
-    category: [],
-    subcategory: [],
+    zoneWithAdd: [],
+    aisleWithAdd: [],
+    rackWithAdd: [],
+    shelfWithAdd: [],
+    categoryWithAdd: [],
+    subcategoryWithAdd: [],
   }
 }
 

@@ -34,7 +34,6 @@ export const defaultVariantFormState: VariantFormState = {
   error: false,
   message: "",
   errorMessages: {
-    id: [],
     name: [],
     description: [],
     quantity: [],
@@ -43,7 +42,8 @@ export const defaultVariantFormState: VariantFormState = {
     width: [],
     heigth: [],
     weight: [],
-    isDefaultVariant: [],
-    item: [],
+
+    //item: [],
+    //isDefaultVariant: [],
   }
 }

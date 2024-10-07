@@ -13,7 +13,6 @@ export const defaultUserFormState: UserFormState = {
   error: false,
   message: "",
   errorMessages: {
-    id: [],
     name: [],
     surname: [],
     email: [],

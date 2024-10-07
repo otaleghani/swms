@@ -46,7 +46,7 @@ export default function InputPattern({
   let inputId = "";
   useEffect(() => {
     inputId = `${Math.random().toString(36).substring(2, 9)}`;
-  }, [])
+  }, []);
 
   const InputPatternField = () => {
     switch (field) {

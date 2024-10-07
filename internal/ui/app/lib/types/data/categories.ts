@@ -12,7 +12,6 @@ export const defaultCategoryFormState: CategoryFormState = {
   error: false,
   message: "",
   errorMessages: {
-    id: [],
     name: [],
     description: [],
   }

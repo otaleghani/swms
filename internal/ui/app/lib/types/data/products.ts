@@ -13,10 +13,10 @@ export const defaultProductFormState: ProductFormState = {
   error: false,
   message: "",
   errorMessages: {
-    id: [],
     name: [],
     description: [],
-    client: [],
+    clientWithAdd: [],
+    images: [],
   }
 }
 

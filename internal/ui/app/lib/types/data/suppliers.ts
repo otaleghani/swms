@@ -17,7 +17,6 @@ export const defaultSupplierFormState: SupplierFormState = {
   error: false,
   message: "",
   errorMessages: {
-    id: [],
     name: [],
     description: [],
   }

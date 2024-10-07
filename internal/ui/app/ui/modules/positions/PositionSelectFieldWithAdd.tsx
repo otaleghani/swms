@@ -22,21 +22,25 @@ interface PositionSelectFieldWithAddProps {
   fields: {
     zone?: {
       errorMessages: string[];
+      defaultValue?: Zone;
       select: SelectFieldProps<"Zone">;
       formDialog: DialogFormPatternProps<"Zone">;
     };
     aisle?: {
       errorMessages: string[];
+      defaultValue?: Aisle;
       select: SelectFieldProps<"Aisle">;
       formDialog: DialogFormPatternProps<"Aisle">;
     }
     rack?: {
       errorMessages: string[];
+      defaultValue?: Rack;
       select: SelectFieldProps<"Rack">;
       formDialog: DialogFormPatternProps<"Rack">;
     };
     shelf?: {
       errorMessages: string[];
+      defaultValue?: Shelf;
       select: SelectFieldProps<"Shelf">;
       formDialog: DialogFormPatternProps<"Shelf">;
     };
@@ -46,10 +50,26 @@ interface PositionSelectFieldWithAddProps {
 export default function PositionSelectFieldWithAdd({
   fields,
 }: PositionSelectFieldWithAddProps) {
-  const [selectedZone, setSelectedZone] = useState(emptyZone);
-  const [selectedAisle, setSelectedAisle] = useState(emptyAisle);
-  const [selectedRack, setSelectedRack] = useState(emptyRack);
-  const [selectedShelf, setSelectedShelf] = useState(emptyShelf);
+  const [selectedZone, setSelectedZone] = useState(
+    fields.zone?.defaultValue ?
+      fields.zone.defaultValue :
+      emptyZone
+  );
+  const [selectedAisle, setSelectedAisle] = useState(
+    fields.aisle?.defaultValue ?
+      fields.aisle.defaultValue :
+      emptyAisle
+  );
+  const [selectedRack, setSelectedRack] = useState(
+    fields.rack?.defaultValue ?
+      fields.rack.defaultValue :
+      emptyRack
+  );
+  const [selectedShelf, setSelectedShelf] = useState(
+    fields.shelf?.defaultValue ?
+      fields.shelf.defaultValue :
+      emptyShelf
+  );
 
   const [listZone, setListZone] = useState(fields.zone?.select.list);
   const [listAisles, setListAisles] = useState(fields.aisle?.select.list);

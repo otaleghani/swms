@@ -6,20 +6,23 @@ import { useState, useEffect } from "react";
 /** Local components */
 import SelectFieldPattern from "../../patterns/form/select/SelectFieldPattern";
 
-import { emptyCategory } from "@/app/lib/types/data/categories";
+import { Category, emptyCategory } from "@/app/lib/types/data/categories";
 import { emptySubcategory } from "@/app/lib/types/data/subcategories";
 import { SelectFieldProps } from "@/app/lib/types/form/fields";
 
 import { filterList } from "../../patterns/form/select/action";
+import { Subcategory } from "@/app/lib/types/data/subcategories";
 
 export interface TagsSelectFieldsProps {
   fields: {
     category?: {
       errorMessages: string[];
+      defaultValue?: Category;
       select: SelectFieldProps<"Category">;
     },
     subcategory?: {
       errorMessages: string[];
+      defaultValue?: Subcategory;
       select: SelectFieldProps<"Subcategory">;
     },
   }
@@ -28,8 +31,16 @@ export interface TagsSelectFieldsProps {
 export default function TagsSelectFields({
   fields
 }: TagsSelectFieldsProps) {
-  const [selectedCategory, setSelectedCategory] = useState(emptyCategory);
-  const [selectedSubcategory, setSelectedSubcategory] = useState(emptySubcategory);
+  const [selectedCategory, setSelectedCategory] = useState(
+    fields.category?.defaultValue ? 
+      fields.category.defaultValue :
+      emptyCategory
+  );
+  const [selectedSubcategory, setSelectedSubcategory] = useState(
+    fields.subcategory?.defaultValue ? 
+      fields.subcategory.defaultValue :
+    emptySubcategory
+  );
 
   const [listCategory, setListCategory] = useState(fields.category?.select.list);
   const [listSubcategory, setListSubcategory] = useState(fields.subcategory?.select.list);

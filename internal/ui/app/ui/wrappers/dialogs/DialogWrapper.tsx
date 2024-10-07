@@ -2,21 +2,17 @@
 
 /** Third-party imports */
 import { useMediaQuery } from "usehooks-ts";
-import { useEffect } from "react"
-
 
 /** Local components */
 import {
   Dialog,
   DialogContent,
-  DialogTrigger,
 } from "@/app/ui/components/dialog"
 import {
   Drawer,
   DrawerClose,
   DrawerContent,
   DrawerFooter,
-  DrawerTrigger,
 } from "@/app/ui/components/drawer"
 import { Button } from "@/app/ui/components/button";
 
@@ -55,7 +51,7 @@ export default function DialogWrapper({
     <Drawer open={open} onOpenChange={setOpen}>
         <Trigger />
       <DrawerContent>
-
+        <Body />
         <DrawerFooter className="pt-2">
           <DrawerClose asChild>
             <Button variant="outline">

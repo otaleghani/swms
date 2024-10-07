@@ -27,7 +27,6 @@ export const defaultShelfFormState: ShelfFormState = {
   error: false,
   message: "",
   errorMessages: {
-    id: [],
     name: [],
     zone: [],
     aisle: [],
@@ -40,7 +39,7 @@ export const defaultShelfsBulkFormState: ShelfsBulkFormState = {
   error: false,
   message: "",
   errorMessages: {
-    number: [],
+    quantity: [],
     zone: [],
     aisle: [],
     rack: [],

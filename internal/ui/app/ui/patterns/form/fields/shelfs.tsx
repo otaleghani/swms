@@ -9,7 +9,16 @@ export const ShelfFormFields = ({
   fields,
   result,
   errorMessages
-}: FormFieldsPropsWithDictCompleteMap["Shelf"]) => { return (
+}: FormFieldsPropsWithDictCompleteMap["Shelf"]) => {
+
+  let defaultZone = result?.zone ? 
+    fields.zone.list.find(i => i.id === result.zone) : undefined;
+  let defaultAisle = result?.aisle ? 
+    fields.aisle.list.find(i => i.id === result.aisle) : undefined;
+  let defaultRack = result?.rack ? 
+    fields.rack.list.find(i => i.id === result.rack) : undefined;
+
+  return (
   <>
     <InputPattern 
       field="name"
@@ -23,14 +32,17 @@ export const ShelfFormFields = ({
       fields={{ 
         zone: {
           select: fields.zone,
+          defaultValue: defaultZone,
           errorMessages: errorMessages.zone,
         },
         aisle: {
           select: fields.aisle,
+          defaultValue: defaultAisle,
           errorMessages: errorMessages.aisle,
         },
         rack: {
           select: fields.rack,
+          defaultValue: defaultRack,
           errorMessages: errorMessages.rack,
         }
       }}

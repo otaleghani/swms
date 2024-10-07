@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
-import { FormFieldsPropsWithDictMap } from "./fields";
+import { FormFieldsPropsMap, FormFieldsPropsWithDictMap } from "./fields";
 
 import { Zone, ZonesBulkPostRequestBody } from "../data/zones";
 import { Aisle, AislesBulkPostRequestBody } from "../data/aisles";
@@ -51,12 +51,16 @@ export interface FormMap {
   User: User;
 }
 
-export interface FormState<T extends keyof FormMap> {
+export interface FormState<X extends keyof FormMap> {
   error: boolean;
   message: string
-  result?: FormMap[T];
+  result?: FormMap[X];
   errorMessages: {
-    [K in keyof FormMap[T]]: string[];
+    [T in keyof FormFieldsPropsMap[X] as 
+      FormFieldsPropsMap[X][T] extends null ? never : 
+        T extends "button" ? never :
+        T 
+      ]: string[];
   }
 }
 

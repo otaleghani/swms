@@ -9,7 +9,14 @@ export const RackFormFields = ({
   fields,
   result,
   errorMessages
-}: FormFieldsPropsWithDictCompleteMap["Rack"]) => { return (
+}: FormFieldsPropsWithDictCompleteMap["Rack"]) => { 
+
+  let defaultZone = result?.zone ? 
+    fields.zone.list.find(i => i.id === result.zone) : undefined;
+  let defaultAisle = result?.aisle ? 
+    fields.aisle.list.find(i => i.id === result.aisle) : undefined;
+
+  return (
   <>
     <InputPattern 
       field="name"
@@ -23,10 +30,12 @@ export const RackFormFields = ({
       fields={{ 
         zone: {
           select: fields.zone,
+          defaultValue: defaultZone,
           errorMessages: errorMessages.zone,
         },
         aisle: {
           select: fields.aisle,
+          defaultValue: defaultAisle,
           errorMessages: errorMessages.aisle,
         }
       }}

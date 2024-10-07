@@ -4,11 +4,11 @@ import InputPattern from "../input/InputPattern";
 /** Types and interfaces */
 import { FormFieldsPropsWithDictCompleteMap } from "@/app/lib/types/form/fields";
 
-export const ZoneFormFields = ({
+export const CategoryFormFields = ({
   fields,
+  result,
   errorMessages,
-  result
-}: FormFieldsPropsWithDictCompleteMap["Zone"]) => { return (
+}: FormFieldsPropsWithDictCompleteMap["Category"] ) => { return (
   <>
     <InputPattern 
       field="name"
@@ -18,22 +18,13 @@ export const ZoneFormFields = ({
       label={true}
       errorMessages={errorMessages.name}
     />
-  </>
-)}
-
-export const ZonesBulkFormFields = ({
-  fields,
-  result,
-  errorMessages
-}: FormFieldsPropsWithDictCompleteMap["ZonesBulk"]) => { return (
-  <>
     <InputPattern 
-      field="quantityWithButtons"
-      dict={fields.quantity.dict}
-      defaultValue={String(result?.number)}
+      field="description"
+      dict={fields.description.dict}
+      defaultValue={result?.description}
       className=""
       label={true}
-      errorMessages={errorMessages.quantity}
+      errorMessages={errorMessages.description as string[]}
     />
   </>
 )}

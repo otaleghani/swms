@@ -7,10 +7,10 @@ import { useState, useEffect } from "react";
 import SelectFieldPattern from "../../patterns/form/select/SelectFieldPattern";
 
 /** Types and itnerfaces */
-import { emptyZone } from "@/app/lib/types/data/zones";
-import { emptyAisle } from "@/app/lib/types/data/aisles";
-import { emptyRack } from "@/app/lib/types/data/racks";
-import { emptyShelf } from "@/app/lib/types/data/shelfs";
+import { emptyZone, Zone } from "@/app/lib/types/data/zones";
+import { Aisle, emptyAisle } from "@/app/lib/types/data/aisles";
+import { emptyRack, Rack } from "@/app/lib/types/data/racks";
+import { emptyShelf, Shelf } from "@/app/lib/types/data/shelfs";
 import { filterList } from "../../patterns/form/select/action";
 import { SelectFieldProps } from "@/app/lib/types/form/fields";
 
@@ -18,18 +18,22 @@ interface PositionSelectFieldProps {
   fields: {
     zone?: {
       errorMessages: string[];
+      defaultValue?: Zone,
       select: SelectFieldProps<"Zone">;
     },
     aisle?: {
       errorMessages: string[];
+      defaultValue?: Aisle;
       select: SelectFieldProps<"Aisle">;
     }
     rack?: {
       errorMessages: string[];
+      defaultValue?: Rack;
       select: SelectFieldProps<"Rack">;
     }
     shelf?: {
       errorMessages: string[];
+      defaultValue?: Shelf;
       select: SelectFieldProps<"Shelf">;
     }
   }
@@ -38,10 +42,26 @@ interface PositionSelectFieldProps {
 export default function PositionSelectField({
   fields,
 }: PositionSelectFieldProps) {
-  const [selectedZone, setSelectedZone] = useState(emptyZone);
-  const [selectedAisle, setSelectedAisle] = useState(emptyAisle);
-  const [selectedRack, setSelectedRack] = useState(emptyRack);
-  const [selectedShelf, setSelectedShelf] = useState(emptyShelf);
+  const [selectedZone, setSelectedZone] = useState(
+    fields.zone?.defaultValue ?
+      fields.zone.defaultValue :
+      emptyZone
+  );
+  const [selectedAisle, setSelectedAisle] = useState(
+    fields.aisle?.defaultValue ?
+      fields.aisle.defaultValue :
+      emptyAisle
+  );
+  const [selectedRack, setSelectedRack] = useState(
+    fields.rack?.defaultValue ?
+      fields.rack.defaultValue :
+      emptyRack
+  );
+  const [selectedShelf, setSelectedShelf] = useState(
+    fields.shelf?.defaultValue ?
+      fields.shelf.defaultValue :
+      emptyShelf
+  );
 
   const [listZones, setListZones] = useState(fields.zone?.select.list);
   const [listAisles, setListAisles] = useState(fields.aisle?.select.list);

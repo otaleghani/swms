@@ -59,8 +59,8 @@ export interface DictFormFields {
 
   isBusiness:     DictCheckboxField;
 
-  openDate:       DictInputField;
-  closeDate:      DictInputField;
+  openDate:       DictDatePickerField;
+  closeDate:      DictDatePickerField;
 }
 
 export interface DictInputField {
@@ -73,6 +73,16 @@ export interface DictInputField {
     type:       string;
     valid:      string;
   };
+}
+
+export interface DictDatePickerField {
+  label:        string;
+  placeholder:  string; // Pick a date!
+  validation: {
+    empty:      string;
+    type:       string;
+    valid:      string;
+  }
 }
 
 export interface DictCheckboxField {

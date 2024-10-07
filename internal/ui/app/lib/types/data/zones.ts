@@ -22,7 +22,6 @@ export const defaultZoneFormState: ZoneFormState = {
   error: false,
   message: "",
   errorMessages: {
-    id: [],
     name: [],
   }
 }
@@ -32,7 +31,7 @@ export const defaultZonesBulkFormState: ZonesBulkFormState = {
   error: false,
   message: "",
   errorMessages: {
-    number: [],
+    quantity: [],
   }
 }
 

@@ -17,11 +17,13 @@ export interface TagsSelectFieldsWithAddProps {
   fields: {
     category?: {
       errorMessages: string[];
+      defaultValue?: Category;
       select: SelectFieldProps<"Category">;
       formDialog: DialogFormPatternProps<"Category">;
     },
     subcategory?: {
       errorMessages: string[];
+      defaultValue?: Subcategory;
       select: SelectFieldProps<"Subcategory">;
       formDialog: DialogFormPatternProps<"Subcategory">;
     },
@@ -31,8 +33,16 @@ export interface TagsSelectFieldsWithAddProps {
 export default function TagsSelectFieldsWithAdd({
   fields
 }: TagsSelectFieldsWithAddProps) {
-  const [selectedCategory, setSelectedCategory] = useState(emptyCategory);
-  const [selectedSubcategory, setSelectedSubcategory] = useState(emptySubcategory);
+  const [selectedCategory, setSelectedCategory] = useState(
+    fields.category?.defaultValue ?
+      fields.category.defaultValue :
+    emptyCategory
+  );
+  const [selectedSubcategory, setSelectedSubcategory] = useState(
+    fields.subcategory?.defaultValue ?
+      fields.subcategory.defaultValue :
+    emptySubcategory
+  );
 
   const [listCategory, setListCategory] = useState(fields.category?.select.list);
   const [listSubcategory, setListSubcategory] = useState(fields.subcategory?.select.list);

@@ -25,7 +25,6 @@ export const defaultAisleFormState: AisleFormState = {
   error: false,
   message: "",
   errorMessages: {
-    id: [],
     name: [],
     zone: [],
   }
@@ -36,7 +35,7 @@ export const defaultAislesBulkFormState: AislesBulkFormState = {
   error: false,
   message: "",
   errorMessages: {
-    number: [],
+    quantity: [],
     zone: [],
   }
 }

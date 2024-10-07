@@ -1,3 +1,8 @@
+"use client";
+
+/** React hooks */
+import { useState } from "react";
+
 /** Types and interfaces */
 import { 
   SelectFieldPatternWithAddProps, 
@@ -5,6 +10,8 @@ import {
 } from "@/app/lib/types/form/fields";
 import SelectFieldPattern from "./SelectFieldPattern";
 import DialogFormPattern from "../../dialog/DialogFormPattern";
+import { addNewItemToList } from "./action";
+import { FormMap } from "@/app/lib/types/form/form";
 
 export default function SelectFieldWithAddPattern<T extends SelectableItem>({
   addDialog,
@@ -13,7 +20,12 @@ export default function SelectFieldWithAddPattern<T extends SelectableItem>({
   setElement,
   errorMessages
 }: SelectFieldPatternWithAddProps<T> & {errorMessages: string[]}) {
-  const inputId = (`${Math.random().toString(36).substring(2, 9)}`);
+  const [list, setList] = useState(selectField.list);
+
+  const refreshList = (item: FormMap[T]) => {
+    addNewItemToList(item, list, setList as any);
+    setElement(item);
+  };
 
   return (
     <div className="flex items-end w-full gap-2">
@@ -28,6 +40,13 @@ export default function SelectFieldWithAddPattern<T extends SelectableItem>({
         />
         <DialogFormPattern<T> 
           {...addDialog}
+          formPattern={{
+            ...addDialog.formPattern,
+            formPattern: {
+              ...addDialog.formPattern.form,
+              refreshItemList: refreshList,
+            }
+          }}
         />
       </div>
     </div>

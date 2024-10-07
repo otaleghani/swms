@@ -57,15 +57,15 @@ export const defaultTicketFormState: TicketFormState = {
   error: false,
   message: "",
   errorMessages: {
-    id: [],
     name: [],
     description: [],
-    open: [],
-    close: [],
     client: [],
     product: [],
-    type: [],
-    state: [],
+    
+    //open: [],
+    //close: [],
+    //type: [],
+    //state: [],
   }
 }
 

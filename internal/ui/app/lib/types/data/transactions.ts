@@ -17,12 +17,12 @@ export const defaultTransactionFormState: TransactionFormState = {
   error: false,
   message: "",
   errorMessages: {
-    id: [],
-    date: [],
     quantity: [],
-    user: [],
-    item: [],
-    variant: [],
     ticket: [],
+
+    //date: [],
+    //user: [],
+    //item: [],
+    //variant: [],
   }
 }

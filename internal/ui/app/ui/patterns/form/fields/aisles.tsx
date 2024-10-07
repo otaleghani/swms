@@ -9,7 +9,11 @@ export const AisleFormFields = ({
   fields,
   result,
   errorMessages
-}: FormFieldsPropsWithDictCompleteMap["Aisle"]) => { return (
+}: FormFieldsPropsWithDictCompleteMap["Aisle"]) => {
+  let defaultZone = result?.zone ? 
+    fields.zone.list.find(i => i.id === result.zone) : undefined;
+
+  return (
   <>
     <InputPattern 
       field="name"
@@ -23,6 +27,7 @@ export const AisleFormFields = ({
       fields={{ 
         zone: {
           select: fields.zone,
+          defaultValue: defaultZone,
           errorMessages: errorMessages.zone,
         }
       }}
@@ -42,7 +47,7 @@ export const AislesBulkFormFields = ({
       defaultValue={String(result?.number)}
       className=""
       label={true}
-      errorMessages={errorMessages.number}
+      errorMessages={errorMessages.quantity}
     />
     <PositionSelectField 
       fields={{ 

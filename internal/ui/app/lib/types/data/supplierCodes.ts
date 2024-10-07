@@ -30,9 +30,8 @@ export const defaultSupplierCodeFormState: SupplierCodeFormState = {
   error: false,
   message: "",
   errorMessages: {
-    id: [],
     code: [],
-    supplier: [],
+    supplierWithAdd: [],
     item: [],
     variant: [],
   }
