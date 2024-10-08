@@ -41,6 +41,7 @@ export const SubcategoryFormFields = ({
           },
         }}
       />
+      <input type="hidden" name="type" value="Subcategory" />
     </>
   )
 }

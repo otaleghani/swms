@@ -14,6 +14,7 @@ import PositionSelectFieldWithAdd from "@/app/ui/modules/positions/PositionSelec
 import { defaultProductFormState } from "@/app/lib/types/data/products";
 import { Client, Clients, defaultClientFormState } from "@/app/lib/types/data/clients";
 import { DatePickerPattern } from "@/app/ui/patterns/form/input/DatePickerPattern";
+import { createFormAction } from "@/app/lib/actions/createFormAction";
 
 export default async function TestingPage( {params}: {params: {lang: string}}) {
   const dict = await getDictionary(params.lang as Locale);
@@ -58,19 +59,22 @@ export default async function TestingPage( {params}: {params: {lang: string}}) {
             ...defaultZoneFormState,
             result: {
               ...defaultZoneFormState.result,
-              name: "default value"
+              id: "sus",
+              name: "default value",
             }
           },
-          formAction: zoneAddFormAction,
+          //formAction: zoneAddFormAction,
+formAction: createFormAction<"Zone">,
           // notifyFormSent
           // refreshItemList
         }}
+        showButton
         self={{
           fields: {
             ...fieldsDefaultProps,
             name: {
               dict: {
-                label: "sandrone",
+                label: "sandronex",
                 placeholder: "dajes",
                 validation: {
                   empty:"empty",
@@ -683,7 +687,7 @@ export default async function TestingPage( {params}: {params: {lang: string}}) {
             valid: "",
           }
         }}
-        locale="it"
+        locale="en"
         errorMessages={[]}
         defaultValue={stringDate}
       />

@@ -34,6 +34,7 @@ export const ProductImagesFormFields = ({
         label={true}
         errorMessages={errorMessages.images as string[]}
       />
+      <input type="hidden" name="type" value="ProductImage" />
     </>
   )
 }

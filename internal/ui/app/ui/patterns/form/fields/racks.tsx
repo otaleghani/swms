@@ -40,6 +40,7 @@ export const RackFormFields = ({
         }
       }}
     />
+    <input type="hidden" name="type" value="Rack" />
   </>
 )}
 
@@ -55,7 +56,7 @@ export const RacksBulkFormFields = ({
       defaultValue={String(result?.number)}
       className=""
       label={true}
-      errorMessages={errorMessages.number}
+      errorMessages={errorMessages.quantity}
     />
     <PositionSelectField 
       fields={{ 
@@ -69,5 +70,6 @@ export const RacksBulkFormFields = ({
         },
       }}
     />
+    <input type="hidden" name="type" value="RacksBulk" />
   </>
 )}

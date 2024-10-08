@@ -47,6 +47,7 @@ export const ShelfFormFields = ({
         }
       }}
     />
+    <input type="hidden" name="type" value="Shelf" />
   </>
 )}
 
@@ -62,7 +63,7 @@ export const ShelfsBulkFormFields = ({
       defaultValue={String(result?.number)}
       className=""
       label={true}
-      errorMessages={errorMessages.number}
+      errorMessages={errorMessages.quantity}
     />
     <PositionSelectField 
       fields={{ 
@@ -80,5 +81,6 @@ export const ShelfsBulkFormFields = ({
         },
       }}
     />
+    <input type="hidden" name="type" value="ShelfsBulk" />
   </>
 )}

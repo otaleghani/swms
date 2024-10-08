@@ -8,10 +8,10 @@ import { createInBulk } from "@/app/lib/requests/generics/createInBulk";
 
 /** Types and interfaces */
 import { Aisle, AislesBulkPostRequestBody } from "@/app/lib/types/data/aisles";
-import { FormState } from "@/app/lib/types/misc";
+import { FormState } from "@/app/lib/types/form/form";
 
 export async function aisleCreateFormAction(
-  currentState: FormState<Aisle>,
+  currentState: FormState<"Aisle">,
   formData: FormData
 ) {
   // Get data from the form
@@ -48,7 +48,7 @@ export async function aisleCreateFormAction(
 }
 
 export async function aisleAddBulkFormAction(
-  currentState: FormState<AislesBulkPostRequestBody>,
+  currentState: FormState<"AislesBulk">,
   formData: FormData
 ) {
   // Get data from the form

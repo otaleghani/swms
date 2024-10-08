@@ -23,3 +23,5 @@ export interface DefaultPageProps {
     lang: string;
   }
 }
+
+export type AcceptedLocales = "it" | "en"

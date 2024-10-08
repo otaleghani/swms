@@ -18,6 +18,7 @@ export const ZoneFormFields = ({
       label={true}
       errorMessages={errorMessages.name}
     />
+    <input type="hidden" name="type" value="Zone" />
   </>
 )}
 
@@ -35,5 +36,6 @@ export const ZonesBulkFormFields = ({
       label={true}
       errorMessages={errorMessages.quantity}
     />
+    <input type="hidden" name="type" value="ZonesBulk" />
   </>
 )}

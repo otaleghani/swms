@@ -10,13 +10,12 @@ import { getDictionary, Locale } from "@/lib/dictionaries";
 import { validateExisting, checkExisting } from "../database";
 
 /** Types and interfaces */
-import { Aisle, AislesBulkPostRequestBody } from "../../types/data/aisles";
-import { FormState } from "../../types/misc";
+import { FormState } from "../../types/form/form";
 
 export async function validateAisle(
-  state: FormState<Aisle>,
+  state: FormState<"Aisle">,
   locale: string,
-): Promise<FormState<Aisle>> {
+): Promise<FormState<"Aisle">> {
   const dictPromise = getDictionary(locale as Locale);
   const [ dict ] = await Promise.all([ dictPromise ]);
 
@@ -48,12 +47,12 @@ export async function validateAisle(
     VALIDATION_SETTINGS.shortString.maxLength,
   )).length != 0 && (state.error = true);
 
-  // (state.errorMessages.zone = validateString(
-  //   state.result.zone, 
-  //   dict.forms.fields.zones.validation, 
-  //   VALIDATION_SETTINGS.foreignKeys.minLength,
-  //   VALIDATION_SETTINGS.foreignKeys.maxLength,
-  // )).length != 0 && (state.error = true);
+  (state.errorMessages.zone = validateString(
+    state.result.zone, 
+    dict.forms.fields.zones.validation, 
+    VALIDATION_SETTINGS.foreignKeys.minLength,
+    VALIDATION_SETTINGS.foreignKeys.maxLength,
+  )).length != 0 && (state.error = true);
 
   if (await checkExisting("Zone", state.result.zone)) {
     state.errorMessages.zone.push(
@@ -64,10 +63,10 @@ export async function validateAisle(
   return state;
 }
 
-export async function validateAisleBulk(
-  state: FormState<AislesBulkPostRequestBody>,
+export async function validateAislesBulk(
+  state: FormState<"AislesBulk">,
   locale: string,
-): Promise<FormState<AislesBulkPostRequestBody>> {
+): Promise<FormState<"AislesBulk">> {
   const dictPromise = getDictionary(locale as Locale);
   const [ dict ] = await Promise.all([ dictPromise ]);
   
@@ -77,23 +76,7 @@ export async function validateAisleBulk(
     return state;
   }
 
-  // In the case of a put request you will also have the id to check
-  // if (state.result.id) {
-  //   state = await validateExisting(
-  //     "Zone", 
-  //     state, 
-  //     state.result.id, 
-  //     locale
-  //   );
-  // }
-
-  //if (!state.result) {
-  //  state.error = true;
-  //  state.errorMessages = dict.forms.messages.errors.empty_after;
-  //  return state;
-  //}
-
-  (state.errorMessages.number = validateNumber(
+  (state.errorMessages.quantity = validateNumber(
     String(state.result.number), 
     dict.forms.fields.number.validation, 
     VALIDATION_SETTINGS.bigUnsignedNumber.minLength,

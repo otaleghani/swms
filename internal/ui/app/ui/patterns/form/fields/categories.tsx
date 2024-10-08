@@ -26,5 +26,6 @@ export const CategoryFormFields = ({
       label={true}
       errorMessages={errorMessages.description as string[]}
     />
+    <input type="hidden" name="type" value="Category" />
   </>
 )}

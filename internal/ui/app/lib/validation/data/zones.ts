@@ -59,7 +59,7 @@ export async function validateZone(
   return state;
 }
 
-export async function validateZoneBulk(
+export async function validateZonesBulk(
   state: FormState<ZonesBulkPostRequestBody>,
   locale: string,
 ): Promise<FormState<ZonesBulkPostRequestBody>> {
@@ -71,22 +71,6 @@ export async function validateZoneBulk(
     state.errorMessages = dict.forms.messages.errors.empty;
     return state;
   }
-
-  // In the case of a put request you will also have the id to check
-  // if (state.result.id) {
-  //   state = await validateExisting(
-  //     "Zone", 
-  //     state, 
-  //     state.result.id, 
-  //     locale
-  //   );
-  // }
-
-  //if (!state.result) {
-  //  state.error = true;
-  //  state.errorMessages = dict.forms.messages.errors.empty_after;
-  //  return state;
-  //}
 
   (state.errorMessages.number = validateNumber(
     String(state.result.number), 

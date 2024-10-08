@@ -9,13 +9,12 @@ import { getDictionary, Locale } from "@/lib/dictionaries";
 import { validateExisting, checkExisting } from "../database";
 
 /** Types and interfaces */
-import { Product } from "../../types/data/products";
-import { FormState } from "../../types/misc";
+import { FormState } from "../../types/form/form";
 
 export async function validateProduct(
-  state: FormState<Product>,
+  state: FormState<"Product">,
   locale: string,
-): Promise<FormState<Product>> {
+): Promise<FormState<"Product">> {
   const dictPromise = getDictionary(locale as Locale);
   const [ dict ] = await Promise.all([ dictPromise ]);
 
@@ -57,7 +56,7 @@ export async function validateProduct(
   }
 
   if (state.result.client) {
-    (state.errorMessages.client = validateString(
+    (state.errorMessages.clientWithAdd = validateString(
       state.result.client as string, 
       dict.forms.fields.client.validation, 
       VALIDATION_SETTINGS.foreignKeys.minLength,
@@ -65,7 +64,7 @@ export async function validateProduct(
     )).length != 0 && (state.error = true);
 
     if (await checkExisting("Client", state.result.client)) {
-      state.errorMessages.client.push(
+      state.errorMessages.clientWithAdd.push(
         dict.forms.fields.client.validation.not_found)
       state.error = true;
     }

@@ -5,7 +5,7 @@ import sharp from "sharp";
 export default async function validateImages(images: File[]) {
   const result = {
     errors: [] as string[],
-    images: [] as string[],
+    images: [] as File[],
   }
 
   for (let i = 0; i < images.length; i++) {

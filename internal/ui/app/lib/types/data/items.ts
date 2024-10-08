@@ -46,5 +46,5 @@ export const defaultItemFormState: ItemFormState = {
 }
 
 export type ItemWithDefaultVariantAndImages = Item & Variant & {
-  images: null;
+  images: File[];
 }

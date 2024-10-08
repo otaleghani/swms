@@ -196,5 +196,6 @@ export const ItemCompleteFormFields = ({
       type="hidden" 
       name="codes" 
       value={fields.codesJSON.data} />
+    <input type="hidden" name="type" value="Item" />
   </>
 )}

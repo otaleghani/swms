@@ -9,14 +9,13 @@ import { getDictionary, Locale } from "@/lib/dictionaries";
 import { validateExisting } from "../database";
 
 /** Types and interfaces */
-import { Client } from "../../types/data/clients";
-import { FormState } from "../../types/misc";
+import { FormState } from "../../types/form/form";
 
 /** @todo Add boolean validation if necessary */
 export async function validateClient(
-  state: FormState<Client>,
+  state: FormState<"Client">,
   locale: string,
-): Promise<FormState<Client>> {
+): Promise<FormState<"Client">> {
   const dictPromise = getDictionary(locale as Locale);
   const [ dict ] = await Promise.all([ dictPromise ]);
 

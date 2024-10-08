@@ -22,7 +22,6 @@ export default function SelectFieldPattern<T extends SelectableItem>({
   dict,
 }: SelectFieldPatternProps<T> & {errorMessages: string[]}) {
   const inputId = (`${Math.random().toString(36).substring(2, 9)}`);
-  // const [] = useState...
 
   return (
     <div className="w-full">

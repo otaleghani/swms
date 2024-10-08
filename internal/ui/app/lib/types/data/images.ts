@@ -4,7 +4,7 @@ export type ItemImage = {
   id?: string;
   uri: string;
   item: string;
-  variant: string;
+  //variant: string;
 }
 export type ItemImages = ItemImage[];
 

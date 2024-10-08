@@ -10,13 +10,12 @@ import { validateExisting, checkExisting } from "../database";
 import validateDate from "../dates";
 
 /** Types and interfaces */
-import { Ticket } from "../../types/data/tickets";
-import { FormState } from "../../types/misc";
+import { FormState } from "../../types/form/form";
 
 export async function validateTicket(
-  state: FormState<Ticket>,
+  state: FormState<"Ticket">,
   locale: string,
-): Promise<FormState<Ticket>> {
+): Promise<FormState<"Ticket">> {
   const dictPromise = getDictionary(locale as Locale);
   const [ dict ] = await Promise.all([ dictPromise ]);
 

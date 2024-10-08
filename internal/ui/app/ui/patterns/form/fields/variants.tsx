@@ -87,5 +87,6 @@ export const VariantsFormFields = ({
           />
         </div>
       </div>
+      <input type="hidden" name="type" value="Variant" />
     </>
 )}

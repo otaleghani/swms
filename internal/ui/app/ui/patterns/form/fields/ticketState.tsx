@@ -1,14 +1,14 @@
 /** Local components */
-import InputPattern from "../input/InputPattern"
+import InputPattern from "../input/InputPattern";
 
 /** Types and interfaces */
-import { FormFieldsPropsWithDictCompleteMap } from "@/app/lib/types/form/fields"
+import { FormFieldsPropsWithDictCompleteMap } from "@/app/lib/types/form/fields";
 
-export const SupplierFormFields = ({
+export const TicketStateFormFields = ({
   fields,
   result,
   errorMessages,
-}: FormFieldsPropsWithDictCompleteMap["Supplier"] ) => { return (
+}: FormFieldsPropsWithDictCompleteMap["TicketState"] ) => { return (
   <>
     <InputPattern 
       field="name"
@@ -24,8 +24,8 @@ export const SupplierFormFields = ({
       defaultValue={result?.description}
       className=""
       label={true}
-      errorMessages={errorMessages.description}
+      errorMessages={errorMessages.description as string[]}
     />
-    <input type="hidden" name="type" value="Supplier" />
+    <input type="hidden" name="type" value="TicketState" />
   </>
 )}

@@ -1,5 +1,4 @@
 import { Response } from "../misc";
-import { Zone } from "./zones";
 import { FormState } from "../form/form";
 
 export type Aisle = {
@@ -47,5 +46,5 @@ export type AislesWithExtraRP = Promise<Response<AislesWithExtra>>;
 
 export type AislesBulkPostRequestBody = {
   number: number;
-  zone: Zone;
+  zone: string;
 }

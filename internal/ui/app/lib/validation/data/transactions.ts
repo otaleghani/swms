@@ -11,13 +11,12 @@ import { validateExisting, checkExisting } from "../database";
 import { getDictionary, Locale } from "@/lib/dictionaries";
 
 /** Types and interfaces */
-import { Transaction } from "../../types/data/transactions";
-import { FormState } from "../../types/misc";
+import { FormState } from "../../types/form/form";
 
 export async function validateTransaction(
-  state: FormState<Transaction>,
+  state: FormState<"Transaction">,
   locale: string,
-): Promise<FormState<Transaction>> {
+): Promise<FormState<"Transaction">> {
   const dictPromise = getDictionary(locale as Locale);
   const [ dict ] = await Promise.all([ dictPromise ]);
 
@@ -42,7 +41,9 @@ export async function validateTransaction(
     return state;
   }
 
-  (state.errorMessages.date = validateDate(
+  // date puts all the error messages inside of quantity
+  // because the form does not have other fields
+  (state.errorMessages.quantity = validateDate(
     state.result.date, 
     dict.forms.fields.date.validation, 
   )).length != 0 && (state.error = true);
@@ -54,7 +55,9 @@ export async function validateTransaction(
     VALIDATION_SETTINGS.bigUnsignedNumber.maxLength,
   )).length != 0 && (state.error = true);
 
-  (state.errorMessages.user = validateString(
+  // date puts all the error messages inside of user
+  // because the form does not have other fields
+  (state.errorMessages.quantity = validateString(
     state.result.user as string, 
     dict.forms.fields.users.validation, 
     VALIDATION_SETTINGS.foreignKeys.minLength,
@@ -62,12 +65,14 @@ export async function validateTransaction(
   )).length != 0 && (state.error = true);
 
   if (await checkExisting("User", state.result.user)) {
-    state.errorMessages.user.push(
+    state.errorMessages.quantity.push(
       dict.forms.fields.users.validation.not_found);
     state.error = true;
   }
 
-  (state.errorMessages.item = validateString(
+  // date puts all the error messages inside of items
+  // because the form does not have other fields
+  (state.errorMessages.quantity = validateString(
     state.result.item as string, 
     dict.forms.fields.items.validation, 
     VALIDATION_SETTINGS.foreignKeys.minLength,
@@ -75,12 +80,14 @@ export async function validateTransaction(
   )).length != 0 && (state.error = true);
 
   if (await checkExisting("Item", state.result.item)) {
-    state.errorMessages.item.push(
+    state.errorMessages.quantity.push(
       dict.forms.fields.items.validation.not_found);
     state.error = true;
   }
 
-  (state.errorMessages.variant = validateString(
+  // date puts all the error messages inside of variants
+  // because the form does not have other fields
+  (state.errorMessages.quantity = validateString(
     state.result.variant as string, 
     dict.forms.fields.variants.validation, 
     VALIDATION_SETTINGS.foreignKeys.minLength,
@@ -88,7 +95,7 @@ export async function validateTransaction(
   )).length != 0 && (state.error = true);
 
   if (await checkExisting("Variant", state.result.variant)) {
-    state.errorMessages.variant.push(
+    state.errorMessages.quantity.push(
       dict.forms.fields.variants.validation.not_found);
     state.error = true;
   }

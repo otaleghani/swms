@@ -38,5 +38,6 @@ export const SupplierCodeFormFields = ({
       setElement={setElement}
       errorMessages={errorMessages.supplierWithAdd}
     />
+      <input type="hidden" name="type" value="SupplierCodes" />
   </>
 )}

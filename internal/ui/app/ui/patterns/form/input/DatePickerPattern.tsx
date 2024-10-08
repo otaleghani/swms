@@ -23,13 +23,14 @@ import FormFieldErrorsPattern from "../FormFieldErrorsPattern"
 
 /** Types and interfaces */
 import { DictDatePickerField } from "@/app/lib/types/dictionary/form"
+import { AcceptedLocales } from "@/app/lib/types/misc"
 
 interface DatePickerPatternProps {
   field: 
     "openDate" |
     "closeDate";
   dict: DictDatePickerField;
-  locale: "it" | "en";
+  locale: AcceptedLocales;
   defaultValue?: string;
   errorMessages: string[];
 }
@@ -71,7 +72,7 @@ export function DatePickerPattern({
           <Button
             variant={"outline"}
             className={cn(
-              "w-[280px] justify-start text-left font-normal",
+              "w-full justify-start text-left font-normal",
               !date && "text-muted-foreground"
             )}
           >

@@ -35,5 +35,6 @@ export const ClientFormFields = ({
       label={true}
       errorMessages={errorMessages.name}
     />
+    <input type="hidden" name="type" value="Client" />
   </>
 )}

@@ -1,5 +1,6 @@
 import {
   DictCheckboxField,
+  DictDatePickerField,
   DictFormButton,
   DictInputField,
   DictSelectField,
@@ -10,6 +11,10 @@ import { DialogFormPatternProps } from "@/app/ui/patterns/dialog/DialogFormPatte
 /** Defines the props for an input field */
 interface InputFieldProps {
   dict: DictInputField;
+}
+
+interface DatePickerProps {
+  dict: DictDatePickerField;
 }
 
 /** Defines the props for a JSON field */
@@ -68,7 +73,7 @@ export type SelectFieldPatternWithAddProps<T extends SelectableItem> =
   SelectFieldPropsWithAdd<T> & {
     element: FormMap[T]; // This would be used as a default value
     setElement: React.Dispatch<React.SetStateAction<FormMap[T]>>;
-  };
+};
 
 /** Maps every field */
 export type FieldsPropsMap = {
@@ -120,6 +125,9 @@ export type FieldsPropsMap = {
   subcategoryWithAdd: SelectFieldPropsWithAdd<"Subcategory">;
 
   clientWithAdd: SelectFieldPropsWithAdd<"Client">;
+  ticketTypeWithAdd: SelectFieldPropsWithAdd<"TicketType">;
+  ticketStateWithAdd: SelectFieldPropsWithAdd<"TicketState">;
+
 
   // Button
   button: DictFormButton;
@@ -128,8 +136,8 @@ export type FieldsPropsMap = {
   isDefaultVariant: CheckboxFieldProps;
   isArchived: CheckboxFieldProps;
 
-  openDate: DictInputField;
-  closeDate: DictInputField;
+  openDate: DatePickerProps;
+  closeDate: DatePickerProps;
 
   variantsJSON: JSONHiddenFieldProps;
   codesJSON: JSONHiddenFieldProps;
@@ -176,6 +184,8 @@ export const fieldsDefaultProps: FieldsPropsNullMap = {
   categoryWithAdd: null,
   subcategoryWithAdd: null,
   clientWithAdd: null,
+  ticketTypeWithAdd: null,
+  ticketStateWithAdd: null,
   button: null,
   isBusiness: null,
   isDefaultVariant: null,
@@ -404,6 +414,7 @@ export type SupplierCodeFormFieldsProps = {
   [K in keyof FieldsPropsMap]: 
     K extends "code" ? FieldsPropsMap[K] :
     K extends "supplierWithAdd" ? FieldsPropsMap[K] :
+    K extends "supplier" ? FieldsPropsMap[K] :
     K extends "item" ? FieldsPropsMap[K] :
     K extends "variant" ? FieldsPropsMap[K] :
     K extends "button" ? FieldsPropsMap[K] :
@@ -415,12 +426,30 @@ export type TicketFormFieldsProps = {
   [K in keyof FieldsPropsMap]: 
     K extends "name" ? FieldsPropsMap[K] :
     K extends "description" ? FieldsPropsMap[K] :
-    K extends "open" ? FieldsPropsMap[K] :
-    K extends "close" ? FieldsPropsMap[K] :
+    K extends "openDate" ? FieldsPropsMap[K] :
+    K extends "closeDate" ? FieldsPropsMap[K] :
     K extends "client" ? FieldsPropsMap[K] :
     K extends "product" ? FieldsPropsMap[K] :
-    K extends "type" ? FieldsPropsMap[K] :
-    K extends "state" ? FieldsPropsMap[K] :
+    K extends "ticketType" ? FieldsPropsMap[K] :
+    K extends "ticketState" ? FieldsPropsMap[K] :
+    K extends "button" ? FieldsPropsMap[K] :
+    null;
+};
+
+// prettier-ignore
+export type TicketStateFormFieldsProps = {
+  [K in keyof FieldsPropsMap]: 
+    K extends "name" ? FieldsPropsMap[K] :
+    K extends "description" ? FieldsPropsMap[K] :
+    K extends "button" ? FieldsPropsMap[K] :
+    null;
+};
+
+// prettier-ignore
+export type TicketTypeFormFieldsProps = {
+  [K in keyof FieldsPropsMap]: 
+    K extends "name" ? FieldsPropsMap[K] :
+    K extends "description" ? FieldsPropsMap[K] :
     K extends "button" ? FieldsPropsMap[K] :
     null;
 };
@@ -470,6 +499,8 @@ export type FormFieldsPropsMap = {
     K extends "Supplier" ? SupplierFormFieldsProps :
     K extends "SupplierCode" ? SupplierCodeFormFieldsProps :
     K extends "Ticket" ? TicketFormFieldsProps :
+    K extends "TicketState" ? TicketStateFormFieldsProps :
+    K extends "TicketType" ? TicketTypeFormFieldsProps :
     K extends "Transaction" ? TransactionFormFieldsProps :
     K extends "User" ? UserFormFieldsProps :
     null;

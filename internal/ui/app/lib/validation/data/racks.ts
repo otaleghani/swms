@@ -5,17 +5,18 @@ import { VALIDATION_SETTINGS } from "../validation.config";
 
 /** Actions */
 import validateString from "../strings";
+import validateNumber from "../number";
 import { getDictionary, Locale } from "@/lib/dictionaries";
 import { validateExisting, checkExisting } from "../database";
 
 /** Types and interfaces */
 import { Rack } from "../../types/data/racks";
-import { FormState } from "../../types/misc";
+import { FormState } from "../../types/form/form";
 
 export async function validateRack(
-  state: FormState<Rack>,
+  state: FormState<"Rack">,
   locale: string,
-): Promise<FormState<Rack>> {
+): Promise<FormState<"Rack">> {
   const dictPromise = getDictionary(locale as Locale);
   const [ dict ] = await Promise.all([ dictPromise ]);
 
@@ -68,5 +69,43 @@ export async function validateRack(
     state.error = true;
   }
 
+  return state;
+}
+
+export async function validateRacksBulk(
+  state: FormState<"RacksBulk">,
+  locale: string,
+): Promise<FormState<"RacksBulk">> {
+  const dictPromise = getDictionary(locale as Locale);
+  const [ dict ] = await Promise.all([ dictPromise ]);
+  
+  if (!state.result) {
+    state.error = true;
+    state.errorMessages = dict.forms.messages.errors.empty;
+    return state;
+  }
+
+  (state.errorMessages.quantity = validateNumber(
+    String(state.result.number), 
+    dict.forms.fields.number.validation, 
+    VALIDATION_SETTINGS.bigUnsignedNumber.minLength,
+    VALIDATION_SETTINGS.bigUnsignedNumber.maxLength,
+  )).length != 0 && (state.error = true);
+
+  if (await checkExisting("Zone", state.result.zone)) {
+    state.errorMessages.zone.push(
+      dict.forms.fields.zones.validation.not_found);
+    state.error = true;
+  }
+  if (await checkExisting("Aisle", state.result.aisle)) {
+    state.errorMessages.aisle.push(
+      dict.forms.fields.aisles.validation.not_found);
+    state.error = true;
+  }
+
+  if (state.error) {
+    state.message = dict.forms.messages.errors.general;
+  }
+  
   return state;
 }

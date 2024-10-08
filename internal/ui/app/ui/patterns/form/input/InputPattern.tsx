@@ -27,7 +27,8 @@ interface InputPatternProps {
     "quantity" |
     "quantityWithButtons" |
     "images" |
-    "isBusiness";
+    "isBusiness" |
+    "email";
   errorMessages: string[];
   dict: DictInputField | DictCheckboxField;
   defaultValue?: string;
@@ -50,6 +51,17 @@ export default function InputPattern({
 
   const InputPatternField = () => {
     switch (field) {
+      case "email":
+        return (
+          <Input
+            type="email"
+            name={field}
+            id={`${field}-${inputId}`}
+            placeholder={dict.placeholder}
+            defaultValue={defaultValue}
+            suppressHydrationWarning
+          />
+        );
       case "name":
       case "surname":
       case "identifier":

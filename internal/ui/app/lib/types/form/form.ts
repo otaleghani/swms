@@ -32,7 +32,11 @@ export interface FormMap {
   
   Item: Item;
   Variant: Variant;
-  ItemImage: ItemImage;
+  //ItemImage: ItemImage;
+  ItemImage: {
+    images: File[];
+    item: string;
+  };
   ItemComplete: ItemWithDefaultVariantAndImages;
 
   Category: Category;
@@ -40,7 +44,11 @@ export interface FormMap {
 
   Product: Product;
   ProductWithImages: ProductWithImages;
-  ProductImage: ProductImage;
+  //ProductImage: ProductImage;
+  ProductImage: {
+    images: File[];
+    product: string;
+  };
   Client: Client;
   Supplier: Supplier;
   SupplierCode: SupplierCode;
@@ -53,7 +61,7 @@ export interface FormMap {
 
 export interface FormState<X extends keyof FormMap> {
   error: boolean;
-  message: string
+  message: string;
   result?: FormMap[X];
   errorMessages: {
     [T in keyof FormFieldsPropsMap[X] as 

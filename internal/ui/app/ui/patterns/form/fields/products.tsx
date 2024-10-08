@@ -56,5 +56,6 @@ export const ProductFormFields = ({
       label={true}
       errorMessages={errorMessages.images}
     />
+    <input type="hidden" name="type" value="Product" />
   </>
 )}

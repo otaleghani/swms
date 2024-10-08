@@ -10,14 +10,13 @@ import { getDictionary, Locale } from "@/lib/dictionaries";
 import { validateExisting, checkExisting } from "../database";
 
 /** Types and interfaces */
-import { Variant } from "../../types/data/variants";
-import { FormState } from "../../types/misc";
+import { FormState } from "../../types/form/form";
 
 /** @todo Add validation for defaultVariant: boolean */
 export async function validateVariant(
-  state: FormState<Variant>,
+  state: FormState<"Variant">,
   locale: string,
-): Promise<FormState<Variant>> {
+): Promise<FormState<"Variant">> {
   const dictPromise = getDictionary(locale as Locale);
   const [ dict ] = await Promise.all([ dictPromise ]);
 
@@ -108,18 +107,17 @@ export async function validateVariant(
     )).length != 0 && (state.error = true);
   }
 
-  (state.errorMessages.item = validateString(
-    state.result.item as string, 
-    dict.forms.fields.items.validation, 
-    VALIDATION_SETTINGS.foreignKeys.minLength,
-    VALIDATION_SETTINGS.foreignKeys.maxLength,
-  )).length != 0 && (state.error = true);
-
-  if (await checkExisting("Item", state.result.item)) {
-    state.errorMessages.item.push(
-      dict.forms.fields.items.validation.not_found);
-    state.error = true;
-  }
+  //(state.errorMessages.item = validateString(
+  //  state.result.item as string, 
+  //  dict.forms.fields.items.validation, 
+  //  VALIDATION_SETTINGS.foreignKeys.minLength,
+  //  VALIDATION_SETTINGS.foreignKeys.maxLength,
+  //)).length != 0 && (state.error = true);
+  //if (await checkExisting("Item", state.result.item)) {
+  //  state.errorMessages.item.push(
+  //    dict.forms.fields.items.validation.not_found);
+  //  state.error = true;
+  //}
 
   return state;
 }

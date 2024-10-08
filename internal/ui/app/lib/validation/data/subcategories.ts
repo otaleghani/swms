@@ -9,13 +9,12 @@ import { getDictionary, Locale } from "@/lib/dictionaries";
 import { validateExisting, checkExisting } from "../database";
 
 /** Types and interfaces */
-import { Subcategory } from "../../types/data/subcategories";
-import { FormState } from "../../types/misc";
+import { FormState } from "../../types/form/form";
 
 export async function validateSubcategory(
-  state: FormState<Subcategory>,
+  state: FormState<"Subcategory">,
   locale: string,
-): Promise<FormState<Subcategory>> {
+): Promise<FormState<"Subcategory">> {
   const dictPromise = getDictionary(locale as Locale);
   const [ dict ] = await Promise.all([ dictPromise ]);
 

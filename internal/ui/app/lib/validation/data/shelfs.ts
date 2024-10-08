@@ -5,17 +5,18 @@ import { VALIDATION_SETTINGS } from "../validation.config";
 
 /** Actions */
 import validateString from "../strings";
+import validateNumber from "../number";
 import { getDictionary, Locale } from "@/lib/dictionaries";
 import { validateExisting, checkExisting } from "../database";
 
 /** Types and interfaces */
 import { Shelf } from "../../types/data/shelfs";
-import { FormState } from "../../types/misc";
+import { FormState } from "../../types/form/form";
 
 export async function validateShelf(
-  state: FormState<Shelf>,
+  state: FormState<"Shelf">,
   locale: string,
-): Promise<FormState<Shelf>> {
+): Promise<FormState<"Shelf">> {
   const dictPromise = getDictionary(locale as Locale);
   const [ dict ] = await Promise.all([ dictPromise ]);
 
@@ -80,11 +81,54 @@ export async function validateShelf(
     VALIDATION_SETTINGS.foreignKeys.maxLength,
   )).length != 0 && (state.error = true);
 
-  if (await checkExisting("Aisle", state.result.rack)) {
+  if (await checkExisting("Rack", state.result.rack)) {
     state.errorMessages.rack.push(
       dict.forms.fields.racks.validation.not_found);
     state.error = true;
   }
 
+  return state;
+}
+
+export async function validateShelfsBulk(
+  state: FormState<"ShelfsBulk">,
+  locale: string,
+): Promise<FormState<"ShelfsBulk">> {
+  const dictPromise = getDictionary(locale as Locale);
+  const [ dict ] = await Promise.all([ dictPromise ]);
+  
+  if (!state.result) {
+    state.error = true;
+    state.errorMessages = dict.forms.messages.errors.empty;
+    return state;
+  }
+
+  (state.errorMessages.quantity = validateNumber(
+    String(state.result.number), 
+    dict.forms.fields.number.validation, 
+    VALIDATION_SETTINGS.bigUnsignedNumber.minLength,
+    VALIDATION_SETTINGS.bigUnsignedNumber.maxLength,
+  )).length != 0 && (state.error = true);
+
+  if (await checkExisting("Zone", state.result.zone)) {
+    state.errorMessages.zone.push(
+      dict.forms.fields.zones.validation.not_found);
+    state.error = true;
+  }
+  if (await checkExisting("Aisle", state.result.aisle)) {
+    state.errorMessages.aisle.push(
+      dict.forms.fields.aisles.validation.not_found);
+    state.error = true;
+  }
+  if (await checkExisting("Rack", state.result.rack)) {
+    state.errorMessages.rack.push(
+      dict.forms.fields.racks.validation.not_found);
+    state.error = true;
+  }
+
+  if (state.error) {
+    state.message = dict.forms.messages.errors.general;
+  }
+  
   return state;
 }
