@@ -32,55 +32,55 @@ export interface ProductsByClientSelectFieldsProps {
 export default function ProductsByClientSelectFields({
   fields
 }: ProductsByClientSelectFieldsProps) {
-  const [selectedCategory, setSelectedCategory] = useState(
-    fields.category?.defaultValue ? 
-      fields.category.defaultValue :
-      emptyCategory
+  const [selectedClient, setSelectedClient] = useState(
+    fields.client?.defaultValue ? 
+      fields.client.defaultValue :
+      emptyClient
   );
-  const [selectedSubcategory, setSelectedSubcategory] = useState(
-    fields.subcategory?.defaultValue ? 
-      fields.subcategory.defaultValue :
-    emptySubcategory
+  const [selectedProduct, setSelectedProduct] = useState(
+    fields.product?.defaultValue ? 
+      fields.product.defaultValue :
+    emptyProduct
   );
 
-  const [listCategory, setListCategory] = useState(fields.category?.select.list);
-  const [listSubcategory, setListSubcategory] = useState(fields.subcategory?.select.list);
+  const [listClient, setListClient] = useState(fields.client?.select.list);
+  const [listProduct, setListProduct] = useState(fields.product?.select.list);
 
-  const [filteredSubcategory, setFilteredSubcategory] = useState(fields.subcategory?.select.list);
+  const [filteredProduct, setFilteredProduct] = useState(fields.product?.select.list);
 
   useEffect(() => {
-    if (listSubcategory) {
-      if (selectedSubcategory.category !== selectedCategory.id) {
-        setSelectedSubcategory(emptySubcategory);
-        filterList(listSubcategory, "category", selectedCategory.id, setFilteredSubcategory);
+    if (listProduct) {
+      if (selectedProduct.client !== selectedClient.id) {
+        setSelectedProduct(emptyProduct);
+        filterList(listProduct, "client", selectedClient.id, setFilteredProduct);
       }
     }
-  }, [selectedCategory])
+  }, [selectedClient])
 
   return (
     <div>
       <div>
-        {fields.category && listCategory && (
+        {fields.client && listClient && (
           <div className="flex gap-4 items-end">
-            <SelectFieldPattern<"Category"> 
-              name="Category"
-              element={selectedCategory}
-              setElement={setSelectedCategory}
-              list={listCategory}
-              errorMessages={fields.category.errorMessages}
-              dict={fields.category.select.dict}
+            <SelectFieldPattern<"Client"> 
+              name="Client"
+              element={selectedClient}
+              setElement={setSelectedClient}
+              list={listClient}
+              errorMessages={fields.client.errorMessages}
+              dict={fields.client.select.dict}
             />
           </div>
         )}
-        {fields.subcategory && filteredSubcategory && (selectedCategory != emptyCategory) && (
+        {fields.product && filteredProduct && (selectedClient != emptyClient) && (
           <div className="flex gap-4 items-end">
-            <SelectFieldPattern<"Subcategory"> 
-              name="Subcategory"
-              element={selectedSubcategory}
-              setElement={setSelectedSubcategory}
-              list={filteredSubcategory}
-              errorMessages={fields.subcategory.errorMessages}
-              dict={fields.subcategory.select.dict}
+            <SelectFieldPattern<"Product"> 
+              name="Product"
+              element={selectedProduct}
+              setElement={setSelectedProduct}
+              list={filteredProduct}
+              errorMessages={fields.product.errorMessages}
+              dict={fields.product.select.dict}
             />
           </div>
         )}

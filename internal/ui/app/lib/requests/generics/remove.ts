@@ -20,7 +20,9 @@ type RemoveMapOptions = {
     "RackWithExtra" |
     "ShelfWithExtra" |
     "SupplierWithExtra" |
-    "SupplierCodeWithExtra"
+    "SupplierCodeWithExtra" |
+    "ProductImagesPostBody" |
+    "ItemImagesPostBody"
   >]: RequestOptions;
 }
 

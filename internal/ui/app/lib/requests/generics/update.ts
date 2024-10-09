@@ -20,7 +20,9 @@ type UpdateMapOptions = {
     "RackWithExtra" |
     "ShelfWithExtra" |
     "SupplierWithExtra" |
-    "SupplierCodeWithExtra"
+    "SupplierCodeWithExtra" |
+    "ItemImagesPostBody" |
+    "ProductImagesPostBody"
   >]: RequestOptions;
 }
 

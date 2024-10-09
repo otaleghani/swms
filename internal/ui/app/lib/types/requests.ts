@@ -58,8 +58,10 @@ import {
 import { 
   ItemImage, 
   ItemImages, 
+  ItemImagesPostBody, 
   ProductImage,
-  ProductImages
+  ProductImages,
+  ProductImagesPostBody
 } from "./data/images";
 import { 
   Item, 
@@ -140,6 +142,7 @@ export type TypeMap = {
   Items: Items;
 
   ItemImage: ItemImage;
+  ItemImagesPostBody: ItemImagesPostBody;
   ItemImages: ItemImages;
 
   Transaction: Transaction;
@@ -160,6 +163,7 @@ export type TypeMap = {
   Products: Products;
 
   ProductImage: ProductImage;
+  ProductImagesPostBody: ProductImagesPostBody;
   ProductImages: ProductImages;
 
   Client: Client;
@@ -199,6 +203,7 @@ export type TypeMapFilterSingles = {
     "SupplierCodeWithExtra" |
     "Item" |
     "ItemImage" |
+    "ItemImagesPostBody" |
     "Transaction" |
     "Variant" |
     "Ticket" |
@@ -206,6 +211,7 @@ export type TypeMapFilterSingles = {
     "TicketState" |
     "Product" |
     "ProductImage" |
+    "ProductImagesPostBody" |
     "Client" |
     "User"
   >]: null;

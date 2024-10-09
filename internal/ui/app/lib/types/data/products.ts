@@ -16,12 +16,23 @@ export const defaultProductFormState: ProductFormState = {
     name: [],
     description: [],
     clientWithAdd: [],
-    images: [],
+    //images: [],
   }
 }
 
 export type ProductWithImages = Product & {
-  images: null;
+  images: File[];
+}
+export type ProductWithImagesFormState = FormState<"ProductWithImages">
+export const defaultProductWithImagesFormState: ProductWithImagesFormState = {
+  error: false,
+  message: "",
+  errorMessages: {
+    name: [],
+    description: [],
+    clientWithAdd: [],
+    images: [],
+  }
 }
 
 export const emptyProduct: Product = {

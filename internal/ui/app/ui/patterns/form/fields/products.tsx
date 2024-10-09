@@ -48,6 +48,48 @@ export const ProductFormFields = ({
       setElement={setElement}
       errorMessages={errorMessages.clientWithAdd}
     />
+    
+    <input type="hidden" name="type" value="Product" />
+  </>
+)}
+
+export const ProductWithImagesFormFields = ({
+  fields,
+  result,
+  errorMessages,
+}: FormFieldsPropsWithDictCompleteMap["ProductWithImages"] ) => { 
+  const [element, setElement] = useState(
+    result?.client ? 
+      fields.clientWithAdd.selectField.list.find(
+        e => e.id === result.client) as Client : 
+      { id: "", name: "" } as Client)
+
+  return (
+  <>
+    <InputPattern 
+      field="name"
+      dict={fields.name.dict}
+      defaultValue={result?.name}
+      className=""
+      label={true}
+      errorMessages={errorMessages.name}
+    />
+    <InputPattern 
+      field="description"
+      dict={fields.description.dict}
+      defaultValue={result?.description}
+      className=""
+      label={true}
+      errorMessages={errorMessages.description}
+    />
+    <SelectFieldWithAddPattern<"Client"> 
+      selectField={fields.clientWithAdd.selectField}
+      addDialog={fields.clientWithAdd.addDialog}
+      element={element}
+      setElement={setElement}
+      errorMessages={errorMessages.clientWithAdd}
+    />
+    
     <InputPattern 
       field="images"
       dict={fields.images.dict}
@@ -56,6 +98,7 @@ export const ProductFormFields = ({
       label={true}
       errorMessages={errorMessages.images}
     />
-    <input type="hidden" name="type" value="Product" />
+
+    <input type="hidden" name="type" value="ProductWithImages" />
   </>
 )}

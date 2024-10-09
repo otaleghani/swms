@@ -384,7 +384,6 @@ export type ProductFormFieldsProps = {
     K extends "name" ? FieldsPropsMap[K] :
     K extends "description" ? FieldsPropsMap[K] :
     K extends "clientWithAdd" ? FieldsPropsMap[K] :
-    K extends "images" ? FieldsPropsMap[K] :
     K extends "button" ? FieldsPropsMap[K] :
     null;
 };

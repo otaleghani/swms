@@ -14,7 +14,10 @@ import {
 } from "../../types/requests";
 
 type RetrieveByIdMapOptions = {
-  [K in keyof TypeMapFilterSingles]: RequestOptions;
+  [K in Exclude<keyof TypeMapFilterSingles,
+    "ItemImagesPostBody" |
+    "ProductImagesPostBody"
+  >]: RequestOptions;
 }
 
 const options: RetrieveByIdMapOptions = {

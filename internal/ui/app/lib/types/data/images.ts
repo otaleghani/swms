@@ -6,6 +6,10 @@ export type ItemImage = {
   item: string;
   //variant: string;
 }
+export type ItemImagesPostBody = {
+  images: File[];
+  item: string;
+}
 export type ItemImages = ItemImage[];
 
 export type ProductImage = {
@@ -14,6 +18,10 @@ export type ProductImage = {
   product: string;
 }
 export type ProductImages = ProductImage[];
+export type ProductImagesPostBody = {
+  images: File[];
+  product: string;
+}
 
 export type ItemImagesFormState = FormState<"ItemImage">
 export const defaultItemImagesFormState: ItemImagesFormState = {

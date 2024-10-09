@@ -47,4 +47,6 @@ export const defaultItemFormState: ItemFormState = {
 
 export type ItemWithDefaultVariantAndImages = Item & Variant & {
   images: File[];
+  variantsJSON: string;
+  codesJSON: string;
 }

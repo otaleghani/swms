@@ -9,7 +9,12 @@ import { Item, ItemWithDefaultVariantAndImages } from "../data/items";
 import { Category } from "../data/categories";
 import { Subcategory } from "../data/subcategories";
 import { Client } from "../data/clients";
-import { ItemImage, ProductImage } from "../data/images";
+import { 
+  ItemImage, 
+  ItemImagesPostBody, 
+  ProductImage, 
+  ProductImagesPostBody 
+} from "../data/images";
 import { Product, ProductWithImages } from "../data/products";
 import { Supplier } from "../data/suppliers";
 import { SupplierCode } from "../data/supplierCodes";
@@ -33,10 +38,7 @@ export interface FormMap {
   Item: Item;
   Variant: Variant;
   //ItemImage: ItemImage;
-  ItemImage: {
-    images: File[];
-    item: string;
-  };
+  ItemImage: ItemImagesPostBody;
   ItemComplete: ItemWithDefaultVariantAndImages;
 
   Category: Category;
@@ -45,10 +47,7 @@ export interface FormMap {
   Product: Product;
   ProductWithImages: ProductWithImages;
   //ProductImage: ProductImage;
-  ProductImage: {
-    images: File[];
-    product: string;
-  };
+  ProductImage: ProductImagesPostBody;
   Client: Client;
   Supplier: Supplier;
   SupplierCode: SupplierCode;

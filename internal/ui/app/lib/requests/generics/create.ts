@@ -21,7 +21,9 @@ type CreateMapOptions = {
     "RackWithExtra" |
     "ShelfWithExtra" |
     "SupplierWithExtra" |
-    "SupplierCodeWithExtra"
+    "SupplierCodeWithExtra" |
+    "ItemImage" |
+    "ProductImage"
   >]: RequestOptions;
 }
 
@@ -35,14 +37,14 @@ const options: CreateMapOptions = {
   "Supplier":       { path: "suppliers/",       type: "Supplier" },
   "SupplierCode":   { path: "supplier-codes/",  type: "SupplierCode" },
   "Item":           { path: "items/",           type: "Item" },
-  "ItemImage":      { path: "item-images/",     type: "ItemImage" },
+  "ItemImagesPostBody":      { path: "item-images/",     type: "ItemImagesPostBody" },
   "Transaction":    { path: "transition/",      type: "Transaction" },
   "Variant":        { path: "variants/",        type: "Variant" },
   "Ticket":         { path: "tickets/",         type: "Ticket" },
   "TicketType":     { path: "ticket-types/",    type: "TicketType" },
   "TicketState":    { path: "aisles-states/",   type: "TicketState" },
   "Product":        { path: "products/",        type: "Product" },
-  "ProductImage":   { path: "product-images/",  type: "ProductImage" },
+  "ProductImagesPostBody":   { path: "product-images/",  type: "ProductImagesPostBody" },
   "Client":         { path: "clients/",         type: "Client" },
   "User":           { path: "users/",           type: "User" },
 }
