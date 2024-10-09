@@ -1,21 +1,6 @@
 "use server";
 
 import { FormMap, FormState } from "../../types/form/form";
-import validateResponse from "../../validation/response";
-import { create } from "../../requests/generics/create";
-import { createInBulk } from "../../requests/generics/createInBulk";
-import { Zone, ZonesBulkPostRequestBody } from "../../types/data/zones";
-import { Aisle, AislesBulkPostRequestBody } from "../../types/data/aisles";
-import { Rack, RacksBulkPostRequestBody } from "../../types/data/racks";
-import { Shelf, ShelfsBulkPostRequestBody } from "../../types/data/shelfs";
-import { Item, ItemWithDefaultVariantAndImages } from "../../types/data/items";
-import { ItemImagesPostBody, ProductImagesPostBody } from "../../types/data/images";
-import { Variant, Variants } from "../../types/data/variants";
-import { SupplierCodes } from "../../types/data/supplierCodes";
-import { remove } from "../../requests/generics/remove";
-import { Category } from "../../types/data/categories";
-import { Subcategory } from "../../types/data/subcategories";
-import { Product, ProductWithImages } from "../../types/data/products";
 
 import { createZone, createZonesBulk } from "./data/zones";
 import { createAisle, createAislesBulk } from "./data/aisles";
@@ -29,6 +14,13 @@ import { createSubcategory } from "./data/subcategories";
 import { createProduct, createProductWithImages } from "./data/products";
 import { createProductImages } from "./data/productImages";
 import { createClient } from "./data/clients";
+import { createSupplier } from "./data/suppliers";
+import { createSupplierCode } from "./data/supplierCodes";
+import { createTicket } from "./data/tickets";
+import { createTicketType } from "./data/ticketTypes";
+import { createTicketState } from "./data/ticketStates";
+import { createTransaction } from "./data/transactions";
+import { createUser } from "./data/users";
 
 export async function validateCreateRequests<K extends keyof FormMap>(
   state: FormState<K>,
@@ -36,7 +28,6 @@ export async function validateCreateRequests<K extends keyof FormMap>(
   locale: string,
 ) {
   let result;
-  let response;
 
   switch (type) {
     case "Zone":
@@ -94,46 +85,31 @@ export async function validateCreateRequests<K extends keyof FormMap>(
       result = await createClient(state, locale)
 
     case "Supplier":
-      stateValidation = await validations.Supplier(
-        state as FormState<"Supplier">,
-        locale as string
-      );
+      result = await createSupplier(state, locale)
+
     case "SupplierCode":
-      stateValidation = await validations.SupplierCode(
-        state as FormState<"SupplierCode">,
-        locale as string
-      );
+      result = await createSupplierCode(state, locale)
+
     case "Ticket":
-      stateValidation = await validations.Ticket(
-        state as FormState<"Ticket">,
-        locale as string
-      );
+      result = await createTicket(state, locale)
+    
     case "TicketType":
-      stateValidation = await validations.TicketType(
-        state as FormState<"TicketType">,
-        locale as string
-      );
+      result = await createTicketType(state, locale)
+
     case "TicketState":
-      stateValidation = await validations.TicketState(
-        state as FormState<"TicketState">,
-        locale as string
-      );
+      result = await createTicketState(state, locale)
+
     case "Transaction":
-      stateValidation = await validations.Transaction(
-        state as FormState<"Transaction">,
-        locale as string
-      );
+      result = await createTransaction(state, locale)
+
     case "User":
-      stateValidation = await validations.User(
-        state as FormState<"User">, 
-        locale as string
-      );
+      result = await createUser(state, locale)
+
     default: 
-      stateValidation = state;
-      state.error = true;
-      state.message = "Oh-oh. This one is a doozy. Open an issue on github with the steps to replicate this message. Thank you!"
+      result = state;
+      result.error = true;
+      result.message = "Oh-oh. This one is a doozy. Open an issue on github with the steps to replicate this message. Thank you!"
   }
 
-
-  return stateValidation;
+  return result;
 }

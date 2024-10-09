@@ -49,6 +49,7 @@ export default function FormPattern<K extends keyof FormPropsMap>({
   showButton,
 }: FormPropsMap[K] & { showButton?: boolean }) {
   let locale = usePathname().split("/")[1] as AcceptedLocales;
+  let values = form.initialState.result as any;
   const [state, action, isPending] = useActionState(
     form.formAction,
     form.initialState,
@@ -68,6 +69,31 @@ export default function FormPattern<K extends keyof FormPropsMap>({
   return (
     <form id={form.formName} action={action}>
       <div className="grid gap-4 py-4">
+        { type === "Delete" && values && (
+          <>
+            <input type="hidden" name="id" value={values.id} />
+            <input type="hidden" name="type" value={values.type} />
+          </>
+        )}
+
+        {
+        //  type === "Replace" && values && (
+        //  <>
+        //    <input type="hidden" name="id" value={values.id} />
+        //    <input 
+        //      type="hidden" 
+        //      name="itemToDelete" 
+        //      value={values.itemToDelete} 
+        //    />
+        //    <input 
+        //      type="hidden" 
+        //      name="itemThatReplaces" 
+        //      value={values.itemThatReplaces} 
+        //    />
+        //  </>
+        //)
+        }
+
 
         { type === "Zone" && (
           <FormFields.Zone

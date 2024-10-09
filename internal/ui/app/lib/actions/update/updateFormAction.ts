@@ -2,9 +2,9 @@
 
 import { FormMap, FormState } from "../../types/form/form";
 import { validateState } from "../validateState";
-import { validateCreateRequests } from "./validateCreateRequests";
+import { validateUpdateRequests } from "./validateUpdateRequests";
 
-export async function createFormAction<K extends keyof FormMap>(
+export async function updateFormAction<K extends keyof FormMap>(
   currentState: FormState<K>,
   formData: FormData
 ) {
@@ -37,7 +37,7 @@ export async function createFormAction<K extends keyof FormMap>(
     return stateValidation 
   };
 
-  const requestValidation = await validateCreateRequests<K>(
+  const requestValidation = await validateUpdateRequests<K>(
     state,
     type as string,
     locale as string,

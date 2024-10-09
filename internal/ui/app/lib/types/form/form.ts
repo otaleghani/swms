@@ -56,6 +56,16 @@ export interface FormMap {
   TicketState: TicketState;
   Transaction: Transaction;
   User: User;
+
+  Delete: {
+    id: string;
+    type: string;
+  };
+  Replace: {
+    id_: string;
+    itemToDelete: string;
+    itemThatReplaces: string;
+  }
 }
 
 export interface FormState<X extends keyof FormMap> {

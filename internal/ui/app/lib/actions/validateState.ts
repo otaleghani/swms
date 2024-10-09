@@ -23,15 +23,17 @@ import { validateZone, validateZonesBulk } from "../validation/data/zones";
 
 /** Types and interfaces */
 import { FormMap, FormState } from "../types/form/form";
+import { validateDelete } from "../validation/delete";
 
 type ValidationsMap = {
-  [K in keyof FormMap]: (
+  [K in keyof Omit<FormMap, "Replace">]: (
     state: FormState<K>,
     locale: string
   ) => Promise<FormState<K>>;
 };
 
 const validations: ValidationsMap = {
+  Delete: validateDelete,
   Zone: validateZone,
   Aisle: validateAisle,
   Rack: validateRack,
@@ -67,6 +69,12 @@ export async function validateState<K extends keyof FormMap>(
   let stateValidation;
 
   switch (type) {
+    case "Delete":
+      stateValidation = await validations.Delete(
+        state as FormState<"Delete">, 
+        locale as string
+      );
+
     case "Zone":
       stateValidation = await validations.Zone(
         state as FormState<"Zone">, 

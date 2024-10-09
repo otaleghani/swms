@@ -3,19 +3,19 @@
 import { FormMap, FormState } from "@/app/lib/types/form/form"
 import { create } from "@/app/lib/requests/generics/create";
 import validateResponse from "@/app/lib/validation/response";
-import { ItemImagesPostBody } from "@/app/lib/types/data/images";
+import { SupplierCode } from "@/app/lib/types/data/supplierCodes";
 
-export async function createItemImages<K extends keyof FormMap>(
+export async function createSupplierCode<K extends keyof FormMap>(
   state: FormState<K>,
   locale: string
 ){
   const response = await create(
-    "ItemImagesPostBody", 
-    state.result as ItemImagesPostBody
+    "SupplierCode", 
+    state.result as SupplierCode
   );
   const stateValidation = await validateResponse(
     response,
-    state as FormState<"ItemImage">, 
+    state as FormState<"SupplierCode">, 
     locale as string
   );
 

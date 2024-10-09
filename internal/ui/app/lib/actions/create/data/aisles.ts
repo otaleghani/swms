@@ -12,7 +12,7 @@ import { FormMap } from "@/app/lib/types/form/form";
 
 export async function createAisle<K extends keyof FormMap>(
   state: FormState<K>,
-  locale: string
+  locale: string,
 ){
   const response = await create("Aisle", state.result as Aisle);
   const stateValidation = await validateResponse(
@@ -20,6 +20,7 @@ export async function createAisle<K extends keyof FormMap>(
     state as FormState<"Aisle">, 
     locale as string
   );
+
   return stateValidation;
 }
 
