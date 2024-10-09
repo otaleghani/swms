@@ -11,10 +11,11 @@ import DialogFormPattern from "@/app/ui/patterns/dialog/DialogFormPattern";
 import { fieldsDefaultProps } from "@/app/lib/types/form/fields";
 import PositionSelectField from "@/app/ui/modules/positions/PositionSelectField";
 import PositionSelectFieldWithAdd from "@/app/ui/modules/positions/PositionSelectFieldWithAdd";
-import { defaultProductFormState } from "@/app/lib/types/data/products";
+import { defaultProductFormState, defaultProductWithImagesFormState } from "@/app/lib/types/data/products";
 import { Client, Clients, defaultClientFormState } from "@/app/lib/types/data/clients";
 import { DatePickerPattern } from "@/app/ui/patterns/form/input/DatePickerPattern";
-import { createFormAction } from "@/app/lib/actions/createFormAction";
+import { createFormAction } from "@/app/lib/actions/create/createFormAction"
+import { FormField } from "@/components/form";
 
 export default async function TestingPage( {params}: {params: {lang: string}}) {
   const dict = await getDictionary(params.lang as Locale);
@@ -525,7 +526,7 @@ formAction: createFormAction<"Zone">,
       />
 
       
-      <FormPattern<"Product"> 
+      <FormPattern<"ProductWithImages"> 
         self={{
           fields: {
             ...fieldsDefaultProps,
@@ -663,18 +664,19 @@ formAction: createFormAction<"Zone">,
         form={{
           formName: "NOMEFORM",
           initialState: {
-            ...defaultProductFormState,
+            ...defaultProductWithImagesFormState,
             result: {
-              ...defaultProductFormState.result,
+              ...defaultProductWithImagesFormState.result,
               name: "default value",
-              client: "nil"
+              client: "nil",
+              images: [],
             }
           },
           formAction: zoneAddFormAction,
           // notifyFormSent
           // refreshItemList
         }}
-        type="Product"
+        type="ProductWithImages"
       />
       <DatePickerPattern 
         field="openDate"
@@ -692,6 +694,15 @@ formAction: createFormAction<"Zone">,
         defaultValue={stringDate}
       />
 
+      <FormPattern<"Delete"> 
+        self={{
+          fields: null,
+        }}
+        form={{
+          
+        }}
+
+      />
     </main>
   )
 }

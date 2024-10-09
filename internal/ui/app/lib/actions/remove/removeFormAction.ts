@@ -1,7 +1,23 @@
 "use server";
 
-import { FormMap, FormState } from "../../types/form/form";
+/** Actions */
+import { remove } from "../../requests/generics/remove";
 import { validateState } from "../validateState";
+import validateResponse from "../../validation/response";
+
+/** Types and interfaces */
+import { FormMap, FormState } from "../../types/form/form";
+
+type RemovableItem = Exclude<keyof FormMap,
+    "ZonesBulk" |
+    "AislesBulk" |
+    "RacksBulk" |
+    "ShelfsBulk" |
+    "ItemComplete" |
+    "ProductWithImages" |
+    "Delete" |
+    "Replace"
+  >;
 
 export async function deleteFormAction(
   currentState: FormState<"Delete">,
@@ -18,9 +34,25 @@ export async function deleteFormAction(
     type: type as string,
   }
 
-  const stateValidation = validateState<"Delete">(
+  const stateValidation = await validateState<"Delete">(
     state,
     type as string,
     locale as string
   );
+
+  // We dont need a validator like in the create and update
+  // because in the validateState we already checked if the
+  // item exists in the db.
+  const response = await remove(
+    type as RemovableItem, 
+    state.result.id,
+  )
+  const requestValidation = await validateResponse(
+    response,
+    state as FormState<"Delete">,
+    locale as string,
+  )
+
+
+  return requestValidation;
 }
