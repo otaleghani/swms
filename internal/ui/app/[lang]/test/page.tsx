@@ -23,9 +23,10 @@ export default async function TestingPage( {params}: {params: {lang: string}}) {
 
   const pZones = retrieve("Zones");
   const pAisles = retrieve("Aisles");
-  const pClients = retrieve("Clients");
+  //const pClients = retrieve("Clients");
+  const clients = [] as Clients;
 
-  const [zones, aisles, clients] = await Promise.all([pZones, pAisles, pClients])
+  const [zones, aisles] = await Promise.all([pZones, pAisles])
 
   const stringDate = "2020-08-15";
 
@@ -586,7 +587,7 @@ formAction: createFormAction<"Zone">,
                     not_found: "sus",
                   }
                 },
-                list: clients.data as Client[],
+                list: clients as Client[],
               },
               addDialog: {
                 self: {

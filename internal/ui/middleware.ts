@@ -7,6 +7,10 @@ export function middleware(request: NextRequest) {
   const locales = headers().get('accept-language');
   const { pathname } = request.nextUrl;
 
+  if (pathname.startsWith("/workers")) {
+    return 
+  }
+
   if (pathname.startsWith("/api")) {
     return 
   }

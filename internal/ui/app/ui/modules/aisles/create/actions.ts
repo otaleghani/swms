@@ -1,7 +1,7 @@
 "use server";
 
 /** Actons */
-import { validateAisle, validateAisleBulk } from "@/app/lib/validation/data/aisles";
+import { validateAisle, validateAislesBulk } from "@/app/lib/validation/data/aisles";
 import validateResponse from "@/app/lib/validation/response";
 import { create } from "@/app/lib/requests/generics/create";
 import { createInBulk } from "@/app/lib/requests/generics/createInBulk";
@@ -74,7 +74,7 @@ export async function aisleAddBulkFormAction(
   };
 
   // Validate the passed fields
-  let fieldValidation = await validateAisleBulk(state, locale as string)
+  let fieldValidation = await validateAislesBulk(state, locale as string)
   if (fieldValidation.error) {
     return fieldValidation as any;
   }

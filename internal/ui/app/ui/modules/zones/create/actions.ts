@@ -3,7 +3,7 @@
 /** Actions */
 import { 
   validateZone, 
-  validateZoneBulk 
+  validateZonesBulk 
 } from "@/app/lib/validation/data/zones";
 import validateResponse from "@/app/lib/validation/response";
 import { create } from "@/app/lib/requests/generics/create";

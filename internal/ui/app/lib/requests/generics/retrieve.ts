@@ -1,6 +1,6 @@
 "use server";
 
-import stringEmitter from "../../emitter";
+import stringEmitter from "../../emitters";
 
 /** Actions */
 import fetchData from "../fetch";
@@ -14,6 +14,7 @@ import {
   TypeMap,
   TypeMapFilterLists,
 } from "../../types/requests";
+import { StreamedChanges } from "@/app/api/stream/route";
 
 type RetrieveMapOptions = {
   [K in keyof TypeMapFilterLists]: RequestOptions;
@@ -60,6 +61,10 @@ export async function retrieve<T extends keyof RetrieveMapOptions>(
     tag: revalidateTags[option.type],
   })
 
-  stringEmitter.emit('message', option.type);
+  const streamedChange: StreamedChanges = {
+    id: "3413f9a0-f6af-4211-8ff0-231ed17398f4",
+    type: option.type
+  };
+  stringEmitter.emit('message', streamedChange);
   return response
 }

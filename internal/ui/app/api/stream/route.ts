@@ -1,53 +1,31 @@
 export const dynamic = "force-dynamic";
-import stringEmitter from "@/app/lib/emitter";
-
-
-export async function POST(request: Request) {
-  const encoder = new TextEncoder()
-  // Create a streaming response
-
-  const customReadable = new ReadableStream({
-    start(controller) {
-        let message;
-        stringEmitter.on('message', (msg: string) => {
-          console.log(`Received message: ${msg}`);
-          message = msg;
-        }); 
-        controller.enqueue(encoder.encode(`data: ${message}\n\n`))
-    },
-  });
-  
-  // Return the stream response and keep the connection alive
-  return new Response(customReadable, {
-    // Set the headers for Server-Sent Events (SSE)
-    headers: {
-      Connection: "keep-alive",
-      "Content-Encoding": "none",
-      "Cache-Control": "no-cache, no-transform",
-      "Content-Type": "text/event-stream; charset=utf-8",
-    },
-  })
-}
-
-// app/api/sse/route.ts
-
+import stringEmitter from "@/app/lib/emitters";
 import { NextRequest, NextResponse } from 'next/server';
 
-type SSEData = {
-  message: string;
+// You want to stream a notification to the client whenever
+// - an item was updated
+// - an item was deleted
+// - an item was added
+//
+// Sometimes you'll have some changes that are a little "stranger"
+// like the bulk add, where you maybe want to do a full page reload
+// instead of a singular fetch.
+export type StreamedChanges = {
+  type: string;
+  id: string;
 };
 
 // Define headers for SSE
 const headers = {
-  'Content-Type': 'text/event-stream',
-  'Cache-Control': 'no-cache',
-  Connection: 'keep-alive',
-  // Optional: Uncomment the following line if you need to allow CORS
-  // 'Access-Control-Allow-Origin': '*',
+  "Content-Type": "text/event-stream",
+  "Cache-Control": "no-cache",
+  "Connection": "keep-alive",
+  "Access-Control-Allow-Origin": "*",
 };
 
 export const GET = async (request: NextRequest) => {
   const encoder = new TextEncoder();
+  let isClosed = true;
 
   const stream = new ReadableStream<Uint8Array>({
     start(controller) {
@@ -55,27 +33,28 @@ export const GET = async (request: NextRequest) => {
       controller.enqueue(encoder.encode(':ok\n\n'));
 
       // Function to send data
-      const sendData = (data: SSEData) => {
+      const sendData = (data: StreamedChanges) => {
         const formattedData = `data: ${JSON.stringify(data)}\n\n`;
+        if (controller.desiredSize !== null && 
+            controller.desiredSize > 0){
         controller.enqueue(encoder.encode(formattedData));
+        }
       };
 
-      // Send a ping every 10 seconds
-      // const intervalId = setInterval(() => {
-      //   sendData({ message: 'Ping from server' });
-      // }, 5000);
-      stringEmitter.on('message', (msg: string) => {
-        console.log(`Received message: ${msg}`);
-        sendData({ message: msg });
+      // Handle data fetched
+      stringEmitter.on('message', (data: StreamedChanges) => {
+        sendData(data);
       }); 
 
       // Handle client disconnect
       request.signal.addEventListener('abort', () => {
-        //clearInterval(intervalId);
         controller.close();
         console.log('SSE connection closed by client');
       });
     },
+    cancel(reason) {
+      isClosed = true;
+    }
   });
 
   return new NextResponse(stream, { headers });
