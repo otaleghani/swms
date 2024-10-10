@@ -8,7 +8,7 @@ import { FormMap, FormState } from "../types/form/form";
 import { retrieveById } from "../requests/generics/retrieveById";
 import validateResponse from "./response";
 
-type Testone = Exclude<keyof FormMap,
+type RetrievableItem = Exclude<keyof FormMap,
     "ZonesBulk" |
     "AislesBulk" |
     "RacksBulk" |
@@ -34,7 +34,7 @@ export async function validateDelete(
 
   if (state.result.id) {
     const response = await retrieveById(
-      state.result.type as Testone, 
+      state.result.type as RetrievableItem, 
       state.result.id
     );
     state = await validateResponse(
@@ -43,6 +43,7 @@ export async function validateDelete(
       locale,
     );
   }
+
 
   // if a-okay we just return, because if it was a good retrieve it 
   // means that the id was a-okay

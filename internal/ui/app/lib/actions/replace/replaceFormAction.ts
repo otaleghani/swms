@@ -1,14 +1,14 @@
 "use server";
 
 /** Actions */
-import { remove } from "../../requests/generics/remove";
+import { replace } from "../../requests/generics/replace";
 import { validateState } from "../validateState";
 import validateResponse from "../../validation/response";
 
 /** Types and interfaces */
 import { FormMap, FormState } from "../../types/form/form";
 
-type RemovableItem = Exclude<keyof FormMap,
+type ReplaceableItem = Exclude<keyof FormMap,
     "ZonesBulk" |
     "AislesBulk" |
     "RacksBulk" |
@@ -19,21 +19,23 @@ type RemovableItem = Exclude<keyof FormMap,
     "Replace"
   >;
 
-export async function removeFormAction(
-  currentState: FormState<"Delete">,
+export async function replaceFormAction(
+  currentState: FormState<"Replace">,
   formData: FormData
 ) {
   let state = currentState;
-  // let result = state.result ? state.result : ({} as FormMap["Delete"]);
   let locale = formData.get("locale");
   let type = formData.get("type");
-  let id = formData.get("id");
+  let replaced = formData.get("id");
+  let replacer = formData.get("id");
 
   // resets the state and creates the result
   //state.error = false;
   //state.message = "";
   state.result = {
-    id: id as string,
+    replaced: replaced as string,
+    replacer: replaced as string,
+
     type: type as string,
   }
   
@@ -50,9 +52,10 @@ export async function removeFormAction(
   // We dont need a validator like in the create and update
   // because in the validateState we already checked if the
   // item exists in the db.
-  const response = await remove(
+  const response = await replace(
     type as RemovableItem, 
-    state.result.id,
+    state.result.replaced,
+    state.result.replacer
   )
   const requestValidation = await validateResponse(
     response,

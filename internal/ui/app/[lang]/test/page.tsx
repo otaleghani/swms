@@ -16,6 +16,7 @@ import { Client, Clients, defaultClientFormState } from "@/app/lib/types/data/cl
 import { DatePickerPattern } from "@/app/ui/patterns/form/input/DatePickerPattern";
 import { createFormAction } from "@/app/lib/actions/create/createFormAction"
 import { FormField } from "@/components/form";
+import { removeFormAction } from "@/app/lib/actions/remove/removeFormAction";
 
 export default async function TestingPage( {params}: {params: {lang: string}}) {
   const dict = await getDictionary(params.lang as Locale);
@@ -696,12 +697,32 @@ formAction: createFormAction<"Zone">,
 
       <FormPattern<"Delete"> 
         self={{
-          fields: null,
+          fields: {
+            ...fieldsDefaultProps,
+            button: {
+              active: "delete",
+              pending: "pendente..."
+            }
+          }
         }}
         form={{
-          
+          formName: "testDelete",
+          initialState: {
+            error: false,
+            message: "",
+            result: {
+              id: "e31e8049-3fab-493f-a25b-b3ca19635f21",
+              type: "Zone",
+            },
+            errorMessages: {
+              id: [],
+              type: [],
+            }
+          },
+          formAction: removeFormAction,
         }}
-
+        type="Delete"
+        showButton
       />
     </main>
   )

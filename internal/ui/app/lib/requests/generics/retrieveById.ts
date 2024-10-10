@@ -61,7 +61,7 @@ export async function retrieveById<T extends keyof RetrieveByIdMapOptions>(
   const option = options[request];
 
   const response = await fetchData<TypeMap[T]>({
-    path: option.path.replace(/{{id}}{{id}}/g, id),
+    path: option.path.replace(/{{id}}/g, id),
     method: "GET",
     tag: revalidateTags[option.type],
   })

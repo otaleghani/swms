@@ -27,7 +27,7 @@ export async function validateItemImage(
   
   (state.errorMessages.images = validateString(
     state.result.item, 
-    dict.forms.fields.item.validation, 
+    dict.forms.fields.items.validation, 
     VALIDATION_SETTINGS.foreignKeys.minLength,
     VALIDATION_SETTINGS.foreignKeys.maxLength,
   )).length != 0 && (state.error = true);

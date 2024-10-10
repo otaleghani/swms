@@ -7,6 +7,10 @@ export function middleware(request: NextRequest) {
   const locales = headers().get('accept-language');
   const { pathname } = request.nextUrl;
 
+  if (pathname.startsWith("/api")) {
+    return 
+  }
+
   if (cookies().get("access") === undefined) {
     console.log(pathname)
     if (!pathname.includes("login") && !pathname.includes("register")) {
@@ -20,9 +24,6 @@ export function middleware(request: NextRequest) {
     return 
   }
   if (pathname.startsWith('/favicon')) {
-    return 
-  }
-  if (pathname.startsWith("/api")) {
     return 
   }
   if (request.method === "POST") {

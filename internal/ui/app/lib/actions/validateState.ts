@@ -32,34 +32,34 @@ type ValidationsMap = {
   ) => Promise<FormState<K>>;
 };
 
-const validations: ValidationsMap = {
-  Delete: validateDelete,
-  Zone: validateZone,
-  Aisle: validateAisle,
-  Rack: validateRack,
-  Shelf: validateShelf,
-  ZonesBulk: validateZonesBulk,
-  AislesBulk: validateAislesBulk,
-  RacksBulk: validateRacksBulk,
-  ShelfsBulk: validateShelfsBulk,
-  Item: validateItem,
-  Variant: validateVariant,
-  ItemImage: validateItemImage,
-  ItemComplete: validateItemComplete,
-  Category: validateCategory,
-  Subcategory: validateSubcategory,
-  Product: validateProduct,
-  ProductWithImages: validateProductWithImages,
-  ProductImage: validateProductImage,
-  Client: validateClient,
-  Supplier: validateSupplier,
-  SupplierCode: validateSupplierCode,
-  Ticket: validateTicket,
-  TicketType: validateTicketType,
-  TicketState: validateTicketState,
-  Transaction: validateTransaction,
-  User: validateUser,
-};
+//const validations: ValidationsMap = {
+//  Delete: validateDelete,
+//  Zone: validateZone,
+//  Aisle: validateAisle,
+//  Rack: validateRack,
+//  Shelf: validateShelf,
+//  ZonesBulk: validateZonesBulk,
+//  AislesBulk: validateAislesBulk,
+//  RacksBulk: validateRacksBulk,
+//  ShelfsBulk: validateShelfsBulk,
+//  Item: validateItem,
+//  Variant: validateVariant,
+//  ItemImage: validateItemImage,
+//  ItemComplete: validateItemComplete,
+//  Category: validateCategory,
+//  Subcategory: validateSubcategory,
+//  Product: validateProduct,
+//  ProductWithImages: validateProductWithImages,
+//  ProductImage: validateProductImage,
+//  Client: validateClient,
+//  Supplier: validateSupplier,
+//  SupplierCode: validateSupplierCode,
+//  Ticket: validateTicket,
+//  TicketType: validateTicketType,
+//  TicketState: validateTicketState,
+//  Transaction: validateTransaction,
+//  User: validateUser,
+//};
 
 export async function validateState<K extends keyof FormMap>(
   state: FormState<K>,
@@ -68,140 +68,203 @@ export async function validateState<K extends keyof FormMap>(
 ) {
   let stateValidation;
 
+  if (type === "Delete") {
+    stateValidation = await validateDelete(
+      state as FormState<"Delete">, 
+      locale as string
+    );
+  }
+
+  if (type === "Zone") {
+    stateValidation = await validateZone(
+      state as FormState<"Zone">, 
+      locale as string
+    );
+  }
+
   switch (type) {
     case "Delete":
-      stateValidation = await validations.Delete(
+      console.log("got here")
+      stateValidation = await validateDelete(
         state as FormState<"Delete">, 
         locale as string
       );
+      break;
 
     case "Zone":
-      stateValidation = await validations.Zone(
+      console.log("got here zone")
+      stateValidation = await validateZone(
         state as FormState<"Zone">, 
         locale as string
       );
+      break;
 
     case "Aisle":
-      stateValidation = await validations.Zone(
+      stateValidation = await validateAisle(
         state as FormState<"Aisle">, 
         locale as string
       );
+      break;
 
     case "Rack":
-      stateValidation = await validations.Rack(
+      stateValidation = await validateRack(
         state as FormState<"Rack">,
         locale as string
       );
+      break;
+
     case "Shelf":
-      stateValidation = await validations.Shelf(
+      stateValidation = await validateShelf(
         state as FormState<"Shelf">,
         locale as string
       );
+      break;
+
     case "ZonesBulk":
-      stateValidation = await validations.ZonesBulk(
+      stateValidation = await validateZonesBulk(
         state as FormState<"ZonesBulk">,
         locale as string
       );
+      break;
+
     case "AislesBulk":
-      stateValidation = await validations.AislesBulk(
+      stateValidation = await validateAislesBulk(
         state as FormState<"AislesBulk">,
         locale as string
       );
+      break;
+
     case "RacksBulk":
-      stateValidation = await validations.RacksBulk(
+      stateValidation = await validateRacksBulk(
         state as FormState<"RacksBulk">,
         locale as string
       );
+      break;
+
     case "ShelfsBulk":
-      stateValidation = await validations.ShelfsBulk(
+      stateValidation = await validateShelfsBulk(
         state as FormState<"ShelfsBulk">,
         locale as string
       );
+      break;
+
     case "Item":
-      stateValidation = await validations.Item(
+      stateValidation = await validateItem(
         state as FormState<"Item">, 
         locale as string
       );
+      break;
+
     case "Variant":
-      stateValidation = await validations.Variant(
+      stateValidation = await validateVariant(
         state as FormState<"Variant">,
         locale as string
       );
+      break;
+
     case "ItemImage":
-      stateValidation = await validations.ItemImage(
+      stateValidation = await validateItemImage(
         state as FormState<"ItemImage">,
         locale as string
       );
+      break;
+
     case "ItemComplete":
-      stateValidation = await validations.ItemComplete(
+      stateValidation = await validateItemComplete(
         state as FormState<"ItemComplete">,
         locale as string
       );
+      break;
+
     case "Category":
-      stateValidation = await validations.Category(
+      stateValidation = await validateCategory(
         state as FormState<"Category">,
         locale as string
       );
     case "Subcategory":
-      stateValidation = await validations.Subcategory(
+      stateValidation = await validateSubcategory(
         state as FormState<"Subcategory">,
         locale as string
       );
+      break;
+
     case "Product":
-      stateValidation = await validations.Product(
+      stateValidation = await validateProduct(
         state as FormState<"Product">,
         locale as string
       );
+      break;
+
     case "ProductWithImages":
-      stateValidation = await validations.ProductWithImages(
+      stateValidation = await validateProductWithImages(
         state as FormState<"ProductWithImages">,
         locale as string
       );
+      break;
+
     case "ProductImage":
-      stateValidation = await validations.ProductImage(
+      stateValidation = await validateProductImage(
         state as FormState<"ProductImage">,
         locale as string
       );
+      break;
+
     case "Client":
-      stateValidation = await validations.Client(
+      stateValidation = await validateClient(
         state as FormState<"Client">,
         locale as string
       );
+      break;
+
     case "Supplier":
-      stateValidation = await validations.Supplier(
+      stateValidation = await validateSupplier(
         state as FormState<"Supplier">,
         locale as string
       );
+      break;
+
     case "SupplierCode":
-      stateValidation = await validations.SupplierCode(
+      stateValidation = await validateSupplierCode(
         state as FormState<"SupplierCode">,
         locale as string
       );
+      break;
+
     case "Ticket":
-      stateValidation = await validations.Ticket(
+      stateValidation = await validateTicket(
         state as FormState<"Ticket">,
         locale as string
       );
+      break;
+
     case "TicketType":
-      stateValidation = await validations.TicketType(
+      stateValidation = await validateTicketType(
         state as FormState<"TicketType">,
         locale as string
       );
+      break;
+
     case "TicketState":
-      stateValidation = await validations.TicketState(
+      stateValidation = await validateTicketState(
         state as FormState<"TicketState">,
         locale as string
       );
+      break;
+
     case "Transaction":
-      stateValidation = await validations.Transaction(
+      stateValidation = await validateTransaction(
         state as FormState<"Transaction">,
         locale as string
       );
+      break;
+
     case "User":
-      stateValidation = await validations.User(
+      stateValidation = await validateUser(
         state as FormState<"User">, 
         locale as string
       );
+      break;
+
     default: 
       stateValidation = state;
       state.error = true;

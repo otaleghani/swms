@@ -474,6 +474,13 @@ export type UserFormFieldsProps = {
 };
 
 // prettier-ignore
+export type DeleteFormFieldsProps = {
+  [K in keyof FieldsPropsMap]:
+    K extends "button" ? FieldsPropsMap[K] :
+    null;
+};
+
+// prettier-ignore
 /** Maps every fields for each type */
 export type FormFieldsPropsMap = {
   [K in keyof FormMap]: 
@@ -502,6 +509,7 @@ export type FormFieldsPropsMap = {
     K extends "TicketType" ? TicketTypeFormFieldsProps :
     K extends "Transaction" ? TransactionFormFieldsProps :
     K extends "User" ? UserFormFieldsProps :
+    K extends "Delete" ? DeleteFormFieldsProps :
     null;
 };
 

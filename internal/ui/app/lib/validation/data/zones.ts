@@ -5,21 +5,22 @@ import { VALIDATION_SETTINGS } from "../validation.config";
 
 /** Actions */
 import validateString from "../strings";
+import validateNumber from "../number";
 import { getDictionary, Locale } from "@/lib/dictionaries";
 import { validateExisting } from "../database";
 
 /** Types and interfaces */
 import { Zone, ZonesBulkPostRequestBody } from "../../types/data/zones";
-import { FormState } from "../../types/misc";
-import validateNumber from "../number";
+import { FormState } from "../../types/form/form";
 
 /** Helper function used to validate the fields of a zone to be added or 
   * updated.
   * */
 export async function validateZone(
-  state: FormState<Zone>,
+  state: FormState<"Zone">,
   locale: string,
-): Promise<FormState<Zone>> {
+): Promise<FormState<"Zone">> {
+  console.log("somehow, I fired this")
   const dictPromise = getDictionary(locale as Locale);
   const [ dict ] = await Promise.all([ dictPromise ]);
   
@@ -60,9 +61,9 @@ export async function validateZone(
 }
 
 export async function validateZonesBulk(
-  state: FormState<ZonesBulkPostRequestBody>,
+  state: FormState<"ZonesBulk">,
   locale: string,
-): Promise<FormState<ZonesBulkPostRequestBody>> {
+): Promise<FormState<"ZonesBulk">> {
   const dictPromise = getDictionary(locale as Locale);
   const [ dict ] = await Promise.all([ dictPromise ]);
   
@@ -72,7 +73,7 @@ export async function validateZonesBulk(
     return state;
   }
 
-  (state.errorMessages.number = validateNumber(
+  (state.errorMessages.quantity = validateNumber(
     String(state.result.number), 
     dict.forms.fields.number.validation, 
     VALIDATION_SETTINGS.bigUnsignedNumber.minLength,

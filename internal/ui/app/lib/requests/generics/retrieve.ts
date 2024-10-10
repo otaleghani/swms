@@ -1,5 +1,7 @@
 "use server";
 
+import stringEmitter from "../../emitter";
+
 /** Actions */
 import fetchData from "../fetch";
 
@@ -57,5 +59,7 @@ export async function retrieve<T extends keyof RetrieveMapOptions>(
     method: "GET",
     tag: revalidateTags[option.type],
   })
+
+  stringEmitter.emit('message', option.type);
   return response
 }
