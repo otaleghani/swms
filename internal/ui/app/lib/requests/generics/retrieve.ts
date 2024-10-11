@@ -12,7 +12,6 @@ import {
   TypeMap,
   TypeMapFilterLists,
 } from "../../types/requests";
-import { ServerSentEventData } from "@/app/api/stream/route";
 
 type RetrieveMapOptions = {
   [K in keyof TypeMapFilterLists]: RequestOptions;

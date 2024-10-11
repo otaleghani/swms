@@ -31,79 +31,104 @@ export async function validateCreateRequests<K extends keyof FormMap>(
 
   switch (type) {
     case "Zone":
-      result = await createZone(state, locale)
+      result = await createZone(state, locale);
+      break;
 
     case "Aisle":
-      result = await createAisle(state, locale)
+      result = await createAisle(state, locale);
+      break;
 
     case "Rack":
-      result = await createRack(state, locale)
+      result = await createRack(state, locale);
+      break;
 
     case "Shelf":
-      result = await createShelf(state, locale)
+      result = await createShelf(state, locale);
+      break;
 
     case "ZonesBulk":
-      result = await createZonesBulk(state, locale)
+      result = await createZonesBulk(state, locale);
+      break;
 
     case "AislesBulk":
-      result = await createAislesBulk(state, locale)
+      result = await createAislesBulk(state, locale);
+      break;
 
     case "RacksBulk":
-      result = await createRacksBulk(state, locale)
+      result = await createRacksBulk(state, locale);
+      break;
 
     case "ShelfsBulk":
-      result = await createShelfsBulk(state, locale)
+      result = await createShelfsBulk(state, locale);
+      break;
 
     case "Item":
-      result = await createItem(state, locale)
+      result = await createItem(state, locale);
+      break;
 
     case "Variant":
-      result = await createVariant(state, locale)
+      result = await createVariant(state, locale);
+      break;
 
     case "ItemImage":
-      result = await createItemImages(state, locale)
+      result = await createItemImages(state, locale);
+      break;
 
     case "ItemComplete":
-      result = await createItemComplete(state, locale)
+      result = await createItemComplete(state, locale);
+      break;
 
     case "Category":
-      result = await createCategory(state, locale)
+      result = await createCategory(state, locale);
+      break;
 
     case "Subcategory":
-      result = await createSubcategory(state, locale)
+      result = await createSubcategory(state, locale);
+      break;
 
     case "Product":
-      result = await createProduct(state, locale)
+      result = await createProduct(state, locale);
+      break;
 
     case "ProductWithImages":
-      result = await createProductWithImages(state, locale)
+      result = await createProductWithImages(state, locale);
+      break;
 
     case "ProductImage":
-      result = await createProductImages(state, locale)
+      result = await createProductImages(state, locale);
+      break;
 
     case "Client":
-      result = await createClient(state, locale)
+      result = await createClient(state, locale);
+      break;
 
     case "Supplier":
-      result = await createSupplier(state, locale)
+      result = await createSupplier(state, locale);
+      break;
 
     case "SupplierCode":
-      result = await createSupplierCode(state, locale)
+      result = await createSupplierCode(state, locale);
+      break;
 
     case "Ticket":
-      result = await createTicket(state, locale)
+      result = await createTicket(state, locale);
+      break;
     
     case "TicketType":
-      result = await createTicketType(state, locale)
+      result = await createTicketType(state, locale);
+      break;
 
     case "TicketState":
-      result = await createTicketState(state, locale)
+      result = await createTicketState(state, locale);
+      break;
 
     case "Transaction":
-      result = await createTransaction(state, locale)
+      result = await createTransaction(state, locale);
+      break;
 
     case "User":
-      result = await createUser(state, locale)
+      result = await createUser(state, locale);
+      break;
 
     default: 
       result = state;

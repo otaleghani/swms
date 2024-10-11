@@ -33,25 +33,25 @@ export default async function TestingPage( {params}: {params: {lang: string}}) {
   return (
     <main>
       {
-        zones.data && (
-          <TestSelect 
-            list={zones.data}
-            dict={{
-              select: {
-                label: "sandro",
-                combobox: {
-                  select: "seleziona",
-                  search: "cercar",
-                  empty: "fottiti"
-                },
-              },
-              validation: { 
-                not_found: "fottiti di buovo" 
-              },
-            }}
-            name="sandro"
-          />
-        )
+        // zones.data && (
+        //   <TestSelect 
+        //     list={zones.data}
+        //     dict={{
+        //       select: {
+        //         label: "sandro",
+        //         combobox: {
+        //           select: "seleziona",
+        //           search: "cercar",
+        //           empty: "fottiti"
+        //         },
+        //       },
+        //       validation: { 
+        //         not_found: "fottiti di buovo" 
+        //       },
+        //     }}
+        //     name="sandro"
+        //   />
+        // )
       }
 
       <FormPattern<"Zone"> 
@@ -62,12 +62,11 @@ export default async function TestingPage( {params}: {params: {lang: string}}) {
             ...defaultZoneFormState,
             result: {
               ...defaultZoneFormState.result,
-              id: "sus",
+              //id: "sus",
               name: "default value",
             }
           },
-          //formAction: zoneAddFormAction,
-formAction: createFormAction<"Zone">,
+          formAction: createFormAction<"Zone">,
           // notifyFormSent
           // refreshItemList
         }}
