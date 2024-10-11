@@ -1,7 +1,5 @@
 "use server";
 
-import stringEmitter from "../../emitters";
-
 /** Actions */
 import fetchData from "../fetch";
 
@@ -14,7 +12,7 @@ import {
   TypeMap,
   TypeMapFilterLists,
 } from "../../types/requests";
-import { StreamedChanges } from "@/app/api/stream/route";
+import { ServerSentEventData } from "@/app/api/stream/route";
 
 type RetrieveMapOptions = {
   [K in keyof TypeMapFilterLists]: RequestOptions;
@@ -45,7 +43,7 @@ const options: RetrieveMapOptions = {
   "TicketStates":           { path: "ticket-states/",       type: "TicketStates" },
   "Products":               { path: "products/",            type: "Products" },
   "ProductImages":          { path: "product-images/",      type: "ProductImage" },
-  "Clients":                { path: "clients/",         type: "Clients" },
+  "Clients":                { path: "clients/",             type: "Clients" },
   "Users":                  { path: "users/",               type: "Users" },
 };
 
@@ -60,13 +58,6 @@ export async function retrieve<T extends keyof RetrieveMapOptions>(
     method: "GET",
     tag: revalidateTags[option.type],
   })
-
-  const streamedChange: StreamedChanges = {
-    id: "3413f9a0-f6af-4211-8ff0-231ed17398f4",
-    type: option.type,
-    action: "POST",
-  };
-  stringEmitter.emit('message', streamedChange);
 
   return response
 }

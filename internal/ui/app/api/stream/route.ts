@@ -1,20 +1,13 @@
 export const dynamic = "force-dynamic";
+
 import stringEmitter from "@/app/lib/emitters";
 import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from "next/headers";
 
-// You want to stream a notification to the client whenever
-// - an item was updated
-// - an item was deleted
-// - an item was added
-//
-// Sometimes you'll have some changes that are a little "stranger"
-// like the bulk add, where you maybe want to do a full page reload
-// instead of a singular fetch.
-export type StreamedChanges = {
+export type ServerSentEventData = {
   type: string;
   id: string;
-  action: "PUT" | "POST" | "DELETE";
+  action: "create" | "createInBulk" | "remove" | "replace" | "update";
 };
 
 // Define headers for SSE
@@ -33,18 +26,17 @@ export const GET = async (request: NextRequest) => {
     start(controller) {
       // Send an initial comment to establish the SSE stream
       const jwt = cookies().get("access")?.value;
-      const accessData = {
-        key: jwt,
-      }
 
+      // On first connection it reads the access key and sends it
+      // to the client so that it can fetch stuff directly.
       controller.enqueue(
         encoder.encode(
-          `data: ${JSON.stringify(accessData)}\n\n`
+          `data: ${JSON.stringify({jwt: jwt})}\n\n`
         )
       );
 
       // Function to send data
-      const sendData = (data: StreamedChanges) => {
+      const sendData = (data: ServerSentEventData) => {
         const formattedData = `data: ${JSON.stringify(data)}\n\n`;
         if (controller.desiredSize !== null && 
             controller.desiredSize > 0){
@@ -52,8 +44,9 @@ export const GET = async (request: NextRequest) => {
         }
       };
 
-      // Handle data fetched
-      stringEmitter.on('message', (data: StreamedChanges) => {
+      // Get's the data from the emitters and sends it over all the 
+      // connected clients.
+      stringEmitter.on('message', (data: ServerSentEventData) => {
         sendData(data);
       }); 
 
@@ -63,6 +56,7 @@ export const GET = async (request: NextRequest) => {
         console.log('SSE connection closed by client');
       });
     },
+
     cancel(reason) {
       isClosed = true;
     }

@@ -1,5 +1,9 @@
 "use server";
 
+/** SSE fields */
+import stringEmitter from "../../emitters";
+import { ServerSentEventData } from "@/app/api/stream/route";
+
 /** Actions */
 import fetchData from "../fetch";
 
@@ -70,6 +74,14 @@ export async function replace<T extends keyof ReplaceMapOptions>(
     path: path,
     method: "POST",
     tag: revalidateTags[option.type],
-  })
+  });
+
+  const streamedChange: ServerSentEventData = {
+    id: replaced,
+    type: request,
+    action: "replace",
+  };
+  stringEmitter.emit('message', streamedChange);
+
   return response
 }

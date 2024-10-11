@@ -1,5 +1,9 @@
 "use server";
 
+/** SSE fields */
+import stringEmitter from "../../emitters";
+import { ServerSentEventData } from "@/app/api/stream/route";
+
 /** Actions */
 import fetchData from "../fetch";
 
@@ -58,6 +62,14 @@ export async function remove<T extends keyof RemoveMapOptions>(
     path: option.path.replace(/{{id}}/g, id),
     method: "DELETE",
     tag: revalidateTags[option.type],
-  })
+  });
+
+  const streamedChange: ServerSentEventData = {
+    id: id,
+    type: request,
+    action: "remove",
+  };
+  stringEmitter.emit('message', streamedChange);
+
   return response
 }

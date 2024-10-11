@@ -1,5 +1,9 @@
 "use server";
 
+/** SSE fields */
+import stringEmitter from "../../emitters";
+import { ServerSentEventData } from "@/app/api/stream/route";
+
 /** Actions */
 import fetchData from "../fetch";
 
@@ -47,6 +51,14 @@ export async function createInBulk<T extends keyof CreateInBulkMapOptions>(
     method: "POST",
     tag: revalidateTags[option.type],
     payload: payload,
-  })
+  });
+
+  const streamedChange: ServerSentEventData = {
+    id: "",
+    type: request,
+    action: "createInBulk",
+  };
+  stringEmitter.emit('message', streamedChange);
+
   return response
 }

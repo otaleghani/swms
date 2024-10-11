@@ -1,5 +1,9 @@
 "use server";
 
+/** SSE fields */
+import stringEmitter from "../../emitters";
+import { ServerSentEventData } from "@/app/api/stream/route";
+
 /** Actions */
 import fetchData from "../fetch";
 
@@ -60,6 +64,14 @@ export async function update<T extends keyof UpdateMapOptions>(
     method: "PUT",
     tag: revalidateTags[option.type],
     payload: payload,
-  })
+  });
+
+  const streamedChange: ServerSentEventData = {
+    id: id,
+    type: request,
+    action: "update",
+  };
+  stringEmitter.emit('message', streamedChange);
+
   return response
 }

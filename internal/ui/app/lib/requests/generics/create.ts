@@ -1,5 +1,9 @@
 "use server";
 
+/** SSE fields */
+import stringEmitter from "../../emitters";
+import { ServerSentEventData } from "@/app/api/stream/route";
+
 /** Actions */
 import fetchData from "../fetch";
 
@@ -61,5 +65,13 @@ export async function create<T extends keyof CreateMapOptions>(
     tag: revalidateTags[option.type],
     payload: payload,
   })
+  
+  const streamedChange: ServerSentEventData = {
+    id: response.data?.uuid ? response.data.uuid : "",
+    type: request,
+    action: "create",
+  };
+  stringEmitter.emit('message', streamedChange);
+
   return response
 }
