@@ -6,6 +6,6 @@
     "noEmit": false
   },
   "include": [
-    "app/lib/workers/**/*.ts"
+    "app/lib/workers/*.ts"
   ]
 }

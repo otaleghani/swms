@@ -1,6 +1,7 @@
 export const dynamic = "force-dynamic";
 import stringEmitter from "@/app/lib/emitters";
 import { NextRequest, NextResponse } from 'next/server';
+import { cookies } from "next/headers";
 
 // You want to stream a notification to the client whenever
 // - an item was updated
@@ -13,6 +14,7 @@ import { NextRequest, NextResponse } from 'next/server';
 export type StreamedChanges = {
   type: string;
   id: string;
+  action: "PUT" | "POST" | "DELETE";
 };
 
 // Define headers for SSE
@@ -30,7 +32,16 @@ export const GET = async (request: NextRequest) => {
   const stream = new ReadableStream<Uint8Array>({
     start(controller) {
       // Send an initial comment to establish the SSE stream
-      controller.enqueue(encoder.encode(':ok\n\n'));
+      const jwt = cookies().get("access")?.value;
+      const accessData = {
+        key: jwt,
+      }
+
+      controller.enqueue(
+        encoder.encode(
+          `data: ${JSON.stringify(accessData)}\n\n`
+        )
+      );
 
       // Function to send data
       const sendData = (data: StreamedChanges) => {

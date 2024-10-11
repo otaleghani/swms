@@ -2,45 +2,54 @@
 
 import { Zones } from "@/app/lib/types/data/zones";
 import { useEffect, useState } from "react";
+// import streamer from "@/app/lib/workers";
+import Single from "./single";
+import { emitter } from "@/app/lib/emitters";
 import streamer from "@/app/lib/workers";
 
 export default function Componente({
   zones
 }: {zones: Zones}) {
   const [zonesx, setZones] = useState(zones);
-
-  const obtainAPIResponse = async (apiRoute: string) => {
-    // Initiate the first call to connect to SSE API
-    //let sse = new EventSource(apiRoute)
-    //sse.onmessage = (event: MessageEvent<any>) => {
-    //  const eventData = JSON.parse(event.data);
-
-    //  const filteredZones = zonesx.map((item) => {
-    //    if (item.id === eventData.id) {
-    //      item.id = "SUSSUS"
-    //    }
-    //    return item;
-    //  })
-
-    //  setZones(filteredZones)
-    //}
-  };
+  const [key, setKey] = useState("");
 
   useEffect(() => {
-    //streamer.postMessage("somethig")
-    streamer.onmessage = (event) => {
-      console.log("got back something");
-      console.log(event.data);
+    const handler = (data: any) => {
+      console.log(data)
     }
-    //obtainAPIResponse("/api/stream")
-  }, [streamer.onmessage]);
+    streamer.addEventListener("message", handler)
+    //streamer.onmessage = (event: any) => {
+    //  console.log(event.data);
+    //  if (event.data.key) {
+    //    setKey(event.data.key);
+    //  }
+    //  const fetchData = async () => {
+    //    const response = await fetch(
+    //      `http://localhost:8080/api/v1/zones/${event.data.id}`, 
+    //      {
+    //        method: "GET",
+    //        headers: { 
+    //          "Content-Type": "application/json",
+    //          "Authorization": `Bearer ${key}`,
+    //        },
+    //      }
+    //    );
+    //    if (!response.ok) {
+    //      // error handling
+    //    }
+    //    const data = await response.json();
+    //    console.log(data)
+    //  }
+    //  if (event.data.type === "Zones") {
+    //    fetchData()
+    //  }
+    //}
+  }, []);
 
   return (
     <>
     {zonesx.map((zone)=> (
-      <div className="bg-red-50 m-1 text-sm" key={zone.id}>
-        {zone.id}
-      </div>
+      <Single zoneProp={zone} key={zone.id}/>
     ))}
     </>
   )

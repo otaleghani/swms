@@ -63,8 +63,10 @@ export async function retrieve<T extends keyof RetrieveMapOptions>(
 
   const streamedChange: StreamedChanges = {
     id: "3413f9a0-f6af-4211-8ff0-231ed17398f4",
-    type: option.type
+    type: option.type,
+    action: "POST",
   };
   stringEmitter.emit('message', streamedChange);
+
   return response
 }
