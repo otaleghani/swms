@@ -17,6 +17,7 @@ import { ItemCompleteFormFields } from "./fields/items";
 import { VariantsFormFields } from "./fields/variants";
 import { TransactionFormFields } from "./fields/transactions";
 import { UserFormFields } from "./fields/users";
+import { ReplaceFormFields } from "./fields/replace";
 
 export {
   ZoneFormFields as Zone,
@@ -50,4 +51,6 @@ export {
   TransactionFormFields as Transaction,
 
   UserFormFields as User,
+
+  ReplaceFormFields as Replace,
 }

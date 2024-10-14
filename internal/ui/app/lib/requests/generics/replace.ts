@@ -62,13 +62,13 @@ const options: ReplaceMapOptions = {
 
 export async function replace<T extends keyof ReplaceMapOptions>(
   request: T,
-  replaced: string,
-  replacer: string,
+  itemToDelete: string,
+  itemThatReplaces: string,
 ) {
   const option = options[request];
   const path = option.path.
-    replace(/{{replaced}}/g, replaced).
-    replace(/{{replacer}}/g, replacer);
+    replace(/{{replaced}}/g, itemToDelete).
+    replace(/{{replacer}}/g, itemThatReplaces);
 
   const response = await fetchData<undefined>({
     path: path,
@@ -77,7 +77,7 @@ export async function replace<T extends keyof ReplaceMapOptions>(
   });
 
   const streamedChange: ServerSentEventData = {
-    id: replaced,
+    id: itemToDelete,
     type: request,
     action: "replace",
   };

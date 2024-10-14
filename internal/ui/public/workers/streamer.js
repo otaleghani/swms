@@ -1,4 +1,3 @@
-"use strict";
 // worker/streamer.ts
 // Creates a new Server-sent event request to the /api/stream endpoint
 // and everytime a message is sent it gets parsed and sent to the
@@ -41,9 +40,9 @@ const retrieve = async (id, jwt, type, action) => {
     if (!response.ok) {
         // Response with error?
     }
-    const data = await response.json();
+    const body = await response.json();
     const notification = {
-        data: data.data,
+        content: body.data,
         type: type,
         id: id,
         action: action
@@ -65,7 +64,7 @@ sse.onmessage = (event) => {
         const notification = {
             type: eventData.data,
             action: eventData.action,
-            data: "",
+            content: "",
             id: "",
         };
     }
@@ -82,3 +81,4 @@ sse.onmessage = (event) => {
         retrieve(eventData.id, jwt, eventData.type, eventData.action);
     }
 };
+export {};

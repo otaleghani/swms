@@ -10,15 +10,17 @@ interface CardWrapperProps {
   Header: React.FunctionComponent;
   Content: React.FunctionComponent;
   Footer?: React.FunctionComponent;
+  className?: string;
 }
 
 export default function CardWrapper({
   Header,
   Content,
-  Footer
+  Footer,
+  className
 }: CardWrapperProps) {
   return (
-    <Card className="mb-4"> 
+    <Card className={"mb-4" + className}> 
       <CardHeader className="pb-4">
         <Header />
       </CardHeader>

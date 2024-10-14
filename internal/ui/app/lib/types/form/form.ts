@@ -62,9 +62,10 @@ export interface FormMap {
     type: string;
   };
   Replace: {
-    id_: string;
+    //id: string;
     itemToDelete: string;
     itemThatReplaces: string;
+    type: string;
   }
 }
 

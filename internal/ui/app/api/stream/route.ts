@@ -53,7 +53,7 @@ export const GET = async (request: NextRequest) => {
       // Handle client disconnect
       request.signal.addEventListener('abort', () => {
         controller.close();
-        console.log('SSE connection closed by client');
+        //console.log('SSE connection closed by client');
       });
     },
 

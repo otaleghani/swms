@@ -13,11 +13,12 @@ export type DictDialogs<List extends string> = {
 export type DictDialogsPositions = DictDialogs<
 "add" | "addBulk" | "replace" | "edit" >
 export type DictDefaultDialogs = DictDialogs<
-"add" | "replace" | "edit" >
+"add" | "replace" | "delete" | "edit" >
 
+/** sus */
 export type DictLabelList<List extends string> = {
   labels: {
-    [Item in List]: DictDialog;
+    [Item in List]: string;
   }
 }
 

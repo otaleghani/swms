@@ -3,7 +3,6 @@ import { Locale } from "@/lib/dictionaries";
 import { retrieve } from "@/app/lib/requests/generics/retrieve";
 import { defaultZoneFormState, Zones } from "@/app/lib/types/data/zones";
 import TestSelect from "@/app/ui/modules/zones/test/SelectTest";
-import { zoneAddFormAction } from "@/app/ui/modules/zones/create/actions";
 import { Aisles, defaultAisleFormState } from "@/app/lib/types/data/aisles";
 import {aisleCreateFormAction} from "@/app/ui/modules/aisles/create/actions";
 import FormPattern from "@/app/ui/patterns/form/FormPattern";
@@ -17,9 +16,12 @@ import { DatePickerPattern } from "@/app/ui/patterns/form/input/DatePickerPatter
 import { createFormAction } from "@/app/lib/actions/create/createFormAction"
 import { FormField } from "@/components/form";
 import { removeFormAction } from "@/app/lib/actions/remove/removeFormAction";
+import { defaultReplaceFormState } from "@/app/lib/types/data/replacer";
+import { replaceFormAction } from "@/app/lib/actions/replace/replaceFormAction";
 
 export default async function TestingPage( {params}: {params: {lang: string}}) {
   const dict = await getDictionary(params.lang as Locale);
+  console.log(dict)
 
   const pZones = retrieve("Zones");
   const pAisles = retrieve("Aisles");
@@ -95,62 +97,52 @@ export default async function TestingPage( {params}: {params: {lang: string}}) {
         }}
       />
 
+      <h1>REPLACER</h1>
+      <FormPattern<"Replace">
+        type="Replace"
+        form={{
+          formName: "REPLACER",
+          initialState: {
+            ...defaultReplaceFormState,
+            result: {
+              itemToDelete: "",
+              itemThatReplaces: "",
+              type: "Zone"
+            }
+          },
+          formAction: replaceFormAction,
+        }}
+        self={{
+          fields: {
+            ...fieldsDefaultProps,
+            zone: {
+              name: "Zone",
+              dict: {
+                select: {
+                  label: "selezionatore",
+                  combobox: {
+                    select: "selezioname",
+                    search: "cercame",
+                    empty: "vuotos",
+                  },
+                },
+                validation: { not_found: "NUN l'HO TROVATO"},
+              },
+              list: zones.data as Zones,
+            },
+            id: "b545b66c-edb5-4f85-b7d8-4a6f531528b5",
 
-      {
-      //<ZoneForm 
-      //  self={{
-      //    dict: {
-      //      name: {
-      //        label:"sandrone",
-      //        placeholder: "daje",
-      //        validation: {
-      //          empty:"empty",
-      //          max:"max",
-      //          min:"min",
-      //          type:"type",
-      //          valid:"valid",
-      //        },
-      //      },
-      //      button: {
-      //        active: "prememe",
-      //        pending: "pesoso"
-      //      }
-      //    },
-      //    form: {
-      //      formName:"gennarone",
-      //      initialState: defaultZoneFormState,
-      //      formAction: zoneAddFormAction,
-      //    }
-      //  }}
-      ///>
-      //
-      // <ZoneBulkForm
-      //   self={{
-      //     form: {
-      //       formName:"gennarone2",
-      //       initialState: defaultZoneBulkFormState,
-      //       formAction: zoneAddBulkFormAction,
-      //     },
-      //     dict: {
-      //       number: {
-      //         label:"sandrone",
-      //         placeholder: "daje",
-      //         validation: {
-      //           empty:"empty",
-      //           max:"max",
-      //           min:"min",
-      //           type:"type",
-      //           valid:"valid",
-      //         },
-      //       },
-      //       button: {
-      //         active: "prememe",
-      //         pending: "pesoso"
-      //       }
-      //     }
-      //   }}
-      // />
-      }
+            button: {
+              active: "attivo",
+              pending: "pendivo"
+            },
+          }
+        }}
+
+        showButton
+
+      />
+
       <h1 className="text-2xl">AisleForm</h1>
 
       {
@@ -633,7 +625,6 @@ export default async function TestingPage( {params}: {params: {lang: string}}) {
                       isBusiness: {
                         dict: {
                           label: "Cognome",
-                          placeholder: "Placeholder",
                           validation: {
                             required: "empty",
                           },
@@ -650,7 +641,7 @@ export default async function TestingPage( {params}: {params: {lang: string}}) {
                   form: {
                     formName: "Formeronix",
                     initialState: defaultClientFormState,
-                    formAction: zoneAddFormAction,
+                    formAction: createFormAction,
                   }
                 }
 
@@ -673,7 +664,7 @@ export default async function TestingPage( {params}: {params: {lang: string}}) {
               images: [],
             }
           },
-          formAction: zoneAddFormAction,
+          formAction: createFormAction,
           // notifyFormSent
           // refreshItemList
         }}

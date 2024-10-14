@@ -20,21 +20,25 @@ interface PositionSelectFieldProps {
       errorMessages: string[];
       defaultValue?: Zone,
       select: SelectFieldProps<"Zone">;
+      type?: "itemThatReplaces" | "itemToDelete"
     },
     aisle?: {
       errorMessages: string[];
       defaultValue?: Aisle;
       select: SelectFieldProps<"Aisle">;
+      type?: "itemThatReplaces" | "itemToDelete"
     }
     rack?: {
       errorMessages: string[];
       defaultValue?: Rack;
       select: SelectFieldProps<"Rack">;
+      type?: "itemThatReplaces" | "itemToDelete"
     }
     shelf?: {
       errorMessages: string[];
       defaultValue?: Shelf;
       select: SelectFieldProps<"Shelf">;
+      type?: "itemThatReplaces" | "itemToDelete"
     }
   }
 }
@@ -112,6 +116,9 @@ export default function PositionSelectField({
               dict={fields.zone.select.dict}
               errorMessages={fields.zone.errorMessages}
             />
+            {fields.zone.type && (
+              <input type="hidden" name={fields.zone.type} value={selectedZone.id} />
+            )} 
           </div>
         )}
         {fields.aisle && filteredAisles && (selectedZone != emptyZone) && (
@@ -124,6 +131,9 @@ export default function PositionSelectField({
               dict={fields.aisle.select.dict}
               errorMessages={fields.aisle.errorMessages}
             />
+            {fields.aisle.type && (
+              <input type="hidden" name={fields.aisle.type} value={selectedAisle.id} />
+            )} 
           </div>
         )}
         {fields.rack && filteredRacks && (selectedAisle != emptyAisle) && (
@@ -136,6 +146,9 @@ export default function PositionSelectField({
               dict={fields.rack.select.dict}
               errorMessages={fields.rack.errorMessages}
             />
+            {fields.rack.type && (
+              <input type="hidden" name={fields.rack.type} value={selectedRack.id} />
+            )} 
           </div>
         )}
         {fields.shelf && filteredShelfs && (selectedRack != emptyRack) && (
@@ -148,6 +161,9 @@ export default function PositionSelectField({
               dict={fields.shelf.select.dict}
               errorMessages={fields.shelf.errorMessages}
             />
+            {fields.shelf.type && (
+              <input type="hidden" name={fields.shelf.type} value={selectedShelf.id} />
+            )} 
           </div>
         )}
       </div>

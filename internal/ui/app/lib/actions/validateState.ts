@@ -24,42 +24,14 @@ import { validateZone, validateZonesBulk } from "../validation/data/zones";
 /** Types and interfaces */
 import { FormMap, FormState } from "../types/form/form";
 import { validateDelete } from "../validation/delete";
+import { validateReplace } from "../validation/replace";
 
 type ValidationsMap = {
-  [K in keyof Omit<FormMap, "Replace">]: (
+  [K in keyof FormMap]: (
     state: FormState<K>,
     locale: string
   ) => Promise<FormState<K>>;
 };
-
-//const validations: ValidationsMap = {
-//  Delete: validateDelete,
-//  Zone: validateZone,
-//  Aisle: validateAisle,
-//  Rack: validateRack,
-//  Shelf: validateShelf,
-//  ZonesBulk: validateZonesBulk,
-//  AislesBulk: validateAislesBulk,
-//  RacksBulk: validateRacksBulk,
-//  ShelfsBulk: validateShelfsBulk,
-//  Item: validateItem,
-//  Variant: validateVariant,
-//  ItemImage: validateItemImage,
-//  ItemComplete: validateItemComplete,
-//  Category: validateCategory,
-//  Subcategory: validateSubcategory,
-//  Product: validateProduct,
-//  ProductWithImages: validateProductWithImages,
-//  ProductImage: validateProductImage,
-//  Client: validateClient,
-//  Supplier: validateSupplier,
-//  SupplierCode: validateSupplierCode,
-//  Ticket: validateTicket,
-//  TicketType: validateTicketType,
-//  TicketState: validateTicketState,
-//  Transaction: validateTransaction,
-//  User: validateUser,
-//};
 
 export async function validateState<K extends keyof FormMap>(
   state: FormState<K>,
@@ -68,23 +40,17 @@ export async function validateState<K extends keyof FormMap>(
 ) {
   let stateValidation;
 
-  if (type === "Delete") {
-    stateValidation = await validateDelete(
-      state as FormState<"Delete">, 
-      locale as string
-    );
-  }
 
-  if (type === "Zone") {
-    stateValidation = await validateZone(
-      state as FormState<"Zone">, 
-      locale as string
-    );
-  }
 
   switch (type) {
+    case "Replace":
+      stateValidation = await validateReplace(
+        state as FormState<"Replace">, 
+        locale as string
+      );
+      break;
+
     case "Delete":
-      console.log("got here")
       stateValidation = await validateDelete(
         state as FormState<"Delete">, 
         locale as string
@@ -92,7 +58,6 @@ export async function validateState<K extends keyof FormMap>(
       break;
 
     case "Zone":
-      console.log("got here zone")
       stateValidation = await validateZone(
         state as FormState<"Zone">, 
         locale as string

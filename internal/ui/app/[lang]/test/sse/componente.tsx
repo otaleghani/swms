@@ -4,7 +4,6 @@ import { Zones } from "@/app/lib/types/data/zones";
 import { useEffect, useState } from "react";
 // import streamer from "@/app/lib/workers";
 import Single from "./single";
-import { emitter } from "@/app/lib/emitters";
 import streamer from "@/app/lib/workers";
 
 export default function Componente({
@@ -18,7 +17,7 @@ export default function Componente({
       console.log("Listened to the streamer")
       console.log(data.data)
     }
-    streamer.addEventListener("message", handler)
+    streamer?.addEventListener("message", handler)
   }, []);
 
   return (

@@ -128,7 +128,6 @@ export type FieldsPropsMap = {
   ticketTypeWithAdd: SelectFieldPropsWithAdd<"TicketType">;
   ticketStateWithAdd: SelectFieldPropsWithAdd<"TicketState">;
 
-
   // Button
   button: DictFormButton;
 
@@ -141,6 +140,8 @@ export type FieldsPropsMap = {
 
   variantsJSON: JSONHiddenFieldProps;
   codesJSON: JSONHiddenFieldProps;
+
+  id: string;
 };
 
 /** Creates a const with default fields that I can pass
@@ -196,6 +197,7 @@ export const fieldsDefaultProps: FieldsPropsNullMap = {
   supplierWithAdd: null,
   codesJSON: null,
   variantsJSON: null,
+  id: null,
 };
 
 /** Defines the fields for each type. */
@@ -481,6 +483,20 @@ export type DeleteFormFieldsProps = {
 };
 
 // prettier-ignore
+export type ReplaceFormFieldsProps = {
+  [K in keyof FieldsPropsMap]:
+    K extends "zone" ? FieldsPropsMap[K] | null :
+    K extends "aisle" ? FieldsPropsMap[K] | null :
+    K extends "rack" ? FieldsPropsMap[K] | null :
+    K extends "shelf" ? FieldsPropsMap[K] | null :
+    K extends "category" ? FieldsPropsMap[K] | null :
+    K extends "subcategory" ? FieldsPropsMap[K] | null :
+    K extends "id" ? FieldsPropsMap[K] :
+    K extends "button" ? FieldsPropsMap[K] :
+    null;
+};
+
+// prettier-ignore
 /** Maps every fields for each type */
 export type FormFieldsPropsMap = {
   [K in keyof FormMap]: 
@@ -510,6 +526,7 @@ export type FormFieldsPropsMap = {
     K extends "Transaction" ? TransactionFormFieldsProps :
     K extends "User" ? UserFormFieldsProps :
     K extends "Delete" ? DeleteFormFieldsProps :
+    K extends "Replace" ? ReplaceFormFieldsProps :
     null;
 };
 

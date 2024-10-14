@@ -3,7 +3,7 @@ import {
   DictPageHeader,
 } from "../misc";
 
-export interface DictCategory {
-  header: DictPageHeader<"home" | "category">
+export interface DictSubcategory {
+  header: DictPageHeader<"home" | "category" | "subcategory">
   dialogs: DictDefaultDialogs;
 }

@@ -39,8 +39,10 @@ import {
   VariantFormFieldsProps,
   TransactionFormFieldsProps,
   UserFormFieldsProps,
+  ReplaceFormFieldsProps,
 } from "@/app/lib/types/form/fields";
 import { AcceptedLocales } from "@/app/lib/types/misc";
+import SelectFieldPattern from "./select/SelectFieldPattern";
 
 export default function FormPattern<K extends keyof FormPropsMap>({
   self,
@@ -69,31 +71,22 @@ export default function FormPattern<K extends keyof FormPropsMap>({
   return (
     <form id={form.formName} action={action}>
       <div className="grid gap-4 py-4">
+
+        {type === "Replace" && values && (
+          <FormFields.Replace
+            fields={self.fields as ReplaceFormFieldsProps}
+            errorMessages={state.errorMessages as {
+              [T in keyof FormFieldsPropsMap["Replace"]]: string[]}}
+            result={state.result}
+          />
+        )}
+
         { type === "Delete" && values && (
           <>
             <input type="hidden" name="id" value={values.id} />
             <input type="hidden" name="type" value={values.type} />
           </>
         )}
-
-        {
-        //  type === "Replace" && values && (
-        //  <>
-        //    <input type="hidden" name="id" value={values.id} />
-        //    <input 
-        //      type="hidden" 
-        //      name="itemToDelete" 
-        //      value={values.itemToDelete} 
-        //    />
-        //    <input 
-        //      type="hidden" 
-        //      name="itemThatReplaces" 
-        //      value={values.itemThatReplaces} 
-        //    />
-        //  </>
-        //)
-        }
-
 
         { type === "Zone" && (
           <FormFields.Zone

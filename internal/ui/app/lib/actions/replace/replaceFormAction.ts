@@ -8,15 +8,14 @@ import validateResponse from "../../validation/response";
 /** Types and interfaces */
 import { FormMap, FormState } from "../../types/form/form";
 
-type ReplaceableItem = Exclude<keyof FormMap,
-    "ZonesBulk" |
-    "AislesBulk" |
-    "RacksBulk" |
-    "ShelfsBulk" |
-    "ItemComplete" |
-    "ProductWithImages" |
-    "Delete" |
-    "Replace"
+type ReplaceableItem = Extract<keyof FormMap,
+    "Category" |
+    "Subcategory" |
+    "Supplier" |
+    "Zone" |
+    "Aisle" |
+    "Rack" |
+    "Shelf"
   >;
 
 export async function replaceFormAction(
@@ -25,26 +24,26 @@ export async function replaceFormAction(
 ) {
   let state = currentState;
   let locale = formData.get("locale");
-  let type = formData.get("type");
-  let replaced = formData.get("id");
-  let replacer = formData.get("id");
+  //let type = formData.get("type");
+  let itemToDelete = formData.get("itemToDelete");
+  let itemThatReplaces = formData.get("itemThatReplaces");
 
   // resets the state and creates the result
-  //state.error = false;
-  //state.message = "";
-  state.result = {
-    replaced: replaced as string,
-    replacer: replaced as string,
-
-    type: type as string,
+  if (!state.result) {
+    state.error = true;
+    return state
   }
+
+  state.result.itemToDelete = itemToDelete as string;
+  state.result.itemThatReplaces = itemThatReplaces as string;
   
-  const stateValidation = await validateState<"Delete">(
+  const stateValidation = await validateState<"Replace">(
     state,
-    "Delete",
+    "Replace",
     locale as string
   );
 
+  console.log(stateValidation)
   if (stateValidation.error === true) {
     return stateValidation;
   }
@@ -53,14 +52,16 @@ export async function replaceFormAction(
   // because in the validateState we already checked if the
   // item exists in the db.
   const response = await replace(
-    type as RemovableItem, 
-    state.result.replaced,
-    state.result.replacer
+    state.result.type as ReplaceableItem, 
+    state.result.itemToDelete,
+    state.result.itemThatReplaces
   )
+
   const requestValidation = await validateResponse(
     response,
-    state as FormState<"Delete">,
+    state as FormState<"Replace">,
     locale as string,
-  )
+  );
+
   return requestValidation;
 }

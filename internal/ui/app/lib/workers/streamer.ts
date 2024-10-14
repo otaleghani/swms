@@ -36,8 +36,8 @@ const options: ClientRetrieveMapOptions = {
 }
 
 // Describes the data field of the streamed message
-interface WorkerResponse {
-  data: any;
+export interface WorkerResponse {
+  content: any;
   id: string;
   type: string;
   action: "create" | "createInBulk" | "remove" | "replace" | "update",
@@ -67,9 +67,9 @@ const retrieve = async (
     // Response with error?
   }
 
-  const data = await response.json();
+  const body = await response.json();
   const notification: WorkerResponse = {
-    data: data.data,
+    content: body.data,
     type: type,
     id: id,
     action: action
@@ -94,7 +94,7 @@ sse.onmessage = (event: MessageEvent<any>) => {
     const notification: WorkerResponse = {
       type: eventData.data,
       action: eventData.action,
-      data: "",
+      content: "",
       id: "",
     };
   }

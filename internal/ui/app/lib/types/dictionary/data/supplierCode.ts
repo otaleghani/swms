@@ -2,6 +2,6 @@ import {
   DictDefaultDialogs 
 } from "../misc";
 
-export interface DictSupplier {
+export interface DictSupplierCode {
   dialogs: DictDefaultDialogs;
 }

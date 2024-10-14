@@ -1,8 +1,10 @@
 import "server-only"
 
-interface Dictionary {
-  [key: string]: any;
-}
+import { Dictionary } from "@/app/lib/types/dictionary";
+
+//interface Dictionary {
+//  [key: string]: any;
+//}
 
 type ImportDictionaryFunction = () => Promise<Dictionary>;
 
@@ -12,8 +14,8 @@ interface Dictionaries {
 }
 
 const dictionaries: Dictionaries = {
-  en: () => import('@/dictionaries/en.json').then((module) => module.default as Dictionary),
-  it: () => import('@/dictionaries/it.json').then((module) => module.default as Dictionary),
+  en: () => import('@/dictionaries/en').then((module) => module.dictionary as Dictionary),
+  it: () => import('@/dictionaries/it.json').then((module) => module.default as any),
 };
 
 export type Locale = keyof Dictionaries;

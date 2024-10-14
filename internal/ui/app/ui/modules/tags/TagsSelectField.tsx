@@ -19,11 +19,13 @@ export interface TagsSelectFieldsProps {
       errorMessages: string[];
       defaultValue?: Category;
       select: SelectFieldProps<"Category">;
+      type?: "itemToDelete" | "itemThatReplaces";
     },
     subcategory?: {
       errorMessages: string[];
       defaultValue?: Subcategory;
       select: SelectFieldProps<"Subcategory">;
+      type?: "itemToDelete" | "itemThatReplaces";
     },
   }
 }
@@ -69,6 +71,13 @@ export default function TagsSelectFields({
               errorMessages={fields.category.errorMessages}
               dict={fields.category.select.dict}
             />
+            {fields.category.type && (
+              <input 
+                type="hidden" 
+                name={fields.category.type} 
+                value={selectedCategory.id} 
+              />
+            )} 
           </div>
         )}
         {fields.subcategory && filteredSubcategory && (selectedCategory != emptyCategory) && (
@@ -81,6 +90,13 @@ export default function TagsSelectFields({
               errorMessages={fields.subcategory.errorMessages}
               dict={fields.subcategory.select.dict}
             />
+            {fields.subcategory.type && (
+              <input 
+                type="hidden" 
+                name={fields.subcategory.type} 
+                value={selectedCategory.id} 
+              />
+            )} 
           </div>
         )}
       </div>
