@@ -8,19 +8,25 @@ import CardWrapper from "@/app/ui/wrappers/cards/CardWrapper";
 
 /** Web workers */
 import streamer from "@/app/lib/workers";
-import { WorkerResponse } from "@/app/lib/workers/streamer";
+//import { WorkerResponse } from "@/app/lib/workers/streamer";
 import CardWrapperHeader from "@/app/ui/wrappers/cards/CardWrapperHeader";
-import { Zone } from "@/app/lib/types/data/zones";
-import { DictDialog, DictLabelList } from "@/app/lib/types/dictionary/misc";
+import { ZoneWithExtra } from "@/app/lib/types/data/zones";
 
 interface ZoneWithExtraCardProps {
-  item: Zone,
-  dictCard: DictLabelList<"aisles" | "items">
-  dialogEdit: DictDialog;
-  dialogReplace: DictDialog;
+  item: ZoneWithExtra,
+  //dictCard: DictLabelList<"aisles" | "items">
+  //dialogEdit: DictDialog;
+  //dialogReplace: DictDialog;
 }
 
-type Change = "none" | "replace" | "remove" | "update";
+/**
+* none:       no active change to display
+* replace:    plays when the item get's replaced, returns to "done"
+* remove:     plays when the item get's removed, returns to "done"
+* update:     plays when the item get's updated, returns to "none"
+* done:       adds a display none to the item
+*/
+type Change = "none" | "replace" | "remove" | "update" | "done";
 
 export default function ZoneWithExtraCard({
   item
@@ -30,33 +36,36 @@ export default function ZoneWithExtraCard({
   const [change, setChange] = useState("none" as Change)
 
   useEffect(() => {
-    const handler = (response: MessageEvent<WorkerResponse>) => {
+    const handler = (response: MessageEvent<any>) => {
+      console.log("got HERE")
       if (response.data.type === "Zone" && 
         response.data.id === zone.id) {
         if (response.data.action === "replace") {
-          // animate out if it's the replaced
-          // animate in if it's the replacer
+          setChange("replace");
         }
         if (response.data.action === "remove") {
-          // animate ou2
+          setChange("remove");
         }
         if (response.data.action === "update") {
-
-          // animate in
+          setZone(response.data.content)
+          setChange("update")
         }
-
-        //if (response.data.action === "create") {}
-        //if (response.data.action === "createInBulk") {}
-        //setName(response.data.content.name);
-
       }
     }
-    streamer?.addEventListener("message", handler)
+    streamer.addEventListener("message", handler)
+
+    // return () => {
+    //   streamer.terminate();
+    // };
   }, []);
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setChange("none")
+      if (change === "update") {
+        setChange("none");
+      } else {
+        setChange("done");
+      }
     }, 500);
     
     return () => clearInterval(timer);
@@ -66,9 +75,10 @@ export default function ZoneWithExtraCard({
 
     <CardWrapper 
       className={
-        change === "replace" ? "sus" : 
-        change === "remove" ? "sas" :
-        change === "update" ? "sis" :
+        change === "replace" ? "transition-colors bg-red-500" : 
+        change === "remove" ? "transition-colors bg-red-500" :
+        change === "update" ? "transition-colors bg-yellow-500" :
+        change === "done" ? "hidden" :
         ""
       }
       Header={() => {

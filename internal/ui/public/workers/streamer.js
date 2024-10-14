@@ -1,7 +1,11 @@
+"use strict";
 // worker/streamer.ts
 // Creates a new Server-sent event request to the /api/stream endpoint
 // and everytime a message is sent it gets parsed and sent to the
 // main thread.
+// Every type is re-declared because if not the imports would get 
+// compiled and shipped
+console.log("connected");
 // Lists every option to interact with the backend
 const options = {
     "Zone": "zones/{{id}}",
@@ -67,6 +71,7 @@ sse.onmessage = (event) => {
             content: "",
             id: "",
         };
+        postMessage(notification);
     }
     if (eventData.action === "remove") {
         // remove returns the id of the deleted item
@@ -78,7 +83,7 @@ sse.onmessage = (event) => {
     }
     if (eventData.action === "update") {
         // update returns the id of the updated item
+        console.log("got in the stream");
         retrieve(eventData.id, jwt, eventData.type, eventData.action);
     }
 };
-export {};

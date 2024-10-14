@@ -5,6 +5,9 @@
 
 // Every type is re-declared because if not the imports would get 
 // compiled and shipped
+
+console.log("connected");
+
 type AcceptedTypes = "Zone" | "Aisle" | "Rack" | "Shelf" | "Category" | "Subcategory" | "Supplier" | "SupplierCode" | "Item" | "ItemImage" | "Transaction" | "Variant" | "Ticket" | "TicketType" | "TicketState" | "Product" | "ProductImage" | "Client" | "User";
 
 // Creates the type that lists every endpoint
@@ -36,7 +39,7 @@ const options: ClientRetrieveMapOptions = {
 }
 
 // Describes the data field of the streamed message
-export interface WorkerResponse {
+interface WorkerResponse {
   content: any;
   id: string;
   type: string;
@@ -79,6 +82,7 @@ const retrieve = async (
 
 let sse = new EventSource("/api/stream")
 let jwt = ""; 
+
 sse.onmessage = (event: MessageEvent<any>) => {
   const eventData = JSON.parse(event.data);
 
@@ -97,6 +101,7 @@ sse.onmessage = (event: MessageEvent<any>) => {
       content: "",
       id: "",
     };
+    postMessage(notification);
   }
   if (eventData.action === "remove") {
     // remove returns the id of the deleted item
@@ -108,6 +113,7 @@ sse.onmessage = (event: MessageEvent<any>) => {
   }
   if (eventData.action === "update") {
     // update returns the id of the updated item
+    console.log("got in the stream")
     retrieve(eventData.id, jwt, eventData.type, eventData.action);
   }
 }

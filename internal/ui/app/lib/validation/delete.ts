@@ -1,4 +1,3 @@
-
 "use server";
 
 /** Actions */
@@ -28,7 +27,7 @@ export async function validateDelete(
 
   if (!state.result) {
     state.error = true;
-    state.errorMessages = dict.forms.messages.errors.emtpy;
+    state.errorMessages = dict.form.messages.errors.emtpy;
     return state;
   }
 

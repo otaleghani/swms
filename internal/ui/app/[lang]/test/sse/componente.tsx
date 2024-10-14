@@ -13,11 +13,12 @@ export default function Componente({
   const [key, setKey] = useState("");
 
   useEffect(() => {
+    //let streamer = new Worker("/workers/streamer.js")
     const handler = (data: any) => {
       console.log("Listened to the streamer")
       console.log(data.data)
     }
-    streamer?.addEventListener("message", handler)
+    streamer.addEventListener("message", handler)
   }, []);
 
   return (

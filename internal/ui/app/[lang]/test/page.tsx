@@ -18,10 +18,10 @@ import { FormField } from "@/components/form";
 import { removeFormAction } from "@/app/lib/actions/remove/removeFormAction";
 import { defaultReplaceFormState } from "@/app/lib/types/data/replacer";
 import { replaceFormAction } from "@/app/lib/actions/replace/replaceFormAction";
+import { updateFormAction } from "@/app/lib/actions/update/updateFormAction";
 
 export default async function TestingPage( {params}: {params: {lang: string}}) {
   const dict = await getDictionary(params.lang as Locale);
-  console.log(dict)
 
   const pZones = retrieve("Zones");
   const pAisles = retrieve("Aisles");
@@ -64,11 +64,11 @@ export default async function TestingPage( {params}: {params: {lang: string}}) {
             ...defaultZoneFormState,
             result: {
               ...defaultZoneFormState.result,
-              //id: "sus",
-              name: "default value",
+              id: "3fa124c7-fd4e-4634-8500-ead6388b4eef",
+              name: "Sandrone",
             }
           },
-          formAction: createFormAction<"Zone">,
+          formAction: updateFormAction<"Zone">,
           // notifyFormSent
           // refreshItemList
         }}
@@ -138,9 +138,7 @@ export default async function TestingPage( {params}: {params: {lang: string}}) {
             },
           }
         }}
-
         showButton
-
       />
 
       <h1 className="text-2xl">AisleForm</h1>
