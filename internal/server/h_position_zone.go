@@ -43,6 +43,48 @@ func getZoneById(db *database.Database) http.HandlerFunc {
 	}
 }
 
+func getZoneByIdWithData(db *database.Database) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+    token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
+    if err := checkAccessToken(token, db); err != nil {
+      ErrorResponse{Message: err.Error()}.r401(w, r)
+      return
+    }
+		path := r.PathValue("id")
+		zone, err := db.SelectZones("Id = ?", path)
+		if err != nil {
+			ErrorResponse{Message: err.Error()}.r500(w, r)
+			return
+		}
+    var data struct {
+      Zone database.Zone `json:"zone"`
+      Aisle_count int `json:"aisles_count"`
+      Items_count int `json:"items_count"`
+    }
+    aisles, err := db.SelectAislesByZone(zone[0].Id)
+		if err != nil {
+			ErrorResponse{Message: err.Error()}.r500(w, r)
+			return
+		}
+    items, err := db.SelectItems("Zone_id = ?", zone[0].Id)
+		if err != nil {
+			ErrorResponse{Message: err.Error()}.r500(w, r)
+			return
+		}
+    data = struct{
+      Zone database.Zone `json:"zone"`
+      Aisle_count int `json:"aisles_count"`
+      Items_count int `json:"items_count"`
+    }{
+      Zone: zone[0],
+      Aisle_count: len(aisles),
+      Items_count: len(items),
+    }
+    
+		SuccessResponse{Data: data}.r200(w, r)
+  }
+}
+
 func postZones(db *database.Database) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")

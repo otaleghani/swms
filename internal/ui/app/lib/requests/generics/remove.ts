@@ -68,6 +68,8 @@ export async function remove<T extends keyof RemoveMapOptions>(
     id: id,
     type: request,
     action: "remove",
+    before: null,
+    after: null,
   };
   stringEmitter.emit('message', streamedChange);
 

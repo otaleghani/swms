@@ -11,7 +11,8 @@ export const emptyZone: Zone = {
   name: "",
 }
 
-export type ZoneWithExtra = Zone & {
+export type ZoneWithExtra = {
+  zone: Zone;
   aislesCount: number;
   itemsCount: number;
 };

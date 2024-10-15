@@ -16,6 +16,8 @@ import {
   TypeMap,
   TypeMapFilterSingles
 } from "../../types/requests";
+import { retrieve } from "./retrieve";
+import { retrieveById } from "./retrieveById";
 
 type UpdateMapOptions = {
   [K in Exclude<keyof TypeMapFilterSingles, 
@@ -59,6 +61,13 @@ export async function update<T extends keyof UpdateMapOptions>(
 ) {
   const option = singleOptions[request];
 
+  // This is an important thing for managing the data client side
+  const before = await fetchData<TypeMap[T]>({
+    path: option.path.replace(/{{id}}/g, id),
+    method: "GET",
+    tag: revalidateTags[option.type],
+  })
+
   const response = await fetchData<undefined>({
     path: option.path.replace(/{{id}}/g, id),
     method: "PUT",
@@ -70,6 +79,8 @@ export async function update<T extends keyof UpdateMapOptions>(
     id: id,
     type: request,
     action: "update",
+    before: before.data,
+    after: payload,
   };
   stringEmitter.emit('message', streamedChange);
 

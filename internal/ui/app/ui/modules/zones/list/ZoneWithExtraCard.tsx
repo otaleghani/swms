@@ -31,32 +31,38 @@ type Change = "none" | "replace" | "remove" | "update" | "done";
 export default function ZoneWithExtraCard({
   item
 }: ZoneWithExtraCardProps) {
-  //const [name, setName] = useState(zone.name);
   const [zone, setZone] = useState(item)
   const [change, setChange] = useState("none" as Change)
 
   useEffect(() => {
     const handler = (response: MessageEvent<any>) => {
-      console.log("got HERE")
-      if (response.data.type === "Zone" && 
-        response.data.id === zone.id) {
-        if (response.data.action === "replace") {
-          setChange("replace");
-        }
-        if (response.data.action === "remove") {
-          setChange("remove");
-        }
-        if (response.data.action === "update") {
-          setZone(response.data.content)
-          setChange("update")
-        }
+      if ((
+        response.data.type == "Zone" ||
+        response.data.type == "Aisle" ||
+        response.data.type == "Item"
+      ) && (
+        response.data.id === zone.zone.id ||
+        response.data.zone === zone.zone.id
+      )) {
+        //console.log(response.data.after);
+        //console.log(response.data.before);
+        streamer?.postMessage({
+           type: "ZoneWithExtra",
+           id: zone.zone.id
+        })
+      }
+
+      if (response.data.type == "ZoneWithExtra" && 
+        response.data.content.zone.id == zone.zone.id) {
+        setChange("update")
+        setZone(response.data.content)
       }
     }
-    streamer.addEventListener("message", handler)
+    streamer?.addEventListener("message", handler)
 
-    // return () => {
-    //   streamer.terminate();
-    // };
+    return () => {
+      streamer?.terminate();
+    };
   }, []);
 
   useEffect(() => {
@@ -72,33 +78,36 @@ export default function ZoneWithExtraCard({
   }, [change]);
 
   return (
-
-    <CardWrapper 
-      className={
-        change === "replace" ? "transition-colors bg-red-500" : 
-        change === "remove" ? "transition-colors bg-red-500" :
-        change === "update" ? "transition-colors bg-yellow-500" :
-        change === "done" ? "hidden" :
-        ""
-      }
-      Header={() => {
-        return (
-          <CardWrapperHeader
-            title={zone.name}
-            description={zone.id}
-          />
-        )
-      }}
-      Content={() => {
-        return (
-          <></>
-        )
-      }}
-      Footer={() => {
-        return (
-          <></>
-        )
-      }}
-    />
+    <>
+      { change !== "remove" && (
+        <CardWrapper 
+          className={
+            change === "replace" ? "transition-colors bg-red-500" : 
+            //change === "remove" ? "transition-colors bg-red-500" :
+            change === "update" ? "transition-colors bg-yellow-500" :
+            change === "done" ? "hidden" :
+            "transition-colors bg-white"
+          }
+          Header={() => {
+            return (
+              <CardWrapperHeader
+                title={zone.zone.name}
+                description={zone.zone.id}
+              />
+            )
+          }}
+          Content={() => {
+            return (
+              <></>
+            )
+          }}
+          Footer={() => {
+            return (
+              <></>
+            )
+          }}
+        />
+      )}
+    </>
   )
 } 

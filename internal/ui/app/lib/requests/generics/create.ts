@@ -70,6 +70,8 @@ export async function create<T extends keyof CreateMapOptions>(
     id: response.data?.uuid ? response.data.uuid : "",
     type: request,
     action: "create",
+    before: null,
+    after: payload,
   };
   stringEmitter.emit('message', streamedChange);
 

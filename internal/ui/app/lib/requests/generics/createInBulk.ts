@@ -57,6 +57,8 @@ export async function createInBulk<T extends keyof CreateInBulkMapOptions>(
     id: "",
     type: request,
     action: "createInBulk",
+    before: null,
+    after: null,
   };
   stringEmitter.emit('message', streamedChange);
 

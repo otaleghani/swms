@@ -1,14 +1,68 @@
 // worker/streamer.ts
-// Creates a new Server-sent event request to the /api/stream endpoint
-// and everytime a message is sent it gets parsed and sent to the
-// main thread.
 
-// Every type is re-declared because if not the imports would get 
-// compiled and shipped
+let sse = new EventSource("/api/stream")
+let jwt = ""; 
 
-console.log("connected");
+sse.onmessage = (event: MessageEvent<any>) => {
+  const eventData = JSON.parse(event.data);
 
-type AcceptedTypes = "Zone" | "Aisle" | "Rack" | "Shelf" | "Category" | "Subcategory" | "Supplier" | "SupplierCode" | "Item" | "ItemImage" | "Transaction" | "Variant" | "Ticket" | "TicketType" | "TicketState" | "Product" | "ProductImage" | "Client" | "User";
+  if (eventData.jwt) {
+    // if jwt is defined it's the first message
+    jwt = eventData.jwt;
+    return;
+  }
+
+  postMessage(eventData)
+}
+
+
+// Cases where you want to fetch data client side:
+// - When a foreign key changes, e.g. You are in the aisles/[id] and you
+// change the zone of that id. You want to fetch the new zone.
+// - When 
+onmessage = (event) => {
+  //console.log(event)
+  const eventData = event.data;
+  //console.log(eventData)
+  
+  clientRetrieve(event.data.type, event.data.id, jwt)
+
+  //if (eventData.action === "create") {
+  //  retrieve(eventData.id, jwt, eventData.type, eventData.action);
+  //}
+  //if (eventData.action === "createInBulk") {
+  //  const notification: WorkerResponse = {
+  //    error: 
+  //    type: eventData.data,
+  //    content: "",
+  //    id: "",
+  //  };
+  //  postMessage(notification);
+  //}
+  //if (eventData.action === "remove") {
+  //  // remove returns the id of the deleted item
+  //  retrieve(eventData.id, jwt, eventData.type, eventData.action);
+  //}
+  //if (eventData.action === "replace") {
+  //  // replace returns the id of the deleted item
+  //  retrieve(eventData.id, jwt, eventData.type, eventData.action);
+  //}
+  //if (eventData.action === "update") {
+  //  // update returns the id of the updated item
+  //  retrieve(eventData.id, jwt, eventData.type, eventData.action);
+  //}
+}
+
+
+// FETCHING DATA
+interface WorkerResponse {
+  type: string;
+  id: string;
+  content: any;
+  error: boolean,
+}
+
+type AcceptedTypes = "Zone" | "ZoneWithExtra" | "Aisle" | "Rack" | "Shelf" | "Category" | "Subcategory" | "Supplier" | "SupplierCode" | "Item" | "ItemImage" | "Transaction" | "Variant" | "Ticket" | "TicketType" | "TicketState" | "Product" | "ProductImage" | "Client" | "User";
 
 // Creates the type that lists every endpoint
 type ClientRetrieveMapOptions = {
@@ -18,6 +72,7 @@ type ClientRetrieveMapOptions = {
 // Lists every option to interact with the backend
 const options: ClientRetrieveMapOptions = {
   "Zone": "zones/{{id}}",
+  "ZoneWithExtra": "zones/{{id}}/extra",
   "Aisle": "aisles/{{id}}",
   "Rack": "racks/{{id}}",
   "Shelf": "shelfs/{{id}}",
@@ -38,20 +93,10 @@ const options: ClientRetrieveMapOptions = {
   "User": "users/{{id}}",
 }
 
-// Describes the data field of the streamed message
-interface WorkerResponse {
-  content: any;
-  id: string;
-  type: string;
-  action: "create" | "createInBulk" | "remove" | "replace" | "update",
-}
-
-// Here we need a kind of generic like we made
-const retrieve = async (
+const clientRetrieve = async (
+  type: AcceptedTypes,
   id: string, 
   jwt: string, 
-  type: AcceptedTypes,
-  action: "create" | "createInBulk" | "remove" | "replace" | "update",
 ) => {
   const option = options[type as AcceptedTypes];
   const path = option.replace(/{{id}}/g, id);
@@ -75,45 +120,8 @@ const retrieve = async (
     content: body.data,
     type: type,
     id: id,
-    action: action
+    error: false,
   };
+
   postMessage(notification);
-}
-
-let sse = new EventSource("/api/stream")
-let jwt = ""; 
-
-sse.onmessage = (event: MessageEvent<any>) => {
-  const eventData = JSON.parse(event.data);
-
-  if (eventData.jwt) {
-    // if jwt is defined it's the first message
-    jwt = eventData.jwt;
-  }
-
-  if (eventData.action === "create") {
-    retrieve(eventData.id, jwt, eventData.type, eventData.action);
-  }
-  if (eventData.action === "createInBulk") {
-    const notification: WorkerResponse = {
-      type: eventData.data,
-      action: eventData.action,
-      content: "",
-      id: "",
-    };
-    postMessage(notification);
-  }
-  if (eventData.action === "remove") {
-    // remove returns the id of the deleted item
-    retrieve(eventData.id, jwt, eventData.type, eventData.action);
-  }
-  if (eventData.action === "replace") {
-    // replace returns the id of the deleted item
-    retrieve(eventData.id, jwt, eventData.type, eventData.action);
-  }
-  if (eventData.action === "update") {
-    // update returns the id of the updated item
-    console.log("got in the stream")
-    retrieve(eventData.id, jwt, eventData.type, eventData.action);
-  }
 }

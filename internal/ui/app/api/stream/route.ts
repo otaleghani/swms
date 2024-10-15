@@ -4,10 +4,19 @@ import stringEmitter from "@/app/lib/emitters";
 import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from "next/headers";
 
+/** 
+* @param type     - type of the edited object 
+* @param id       - id of the object 
+* @param action   - action performed 
+* @param before   - old content, used for updates
+* @param after    - new content
+**/
 export type ServerSentEventData = {
   type: string;
   id: string;
   action: "create" | "createInBulk" | "remove" | "replace" | "update";
+  before: any;
+  after: any;
 };
 
 // Define headers for SSE

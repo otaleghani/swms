@@ -70,6 +70,17 @@ export async function replace<T extends keyof ReplaceMapOptions>(
     replace(/{{replaced}}/g, itemToDelete).
     replace(/{{replacer}}/g, itemThatReplaces);
 
+  const before = await fetchData<TypeMap[T]>({
+    path: option.path.replace(/{{id}}/g, itemToDelete),
+    method: "GET",
+    tag: revalidateTags[option.type],
+  });
+  const after = await fetchData<TypeMap[T]>({
+    path: option.path.replace(/{{id}}/g, itemThatReplaces),
+    method: "GET",
+    tag: revalidateTags[option.type],
+  });
+
   const response = await fetchData<undefined>({
     path: path,
     method: "POST",
@@ -78,8 +89,11 @@ export async function replace<T extends keyof ReplaceMapOptions>(
 
   const streamedChange: ServerSentEventData = {
     id: itemToDelete,
+    //content: itemThatReplaces,
     type: request,
     action: "replace",
+    before: before.data,
+    after: after.data,
   };
   stringEmitter.emit('message', streamedChange);
 
