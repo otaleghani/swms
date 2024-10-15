@@ -44,20 +44,19 @@ export default function ZoneWithExtraCard({
         response.data.id === zone.zone.id ||
         response.data.zone === zone.zone.id
       )) {
-        //console.log(response.data.after);
-        //console.log(response.data.before);
+        setChange("update")
         streamer?.postMessage({
            type: "ZoneWithExtra",
            id: zone.zone.id
-        })
-      }
+        });
+      };
 
       if (response.data.type == "ZoneWithExtra" && 
         response.data.content.zone.id == zone.zone.id) {
-        setChange("update")
         setZone(response.data.content)
-      }
-    }
+        setChange("none")
+      };
+    };
     streamer?.addEventListener("message", handler)
 
     return () => {
@@ -65,28 +64,28 @@ export default function ZoneWithExtraCard({
     };
   }, []);
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      if (change === "update") {
-        setChange("none");
-      } else {
-        setChange("done");
-      }
-    }, 500);
-    
-    return () => clearInterval(timer);
-  }, [change]);
+  //useEffect(() => {
+  //  const timer = setInterval(() => {
+  //    if (change === "update") {
+  //      setChange("none");
+  //    } else {
+  //      setChange("done");
+  //    }
+  //  }, 500);
+  //  
+  //  return () => clearInterval(timer);
+  //}, [change]);
 
   return (
     <>
       { change !== "remove" && (
         <CardWrapper 
           className={
-            change === "replace" ? "transition-colors bg-red-500" : 
+            change === "replace" ? "!bg-red-500" : 
             //change === "remove" ? "transition-colors bg-red-500" :
-            change === "update" ? "transition-colors bg-yellow-500" :
+            change === "update" ? "!bg-yellow-500 " :
             change === "done" ? "hidden" :
-            "transition-colors bg-white"
+            ""
           }
           Header={() => {
             return (
