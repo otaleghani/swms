@@ -21,20 +21,20 @@ export async function validateItemImage(
 
   if (!state.result) {
     state.error = true;
-    state.errorMessages = dict.forms.messages.errors.emtpy;
+    state.message = dict.form.messages.errors.empty;
     return state;
   }
   
   (state.errorMessages.images = validateString(
     state.result.item, 
-    dict.forms.fields.items.validation, 
+    dict.form.fields.items.validation, 
     VALIDATION_SETTINGS.foreignKeys.minLength,
     VALIDATION_SETTINGS.foreignKeys.maxLength,
   )).length != 0 && (state.error = true);
 
   if (await checkExisting("Item", state.result.item)) {
     state.errorMessages.images.push(
-      dict.forms.fields.items.validation.not_found)
+      dict.form.fields.items.validation.not_found)
     state.error = true;
   }
 
@@ -44,13 +44,13 @@ export async function validateItemImage(
       state.errorMessages.images = errors;
       state.error = true;
     } else {
-      state.result.images = images;
+      state.result.encodedImages = images;
     }
   }
 
   if (!state.result) {
     state.error = true;
-    state.errorMessages = dict.forms.messages.errors.empty_after;
+    state.message = dict.form.messages.errors.empty_after;
     return state;
   }
 

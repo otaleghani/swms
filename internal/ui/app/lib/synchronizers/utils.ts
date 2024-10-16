@@ -10,7 +10,7 @@ import { ServerSentEventData } from "@/app/api/stream/route";
 * remove:   plays an animation then goes to "done"
 * done:     hides the element
 **/ 
-export type SyncState = "none" | "update" | "remove" | "done";
+export type SyncState = "none" | "update" | "remove" | "hidden" | "new";
 
 export type FetchResultMessage = {
   type: string;
@@ -40,12 +40,12 @@ export const delaySyncStateToNone = (
 * Used to make the animation finish even if the server already 
 * returned the data.
 **/
-export const delaySyncStateToDone = (
+export const delaySyncStateToHidden = (
   setChange: Dispatch<SetStateAction<SyncState>>
 ) => {
   return new Promise(resolve => {
     setTimeout(() => {
-      setChange("done");
+      setChange("hidden");
       resolve
     }, 550)
   });
@@ -60,7 +60,3 @@ export function isFetchResultMessage(m: WorkerMessage):
   m is FetchResultMessage {
   return (m as FetchResultMessage).error !== undefined;
 }
-
-//function isTypeA(message: Message): message is TypeA {
-//  return (message as TypeA).typeAField !== undefined;
-//}

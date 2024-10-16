@@ -8,14 +8,13 @@ import CardWrapper from "@/app/ui/wrappers/cards/CardWrapper";
 
 /** Web workers */
 import streamer from "@/app/lib/workers";
-//import { WorkerResponse } from "@/app/lib/workers/streamer";
 import CardWrapperHeader from "@/app/ui/wrappers/cards/CardWrapperHeader";
 import { ZoneWithExtra } from "@/app/lib/types/data/zones";
-import { SyncState } from "@/app/lib/synchronizers/utils";
-import { synchronizeZoneWithExtra } from "@/app/lib/synchronizers/data/zones";
+import { delaySyncStateToNone, SyncState } from "@/app/lib/synchronizers/utils";
+import { synchronizeZoneWithExtraSingle } from "@/app/lib/synchronizers/data/zonesWithExtra";
 
 interface ZoneWithExtraCardProps {
-  item: ZoneWithExtra,
+  item: ZoneWithExtra & {isNew?: boolean},
   //dictCard: DictLabelList<"aisles" | "items">
   //dialogEdit: DictDialog;
   //dialogReplace: DictDialog;
@@ -25,16 +24,20 @@ export default function ZoneWithExtraCard({
   item
 }: ZoneWithExtraCardProps) {
   const [zoneWithExtra, setZoneWithExtra] = useState(item);
-  const [syncState, setSyncState] = useState("none" as SyncState);
+  const [syncState, setSyncState] = useState(
+    item.isNew ? "new" as SyncState : "none" as SyncState
+  );
 
   useEffect(() => {
-    synchronizeZoneWithExtra(
+    synchronizeZoneWithExtraSingle(
       streamer as Worker,
-      syncState,
       setSyncState,
       zoneWithExtra,
       setZoneWithExtra,
-    )
+    );
+    
+    // This resets in theory to "none" if "new"
+    delaySyncStateToNone(setSyncState);
 
     return () => {
       streamer?.terminate();
@@ -43,13 +46,12 @@ export default function ZoneWithExtraCard({
 
   return (
     <>
-      { syncState && (
+      { syncState != "hidden" && (
         <CardWrapper 
           className={
-            //change === "replace" ? "!bg-red-500" : 
+            syncState === "new" ? "animate-new" :
             syncState === "remove" ? "animate-delete" :
             syncState === "update" ? "animate-update" :
-            syncState === "done" ? "hidden" :
             ""
           }
           Header={() => {

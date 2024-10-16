@@ -13,8 +13,8 @@ export interface DictFormMessages {
   };
   errors: {
     general:      string,
-    emtpy:        string,
-    emtpy_after:  string,
+    empty:        string,
+    empty_after:  string,
     auth:         string,
     not_found:    string,
     client:       string,
@@ -49,6 +49,8 @@ export interface DictFormFields {
   variants:       DictSelectField;
 
   tickets:        DictSelectField;
+  ticketTypes:    DictSelectField;
+  ticketStates:   DictSelectField;
   products:       DictSelectField;
   clients:        DictSelectField;
 

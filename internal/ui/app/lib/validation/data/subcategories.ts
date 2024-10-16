@@ -20,7 +20,7 @@ export async function validateSubcategory(
 
   if (!state.result) {
     state.error = true;
-    state.errorMessages = dict.forms.messages.errors.empty;
+    state.message = dict.form.messages.errors.empty;
     return state;
   }
 
@@ -35,13 +35,13 @@ export async function validateSubcategory(
 
   if (!state.result) {
     state.error = true;
-    state.errorMessages = dict.forms.messages.errors.empty_after;
+    state.message = dict.form.messages.errors.empty_after;
     return state;
   }
 
   (state.errorMessages.name = validateString(
     state.result.name as string, 
-    dict.forms.fields.name.validation, 
+    dict.form.fields.name.validation, 
     VALIDATION_SETTINGS.shortString.minLength,
     VALIDATION_SETTINGS.shortString.maxLength,
   )).length != 0 && (state.error = true);
@@ -49,7 +49,7 @@ export async function validateSubcategory(
   if (state.result.description) {
     (state.errorMessages.description = validateString(
       state.result.description as string, 
-      dict.forms.fields.description.validation, 
+      dict.form.fields.description.validation, 
       VALIDATION_SETTINGS.longString.minLength,
       VALIDATION_SETTINGS.longString.maxLength,
     )).length != 0 && (state.error = true);
@@ -57,14 +57,14 @@ export async function validateSubcategory(
 
   (state.errorMessages.category = validateString(
     state.result.category as string, 
-    dict.forms.fields.categories.validation, 
+    dict.form.fields.categories.validation, 
     VALIDATION_SETTINGS.foreignKeys.minLength,
     VALIDATION_SETTINGS.foreignKeys.maxLength,
   )).length != 0 && (state.error = true);
 
   if (await checkExisting("Category", state.result.category)) {
     state.errorMessages.category.push(
-      dict.forms.fields.categories.validation.not_found);
+      dict.form.fields.categories.validation.not_found);
     state.error = true;
   }
 

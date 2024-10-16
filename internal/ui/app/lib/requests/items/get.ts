@@ -49,15 +49,3 @@ export async function getItemById(id: string) {
   return body.data as Item;
 }
 
-export async function getItemByIdValidation(id: string) {
-
-  const body = await res.json()
-
-  if (body.code === undefined || body.code !== 200) {
-    return {} as Item;
-  }
-
-  return body.data as Item;
-}
-
-

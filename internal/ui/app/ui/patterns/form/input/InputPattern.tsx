@@ -12,6 +12,7 @@ import InputPatternImages from "./images/InputPatternImages";
 import { DictCheckboxField, DictInputField } from "@/app/lib/types/dictionary/form";
 import { InputPatternNumberWithButtons } from "./InputPatternTransaction";
 import { Checkbox } from "@/app/ui/components/checkbox";
+import { isInputFieldDict } from "./misc";
 
 interface InputPatternProps {
   field: 
@@ -57,7 +58,7 @@ export default function InputPattern({
             type="email"
             name={field}
             id={`${field}-${inputId}`}
-            placeholder={dict.placeholder}
+            placeholder={isInputFieldDict(dict) ? dict.placeholder : ""}
             defaultValue={defaultValue}
             suppressHydrationWarning
           />
@@ -71,7 +72,7 @@ export default function InputPattern({
             type="text"
             name={field}
             id={`${field}-${inputId}`}
-            placeholder={dict.placeholder}
+            placeholder={isInputFieldDict(dict) ? dict.placeholder : ""}
             defaultValue={defaultValue}
             suppressHydrationWarning
           />
@@ -82,7 +83,7 @@ export default function InputPattern({
             defaultValue={defaultValue}
             name={field}
             id={`${field}-${inputId}`}
-            placeholder={dict.placeholder}
+            placeholder={isInputFieldDict(dict) ? dict.placeholder : ""}
             suppressHydrationWarning
           />
         );
@@ -96,7 +97,7 @@ export default function InputPattern({
             defaultValue={defaultValue}
             name={field}
             id={`${field}-${inputId}`}
-            placeholder={dict.placeholder}
+            placeholder={isInputFieldDict(dict) ? dict.placeholder : ""}
             suppressHydrationWarning
           />
         );
@@ -107,7 +108,7 @@ export default function InputPattern({
             defaultValue={defaultValue}
             name={field}
             id={`${field}-${inputId}`}
-            placeholder={dict.placeholder}
+            placeholder={isInputFieldDict(dict) ? dict.placeholder : ""}
             step="1"
             suppressHydrationWarning
           />

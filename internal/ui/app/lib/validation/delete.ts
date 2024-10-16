@@ -27,7 +27,7 @@ export async function validateDelete(
 
   if (!state.result) {
     state.error = true;
-    state.errorMessages = dict.form.messages.errors.emtpy;
+    state.errorMessages = dict.form.messages.errors.empty;
     return state;
   }
 

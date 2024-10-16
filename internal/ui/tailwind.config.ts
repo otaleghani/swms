@@ -77,10 +77,10 @@ const config = {
           "25%": { backgroundColor: "#f87f71", opacity: "1" },
           "100%": { backgroundColor: "#ffffff", opacity: "0" },
         },
-        "added": {
-          "0%": { backgroundColor: "#ffffff" },
-          "25%": { backgroundColor: "#4ade80" },
-          "100%": { backgroundColor: "#ffffff" },
+        "new": {
+          "0%": { backgroundColor: "#ffffff", opacity: "0" },
+          "25%": { backgroundColor: "#4ade80", opacity: "1" },
+          "100%": { backgroundColor: "#ffffff", opacity: "1" },
         },
       },
       animation: {
@@ -88,7 +88,7 @@ const config = {
         "accordion-up": "accordion-up 0.2s ease-out",
         "update": "update 0.5s ease-out forwards",
         "delete": "delete 0.5s ease-out forwards",
-        "added": "added 0.5s ease-out forwards",
+        "new": "new 0.5s ease-out forwards",
       },
     },
   },

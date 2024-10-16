@@ -7,7 +7,8 @@ export type ItemImage = {
   //variant: string;
 }
 export type ItemImagesPostBody = {
-  images: File[];
+  images?: File[];
+  encodedImages?: string[];
   item: string;
 }
 export type ItemImages = ItemImage[];
@@ -19,7 +20,8 @@ export type ProductImage = {
 }
 export type ProductImages = ProductImage[];
 export type ProductImagesPostBody = {
-  images: File[];
+  images?: File[];
+  encodedImages?: string[];
   product: string;
 }
 

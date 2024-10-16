@@ -5,13 +5,13 @@ import { Button } from "@/components/button"
 import { Loader2 } from "lucide-react"
 
 /** Types and interfaces */
-import { DictionaryFormButton } from "@/app/lib/types/dictionary/form";
+import { DictFormButton } from "@/app/lib/types/dictionary/form";
 
 interface SubmitFormButtonPatternProps {
   className: string;
   formName: string;
   isPending: boolean;
-  dict: DictionaryFormButton;
+  dict: DictFormButton;
 }
 
 export default function SubmitFormButtonPattern({

@@ -21,6 +21,7 @@ export const defaultProductFormState: ProductFormState = {
 }
 
 export type ProductWithImages = Product & {
+  encodedImages: string[];
   images: File[];
 }
 export type ProductWithImagesFormState = FormState<"ProductWithImages">

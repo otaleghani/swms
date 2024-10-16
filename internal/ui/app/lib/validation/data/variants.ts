@@ -22,7 +22,7 @@ export async function validateVariant(
 
   if (!state.result) {
     state.error = true;
-    state.errorMessages = dict.forms.messages.errors.empty;
+    state.message = dict.form.messages.errors.empty;
     return state;
   }
 
@@ -37,13 +37,13 @@ export async function validateVariant(
 
   if (!state.result) {
     state.error = true;
-    state.errorMessages = dict.forms.messages.errors.empty_after;
+    state.message = dict.form.messages.errors.empty_after;
     return state;
   }
 
   (state.errorMessages.name = validateString(
     state.result.name as string, 
-    dict.forms.fields.name.validation, 
+    dict.form.fields.name.validation, 
     VALIDATION_SETTINGS.shortString.minLength,
     VALIDATION_SETTINGS.shortString.maxLength,
   )).length != 0 && (state.error = true);
@@ -51,7 +51,7 @@ export async function validateVariant(
   if (state.result.description) {
     (state.errorMessages.description = validateString(
       state.result.description as string, 
-      dict.forms.fields.description.validation, 
+      dict.form.fields.description.validation, 
       VALIDATION_SETTINGS.longString.minLength,
       VALIDATION_SETTINGS.longString.maxLength,
     )).length != 0 && (state.error = true);
@@ -59,14 +59,14 @@ export async function validateVariant(
 
   (state.errorMessages.identifier = validateString(
     state.result.identifier as string, 
-    dict.forms.fields.identifier.validation, 
+    dict.form.fields.identifier.validation, 
     VALIDATION_SETTINGS.mediumString.minLength,
     VALIDATION_SETTINGS.mediumString.maxLength,
   )).length != 0 && (state.error = true);
 
   (state.errorMessages.quantity = validateNumber(
     String(state.result.quantity), 
-    dict.forms.fields.categories.validation, 
+    dict.form.fields.categories.validation, 
     VALIDATION_SETTINGS.bigSignedNumber.minLength,
     VALIDATION_SETTINGS.bigSignedNumber.maxLength,
   )).length != 0 && (state.error = true);
@@ -74,7 +74,7 @@ export async function validateVariant(
   if (state.result.length) {
     (state.errorMessages.length = validateNumber(
       String(state.result.length), 
-      dict.forms.fields.length.validation, 
+      dict.form.fields.length.validation, 
       VALIDATION_SETTINGS.bigUnsignedNumber.minLength,
       VALIDATION_SETTINGS.bigUnsignedNumber.maxLength,
     )).length != 0 && (state.error = true);
@@ -83,7 +83,7 @@ export async function validateVariant(
   if (state.result.width) {
     (state.errorMessages.width = validateNumber(
       String(state.result.width), 
-      dict.forms.fields.width.validation, 
+      dict.form.fields.width.validation, 
       VALIDATION_SETTINGS.bigUnsignedNumber.minLength,
       VALIDATION_SETTINGS.bigUnsignedNumber.maxLength,
     )).length != 0 && (state.error = true);
@@ -92,7 +92,7 @@ export async function validateVariant(
   if (state.result.heigth) {
     (state.errorMessages.heigth = validateNumber(
       String(state.result.heigth), 
-      dict.forms.fields.heigth.validation, 
+      dict.form.fields.height.validation, 
       VALIDATION_SETTINGS.bigUnsignedNumber.minLength,
       VALIDATION_SETTINGS.bigUnsignedNumber.maxLength,
     )).length != 0 && (state.error = true);
@@ -101,7 +101,7 @@ export async function validateVariant(
   if (state.result.weight) {
     (state.errorMessages.weight = validateNumber(
       String(state.result.weight), 
-      dict.forms.fields.weight.validation, 
+      dict.form.fields.weight.validation, 
       VALIDATION_SETTINGS.bigUnsignedNumber.minLength,
       VALIDATION_SETTINGS.bigUnsignedNumber.maxLength,
     )).length != 0 && (state.error = true);
@@ -109,13 +109,13 @@ export async function validateVariant(
 
   //(state.errorMessages.item = validateString(
   //  state.result.item as string, 
-  //  dict.forms.fields.items.validation, 
+  //  dict.form.fields.items.validation, 
   //  VALIDATION_SETTINGS.foreignKeys.minLength,
   //  VALIDATION_SETTINGS.foreignKeys.maxLength,
   //)).length != 0 && (state.error = true);
   //if (await checkExisting("Item", state.result.item)) {
   //  state.errorMessages.item.push(
-  //    dict.forms.fields.items.validation.not_found);
+  //    dict.form.fields.items.validation.not_found);
   //  state.error = true;
   //}
 

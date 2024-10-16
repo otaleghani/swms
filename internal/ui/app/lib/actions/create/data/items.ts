@@ -56,7 +56,8 @@ export async function createItemComplete<K extends keyof FormMap>(
   // Creates the images request
   const imagesRB: ItemImagesPostBody = {
     item: itemUUID,
-    images: resultItemComplete.images,
+    //images: resultItemComplete.images,
+    encodedImages: resultItemComplete.encodedImages,
   }
   let rImages = await create("ItemImagesPostBody", imagesRB);
   stateValidation = await validateResponse(rImages, state, locale);

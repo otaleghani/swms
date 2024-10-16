@@ -20,7 +20,7 @@ export async function validateUser(
 
   if (!state.result) {
     state.error = true;
-    state.errorMessages = dict.forms.messages.errors.empty;
+    state.message = dict.form.messages.errors.empty;
     return state;
   }
 
@@ -35,13 +35,13 @@ export async function validateUser(
 
   if (!state.result) {
     state.error = true;
-    state.errorMessages = dict.forms.messages.errors.empty_after;
+    state.message = dict.form.messages.errors.empty_after;
     return state;
   }
 
   (state.errorMessages.name = validateString(
     state.result.name as string, 
-    dict.forms.fields.name.validation, 
+    dict.form.fields.name.validation, 
     VALIDATION_SETTINGS.shortString.minLength,
     VALIDATION_SETTINGS.shortString.maxLength,
   )).length != 0 && (state.error = true);
@@ -49,7 +49,7 @@ export async function validateUser(
   if (state.result.surname) {
     (state.errorMessages.surname = validateString(
       state.result.surname as string, 
-      dict.forms.fields.surname.validation, 
+      dict.form.fields.surname.validation, 
       VALIDATION_SETTINGS.shortString.minLength,
       VALIDATION_SETTINGS.shortString.maxLength,
     )).length != 0 && (state.error = true);

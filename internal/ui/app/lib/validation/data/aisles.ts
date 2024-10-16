@@ -21,7 +21,7 @@ export async function validateAisle(
 
   if (!state.result) {
     state.error = true;
-    state.errorMessages = dict.forms.messages.errors.emtpy;
+    state.message = dict.form.messages.errors.empty;
     return state;
   }
 
@@ -36,27 +36,27 @@ export async function validateAisle(
 
   if (!state.result) {
     state.error = true;
-    state.errorMessages = dict.forms.messages.errors.empty_after;
+    state.message = dict.form.messages.errors.empty_after;
     return state;
   }
 
   (state.errorMessages.name = validateString(
     state.result.name, 
-    dict.forms.fields.name.validation, 
+    dict.form.fields.name.validation, 
     VALIDATION_SETTINGS.shortString.minLength,
     VALIDATION_SETTINGS.shortString.maxLength,
   )).length != 0 && (state.error = true);
 
   (state.errorMessages.zone = validateString(
     state.result.zone, 
-    dict.forms.fields.zones.validation, 
+    dict.form.fields.zones.validation, 
     VALIDATION_SETTINGS.foreignKeys.minLength,
     VALIDATION_SETTINGS.foreignKeys.maxLength,
   )).length != 0 && (state.error = true);
 
   if (await checkExisting("Zone", state.result.zone)) {
     state.errorMessages.zone.push(
-      dict.forms.fields.zones.validation.not_found)
+      dict.form.fields.zones.validation.not_found)
     state.error = true;
   }
 
@@ -72,25 +72,25 @@ export async function validateAislesBulk(
   
   if (!state.result) {
     state.error = true;
-    state.errorMessages = dict.forms.messages.errors.empty;
+    state.message = dict.form.messages.errors.empty;
     return state;
   }
 
   (state.errorMessages.quantity = validateNumber(
     String(state.result.number), 
-    dict.forms.fields.number.validation, 
+    dict.form.fields.quantity.validation, 
     VALIDATION_SETTINGS.bigUnsignedNumber.minLength,
     VALIDATION_SETTINGS.bigUnsignedNumber.maxLength,
   )).length != 0 && (state.error = true);
 
   if (await checkExisting("Zone", state.result.zone)) {
     state.errorMessages.zone.push(
-      dict.forms.fields.zones.validation.not_found);
+      dict.form.fields.zones.validation.not_found);
     state.error = true;
   }
 
   if (state.error) {
-    state.message = dict.forms.messages.errors.general;
+    state.message = dict.form.messages.errors.general;
   }
   
   return state;

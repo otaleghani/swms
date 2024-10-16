@@ -41,6 +41,8 @@ export type SelectableItem = keyof Omit<
   | "ItemCompleteFormFieldsProps"
   | "Transaction"
   | "ProductWithImages"
+  | "Delete"
+  | "Replace"
 >;
 
 /**

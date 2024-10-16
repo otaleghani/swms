@@ -49,10 +49,11 @@ export const revalidateTags: Record<keyof TypeMap, string> = {
   "Items": "items",
 
   "ItemImage": "item-images",
+  "ItemImagesPostBody": "item-images",
   "ItemImages": "item-images",
 
-  "Transition": "transitions",
-  "Transitions": "transitions",
+  "Transaction": "transitions",
+  "Transactions": "transitions",
 
   "Variant": "variants",
   "Variants": "variants",
@@ -71,7 +72,11 @@ export const revalidateTags: Record<keyof TypeMap, string> = {
   "Products": "products",
 
   "ProductImage": "product-images",
+  "ProductImagesPostBody": "product-images",
   "ProductImages": "product-images",
+
+  "Client": "clients",
+  "Clients": "clients",
 
   // User
   "User": "users",

@@ -61,11 +61,10 @@ export const defaultTicketFormState: TicketFormState = {
     description: [],
     client: [],
     product: [],
-    
-    //open: [],
-    //close: [],
-    //type: [],
-    //state: [],
+    openDate: [],
+    closeDate: [],
+    ticketType: [],
+    ticketState: [],
   }
 }
 

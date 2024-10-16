@@ -21,7 +21,7 @@ export async function validateProduct(
 
   if (!state.result) {
     state.error = true;
-    state.errorMessages = dict.forms.messages.errors.emtpy;
+    state.message = dict.form.messages.errors.empty;
     return state;
   }
 
@@ -36,13 +36,13 @@ export async function validateProduct(
 
   if (!state.result) {
     state.error = true;
-    state.errorMessages = dict.forms.messages.errors.empty_after;
+    state.message = dict.form.messages.errors.empty_after;
     return state;
   }
 
   (state.errorMessages.name = validateString(
     state.result.name as string, 
-    dict.forms.fields.name.validation, 
+    dict.form.fields.name.validation, 
     VALIDATION_SETTINGS.shortString.minLength,
     VALIDATION_SETTINGS.shortString.maxLength,
   )).length != 0 && (state.error = true);
@@ -50,7 +50,7 @@ export async function validateProduct(
   if (state.result.description) {
     (state.errorMessages.description = validateString(
       state.result.description as string, 
-      dict.forms.fields.description.validation, 
+      dict.form.fields.description.validation, 
       VALIDATION_SETTINGS.longString.minLength,
       VALIDATION_SETTINGS.longString.maxLength,
     )).length != 0 && (state.error = true);
@@ -59,14 +59,14 @@ export async function validateProduct(
   if (state.result.client) {
     (state.errorMessages.clientWithAdd = validateString(
       state.result.client as string, 
-      dict.forms.fields.client.validation, 
+      dict.form.fields.clients.validation, 
       VALIDATION_SETTINGS.foreignKeys.minLength,
       VALIDATION_SETTINGS.foreignKeys.maxLength,
     )).length != 0 && (state.error = true);
 
     if (await checkExisting("Client", state.result.client)) {
       state.errorMessages.clientWithAdd.push(
-        dict.forms.fields.client.validation.not_found)
+        dict.form.fields.clients.validation.not_found)
       state.error = true;
     }
   }
@@ -83,28 +83,28 @@ export async function validateProductWithImages(
 
   if (!state.result) {
     state.error = true;
-    state.errorMessages = dict.forms.messages.errors.emtpy;
+    state.message = dict.form.messages.errors.empty;
     return state;
   }
 
-  if (state.result.id) {
-    state = await validateExisting(
-      "Product", 
-      state, 
-      state.result.id, 
-      locale
-    );
-  }
+  //if (state.result.id) {
+  //  state = await validateExisting(
+  //    "Product", 
+  //    state, 
+  //    state.result.id, 
+  //    locale
+  //  );
+  //}
 
   if (!state.result) {
     state.error = true;
-    state.errorMessages = dict.forms.messages.errors.empty_after;
+    state.message = dict.form.messages.errors.empty_after;
     return state;
   }
 
   (state.errorMessages.name = validateString(
     state.result.name as string, 
-    dict.forms.fields.name.validation, 
+    dict.form.fields.name.validation, 
     VALIDATION_SETTINGS.shortString.minLength,
     VALIDATION_SETTINGS.shortString.maxLength,
   )).length != 0 && (state.error = true);
@@ -112,7 +112,7 @@ export async function validateProductWithImages(
   if (state.result.description) {
     (state.errorMessages.description = validateString(
       state.result.description as string, 
-      dict.forms.fields.description.validation, 
+      dict.form.fields.description.validation, 
       VALIDATION_SETTINGS.longString.minLength,
       VALIDATION_SETTINGS.longString.maxLength,
     )).length != 0 && (state.error = true);
@@ -121,14 +121,14 @@ export async function validateProductWithImages(
   if (state.result.client) {
     (state.errorMessages.clientWithAdd = validateString(
       state.result.client as string, 
-      dict.forms.fields.client.validation, 
+      dict.form.fields.clients.validation, 
       VALIDATION_SETTINGS.foreignKeys.minLength,
       VALIDATION_SETTINGS.foreignKeys.maxLength,
     )).length != 0 && (state.error = true);
 
     if (await checkExisting("Client", state.result.client)) {
       state.errorMessages.clientWithAdd.push(
-        dict.forms.fields.client.validation.not_found)
+        dict.form.fields.clients.validation.not_found)
       state.error = true;
     }
   }
@@ -139,7 +139,7 @@ export async function validateProductWithImages(
       state.errorMessages.images = errors;
       state.error = true;
     } else {
-      state.result.images = images;
+      state.result.encodedImages = images;
     }
   }
 

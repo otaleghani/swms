@@ -27,13 +27,13 @@ export async function validateReplace(
 
   if (!state.result) {
     state.error = true;
-    state.message = dict.forms.messages.errors.emtpy;
+    state.message = dict.form.messages.errors.empty;
     return state;
   }
 
   if (!state.result.itemToDelete || !state.result.itemThatReplaces) {
     state.error = true;
-    state.message = dict.forms.messages.errors.emtpy;
+    state.message = dict.form.messages.errors.empty;
     return state;
   }
 
@@ -49,7 +49,7 @@ export async function validateReplace(
 
   if (stateItemToDelete.error) {
     state.error = true;
-    state.message = dict.forms.messages.errors.empty;
+    state.message = dict.form.messages.errors.empty;
     return state;
   }
 

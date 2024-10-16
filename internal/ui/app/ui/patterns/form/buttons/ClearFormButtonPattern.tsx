@@ -2,11 +2,11 @@
 import { Button } from "@/components/button";
 
 /** Types and interfaces */
-import { DictionaryFormButton } from "@/app/lib/types/dictionary/form";
+import { DictFormButton } from "@/app/lib/types/dictionary/form";
 
 interface ClearFormButtonPatternProps {
   className: string;
-  dict: DictionaryFormButton;
+  dict: DictFormButton;
 }
 
 export default function ClearFormButtonPattern({

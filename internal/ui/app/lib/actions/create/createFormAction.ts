@@ -9,7 +9,7 @@ export async function createFormAction<K extends keyof FormMap>(
   formData: FormData
 ) {
   let state = currentState;
-  let result = state.result ? state.result : ({} as FormMap[K]);
+  let result = state.result as FormMap[K]; 
   let locale = formData.get("locale");
   let type = formData.get("type");
 

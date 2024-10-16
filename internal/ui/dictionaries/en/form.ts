@@ -11,8 +11,8 @@ export const dictionaryForm: DictForms = {
     },
     errors: {
       general: "General server error",
-      emtpy: "The server response was empty",
-      emtpy_after: "The server response... What was it?",
+      empty: "The server response was empty",
+      empty_after: "The server response... What was it?",
       auth: "You are not authorized to do this action. Please login.",
       not_found: "The resource that you asked for was not found.",
       client: "The request was malformed. Refresh the page and retry.",
@@ -262,6 +262,34 @@ export const dictionaryForm: DictForms = {
       },
       validation: {
         not_found: "The selected ticket was not found.",
+      }
+    },
+
+    ticketTypes: {
+      select: {
+        label: "Ticket type",
+        combobox: {
+          select: "Select",
+          search: "Search",
+          empty: "Nothing found...",
+        },
+      },
+      validation: {
+        not_found: "The selected ticket type was not found.",
+      }
+    },
+
+    ticketStates: {
+      select: {
+        label: "Ticket state",
+        combobox: {
+          select: "Select",
+          search: "Search",
+          empty: "Nothing found...",
+        },
+      },
+      validation: {
+        not_found: "The selected ticket state was not found.",
       }
     },
 

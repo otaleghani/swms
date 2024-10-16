@@ -22,7 +22,7 @@ export async function validateTransaction(
 
   if (!state.result) {
     state.error = true;
-    state.errorMessages = dict.forms.messages.errors.empty;
+    state.message = dict.form.messages.errors.empty;
     return state;
   }
 
@@ -37,7 +37,7 @@ export async function validateTransaction(
 
   if (!state.result) {
     state.error = true;
-    state.errorMessages = dict.forms.messages.errors.empty_after;
+    state.message = dict.form.messages.errors.empty_after;
     return state;
   }
 
@@ -45,12 +45,12 @@ export async function validateTransaction(
   // because the form does not have other fields
   (state.errorMessages.quantity = validateDate(
     state.result.date, 
-    dict.forms.fields.date.validation, 
+    dict.form.fields.date.validation, 
   )).length != 0 && (state.error = true);
 
   (state.errorMessages.quantity = validateNumber(
     String(state.result.quantity), 
-    dict.forms.fields.quantity.validation, 
+    dict.form.fields.quantity.validation, 
     VALIDATION_SETTINGS.bigUnsignedNumber.minLength,
     VALIDATION_SETTINGS.bigUnsignedNumber.maxLength,
   )).length != 0 && (state.error = true);
@@ -59,14 +59,14 @@ export async function validateTransaction(
   // because the form does not have other fields
   (state.errorMessages.quantity = validateString(
     state.result.user as string, 
-    dict.forms.fields.users.validation, 
+    dict.form.fields.users.validation, 
     VALIDATION_SETTINGS.foreignKeys.minLength,
     VALIDATION_SETTINGS.foreignKeys.maxLength,
   )).length != 0 && (state.error = true);
 
   if (await checkExisting("User", state.result.user)) {
     state.errorMessages.quantity.push(
-      dict.forms.fields.users.validation.not_found);
+      dict.form.fields.users.validation.not_found);
     state.error = true;
   }
 
@@ -74,14 +74,14 @@ export async function validateTransaction(
   // because the form does not have other fields
   (state.errorMessages.quantity = validateString(
     state.result.item as string, 
-    dict.forms.fields.items.validation, 
+    dict.form.fields.items.validation, 
     VALIDATION_SETTINGS.foreignKeys.minLength,
     VALIDATION_SETTINGS.foreignKeys.maxLength,
   )).length != 0 && (state.error = true);
 
   if (await checkExisting("Item", state.result.item)) {
     state.errorMessages.quantity.push(
-      dict.forms.fields.items.validation.not_found);
+      dict.form.fields.items.validation.not_found);
     state.error = true;
   }
 
@@ -89,28 +89,28 @@ export async function validateTransaction(
   // because the form does not have other fields
   (state.errorMessages.quantity = validateString(
     state.result.variant as string, 
-    dict.forms.fields.variants.validation, 
+    dict.form.fields.variants.validation, 
     VALIDATION_SETTINGS.foreignKeys.minLength,
     VALIDATION_SETTINGS.foreignKeys.maxLength,
   )).length != 0 && (state.error = true);
 
   if (await checkExisting("Variant", state.result.variant)) {
     state.errorMessages.quantity.push(
-      dict.forms.fields.variants.validation.not_found);
+      dict.form.fields.variants.validation.not_found);
     state.error = true;
   }
 
   if (state.result.ticket) {
     (state.errorMessages.ticket = validateString(
       state.result.ticket as string, 
-      dict.forms.fields.tickets.validation, 
+      dict.form.fields.tickets.validation, 
       VALIDATION_SETTINGS.foreignKeys.minLength,
       VALIDATION_SETTINGS.foreignKeys.maxLength,
     )).length != 0 && (state.error = true);
 
     if (await checkExisting("Ticket", state.result.ticket)) {
       state.errorMessages.ticket.push(
-        dict.forms.fields.tickets.validation.not_found);
+        dict.form.fields.tickets.validation.not_found);
       state.error = true;
     }
   }

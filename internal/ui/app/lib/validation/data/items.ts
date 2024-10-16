@@ -23,7 +23,7 @@ export async function validateItem(
 
   if (!state.result) {
     state.error = true;
-    state.errorMessages = dict.forms.messages.errors.empty;
+    state.message = dict.form.messages.errors.empty;
     return state;
   }
 
@@ -38,13 +38,13 @@ export async function validateItem(
 
   if (!state.result) {
     state.error = true;
-    state.errorMessages = dict.forms.messages.errors.empty_after;
+    state.message = dict.form.messages.errors.empty_after;
     return state;
   }
 
   (state.errorMessages.name = validateString(
     state.result.name as string, 
-    dict.forms.fields.name.validation, 
+    dict.form.fields.name.validation, 
     VALIDATION_SETTINGS.shortString.minLength,
     VALIDATION_SETTINGS.shortString.maxLength,
   )).length != 0 && (state.error = true);
@@ -52,7 +52,7 @@ export async function validateItem(
   if (state.result.category) {
     (state.errorMessages.description = validateString(
       state.result.description as string, 
-      dict.forms.fields.description.validation, 
+      dict.form.fields.description.validation, 
       VALIDATION_SETTINGS.longString.minLength,
       VALIDATION_SETTINGS.longString.maxLength,
     )).length != 0 && (state.error = true);
@@ -61,14 +61,14 @@ export async function validateItem(
   if (state.result.zone) {
     (state.errorMessages.zoneWithAdd = validateString(
       state.result.zone as string, 
-      dict.forms.fields.zones.validation, 
+      dict.form.fields.zones.validation, 
       VALIDATION_SETTINGS.foreignKeys.minLength,
       VALIDATION_SETTINGS.foreignKeys.maxLength,
     )).length != 0 && (state.error = true);
 
     if (await checkExisting("Zone", state.result.zone)) {
       state.errorMessages.zoneWithAdd.push(
-        dict.forms.fields.zones.validation.not_found);
+        dict.form.fields.zones.validation.not_found);
       state.error = true;
     }
   }
@@ -76,14 +76,14 @@ export async function validateItem(
   if (state.result.aisle) {
     (state.errorMessages.aisleWithAdd = validateString(
       state.result.aisle as string, 
-      dict.forms.fields.aisles.validation, 
+      dict.form.fields.aisles.validation, 
       VALIDATION_SETTINGS.foreignKeys.minLength,
       VALIDATION_SETTINGS.foreignKeys.maxLength,
     )).length != 0 && (state.error = true);
 
     if (await checkExisting("Aisle", state.result.aisle)) {
       state.errorMessages.aisleWithAdd.push(
-        dict.forms.fields.aisles.validation.not_found);
+        dict.form.fields.aisles.validation.not_found);
       state.error = true;
     }
   }
@@ -91,14 +91,14 @@ export async function validateItem(
   if (state.result.rack) {
     (state.errorMessages.rackWithAdd = validateString(
       state.result.rack as string, 
-      dict.forms.fields.racks.validation, 
+      dict.form.fields.racks.validation, 
       VALIDATION_SETTINGS.foreignKeys.minLength,
       VALIDATION_SETTINGS.foreignKeys.maxLength,
     )).length != 0 && (state.error = true);
 
     if (await checkExisting("Rack", state.result.rack)) {
       state.errorMessages.rackWithAdd.push(
-        dict.forms.fields.racks.validation.not_found);
+        dict.form.fields.racks.validation.not_found);
       state.error = true;
     }
   }
@@ -106,14 +106,14 @@ export async function validateItem(
   if (state.result.shelf) {
     (state.errorMessages.shelfWithAdd = validateString(
       state.result.shelf as string, 
-      dict.forms.fields.shelfs.validation, 
+      dict.form.fields.shelfs.validation, 
       VALIDATION_SETTINGS.foreignKeys.minLength,
       VALIDATION_SETTINGS.foreignKeys.maxLength,
     )).length != 0 && (state.error = true);
 
     if (await checkExisting("Shelf", state.result.shelf)) {
       state.errorMessages.shelfWithAdd.push(
-        dict.forms.fields.shelfs.validation.not_found);
+        dict.form.fields.shelfs.validation.not_found);
       state.error = true;
     }
   }
@@ -121,14 +121,14 @@ export async function validateItem(
   if (state.result.category) {
     (state.errorMessages.categoryWithAdd = validateString(
       state.result.category as string, 
-      dict.forms.fields.categories.validation, 
+      dict.form.fields.categories.validation, 
       VALIDATION_SETTINGS.foreignKeys.minLength,
       VALIDATION_SETTINGS.foreignKeys.maxLength,
     )).length != 0 && (state.error = true);
 
     if (await checkExisting("Category", state.result.category)) {
       state.errorMessages.categoryWithAdd.push(
-        dict.forms.fields.categories.validation.not_found);
+        dict.form.fields.categories.validation.not_found);
       state.error = true;
     }
   }
@@ -136,14 +136,14 @@ export async function validateItem(
   if (state.result.subcategory) {
     (state.errorMessages.subcategoryWithAdd = validateString(
       state.result.subcategory as string, 
-      dict.forms.fields.subcategories.validation, 
+      dict.form.fields.subcategories.validation, 
       VALIDATION_SETTINGS.foreignKeys.minLength,
       VALIDATION_SETTINGS.foreignKeys.maxLength,
     )).length != 0 && (state.error = true);
 
     if (await checkExisting("Subcategory", state.result.subcategory)) {
       state.errorMessages.subcategoryWithAdd.push(
-        dict.forms.fields.subcategories.validation.not_found);
+        dict.form.fields.subcategories.validation.not_found);
       state.error = true;
     }
   }
@@ -160,28 +160,28 @@ export async function validateItemComplete(
 
   if (!state.result) {
     state.error = true;
-    state.errorMessages = dict.forms.messages.errors.empty;
+    state.message = dict.form.messages.errors.empty;
     return state;
   }
 
-  if (state.result.id) {
-    state = await validateExisting(
-      "Item", 
-      state, 
-      state.result.id, 
-      locale
-    );
-  }
+  //if (state.result.id) {
+  //  state = await validateExisting(
+  //    "Item", 
+  //    state, 
+  //    state.result.id, 
+  //    locale
+  //  );
+  //}
 
   if (!state.result) {
     state.error = true;
-    state.errorMessages = dict.forms.messages.errors.empty_after;
+    state.message = dict.form.messages.errors.empty_after;
     return state;
   }
 
   (state.errorMessages.name = validateString(
     state.result.name as string, 
-    dict.forms.fields.name.validation, 
+    dict.form.fields.name.validation, 
     VALIDATION_SETTINGS.shortString.minLength,
     VALIDATION_SETTINGS.shortString.maxLength,
   )).length != 0 && (state.error = true);
@@ -189,7 +189,7 @@ export async function validateItemComplete(
   if (state.result.category) {
     (state.errorMessages.description = validateString(
       state.result.description as string, 
-      dict.forms.fields.description.validation, 
+      dict.form.fields.description.validation, 
       VALIDATION_SETTINGS.longString.minLength,
       VALIDATION_SETTINGS.longString.maxLength,
     )).length != 0 && (state.error = true);
@@ -198,14 +198,14 @@ export async function validateItemComplete(
   if (state.result.zone) {
     (state.errorMessages.zoneWithAdd = validateString(
       state.result.zone as string, 
-      dict.forms.fields.zones.validation, 
+      dict.form.fields.zones.validation, 
       VALIDATION_SETTINGS.foreignKeys.minLength,
       VALIDATION_SETTINGS.foreignKeys.maxLength,
     )).length != 0 && (state.error = true);
 
     if (await checkExisting("Zone", state.result.zone)) {
       state.errorMessages.zoneWithAdd.push(
-        dict.forms.fields.zones.validation.not_found);
+        dict.form.fields.zones.validation.not_found);
       state.error = true;
     }
   }
@@ -213,14 +213,14 @@ export async function validateItemComplete(
   if (state.result.aisle) {
     (state.errorMessages.aisleWithAdd = validateString(
       state.result.aisle as string, 
-      dict.forms.fields.aisles.validation, 
+      dict.form.fields.aisles.validation, 
       VALIDATION_SETTINGS.foreignKeys.minLength,
       VALIDATION_SETTINGS.foreignKeys.maxLength,
     )).length != 0 && (state.error = true);
 
     if (await checkExisting("Aisle", state.result.aisle)) {
       state.errorMessages.aisleWithAdd.push(
-        dict.forms.fields.aisles.validation.not_found);
+        dict.form.fields.aisles.validation.not_found);
       state.error = true;
     }
   }
@@ -228,14 +228,14 @@ export async function validateItemComplete(
   if (state.result.rack) {
     (state.errorMessages.rackWithAdd = validateString(
       state.result.rack as string, 
-      dict.forms.fields.racks.validation, 
+      dict.form.fields.racks.validation, 
       VALIDATION_SETTINGS.foreignKeys.minLength,
       VALIDATION_SETTINGS.foreignKeys.maxLength,
     )).length != 0 && (state.error = true);
 
     if (await checkExisting("Rack", state.result.rack)) {
       state.errorMessages.rackWithAdd.push(
-        dict.forms.fields.racks.validation.not_found);
+        dict.form.fields.racks.validation.not_found);
       state.error = true;
     }
   }
@@ -243,14 +243,14 @@ export async function validateItemComplete(
   if (state.result.shelf) {
     (state.errorMessages.shelfWithAdd = validateString(
       state.result.shelf as string, 
-      dict.forms.fields.shelfs.validation, 
+      dict.form.fields.shelfs.validation, 
       VALIDATION_SETTINGS.foreignKeys.minLength,
       VALIDATION_SETTINGS.foreignKeys.maxLength,
     )).length != 0 && (state.error = true);
 
     if (await checkExisting("Shelf", state.result.shelf)) {
       state.errorMessages.shelfWithAdd.push(
-        dict.forms.fields.shelfs.validation.not_found);
+        dict.form.fields.shelfs.validation.not_found);
       state.error = true;
     }
   }
@@ -258,14 +258,14 @@ export async function validateItemComplete(
   if (state.result.category) {
     (state.errorMessages.categoryWithAdd = validateString(
       state.result.category as string, 
-      dict.forms.fields.categories.validation, 
+      dict.form.fields.categories.validation, 
       VALIDATION_SETTINGS.foreignKeys.minLength,
       VALIDATION_SETTINGS.foreignKeys.maxLength,
     )).length != 0 && (state.error = true);
 
     if (await checkExisting("Category", state.result.category)) {
       state.errorMessages.categoryWithAdd.push(
-        dict.forms.fields.categories.validation.not_found);
+        dict.form.fields.categories.validation.not_found);
       state.error = true;
     }
   }
@@ -273,14 +273,14 @@ export async function validateItemComplete(
   if (state.result.subcategory) {
     (state.errorMessages.subcategoryWithAdd = validateString(
       state.result.subcategory as string, 
-      dict.forms.fields.subcategories.validation, 
+      dict.form.fields.subcategories.validation, 
       VALIDATION_SETTINGS.foreignKeys.minLength,
       VALIDATION_SETTINGS.foreignKeys.maxLength,
     )).length != 0 && (state.error = true);
 
     if (await checkExisting("Subcategory", state.result.subcategory)) {
       state.errorMessages.subcategoryWithAdd.push(
-        dict.forms.fields.subcategories.validation.not_found);
+        dict.form.fields.subcategories.validation.not_found);
       state.error = true;
     }
   }
@@ -291,14 +291,14 @@ export async function validateItemComplete(
       state.errorMessages.images = errors;
       state.error = true;
     } else {
-      state.result.images = images;
+      state.result.encodedImages = images;
     }
   }
 
   if (state.result.identifier) {
     (state.errorMessages.identifier = validateString(
       state.result.identifier as string, 
-      dict.forms.fields.identifier.validation, 
+      dict.form.fields.identifier.validation, 
       VALIDATION_SETTINGS.mediumString.minLength,
       VALIDATION_SETTINGS.mediumString.maxLength,
     )).length != 0 && (state.error = true);
@@ -306,7 +306,7 @@ export async function validateItemComplete(
 
   (state.errorMessages.quantity = validateNumber(
     String(state.result.quantity), 
-    dict.forms.fields.categories.validation, 
+    dict.form.fields.categories.validation, 
     VALIDATION_SETTINGS.bigSignedNumber.minLength,
     VALIDATION_SETTINGS.bigSignedNumber.maxLength,
   )).length != 0 && (state.error = true);
@@ -314,7 +314,7 @@ export async function validateItemComplete(
   if (state.result.length) {
     (state.errorMessages.length = validateNumber(
       String(state.result.length), 
-      dict.forms.fields.length.validation, 
+      dict.form.fields.length.validation, 
       VALIDATION_SETTINGS.bigUnsignedNumber.minLength,
       VALIDATION_SETTINGS.bigUnsignedNumber.maxLength,
     )).length != 0 && (state.error = true);
@@ -323,7 +323,7 @@ export async function validateItemComplete(
   if (state.result.width) {
     (state.errorMessages.width = validateNumber(
       String(state.result.width), 
-      dict.forms.fields.width.validation, 
+      dict.form.fields.width.validation, 
       VALIDATION_SETTINGS.bigUnsignedNumber.minLength,
       VALIDATION_SETTINGS.bigUnsignedNumber.maxLength,
     )).length != 0 && (state.error = true);
@@ -332,7 +332,7 @@ export async function validateItemComplete(
   if (state.result.heigth) {
     (state.errorMessages.heigth = validateNumber(
       String(state.result.heigth), 
-      dict.forms.fields.heigth.validation, 
+      dict.form.fields.height.validation, 
       VALIDATION_SETTINGS.bigUnsignedNumber.minLength,
       VALIDATION_SETTINGS.bigUnsignedNumber.maxLength,
     )).length != 0 && (state.error = true);
@@ -341,7 +341,7 @@ export async function validateItemComplete(
   if (state.result.weight) {
     (state.errorMessages.weight = validateNumber(
       String(state.result.weight), 
-      dict.forms.fields.weight.validation, 
+      dict.form.fields.weight.validation, 
       VALIDATION_SETTINGS.bigUnsignedNumber.minLength,
       VALIDATION_SETTINGS.bigUnsignedNumber.maxLength,
     )).length != 0 && (state.error = true);
