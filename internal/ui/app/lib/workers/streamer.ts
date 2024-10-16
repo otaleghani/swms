@@ -1,17 +1,20 @@
-// worker/streamer.ts
-
+// Sources the Server Sent Event
 let sse = new EventSource("/api/stream")
 let jwt = ""; 
 
+// Handles the messages from the server
 sse.onmessage = (event: MessageEvent<any>) => {
   const eventData = JSON.parse(event.data);
 
+  // If the event.data contains the field jwt, then it's the first
+  // response. In this special case we would just save the jwt for
+  // future usage and return.
   if (eventData.jwt) {
-    // if jwt is defined it's the first message
     jwt = eventData.jwt;
     return;
   }
 
+  // Every other message gets relayed to the main thread.
   postMessage(eventData)
 }
 
@@ -20,41 +23,20 @@ sse.onmessage = (event: MessageEvent<any>) => {
 // - When a foreign key changes, e.g. You are in the aisles/[id] and you
 // change the zone of that id. You want to fetch the new zone.
 // - When 
-onmessage = (event) => {
-  //console.log(event)
-  const eventData = event.data;
-  //console.log(eventData)
-  
-  clientRetrieve(event.data.type, event.data.id, jwt)
 
-  //if (eventData.action === "create") {
-  //  retrieve(eventData.id, jwt, eventData.type, eventData.action);
-  //}
-  //if (eventData.action === "createInBulk") {
-  //  const notification: WorkerResponse = {
-  //    error: 
-  //    type: eventData.data,
-  //    content: "",
-  //    id: "",
-  //  };
-  //  postMessage(notification);
-  //}
-  //if (eventData.action === "remove") {
-  //  // remove returns the id of the deleted item
-  //  retrieve(eventData.id, jwt, eventData.type, eventData.action);
-  //}
-  //if (eventData.action === "replace") {
-  //  // replace returns the id of the deleted item
-  //  retrieve(eventData.id, jwt, eventData.type, eventData.action);
-  //}
-  //if (eventData.action === "update") {
-  //  // update returns the id of the updated item
-  //  retrieve(eventData.id, jwt, eventData.type, eventData.action);
-  //}
+// The main thread can request some other data if needed for rendering
+// purposes. In that case the main thread would send a message to this 
+// worker asking for a specific resource. The event.data sent would be
+// an object containing the type of resource to request and it's id.
+onmessage = (event) => {
+  clientRetrieve(event.data.type, event.data.id, jwt)
 }
 
 
-// FETCHING DATA
+// The response used to communicate with the main thread. It contains
+// both the type and the id so that only the caller can use this data
+// while the other components ignore it. "content" contains the newer
+// data fetched from the server.
 interface WorkerResponse {
   type: string;
   id: string;
@@ -64,12 +46,11 @@ interface WorkerResponse {
 
 type AcceptedTypes = "Zone" | "ZoneWithExtra" | "Aisle" | "Rack" | "Shelf" | "Category" | "Subcategory" | "Supplier" | "SupplierCode" | "Item" | "ItemImage" | "Transaction" | "Variant" | "Ticket" | "TicketType" | "TicketState" | "Product" | "ProductImage" | "Client" | "User";
 
-// Creates the type that lists every endpoint
 type ClientRetrieveMapOptions = {
   [K in AcceptedTypes]: string;
 }
 
-// Lists every option to interact with the backend
+// List all the possible endpoints that can be hit
 const options: ClientRetrieveMapOptions = {
   "Zone": "zones/{{id}}",
   "ZoneWithExtra": "zones/{{id}}/extra",
@@ -93,6 +74,9 @@ const options: ClientRetrieveMapOptions = {
   "User": "users/{{id}}",
 }
 
+// This function does a get request to the requested type with the
+// specified id. If the response is not okay or the code differs from
+// a "200" it will return an error message.
 const clientRetrieve = async (
   type: AcceptedTypes,
   id: string, 
@@ -112,16 +96,34 @@ const clientRetrieve = async (
   });
 
   if (!response.ok) {
-    // Response with error?
+    const notification: WorkerResponse = {
+      content: null,
+      type: type,
+      id: id,
+      error: true,
+    };
+    postMessage(notification);
+    return;
   }
 
   const body = await response.json();
+
+  if (body.code !== 200) {
+    const notification: WorkerResponse = {
+      content: null,
+      type: type,
+      id: id,
+      error: true,
+    };
+    postMessage(notification);
+    return;
+  }
+
   const notification: WorkerResponse = {
     content: body.data,
     type: type,
     id: id,
     error: false,
   };
-
   postMessage(notification);
 }

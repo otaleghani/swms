@@ -58,6 +58,12 @@ export async function remove<T extends keyof RemoveMapOptions>(
 ) {
   const option = options[request];
 
+  const before = await fetchData<TypeMap[T]>({
+    path: option.path.replace(/{{id}}/g, id),
+    method: "GET",
+    tag: revalidateTags[option.type],
+  })
+
   const response = await fetchData<undefined>({
     path: option.path.replace(/{{id}}/g, id),
     method: "DELETE",
@@ -68,7 +74,7 @@ export async function remove<T extends keyof RemoveMapOptions>(
     id: id,
     type: request,
     action: "remove",
-    before: null,
+    before: before.data,
     after: null,
   };
   stringEmitter.emit('message', streamedChange);

@@ -11,6 +11,8 @@ import streamer from "@/app/lib/workers";
 //import { WorkerResponse } from "@/app/lib/workers/streamer";
 import CardWrapperHeader from "@/app/ui/wrappers/cards/CardWrapperHeader";
 import { ZoneWithExtra } from "@/app/lib/types/data/zones";
+import { SyncState } from "@/app/lib/synchronizers/utils";
+import { synchronizeZoneWithExtra } from "@/app/lib/synchronizers/data/zones";
 
 interface ZoneWithExtraCardProps {
   item: ZoneWithExtra,
@@ -19,79 +21,42 @@ interface ZoneWithExtraCardProps {
   //dialogReplace: DictDialog;
 }
 
-/**
-* none:       no active change to display
-* replace:    plays when the item get's replaced, returns to "done"
-* remove:     plays when the item get's removed, returns to "done"
-* update:     plays when the item get's updated, returns to "none"
-* done:       adds a display none to the item
-*/
-type Change = "none" | "replace" | "remove" | "update" | "done";
-
 export default function ZoneWithExtraCard({
   item
 }: ZoneWithExtraCardProps) {
-  const [zone, setZone] = useState(item)
-  const [change, setChange] = useState("none" as Change)
+  const [zoneWithExtra, setZoneWithExtra] = useState(item);
+  const [syncState, setSyncState] = useState("none" as SyncState);
 
   useEffect(() => {
-    const handler = (response: MessageEvent<any>) => {
-      if ((
-        response.data.type == "Zone" ||
-        response.data.type == "Aisle" ||
-        response.data.type == "Item"
-      ) && (
-        response.data.id === zone.zone.id ||
-        response.data.zone === zone.zone.id
-      )) {
-        setChange("update")
-        streamer?.postMessage({
-           type: "ZoneWithExtra",
-           id: zone.zone.id
-        });
-      };
-
-      if (response.data.type == "ZoneWithExtra" && 
-        response.data.content.zone.id == zone.zone.id) {
-        setZone(response.data.content)
-        setChange("none")
-      };
-    };
-    streamer?.addEventListener("message", handler)
+    synchronizeZoneWithExtra(
+      streamer as Worker,
+      syncState,
+      setSyncState,
+      zoneWithExtra,
+      setZoneWithExtra,
+    )
 
     return () => {
       streamer?.terminate();
     };
   }, []);
 
-  //useEffect(() => {
-  //  const timer = setInterval(() => {
-  //    if (change === "update") {
-  //      setChange("none");
-  //    } else {
-  //      setChange("done");
-  //    }
-  //  }, 500);
-  //  
-  //  return () => clearInterval(timer);
-  //}, [change]);
-
   return (
     <>
-      { change !== "remove" && (
+      { syncState && (
         <CardWrapper 
           className={
-            change === "replace" ? "!bg-red-500" : 
-            //change === "remove" ? "transition-colors bg-red-500" :
-            change === "update" ? "!bg-yellow-500 " :
-            change === "done" ? "hidden" :
+            //change === "replace" ? "!bg-red-500" : 
+            syncState === "remove" ? "animate-delete" :
+            syncState === "update" ? "animate-update" :
+            syncState === "done" ? "hidden" :
             ""
           }
           Header={() => {
             return (
               <CardWrapperHeader
-                title={zone.zone.name}
-                description={zone.zone.id}
+                title={zoneWithExtra.zone.name}
+                description={zoneWithExtra.zone.id}
               />
             )
           }}

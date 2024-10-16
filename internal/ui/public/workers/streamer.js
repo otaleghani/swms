@@ -1,51 +1,32 @@
 "use strict";
-// worker/streamer.ts
+// Sources the Server Sent Event
 let sse = new EventSource("/api/stream");
 let jwt = "";
+// Handles the messages from the server
 sse.onmessage = (event) => {
     const eventData = JSON.parse(event.data);
+    // If the event.data contains the field jwt, then it's the first
+    // response. In this special case we would just save the jwt for
+    // future usage and return.
     if (eventData.jwt) {
-        // if jwt is defined it's the first message
         jwt = eventData.jwt;
         return;
     }
+    // Every other message gets relayed to the main thread.
     postMessage(eventData);
 };
 // Cases where you want to fetch data client side:
 // - When a foreign key changes, e.g. You are in the aisles/[id] and you
 // change the zone of that id. You want to fetch the new zone.
 // - When 
+// The main thread can request some other data if needed for rendering
+// purposes. In that case the main thread would send a message to this 
+// worker asking for a specific resource. The event.data sent would be
+// an object containing the type of resource to request and it's id.
 onmessage = (event) => {
-    //console.log(event)
-    const eventData = event.data;
-    //console.log(eventData)
     clientRetrieve(event.data.type, event.data.id, jwt);
-    //if (eventData.action === "create") {
-    //  retrieve(eventData.id, jwt, eventData.type, eventData.action);
-    //}
-    //if (eventData.action === "createInBulk") {
-    //  const notification: WorkerResponse = {
-    //    error: 
-    //    type: eventData.data,
-    //    content: "",
-    //    id: "",
-    //  };
-    //  postMessage(notification);
-    //}
-    //if (eventData.action === "remove") {
-    //  // remove returns the id of the deleted item
-    //  retrieve(eventData.id, jwt, eventData.type, eventData.action);
-    //}
-    //if (eventData.action === "replace") {
-    //  // replace returns the id of the deleted item
-    //  retrieve(eventData.id, jwt, eventData.type, eventData.action);
-    //}
-    //if (eventData.action === "update") {
-    //  // update returns the id of the updated item
-    //  retrieve(eventData.id, jwt, eventData.type, eventData.action);
-    //}
 };
-// Lists every option to interact with the backend
+// List all the possible endpoints that can be hit
 const options = {
     "Zone": "zones/{{id}}",
     "ZoneWithExtra": "zones/{{id}}/extra",
@@ -68,6 +49,9 @@ const options = {
     "Client": "clients/{{id}}",
     "User": "users/{{id}}",
 };
+// This function does a get request to the requested type with the
+// specified id. If the response is not okay or the code differs from
+// a "200" it will return an error message.
 const clientRetrieve = async (type, id, jwt) => {
     const option = options[type];
     const path = option.replace(/{{id}}/g, id);
@@ -81,9 +65,26 @@ const clientRetrieve = async (type, id, jwt) => {
         }
     });
     if (!response.ok) {
-        // Response with error?
+        const notification = {
+            content: null,
+            type: type,
+            id: id,
+            error: true,
+        };
+        postMessage(notification);
+        return;
     }
     const body = await response.json();
+    if (body.code !== 200) {
+        const notification = {
+            content: null,
+            type: type,
+            id: id,
+            error: true,
+        };
+        postMessage(notification);
+        return;
+    }
     const notification = {
         content: body.data,
         type: type,

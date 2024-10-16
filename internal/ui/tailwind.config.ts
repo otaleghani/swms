@@ -67,10 +67,28 @@ const config = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        "update": {
+          "0%": { backgroundColor: "#ffffff" },
+          "25%": { backgroundColor: "#fbbf24" },
+          "100%": { backgroundColor: "#ffffff" },
+        },
+        "delete": {
+          "0%": { backgroundColor: "#ffffff", opacity: "1" },
+          "25%": { backgroundColor: "#f87f71", opacity: "1" },
+          "100%": { backgroundColor: "#ffffff", opacity: "0" },
+        },
+        "added": {
+          "0%": { backgroundColor: "#ffffff" },
+          "25%": { backgroundColor: "#4ade80" },
+          "100%": { backgroundColor: "#ffffff" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "update": "update 0.5s ease-out forwards",
+        "delete": "delete 0.5s ease-out forwards",
+        "added": "added 0.5s ease-out forwards",
       },
     },
   },
