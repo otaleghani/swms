@@ -12,12 +12,28 @@ import DialogFormPattern from "@/app/ui/patterns/dialog/DialogFormPattern";
 /** Types and interfaces */
 import { DefaultPageProps } from "@/app/lib/types/misc";
 import ListZonesWithExtra from "@/app/ui/modules/zones/list/ListZonesWithExtra";
+import { Suspense } from "react";
+import PaginationPattern from "@/app/ui/patterns/PaginationPattern";
 
-export default async function ZonePage({ params }: DefaultPageProps) {
+export default async function ZonePage({ 
+  params, 
+  searchParams 
+}: DefaultPageProps) {
+  // listen to the changes
+
   const dict = await getDictionary(params.lang as Locale);
   const pZonesWithExtra = retrieve("ZonesWithExtra");
+  const pZones = retrieve(
+    "Zones",
+    searchParams.page,
+    searchParams.perPage,
+  );
 
-  const [ zonesWithExtra ] = await Promise.all([pZonesWithExtra]);
+  const [ zonesWithExtra, zones] = await Promise.all([pZonesWithExtra, pZones]);
+
+  const Loading = () => (
+    <>helo</>
+  )
 
   return (
     <>
@@ -30,6 +46,7 @@ export default async function ZonePage({ params }: DefaultPageProps) {
         Right={() => {
           return (
             <DialogFormPattern<"ZonesBulk"> 
+              showButton
               self={{
                 triggerType: "button",
                 dict: dict.zone.dialogs.addBulk
@@ -56,9 +73,19 @@ export default async function ZonePage({ params }: DefaultPageProps) {
         }}
       />
 
-      <ListZonesWithExtra
-        zonesWithExtra={zonesWithExtra.data as ZonesWithExtra}
-      />
+      <Suspense fallback={<Loading/>}>
+        {zones.data?.map((item) => (
+          <div>
+            {item.id}
+          </div>
+        ))}
+      </Suspense>
+      <PaginationPattern totalPages={zones.totalPages as number} />
+      {
+      //<ListZonesWithExtra
+      //  zonesWithExtra={zonesWithExtra.data as ZonesWithExtra}
+      ///>
+      }
     </>
   )
 }

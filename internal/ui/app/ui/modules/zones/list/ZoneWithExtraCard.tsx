@@ -14,7 +14,7 @@ import { delaySyncStateToNone, SyncState } from "@/app/lib/synchronizers/utils";
 import { synchronizeZoneWithExtraSingle } from "@/app/lib/synchronizers/data/zonesWithExtra";
 
 interface ZoneWithExtraCardProps {
-  item: ZoneWithExtra & {isNew?: boolean},
+  item: ZoneWithExtra, 
   //dictCard: DictLabelList<"aisles" | "items">
   //dialogEdit: DictDialog;
   //dialogReplace: DictDialog;
@@ -24,20 +24,15 @@ export default function ZoneWithExtraCard({
   item
 }: ZoneWithExtraCardProps) {
   const [zoneWithExtra, setZoneWithExtra] = useState(item);
-  const [syncState, setSyncState] = useState(
-    item.isNew ? "new" as SyncState : "none" as SyncState
-  );
+  const [syncState, setSyncState] = useState("none" as SyncState);
 
   useEffect(() => {
-    synchronizeZoneWithExtraSingle(
-      streamer as Worker,
-      setSyncState,
-      zoneWithExtra,
-      setZoneWithExtra,
-    );
-    
-    // This resets in theory to "none" if "new"
-    delaySyncStateToNone(setSyncState);
+    synchronizeZoneWithExtraSingle({
+      streamer: streamer as Worker,
+      setSyncState: setSyncState,
+      zoneWithExtra: zoneWithExtra,
+      setZoneWithExtra: setZoneWithExtra,
+    });
 
     return () => {
       streamer?.terminate();
@@ -49,7 +44,6 @@ export default function ZoneWithExtraCard({
       { syncState != "hidden" && (
         <CardWrapper 
           className={
-            syncState === "new" ? "animate-new" :
             syncState === "remove" ? "animate-delete" :
             syncState === "update" ? "animate-update" :
             ""

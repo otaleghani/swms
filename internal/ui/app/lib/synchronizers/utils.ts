@@ -12,6 +12,16 @@ import { ServerSentEventData } from "@/app/api/stream/route";
 **/ 
 export type SyncState = "none" | "update" | "remove" | "hidden" | "new";
 
+/**
+* Describes the types of toasts that could occour whenever we notify
+* the main thread of a change.
+*
+* none:     no synch at the time
+* error:    a background process tryed the fetch but failed
+* success:  Asks the user to refresh to view new data
+**/
+export type ToastType = "none" | "error" | "success";
+ 
 export type FetchResultMessage = {
   type: string;
   id: string;

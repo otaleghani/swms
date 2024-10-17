@@ -49,11 +49,15 @@ const options: RetrieveMapOptions = {
 
 export async function retrieve<T extends keyof RetrieveMapOptions>(
   request: T,
+  page?: number,
+  perPage?: number,
 ) {
   const option = options[request];
 
+  const path = option.path + `?page=${page}&perPage=${perPage}`
+
   const response = await fetchData<TypeMap[T]>({
-    path: option.path,
+    path: path,
     method: "GET",
     tag: revalidateTags[option.type],
   })

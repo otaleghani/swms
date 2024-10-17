@@ -4,6 +4,7 @@ import Link from "next/link"
 
 import { cn } from "@/lib/utils"
 import { ButtonProps, buttonVariants } from "@/components/button"
+import { Button } from "./button"
 
 const Pagination = ({ className, ...props }: React.ComponentProps<"nav">) => (
   <nav
@@ -46,17 +47,19 @@ const PaginationLink = ({
   size = "icon",
   ...props
 }: PaginationLinkProps) => (
-  <Link
-    aria-current={isActive ? "page" : undefined}
-    className={cn(
-      buttonVariants({
-        variant: isActive ? "outline" : "ghost",
-        size,
-      }),
-      className
-    )}
-    {...props}
-  />
+  <Button asChild variant="default">
+    <Link
+      aria-current={isActive ? "page" : undefined}
+      className={cn(
+        buttonVariants({
+          variant: "default",
+          size: "icon",
+        }),
+        className
+      )}
+      {...props}
+    />
+  </Button>
 )
 PaginationLink.displayName = "PaginationLink"
 

@@ -1,6 +1,12 @@
 export type Response<Entity> = {
   code: number;
   message?: string;
+
+  page?: number;
+  perPage?: number;
+  totalItems?: number;
+  totalPages?: number;
+
   data?: Entity;
 }
 
@@ -21,6 +27,10 @@ export type MediaPost = {
 export interface DefaultPageProps {
   params: {
     lang: string;
+  },
+  searchParams: {
+    page: number;
+    perPage: number;
   }
 }
 

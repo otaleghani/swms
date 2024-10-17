@@ -58,7 +58,7 @@ export default function FormPattern<K extends keyof FormPropsMap>({
   );
 
   useEffect(() => {
-    if (!state.error && state.result) {
+    if (!state.error && state.result && state.message) {
       if (form.notifyFormSent) {
         form.notifyFormSent(false);
         if (form.refreshItemList) {

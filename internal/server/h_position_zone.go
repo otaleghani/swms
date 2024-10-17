@@ -1,6 +1,8 @@
 package server
 
 import (
+  "math"
+  "strconv"
 	"encoding/json"
 	"net/http"
 	"strings"
@@ -10,6 +12,21 @@ import (
   "github.com/otaleghani/spg"
 )
 
+func convertPageQueryToIntOrDefault(s string) int {
+    num, err := strconv.Atoi(s)
+    if err != nil {
+        return 1
+    }
+    return num
+}
+func convertPerPageQueryToIntOrDefault(s string) int {
+    num, err := strconv.Atoi(s)
+    if err != nil {
+        return 10
+    }
+    return num
+}
+
 func getZones(db *database.Database) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
@@ -18,11 +35,44 @@ func getZones(db *database.Database) http.HandlerFunc {
 			return
 		}
 		rows, err := db.SelectZones("")
+
+    queryPageNumber := r.URL.Query().Get("page")
+    queryPerPageNumber := r.URL.Query().Get("perPage")
+    //querySearchTerm := r.URL.Query().Get("search")
+
+    // Todo: filters...
+    filteredRows := rows
+
+    totalItems := len(filteredRows)
+    page := convertPageQueryToIntOrDefault(queryPageNumber)
+    perPage := convertPerPageQueryToIntOrDefault(queryPerPageNumber)
+
+    totalPages := int(math.Ceil(float64(totalItems) / float64(perPage)))
+    if page > totalPages {
+      page = 1
+    }
+
+    start := 0 + (perPage * (page - 1))
+    end := perPage + (perPage * (page - 1))
+
+    if end >= totalItems {
+      end = totalItems
+    }
+
+    resultedItems := filteredRows[start:end]
+
+
 		if err != nil {
 			ErrorResponse{Message: err.Error()}.r500(w, r)
 			return
 		}
-		SuccessResponse{Data: rows}.r200(w, r)
+		SuccessResponse{
+      Data: resultedItems,
+      Page: page,
+      PerPage: perPage,
+      TotalItems: totalItems,
+      TotalPages: totalPages,
+    }.r200(w, r)
 	}
 }
 
@@ -187,8 +237,10 @@ func postBulkZones(db *database.Database) http.HandlerFunc {
     g := spg.New("en-usa")
     var opt = spg.Options{Format: "camel", Separator: "-"}
     var zone database.Zone
+    var returnData []string
     for i := 0; i < data.Number; i++ {
 		  zone.Id = uuid.NewString()
+      returnData = append(returnData, zone.Id)
       zone.Name = g.Place().Country(opt)
 		  err = db.Insert(zone)
       if err != nil {
@@ -196,7 +248,7 @@ func postBulkZones(db *database.Database) http.HandlerFunc {
         return
       }
     }
-		SuccessResponse{Message: "Rows added"}.r201(w, r)
+    SuccessResponse{Message: "Rows added", Data: returnData}.r201(w, r)
   }
 }
 

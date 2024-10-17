@@ -26,14 +26,15 @@ export interface DialogFormPatternProps<T extends keyof FormPropsMap> {
     dict: DictDialog;
   }
   formPattern: FormPropsMap[T];
+  showButton?: boolean;
 }
 
 export default function DialogFormPattern<T extends keyof FormPropsMap>({
   self,
-  formPattern
+  formPattern,
+  showButton,
 }: DialogFormPatternProps<T>) {
   const [open, setOpen] = useState(false);
-  //const formName = "AddZoneDialog";
 
   const DialogFormPatternBody = () => {
     return (
@@ -48,6 +49,7 @@ export default function DialogFormPattern<T extends keyof FormPropsMap>({
             ...formPattern.form,
             notifyFormSent: setOpen,
           }}
+          showButton={showButton}
         />
         <span>susenberg</span>
       </>

@@ -8,6 +8,7 @@ import { dictionarySubcategories } from "./en/subcategories"
 import { dictionarySuppliers } from "./en/suppliers"
 import { dictionarySupplierCodes } from "./en/supplierCodes"
 import { dictionaryForm } from "./en/form"
+import { dictionaryToasts } from "./en/toasts"
 
 export const dictionary: Dictionary = {
   zone: dictionaryZones,
@@ -19,4 +20,5 @@ export const dictionary: Dictionary = {
   supplier: dictionarySuppliers,
   supplierCode: dictionarySupplierCodes,
   form: dictionaryForm,
+  toasts: dictionaryToasts,
 }

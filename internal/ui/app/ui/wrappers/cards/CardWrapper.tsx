@@ -20,7 +20,7 @@ export default function CardWrapper({
   className
 }: CardWrapperProps) {
   return (
-    <Card className={"mb-4 " + className}> 
+    <Card className={className}> 
       <CardHeader className="pb-4">
         <Header />
       </CardHeader>

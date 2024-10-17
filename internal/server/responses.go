@@ -57,9 +57,14 @@ func (e ErrorResponse) r500(w http.ResponseWriter, r *http.Request) {
 //**********************************************************************//
 
 type SuccessResponse struct {
-	Code    int         `json:"code"`
-	Message string      `json:"message,omitempty"`
-	Data    interface{} `json:"data,omitempty"`
+	Code        int         `json:"code"`
+	Message     string      `json:"message,omitempty"`
+	Data        interface{} `json:"data,omitempty"`
+
+  Page        int         `json:"page,omitempty"`
+  PerPage     int         `json:"perPage,omitempty"`
+  TotalItems  int         `json:"totalItems,omitempty"`
+  TotalPages  int         `json:"totalPages,omitempty"`
 }
 
 func (s SuccessResponse) Send(w http.ResponseWriter, r *http.Request) {

@@ -7,17 +7,30 @@ import {
   isFetchResultMessage, 
   WorkerMessage,
   SyncState,
+  ToastType,
 } from "../utils";
 
-export function synchronizeZoneWithExtraSingle(
+export type SyncZoneWithExtra = {
   streamer: Worker,
   setSyncState: Dispatch<SetStateAction<SyncState>>,
   zoneWithExtra: ZoneWithExtra,
   setZoneWithExtra: Dispatch<SetStateAction<ZoneWithExtra>>,
-) {
+}
+
+type SyncZonesWithExtra = {
+  streamer: Worker,
+  zonesWithExtra: ZonesWithExtra,
+  setShowToast: Dispatch<SetStateAction<ToastType>>,
+}
+
+export function synchronizeZoneWithExtraSingle({
+  streamer,
+  setSyncState,
+  zoneWithExtra,
+  setZoneWithExtra,
+}: SyncZoneWithExtra) {
   const handler = (message: MessageEvent<WorkerMessage>) => {
 
-    console.log(message.data)
     if (isFetchResultMessage(message.data)) {
       if (message.data.type == "ZoneWithExtra" && 
         message.data.content.zone.id == zoneWithExtra.zone.id) {
@@ -92,27 +105,22 @@ export function synchronizeZoneWithExtraSingle(
   streamer.addEventListener("message", handler)
 }
 
-export function synchronizeZoneWithExtraList(
-  streamer: Worker,
-  zonesWithExtra: ZonesWithExtra,
-  setZonesWithExtra: Dispatch<SetStateAction<ZonesWithExtra>>,
-) {
+export function synchronizeZoneWithExtraList({
+  streamer,
+  zonesWithExtra,
+  setShowToast,
+}: SyncZonesWithExtra) {
   const handler = (message: MessageEvent<WorkerMessage>) => {
-    console.log(message.data)
 
     if (isFetchResultMessage(message.data)) {
-      console.log(message.data.content.zone.id)
+      if (message.data.error) {
+        setShowToast("error");
+      }
+      let content = message.data.content
       if (message.data.type == "ZoneWithExtra") {
-        for (let i = 0; i < zonesWithExtra.length; i++) {
-          if (zonesWithExtra[i].zone.id == 
-              message.data.content.zone.id) {
-            return;
-          }
+        if (!zonesWithExtra.some(item => (item.zone.id === content.zone.id))) {
+          setShowToast("success");
         }
-        setZonesWithExtra([...zonesWithExtra, {
-          ...message.data.content,
-          isNew: true,
-        }]);
       };
     }
 
@@ -138,5 +146,5 @@ export function synchronizeZoneWithExtraList(
     };
   };
 
-  streamer.addEventListener("message", handler)
+  streamer.addEventListener("message", handler);
 }
