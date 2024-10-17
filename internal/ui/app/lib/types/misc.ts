@@ -24,14 +24,4 @@ export type MediaPost = {
   blob: string;
 }
 
-export interface DefaultPageProps {
-  params: {
-    lang: string;
-  },
-  searchParams: {
-    page: number;
-    perPage: number;
-  }
-}
-
 export type AcceptedLocales = "it" | "en";

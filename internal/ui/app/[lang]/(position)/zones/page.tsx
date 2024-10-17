@@ -14,6 +14,8 @@ import { DefaultPageProps } from "@/app/lib/types/misc";
 import ListZonesWithExtra from "@/app/ui/modules/zones/list/ListZonesWithExtra";
 import { Suspense } from "react";
 import PaginationPattern from "@/app/ui/patterns/PaginationPattern";
+import TestListZones from "@/app/ui/modules/zones/TestListZones";
+//const TestListZones = dynamic(() => import("@/app/ui/modules/zones/TestListZones"), { ssr: false })
 
 export default async function ZonePage({ 
   params, 
@@ -29,7 +31,7 @@ export default async function ZonePage({
     searchParams.perPage,
   );
 
-  const [ zonesWithExtra, zones] = await Promise.all([pZonesWithExtra, pZones]);
+  const [zonesWithExtra, zones] = await Promise.all([pZonesWithExtra, pZones]);
 
   const Loading = () => (
     <>helo</>
@@ -72,15 +74,13 @@ export default async function ZonePage({
           )
         }}
       />
-
-      <Suspense fallback={<Loading/>}>
-        {zones.data?.map((item) => (
-          <div>
-            {item.id}
-          </div>
-        ))}
+      <Suspense fallback="sus">
+        <TestListZones 
+          page={searchParams.page} 
+          perPage={searchParams.perPage} 
+        />
       </Suspense>
-      <PaginationPattern totalPages={zones.totalPages as number} />
+
       {
       //<ListZonesWithExtra
       //  zonesWithExtra={zonesWithExtra.data as ZonesWithExtra}

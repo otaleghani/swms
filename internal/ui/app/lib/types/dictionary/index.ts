@@ -7,6 +7,7 @@ import { DictSupplier } from "./data/supplier";
 import { DictSupplierCode } from "./data/supplierCode";
 import { DictZone } from "./data/zone"
 import { DictForms } from "./form";
+import { DictToasts } from "./toasts";
 
 export type Dictionary = {
   zone: DictZone;
@@ -21,4 +22,5 @@ export type Dictionary = {
   // variant:
 
   form: DictForms;
+  toasts: DictToasts;
 }
