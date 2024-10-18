@@ -1,58 +1,71 @@
 export interface DefaultPageProps {
-  params: {
-    lang: string;
-    id?: string;
-  },
+  params: PageParams;
   searchParams: {
-    page: number;
-    perPage: number;
+    q: string;
   }
 }
 
+// Page params
+export type PageParams = {
+  lang: string;
+  id?: string;
+}
+
+// Search Params
+export type SearchParams = {
+  zones?: ZoneSearchParams;
+  aisles?: AisleSearchParams;
+  //...
+}
+
+/** Every type of list that could be pagiated */
+export type PaginationType = keyof SearchParams;
+
+/** The pagination parameters */
 export type PaginationParams = {
-  page: number;
-  perPage: number;
+  page?: number;
+  perPage?: number;
 }
 
 export type ZoneSearchParams = {
-  filters: {
-    search: string;
+  filters?: {
+    search?: string;
   }
-  pagination: PaginationParams;
+  pagination?: PaginationParams;
 }
 
 export type AisleSearchParams = {
-  filters: {
-    search: string;
-    zone: string;
+  filters?: {
+    search?: string;
+    zone?: string;
   }
-  pagination: PaginationParams;
+  pagination?: PaginationParams;
 }
 
 export type RackSearchParams = {
-  filters: {
-    search: string;
-    zone: string;
-    aisle: string;
+  filters?: {
+    search?: string;
+    zone?: string;
+    aisle?: string;
   }
-  pagination: PaginationParams;
+  pagination?: PaginationParams;
 }
 
 export type ShelfSearchParams = {
-  filters: {
-    search: string;
-    zone: string;
-    aisle: string;
-    rack: string;
+  filters?: {
+    search?: string;
+    zone?: string;
+    aisle?: string;
+    rack?: string;
   }
-  pagination: PaginationParams;
+  pagination?: PaginationParams;
 }
 
 export type CategorySearchParams = {
-  filters: {
-    search: string;
+  filters?: {
+    search?: string;
   }
-  pagination: PaginationParams;
+  pagination?: PaginationParams;
 }
 
 export type SubcategorySearchParams = {

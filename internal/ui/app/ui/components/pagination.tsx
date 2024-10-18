@@ -10,7 +10,7 @@ const Pagination = ({ className, ...props }: React.ComponentProps<"nav">) => (
   <nav
     role="navigation"
     aria-label="pagination"
-    className={cn("mx-auto flex w-full justify-center", className)}
+    className={cn("flex justify-center", className)}
     {...props}
   />
 )
@@ -47,19 +47,18 @@ const PaginationLink = ({
   size = "icon",
   ...props
 }: PaginationLinkProps) => (
-  <Button asChild variant="default">
     <Link
       aria-current={isActive ? "page" : undefined}
       className={cn(
         buttonVariants({
-          variant: "default",
-          size: "icon",
+          variant: "outline",
+          className: "w-8 h-8 p-0"
+          //size: "icon",
         }),
         className
       )}
       {...props}
     />
-  </Button>
 )
 PaginationLink.displayName = "PaginationLink"
 
@@ -70,7 +69,7 @@ const PaginationPrevious = ({
   <PaginationLink
     aria-label="Go to previous page"
     size="default"
-    className={cn("gap-1 pl-2.5", className)}
+    className={cn("", className)}
     {...props}
   >
     <ChevronLeft className="h-4 w-4" />
@@ -85,7 +84,7 @@ const PaginationNext = ({
   <PaginationLink
     aria-label="Go to next page"
     size="default"
-    className={cn("gap-1 pr-2.5", className)}
+    className={cn("", className)}
     {...props}
   >
     <ChevronRight className="h-4 w-4" />

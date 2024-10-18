@@ -10,32 +10,18 @@ import HeaderWrapper from "@/app/ui/wrappers/headers/HeaderWrapper";
 import DialogFormPattern from "@/app/ui/patterns/dialog/DialogFormPattern";
 
 /** Types and interfaces */
-import { DefaultPageProps } from "@/app/lib/types/misc";
+import { DefaultPageProps } from "@/app/lib/types/pageParams";
 import ListZonesWithExtra from "@/app/ui/modules/zones/list/ListZonesWithExtra";
 import { Suspense } from "react";
-import PaginationPattern from "@/app/ui/patterns/PaginationPattern";
 import TestListZones from "@/app/ui/modules/zones/TestListZones";
-//const TestListZones = dynamic(() => import("@/app/ui/modules/zones/TestListZones"), { ssr: false })
+import { decodeSearchParams } from "@/app/lib/searchParams";
 
 export default async function ZonePage({ 
   params, 
   searchParams 
 }: DefaultPageProps) {
-  // listen to the changes
-
   const dict = await getDictionary(params.lang as Locale);
-  const pZonesWithExtra = retrieve("ZonesWithExtra");
-  const pZones = retrieve(
-    "Zones",
-    searchParams.page,
-    searchParams.perPage,
-  );
-
-  const [zonesWithExtra, zones] = await Promise.all([pZonesWithExtra, pZones]);
-
-  const Loading = () => (
-    <>helo</>
-  )
+  const currentSearchParams = decodeSearchParams(searchParams.q)
 
   return (
     <>
@@ -76,16 +62,11 @@ export default async function ZonePage({
       />
       <Suspense fallback="sus">
         <TestListZones 
-          page={searchParams.page} 
-          perPage={searchParams.perPage} 
+          // currentSearchParams.zones
+          page={currentSearchParams.zones?.pagination?.page} 
+          perPage={currentSearchParams.zones?.pagination?.perPage} 
         />
       </Suspense>
-
-      {
-      //<ListZonesWithExtra
-      //  zonesWithExtra={zonesWithExtra.data as ZonesWithExtra}
-      ///>
-      }
     </>
   )
 }
