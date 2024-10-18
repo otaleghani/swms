@@ -291,7 +291,38 @@ func getZonesWithData(db *database.Database) http.HandlerFunc {
         },
       )
     }
-		SuccessResponse{Data: data}.r200(w, r)
+    // here
+    queryPageNumber := r.URL.Query().Get("page")
+    queryPerPageNumber := r.URL.Query().Get("perPage")
+    // Todo: filters...
+    filteredRows := data
+
+    totalItems := len(filteredRows)
+    page := convertPageQueryToIntOrDefault(queryPageNumber)
+    perPage := convertPerPageQueryToIntOrDefault(queryPerPageNumber)
+
+    totalPages := int(math.Ceil(float64(totalItems) / float64(perPage)))
+    if page > totalPages {
+      page = 1
+    }
+
+    start := 0 + (perPage * (page - 1))
+    end := perPage + (perPage * (page - 1))
+
+    if end >= totalItems {
+      end = totalItems
+    }
+
+    resultedItems := filteredRows[start:end]
+
+		//SuccessResponse{Data: data}.r200(w, r)
+		SuccessResponse{
+      Data: resultedItems,
+      Page: page,
+      PerPage: perPage,
+      TotalItems: totalItems,
+      TotalPages: totalPages,
+    }.r200(w, r)
   }
 }
 

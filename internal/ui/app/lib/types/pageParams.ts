@@ -25,6 +25,7 @@ export type PaginationType = keyof SearchParams;
 export type PaginationParams = {
   page?: number;
   perPage?: number;
+  layout?: number;
 }
 
 export type ZoneSearchParams = {

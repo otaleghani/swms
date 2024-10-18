@@ -18,6 +18,7 @@ interface PageSizeSelectorProps {
 
 function getPerPage(params: SearchParams, type: PaginationType) {
   if (params[type]?.pagination?.perPage) {
+  console.log(params)
     return params[type]?.pagination?.perPage;
   }
   return 10;
@@ -60,8 +61,6 @@ export default function PageSizeSelector({
         Per page:
       </div>
       <Select 
-        defaultValue="10" 
-        //value={String(perPage)}
         onValueChange={setPerPage}>
         <SelectTrigger className="w-24 h-8">
           <SelectValue placeholder={perPage} />

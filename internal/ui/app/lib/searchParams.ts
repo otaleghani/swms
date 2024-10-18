@@ -41,3 +41,12 @@ export const decodeSearchParams = (
   const jsonString = Buffer.from(encoded, 'base64').toString('utf-8');
   return JSON.parse(jsonString);
 };
+
+/** Describes the grid cols classes */
+export const gridCols: Record<number, string> = {
+  1: "grid-cols-1",
+  2: "grid-cols-2",
+  3: "grid-cols-3",
+  4: "grid-cols-4",
+  5: "grid-cols-5",
+};

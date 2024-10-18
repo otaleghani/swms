@@ -15,6 +15,7 @@ import { PaginationType } from "@/app/lib/types/pageParams";
 
 import { usePathname, useSearchParams } from 'next/navigation';
 import PageSizeSelector from "./PageSizeSelector";
+import LayoutSelector from "./LayoutSelector";
 
 interface PaginationPatternProps {
   totalPages: number;
@@ -57,6 +58,7 @@ export default function PaginationPattern({
 
   return (
     <div className="p-4 flex gap-4 items-center justify-end">
+      <LayoutSelector type={type} />
       <PageSizeSelector type={type} />
       <Pagination className="flex items-center">
         <div className="pr-2 text-sm font-medium">
