@@ -8,6 +8,7 @@ import { ScrollArea } from "@/app/ui/components/scroll-area";
 import PaginationPattern from "@/app/ui/patterns/pagination/PaginationPattern";
 import FetchToastPattern from "@/app/ui/patterns/FetchToast";
 import ZoneWithExtraCard from "../list/ZoneWithExtraCard";
+import ForeignKeyFilter from "@/app/ui/patterns/filter/ForeignKeyFilter";
 
 interface Props {
   searchParams?: ZoneSearchParams;
@@ -23,6 +24,8 @@ export default async function ListZonesWithExtra({
     searchParams?.pagination?.page,
     searchParams?.pagination?.perPage,
   );
+  // Here you should filter out the things that are not available in 
+  // filters... Why should you have something that it's unavailable?
 
   return (
     <>
@@ -45,9 +48,12 @@ export default async function ListZonesWithExtra({
         type="zones"
       />
       <FetchToastPattern
-        type={["Zones","Zone"]}
+        type={[ "Zones", "Zone" ]}
         dict={dict.toasts.fetching}
       />
+      {
+        // Filter component... Sheet that holds all of the filters 
+      }
     </>
   )
 }

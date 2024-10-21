@@ -16,7 +16,7 @@ import TestListZones from "@/app/ui/modules/zones/TestListZones";
 import { decodeSearchParams } from "@/app/lib/searchParams";
 import ListZonesWithExtra from "@/app/ui/modules/zones/lists/ListZonesWithExtra";
 
-export default async function ZonePage({ 
+export default async function ZonesPage({ 
   params, 
   searchParams 
 }: DefaultPageProps) {

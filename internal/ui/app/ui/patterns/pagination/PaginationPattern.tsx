@@ -11,7 +11,7 @@ import {
   PaginationPrevious,
 } from "@/app/ui/components/pagination"
 import { ChevronsLeft, ChevronsRight } from "lucide-react";
-import { PaginationType } from "@/app/lib/types/pageParams";
+import { KeySearchParams } from "@/app/lib/types/pageParams";
 
 import { usePathname, useSearchParams } from 'next/navigation';
 import PageSizeSelector from "./PageSizeSelector";
@@ -19,12 +19,12 @@ import LayoutSelector from "./LayoutSelector";
 
 interface PaginationPatternProps {
   totalPages: number;
-  type: PaginationType;
+  type: KeySearchParams;
 }
 
 function getPage(
   params: SearchParams, 
-  type: PaginationType,
+  type: KeySearchParams,
   totalPages: number,
 ) {
   if (params[type]?.pagination?.page) {
@@ -49,7 +49,7 @@ export default function PaginationPattern({
 
   const createPageURL = (pageNumber: number | string) => {
     let diff: SearchParams = {};
-    diff[type] = { ...{ pagination: { page: Number(pageNumber) } } };
+    diff[type] = { ...{ pagination: { page: Number(pageNumber)}}};
     const newParams = deepMerge({ ...currentParams }, diff);
     const newParamsString = encodeSearchParams(newParams);
     params.set("q", newParamsString);

@@ -13,11 +13,12 @@ export const emptyAisle: Aisle = {
   zone: "",
 }
 
-export type AisleWithExtra = Aisle & {
+export type AisleWithExtra = {
+  aisle: Aisle;
   racksCount: number;
   itemsCount: number;
 };
-export type AislesWithExtra = AislesWithExtra[];
+export type AislesWithExtra = AisleWithExtra[];
 
 export type AisleFormState = FormState<"Aisle">
 export const defaultAisleFormState: AisleFormState = {

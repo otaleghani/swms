@@ -1,8 +1,6 @@
 package server
 
 import (
-  "math"
-  "strconv"
 	"encoding/json"
 	"net/http"
 	"strings"
@@ -11,21 +9,6 @@ import (
 	"github.com/otaleghani/swms/internal/database"
   "github.com/otaleghani/spg"
 )
-
-func convertPageQueryToIntOrDefault(s string) int {
-    num, err := strconv.Atoi(s)
-    if err != nil {
-        return 1
-    }
-    return num
-}
-func convertPerPageQueryToIntOrDefault(s string) int {
-    num, err := strconv.Atoi(s)
-    if err != nil {
-        return 10
-    }
-    return num
-}
 
 func getZones(db *database.Database) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
@@ -36,31 +19,14 @@ func getZones(db *database.Database) http.HandlerFunc {
 		}
 		rows, err := db.SelectZones("")
 
-    queryPageNumber := r.URL.Query().Get("page")
-    queryPerPageNumber := r.URL.Query().Get("perPage")
+    queryPage := r.URL.Query().Get("page")
+    queryPerPage := r.URL.Query().Get("perPage")
     //querySearchTerm := r.URL.Query().Get("search")
 
     // Todo: filters...
     filteredRows := rows
 
-    totalItems := len(filteredRows)
-    page := convertPageQueryToIntOrDefault(queryPageNumber)
-    perPage := convertPerPageQueryToIntOrDefault(queryPerPageNumber)
-
-    totalPages := int(math.Ceil(float64(totalItems) / float64(perPage)))
-    if page > totalPages {
-      page = 1
-    }
-
-    start := 0 + (perPage * (page - 1))
-    end := perPage + (perPage * (page - 1))
-
-    if end >= totalItems {
-      end = totalItems
-    }
-
-    resultedItems := filteredRows[start:end]
-
+    resultedItems, page, perPage, totalItems, totalPages, err := paginateItems(queryPage, queryPerPage, filteredRows)
 
 		if err != nil {
 			ErrorResponse{Message: err.Error()}.r500(w, r)
@@ -85,7 +51,7 @@ func getZoneById(db *database.Database) http.HandlerFunc {
 		}
 		path := r.PathValue("id")
 		rows, _ := db.SelectZones("Id = ?", path)
-		if len(rows) == 0 {
+if len(rows) == 0 {
 			ErrorResponse{Message: "Not found"}.r404(w, r)
 			return
 		}
@@ -291,31 +257,14 @@ func getZonesWithData(db *database.Database) http.HandlerFunc {
         },
       )
     }
-    // here
-    queryPageNumber := r.URL.Query().Get("page")
-    queryPerPageNumber := r.URL.Query().Get("perPage")
+
+    queryPage := r.URL.Query().Get("page")
+    queryPerPage := r.URL.Query().Get("perPage")
     // Todo: filters...
     filteredRows := data
 
-    totalItems := len(filteredRows)
-    page := convertPageQueryToIntOrDefault(queryPageNumber)
-    perPage := convertPerPageQueryToIntOrDefault(queryPerPageNumber)
+    resultedItems, page, perPage, totalItems, totalPages, err := paginateItems(queryPage, queryPerPage, filteredRows)
 
-    totalPages := int(math.Ceil(float64(totalItems) / float64(perPage)))
-    if page > totalPages {
-      page = 1
-    }
-
-    start := 0 + (perPage * (page - 1))
-    end := perPage + (perPage * (page - 1))
-
-    if end >= totalItems {
-      end = totalItems
-    }
-
-    resultedItems := filteredRows[start:end]
-
-		//SuccessResponse{Data: data}.r200(w, r)
 		SuccessResponse{
       Data: resultedItems,
       Page: page,

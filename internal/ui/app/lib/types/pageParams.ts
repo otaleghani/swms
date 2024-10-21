@@ -19,7 +19,7 @@ export type SearchParams = {
 }
 
 /** Every type of list that could be pagiated */
-export type PaginationType = keyof SearchParams;
+export type KeySearchParams = keyof SearchParams;
 
 /** The pagination parameters */
 export type PaginationParams = {
@@ -29,17 +29,12 @@ export type PaginationParams = {
 }
 
 export type ZoneSearchParams = {
-  filters?: {
-    search?: string;
-  }
+  filters?: ZoneFiltersParams;
   pagination?: PaginationParams;
 }
 
 export type AisleSearchParams = {
-  filters?: {
-    search?: string;
-    zone?: string;
-  }
+  filters?: AisleFiltersParams;
   pagination?: PaginationParams;
 }
 
@@ -69,6 +64,29 @@ export type CategorySearchParams = {
   pagination?: PaginationParams;
 }
 
-export type SubcategorySearchParams = {
+export type SubcategorySearchParams = {}
 
+export interface AllFilters {
+  search?: string;
+  zone?: string;
+}
+export type AllFiltersKey = keyof AllFilters;
+
+export type ZoneFiltersParams = {
+  [K in keyof AllFilters]: 
+    K extends "search" ? AllFilters[K] :
+    null | undefined;
+}
+export type AisleFiltersParams = {
+  [K in keyof AllFilters]: 
+    K extends "zone" ? AllFilters[K] :
+    K extends "search" ? AllFilters[K] :
+    null | undefined;
+}
+
+export type FiltersMap = {
+  [K in KeySearchParams]: 
+    K extends "zones" ? ZoneFiltersParams :
+    K extends "aisles" ? AisleFiltersParams :
+    null
 }
