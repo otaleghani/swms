@@ -38,7 +38,6 @@ export function SelectFieldPatternCombobox<T extends SelectableItem>({
   dict,
 }: SelectFieldPatternProps<T>) {
   const [open, setOpen] = useState(false);
-
   return (
     <>
       <Popover open={open} onOpenChange={setOpen}>

@@ -20,10 +20,11 @@ export default async function ListZonesWithExtra({
   locale,
 }: Props) {
   const dict = await getDictionary(locale);
-  const zonesWithExtra = await retrieve("ZonesWithExtra",
-    searchParams?.pagination?.page,
-    searchParams?.pagination?.perPage,
-  );
+  const zonesWithExtra = await retrieve({
+    request: "ZonesWithExtra",
+    page: searchParams?.pagination?.page,
+    perPage: searchParams?.pagination?.perPage,
+  });
   // Here you should filter out the things that are not available in 
   // filters... Why should you have something that it's unavailable?
 

@@ -18,6 +18,16 @@ func getZones(db *database.Database) http.HandlerFunc {
 			return
 		}
 		rows, err := db.SelectZones("")
+		if err != nil {
+			ErrorResponse{Message: err.Error()}.r500(w, r)
+			return
+		}
+
+    queryPagination := r.URL.Query().Get("paginationOff")
+    if queryPagination == "true" {
+		  SuccessResponse{Data: rows}.r200(w, r)
+      return
+    }
 
     queryPage := r.URL.Query().Get("page")
     queryPerPage := r.URL.Query().Get("perPage")

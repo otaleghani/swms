@@ -46,15 +46,22 @@ const options: RetrieveMapOptions = {
   "Users":                  { path: "users/",               type: "Users" },
 };
 
-
-export async function retrieve<T extends keyof RetrieveMapOptions>(
+interface RetrieveData<T extends keyof RetrieveMapOptions> {
   request: T,
   page?: number,
   perPage?: number,
-) {
+  paginationOff?: "true" | "false"
+}
+
+export async function retrieve<T extends keyof RetrieveMapOptions>({
+  request,
+  page,
+  perPage,
+  paginationOff,
+}: RetrieveData<T>) {
   const option = options[request];
 
-  const path = option.path + `?page=${page}&perPage=${perPage}`
+  const path = option.path + `?page=${page}&perPage=${perPage}&paginationOff=${paginationOff}`
 
   const response = await fetchData<TypeMap[T]>({
     path: path,

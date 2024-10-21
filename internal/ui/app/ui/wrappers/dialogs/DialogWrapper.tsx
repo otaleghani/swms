@@ -49,7 +49,7 @@ export default function DialogWrapper({
 
   return (
     <Drawer open={open} onOpenChange={setOpen}>
-        <Trigger />
+      <Trigger />
       <DrawerContent>
         <Body />
         <DrawerFooter className="pt-2">

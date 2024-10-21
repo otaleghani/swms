@@ -51,7 +51,6 @@ export default function DialogFormPattern<T extends keyof FormPropsMap>({
           }}
           showButton={showButton}
         />
-        <span>susenberg</span>
       </>
     )
   }

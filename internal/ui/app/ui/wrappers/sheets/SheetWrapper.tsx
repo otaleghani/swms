@@ -18,10 +18,8 @@ export default function SheetWrapper({
 }: SheetWrapperProps) {
   return (
     <Sheet>
-      <SheetTrigger className="w-full">
-        <Trigger />
-      </SheetTrigger>
-      <SheetContent className="bg-gray-100 w-[100%] p-0">
+      <Trigger />
+      <SheetContent className="bg-gray-100 w-[100%] ">
         <Body />
       </SheetContent>
     </Sheet>

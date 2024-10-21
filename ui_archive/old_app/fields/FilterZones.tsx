@@ -1,22 +1,22 @@
 "use client"
 
 import { usePathname, useSearchParams } from "next/navigation"
+import { decodeSearchParams, encodeSearchParams, deepMerge } from "@/app/lib/searchParams"
 
 import { useEffect, useState } from "react"
-import { decodeSearchParams, encodeSearchParams, deepMerge } from "@/app/lib/searchParams"
 import { Zone, Zones } from "@/app/lib/types/data/zones"
 import { DictSelectField } from "@/app/lib/types/dictionary/form"
 import { AllFiltersKey, SearchParams } from "@/app/lib/types/pageParams"
 
 import { SelectFieldPatternCombobox } from "../form/select/SelectFieldPatternCombobox"
 
-type PossibleFilters = keyof Pick<SearchParams, "aisles">
+//type PossibleFilters = keyof Pick<SearchParams, "aisles">
 
 interface Props {
   list: Zones,
   dict: DictSelectField,
   /** Is the field of the params that you want to chane */
-  filterParam: PossibleFilters;
+  //filterParam: PossibleFilters;
   initialValue: string | undefined;
   updatePageURL: (s: string) => string;
 }
@@ -37,7 +37,6 @@ interface Props {
 export default function FilterZones({
   list,
   dict,
-  filterParam,
   initialValue,
   updatePageURL,
 }: Props) {

@@ -3,9 +3,8 @@ import { Locale, getDictionary } from "@/lib/dictionaries";
 import { retrieve } from "@/app/lib/requests/generics/retrieve";
 import { ScrollArea } from "@/app/ui/components/scroll-area";
 import { gridCols } from "@/app/lib/searchParams";
-import ForeignKeyFilter from "@/app/ui/patterns/filter/ForeignKeyFilter";
+import FilterAislesSheet from "@/app/ui/patterns/filter/data/FilterAislesSheet";
 import { Zones } from "@/app/lib/types/data/zones";
-import FilterZones from "@/app/ui/patterns/filter/FilterZones";
 
 interface Props {
   searchParams?: AisleSearchParams;
@@ -17,11 +16,16 @@ export default async function ListAislesWithExtra({
   locale,
 }: Props) {
   const dict = await getDictionary(locale);
-  const zones = await retrieve("Zones")
-  const aislesWithExtra = await retrieve("AislesWithExtra",
-    searchParams?.pagination?.page,
-    searchParams?.pagination?.perPage,
-  );
+  const zones = await retrieve({
+    request: "Zones", 
+    paginationOff: "true"
+  });
+
+  const aislesWithExtra = await retrieve({
+    request: "AislesWithExtra",
+    page: searchParams?.pagination?.page,
+    perPage: searchParams?.pagination?.perPage,
+  })
 
   return (
     <>
@@ -38,19 +42,11 @@ export default async function ListAislesWithExtra({
           ))}
         </div>
       </ScrollArea>
-      {
-      //<ForeignKeyFilter<"Zone">
-      //  name="Zone"
-      //  list={zones.data as Zones}
-      //  type={"aisles"}
-      //  dict={dict.form.fields.zones}
-      //  key="zone"
-      ///>
-      }
-      <FilterZones 
-        list={zones.data as Zones}
-        filterParam="aisles"
-        dict={dict.form.fields.zones}
+      <FilterAislesSheet 
+        zones={{
+          list: zones.data as Zones,
+          dict: dict.form.fields.zones
+        }}
       />
       {
         // Filter component... Sheet that holds all of the filters 
