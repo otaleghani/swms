@@ -232,23 +232,30 @@ func getAislesWithData(db *database.Database) http.HandlerFunc {
 
     // FILTER THE AISLES
     queryFilters := r.URL.Query().Get("filters")
-    var filteredRows []database.Aisle
+    filteredRows := aisles
 
     if queryFilters != "" {
 		  var filters AislesFilters
 		  err = json.Unmarshal([]byte(queryFilters), &filters)
 		  if err != nil {
-        fmt.Println(err)
 		  	ErrorResponse{Message: err.Error()}.r400(w, r)
 		  	return
 		  }
+
+      // If the filter params for Zone exists, then filter for the 
+      // given zone
       if filters.Zone != "" {
-        filteredRows, err = FilterByField(aisles, "Zone_id", filters.Zone)
-      } else {
-        filteredRows = aisles
-      }
-    } else {
-      filteredRows = aisles
+        filteredRows, err = FilterByField(filteredRows, "Zone_id", filters.Zone)
+      } 
+
+      if filters.Search != "" {
+        filteredRows, err = FilterBySearch(filteredRows, "Name", filters.Search)
+      } 
+      //if filter.Search != "" {
+      //  // filter per search
+      //} else {
+      //  // smae result
+      //}
     }
 
     // CONSTRUCT EXTRA DATA

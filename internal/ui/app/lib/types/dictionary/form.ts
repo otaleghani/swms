@@ -24,6 +24,8 @@ export interface DictFormMessages {
 }
 
 export interface DictFormFields {
+  search:           DictInputField;
+
   date:           DictInputField;
   name:           DictInputField;
   surname:        DictInputField;

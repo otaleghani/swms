@@ -3,8 +3,8 @@ import { Locale, getDictionary } from "@/lib/dictionaries";
 import { retrieve } from "@/app/lib/requests/generics/retrieve";
 import { ScrollArea } from "@/app/ui/components/scroll-area";
 import { gridCols } from "@/app/lib/searchParams";
-import FilterAislesSheet from "@/app/ui/patterns/filter/data/FilterAislesSheet";
 import { Zones } from "@/app/lib/types/data/zones";
+import FilterAisles from "@/app/ui/patterns/filter/data/FilterAisles";
 
 interface Props {
   searchParams?: AisleSearchParams;
@@ -44,10 +44,14 @@ export default async function ListAislesWithExtra({
           ))}
         </div>
       </ScrollArea>
-      <FilterAislesSheet 
+
+      <FilterAisles
         zones={{
           list: zones.data as Zones,
           dict: dict.form.fields.zones
+        }}
+        search={{
+          dict: dict.form.fields.search
         }}
       />
       {

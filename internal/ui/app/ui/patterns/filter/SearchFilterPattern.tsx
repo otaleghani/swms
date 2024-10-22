@@ -1,29 +1,24 @@
 "use client"
 
-import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
+import { ChangeEvent, Dispatch, memo, SetStateAction, useState } from "react";
 import { Input } from "../../components/input";
 
 interface Props {
-  search: string;
-  setSearch: Dispatch<SetStateAction<string>>;
+  onInputChange: (value: string) => void;
   // dict
 }
 
-export default function SearchFilterPattern({
-  search,
-  setSearch
+const Component = memo(function SearchFilterPattern({
+  onInputChange
 }: Props) {
 
   const [state, setState] = useState("")
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setState(e.target.value)
-  }
-
-  const handleNotification = () => {
-    const copy = JSON.parse(JSON.stringify(state))
-    setSearch(copy)
-    //setState(state)
+    const newValue = e.target.value;
+    setState(newValue);
+    onInputChange(newValue);
+    //console.log(state)
   }
 
   return (
@@ -31,10 +26,12 @@ export default function SearchFilterPattern({
       <Input 
         type="text"
         placeholder="Your search.."
-        //onChange={handleChange}
-        //value={state}
-        onBlur={handleNotification}
+        onChange={handleChange}
+        value={state}
       />
+      <input type="hidden" />
     </>
   );
-};
+});
+
+export default Component

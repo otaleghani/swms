@@ -21,6 +21,18 @@ export const dictionaryForm: DictForms = {
     }
   },
   fields: {
+    search: {
+      label: "Seach",
+      placeholder: "Enter the name",
+      validation: {
+        empty: "",
+        max: "",
+        min: "",
+        type: "",
+        valid: "",
+      },
+    },
+
     date: {
       label: "Date",
       placeholder: "Enter the date",
