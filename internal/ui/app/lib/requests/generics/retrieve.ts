@@ -47,10 +47,13 @@ const options: RetrieveMapOptions = {
 };
 
 interface RetrieveData<T extends keyof RetrieveMapOptions> {
-  request: T,
-  page?: number,
-  perPage?: number,
-  paginationOff?: "true" | "false"
+  request: T;
+  page?: number;
+  perPage?: number;
+  paginationOff?: "true" | "false";
+  // here I should recieve either a filter / pagination thing
+  // Or I should just get the different filters?
+  filters?: any;
 }
 
 export async function retrieve<T extends keyof RetrieveMapOptions>({
@@ -58,10 +61,25 @@ export async function retrieve<T extends keyof RetrieveMapOptions>({
   page,
   perPage,
   paginationOff,
+  filters
 }: RetrieveData<T>) {
   const option = options[request];
 
-  const path = option.path + `?page=${page}&perPage=${perPage}&paginationOff=${paginationOff}`
+  let path = option.path + `?q=""`
+
+  if (page) {
+    path += `&page=${page}`
+  }
+  if (perPage) {
+    path += `&perPage=${perPage}`
+  }
+
+  if (paginationOff) {
+    path += `&paginationOff=${paginationOff}`
+  }
+  if (filters) {
+    path += `&filters=${filters}`
+  }
 
   const response = await fetchData<TypeMap[T]>({
     path: path,

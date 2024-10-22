@@ -58,12 +58,14 @@ export default function ZoneWithExtraCard({
           }}
           Content={() => {
             return (
-              <></>
+              <div>
+                <span>sus {zoneWithExtra.aislesCount}</span>
+              </div>
             )
           }}
           Footer={() => {
             return (
-              <></>
+              <>sus</>
             )
           }}
         />

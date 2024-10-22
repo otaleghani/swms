@@ -23,6 +23,9 @@ func getZones(db *database.Database) http.HandlerFunc {
 			return
 		}
 
+    // Todo: filters...
+    filteredRows := rows
+
     queryPagination := r.URL.Query().Get("paginationOff")
     if queryPagination == "true" {
 		  SuccessResponse{Data: rows}.r200(w, r)
@@ -33,8 +36,6 @@ func getZones(db *database.Database) http.HandlerFunc {
     queryPerPage := r.URL.Query().Get("perPage")
     //querySearchTerm := r.URL.Query().Get("search")
 
-    // Todo: filters...
-    filteredRows := rows
 
     resultedItems, page, perPage, totalItems, totalPages, err := paginateItems(queryPage, queryPerPage, filteredRows)
 
@@ -84,8 +85,8 @@ func getZoneByIdWithData(db *database.Database) http.HandlerFunc {
 		}
     var data struct {
       Zone database.Zone `json:"zone"`
-      Aisle_count int `json:"aisles_count"`
-      Items_count int `json:"items_count"`
+      Aisle_count int `json:"aislesCount"`
+      Items_count int `json:"itemsCount"`
     }
     aisles, err := db.SelectAislesByZone(zone[0].Id)
 		if err != nil {
@@ -99,8 +100,8 @@ func getZoneByIdWithData(db *database.Database) http.HandlerFunc {
 		}
     data = struct{
       Zone database.Zone `json:"zone"`
-      Aisle_count int `json:"aisles_count"`
-      Items_count int `json:"items_count"`
+      Aisle_count int `json:"aislesCount"`
+      Items_count int `json:"itemsCount"`
     }{
       Zone: zone[0],
       Aisle_count: len(aisles),
@@ -242,8 +243,8 @@ func getZonesWithData(db *database.Database) http.HandlerFunc {
 		}
     var data []struct {
       Zone database.Zone `json:"zone"`
-      Aisle_count int `json:"aisles_count"`
-      Items_count int `json:"items_count"`
+      Aisle_count int `json:"aislesCount"`
+      Items_count int `json:"itemsCount"`
     }
     for i := 0; i < len(zones); i++ {
       aisles, err := db.SelectAislesByZone(zones[i].Id)
@@ -258,8 +259,8 @@ func getZonesWithData(db *database.Database) http.HandlerFunc {
 		  }
       data = append(data, struct{
           Zone database.Zone `json:"zone"`
-          Aisle_count int `json:"aisles_count"`
-          Items_count int `json:"items_count"`
+          Aisle_count int `json:"aislesCount"`
+          Items_count int `json:"itemsCount"`
         }{
           Zone: zones[i],
           Aisle_count: len(aisles),

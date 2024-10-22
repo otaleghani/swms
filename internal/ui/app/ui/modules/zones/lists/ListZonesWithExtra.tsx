@@ -25,8 +25,6 @@ export default async function ListZonesWithExtra({
     page: searchParams?.pagination?.page,
     perPage: searchParams?.pagination?.perPage,
   });
-  // Here you should filter out the things that are not available in 
-  // filters... Why should you have something that it's unavailable?
 
   return (
     <>

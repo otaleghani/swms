@@ -15,6 +15,7 @@ export default async function ListAislesWithExtra({
   searchParams,
   locale,
 }: Props) {
+
   const dict = await getDictionary(locale);
   const zones = await retrieve({
     request: "Zones", 
@@ -25,6 +26,7 @@ export default async function ListAislesWithExtra({
     request: "AislesWithExtra",
     page: searchParams?.pagination?.page,
     perPage: searchParams?.pagination?.perPage,
+    filters: JSON.stringify(searchParams?.filters),
   })
 
   return (
@@ -36,9 +38,9 @@ export default async function ListAislesWithExtra({
             : "grid-cols-3"
         }`}>
           {aislesWithExtra.data?.map((item) => (
-            <>
+            <div key={item.aisle.id}>
               {item.aisle.id}
-            </>
+            </div>
           ))}
         </div>
       </ScrollArea>

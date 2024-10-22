@@ -3,7 +3,6 @@ package server
 import (
   "math"
   "strconv"
-
 )
 
 // Takes the page query params (string) and return a valid number

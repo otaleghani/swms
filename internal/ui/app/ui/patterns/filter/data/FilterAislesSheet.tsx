@@ -1,7 +1,7 @@
 "use client"
 
-import { useEffect, useState } from "react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState, ChangeEvent, useRef } from "react";
+import { usePathname, useSearchParams } from "next/navigation";
 import { SearchParams } from "@/app/lib/types/pageParams";
 import { deepMerge, decodeSearchParams, encodeSearchParams } from "@/app/lib/searchParams";
 import { Zone, Zones } from "@/app/lib/types/data/zones";
@@ -12,6 +12,9 @@ import { SheetHeader, SheetTitle, SheetTrigger } from "@/app/ui/components/sheet
 import ForeignKeyFilter from "../ForeignKeyFilter";
 import { Button } from "@/app/ui/components/button";
 import Link from "next/link";
+import { ListFilter } from "lucide-react";
+import SearchFilterPattern from "../SearchFilterPattern";
+import { Input } from "@/app/ui/components/input";
 
 interface Props {
   zones: {
@@ -23,7 +26,8 @@ interface Props {
 export default function FilterAislesSheet({
   zones,
 }: Props) {
-  const router = useRouter();
+  const inputRef = useRef<HTMLInputElement>(null);
+
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const params = new URLSearchParams(searchParams);
@@ -31,7 +35,6 @@ export default function FilterAislesSheet({
 
   const [link, setLink] = useState("");
   const [updatedParams, setUpdatedParams] = useState(currentParams);
-
   const [zone, setZone] = useState(
     updatedParams.aisles?.filters?.zone
     ? zones.list.find(
@@ -39,17 +42,22 @@ export default function FilterAislesSheet({
         || {id: "", name: ""} as Zone
     : {id: "", name: ""} as Zone
   );
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     let diff: SearchParams = {};
     diff["aisles"] = { ...{ filters: { zone: zone.id }}};
-    if (zone.id == "") {
-      delete diff["aisles"].filters?.zone
-    }
     const newParams = deepMerge({...currentParams}, diff);
     setUpdatedParams(newParams);
   }, [zone]);
 
+  useEffect(() => {
+    console.log("updated: ", search)
+    let diff: SearchParams = {};
+    diff["aisles"] = { ...{ filters: { search: search }}};
+    const newParams = deepMerge({...currentParams}, diff);
+    setUpdatedParams(newParams);
+  }, [search]);
 
   useEffect(() => {
     const newParamsString = encodeSearchParams(updatedParams);
@@ -57,11 +65,18 @@ export default function FilterAislesSheet({
     setLink(`${pathname}?${params.toString()}`);
   }, [updatedParams])
 
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value)
+  }
+
   const SheetPatternTrigger = () => {
     return (
       <>
         <SheetTrigger asChild className="w-full">
-          <Button>Sus</Button>
+          <Button variant="secondary">
+            <ListFilter className="w-4 h-4 mr-2" />
+            Filters
+          </Button>
         </SheetTrigger>
       </>
     );
@@ -70,21 +85,45 @@ export default function FilterAislesSheet({
   const SheetPatternBody = () => {
     return (
       <div>
-        <SheetHeader>
+        <SheetHeader className="mb-4">
           <SheetTitle className="font-semibold text-xl">
             Filter
           </SheetTitle>
         </SheetHeader>
-        <ForeignKeyFilter<"Zone"> 
-          name="Zone"
-          list={zones.list}
-          dict={zones.dict}
-          element={zone}
-          setElement={setZone}
-        />
-        <Button asChild> 
-          <Link href={link}>Filtra</Link>
-        </Button>
+
+        <div className="mb-4">
+          <ForeignKeyFilter<"Zone"> 
+            name="Zone"
+            list={zones.list}
+            dict={zones.dict}
+            element={zone}
+            setElement={setZone}
+          />
+          <Input
+            type="text"
+            placeholder="Your search.."
+            onBlur={handleChange}
+            //value={search}
+            ref={inputRef}
+          />
+          <SearchFilterPattern 
+            search={search}
+            setSearch={setSearch}
+          />
+
+        </div>
+
+        <div className="flex gap-2">
+          <Button asChild> 
+            <Link href={link}>Filtra</Link>
+          </Button>
+          <Button variant="secondary" onClick={() => {
+            setZone({id: "", name: ""});
+            setSearch("");
+          }}> 
+            Reset
+          </Button>
+        </div>
       </div>
     );
   };

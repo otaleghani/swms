@@ -69,19 +69,20 @@ export type SubcategorySearchParams = {}
 export interface AllFilters {
   search?: string;
   zone?: string;
+  aisle?: string;
 }
 export type AllFiltersKey = keyof AllFilters;
 
 export type ZoneFiltersParams = {
   [K in keyof AllFilters]: 
     K extends "search" ? AllFilters[K] :
-    null | undefined;
+    undefined;
 }
 export type AisleFiltersParams = {
   [K in keyof AllFilters]: 
     K extends "zone" ? AllFilters[K] :
     K extends "search" ? AllFilters[K] :
-    null | undefined;
+    undefined;
 }
 
 export type FiltersMap = {

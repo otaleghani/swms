@@ -19,7 +19,7 @@ export default function SheetWrapper({
   return (
     <Sheet>
       <Trigger />
-      <SheetContent className="bg-gray-100 w-[100%] ">
+      <SheetContent className="w-[100%]">
         <Body />
       </SheetContent>
     </Sheet>
