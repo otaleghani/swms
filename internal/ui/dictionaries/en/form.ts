@@ -22,7 +22,7 @@ export const dictionaryForm: DictForms = {
   },
   fields: {
     search: {
-      label: "Seach",
+      label: "Search",
       placeholder: "Enter the name",
       validation: {
         empty: "",
