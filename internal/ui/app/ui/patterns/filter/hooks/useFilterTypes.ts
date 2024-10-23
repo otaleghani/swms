@@ -1,36 +1,33 @@
-import { Zones, Zone } from "@/app/lib/types/data/zones";
+import { TicketTypes, TicketType } from "@/app/lib/types/data/tickets";
 import { SearchParams } from "@/app/lib/types/pageParams";
 import { useState, useEffect, Dispatch, SetStateAction } from "react";
 import { deepMerge } from "@/app/lib/searchParams";
 
 type PossibleParams = keyof Pick<SearchParams, 
-  "aisles" |
-  "racks" |
-  "shelfs" |
-  "items"
+  "tickets"
 >;
 
 /** Manages the creation of a compatible URL for filtering data. */
-export const useFilterZones = (
+export const useFilterTicketTypes = (
   params: SearchParams,
-  zones: Zones,
+  ticketTypes: TicketTypes,
   type: PossibleParams,
   setParams: Dispatch<SetStateAction<SearchParams>>,
 ) => {
-  const [zone, setZone] = useState(
-    params[type]?.filters?.zone
-    ? zones.find(
-      (item) => item.id == params[type]?.filters?.zone) 
-        || {id: "", name: ""} as Zone
-    : {id: "", name: ""} as Zone
+  const [ticketType, setTicketType] = useState(
+    params[type]?.filters?.ticketType
+    ? ticketTypes.find(
+      (item) => item.id == params[type]?.filters?.ticketType) 
+        || {id: "", name: ""} as TicketType
+    : {id: "", name: ""} as TicketType
   );
 
   useEffect(() => {
     let diff: SearchParams = {};
-    diff[type] = { ...{ filters: { zone: zone.id }}};
+    diff[type] = { ...{ filters: { ticketType: ticketType.id }}};
     const newParams = deepMerge({...params}, diff);
     setParams(newParams);
-  }, [zone]);
+  }, [ticketType]);
 
-  return { zone, setZone };
+  return { ticketType, setTicketType };
 };

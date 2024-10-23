@@ -1,4 +1,4 @@
-import { ZoneSearchParams } from "@/app/lib/types/pageParams";
+import { SearchParams } from "@/app/lib/types/pageParams";
 import { retrieve } from "@/app/lib/requests/generics/retrieve";
 import { getDictionary, Locale } from "@/lib/dictionaries";
 import { gridCols } from "@/app/lib/searchParams";
@@ -7,11 +7,12 @@ import { gridCols } from "@/app/lib/searchParams";
 import { ScrollArea } from "@/app/ui/components/scroll-area";
 import PaginationPattern from "@/app/ui/patterns/pagination/PaginationPattern";
 import FetchToastPattern from "@/app/ui/patterns/FetchToast";
-import ZoneWithExtraCard from "../list/ZoneWithExtraCard";
+import ZoneWithExtraCard from "../cards/ZoneWithExtraCard";
 import ForeignKeyFilter from "@/app/ui/patterns/filter/ForeignKeyFilter";
+import FilterZones from "@/app/ui/patterns/filter/data/FilterZones";
 
 interface Props {
-  searchParams?: ZoneSearchParams;
+  searchParams?: SearchParams["zones"];
   locale: Locale
 }
 
@@ -28,11 +29,11 @@ export default async function ListZonesWithExtra({
 
   return (
     <>
-      <ScrollArea scrollHideDelay={10000} className="xl:h-[calc(100vh_-_121px)]">
+      <ScrollArea scrollHideDelay={10000} className="xl:h-[calc(100vh_-_114px)] bg-gray-50">
         <div className={`grid gap-2 p-4 ${
           searchParams?.pagination?.layout 
             ? `${gridCols[searchParams.pagination.layout]}`
-            : "grid-cols-3"
+            : "xl:grid-cols-3"
         }`}>
           {zonesWithExtra.data?.map((item) => (
             <ZoneWithExtraCard 
@@ -42,17 +43,24 @@ export default async function ListZonesWithExtra({
           ))}
         </div>
       </ScrollArea>
-      <PaginationPattern 
-        totalPages={zonesWithExtra.totalPages as number} 
-        type="zones"
-      />
+      <div className="flex items-center justify-end bg-gray-50 border-t xl:h-[57px]">
+        <FilterZones 
+          dict={dict.filters}
+          fields={{
+            search: {
+              dict: dict.form.fields.search
+            }
+          }}
+        />
+        <PaginationPattern 
+          totalPages={zonesWithExtra.totalPages as number} 
+          type="zones"
+        />
+      </div>
       <FetchToastPattern
         type={[ "Zones", "Zone" ]}
         dict={dict.toasts.fetching}
       />
-      {
-        // Filter component... Sheet that holds all of the filters 
-      }
     </>
   )
 }

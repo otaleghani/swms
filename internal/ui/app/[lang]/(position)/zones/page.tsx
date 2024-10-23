@@ -12,7 +12,6 @@ import DialogFormPattern from "@/app/ui/patterns/dialog/DialogFormPattern";
 /** Types and interfaces */
 import { DefaultPageProps } from "@/app/lib/types/pageParams";
 import { Suspense } from "react";
-import TestListZones from "@/app/ui/modules/zones/TestListZones";
 import { decodeSearchParams } from "@/app/lib/searchParams";
 import ListZonesWithExtra from "@/app/ui/modules/zones/lists/ListZonesWithExtra";
 
@@ -60,20 +59,10 @@ export default async function ZonesPage({
           )
         }}
       />
-      <Suspense fallback="sus">
       <ListZonesWithExtra 
         locale={params.lang as Locale}
         searchParams={currentSearchParams.zones}
       />
-      {
-      //  <TestListZones 
-      //    params={currentSearchParams.zones}
-      //    // currentSearchParams.zones
-      //    page={currentSearchParams.zones?.pagination?.page} 
-      //    perPage={currentSearchParams.zones?.pagination?.perPage} 
-      //  />
-      }
-      </Suspense>
     </>
   )
 }

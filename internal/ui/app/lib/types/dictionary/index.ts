@@ -8,6 +8,12 @@ import { DictSupplierCode } from "./data/supplierCode";
 import { DictZone } from "./data/zone"
 import { DictForms } from "./form";
 import { DictToasts } from "./toasts";
+import { DictFilters } from "./misc";
+
+/** Every one-off term that do not fit in any cat */
+export interface DictMisc {
+  notFound: string;
+}
 
 export type Dictionary = {
   zone: DictZone;
@@ -23,4 +29,6 @@ export type Dictionary = {
 
   form: DictForms;
   toasts: DictToasts;
+  filters: DictFilters;
+  misc: DictMisc;
 }

@@ -1,36 +1,33 @@
-import { Zones, Zone } from "@/app/lib/types/data/zones";
+import { Subcategories, Subcategory } from "@/app/lib/types/data/subcategories";
 import { SearchParams } from "@/app/lib/types/pageParams";
 import { useState, useEffect, Dispatch, SetStateAction } from "react";
 import { deepMerge } from "@/app/lib/searchParams";
 
 type PossibleParams = keyof Pick<SearchParams, 
-  "aisles" |
-  "racks" |
-  "shelfs" |
   "items"
 >;
 
 /** Manages the creation of a compatible URL for filtering data. */
-export const useFilterZones = (
+export const useFilterSubcategories = (
   params: SearchParams,
-  zones: Zones,
+  subcategories: Subcategories,
   type: PossibleParams,
   setParams: Dispatch<SetStateAction<SearchParams>>,
 ) => {
-  const [zone, setZone] = useState(
-    params[type]?.filters?.zone
-    ? zones.find(
-      (item) => item.id == params[type]?.filters?.zone) 
-        || {id: "", name: ""} as Zone
-    : {id: "", name: ""} as Zone
+  const [subcategory, setSubcategory] = useState(
+    params[type]?.filters?.subcategory
+    ? subcategories.find(
+      (item) => item.id == params[type]?.filters?.subcategory) 
+        || {id: "", name: ""} as Subcategory
+    : {id: "", name: ""} as Subcategory
   );
 
   useEffect(() => {
     let diff: SearchParams = {};
-    diff[type] = { ...{ filters: { zone: zone.id }}};
+    diff[type] = { ...{ filters: { subcategory: subcategory.id }}};
     const newParams = deepMerge({...params}, diff);
     setParams(newParams);
-  }, [zone]);
+  }, [subcategory]);
 
-  return { zone, setZone };
+  return { subcategory, setSubcategory };
 };

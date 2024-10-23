@@ -2,16 +2,16 @@
 
 import { usePathname, useSearchParams } from "next/navigation";
 
-import { LayoutGrid, LayoutList } from "lucide-react";
-import { PaginationType, SearchParams } from "@/app/lib/types/pageParams";
+import { LayoutGrid, LayoutList, Search } from "lucide-react";
+import { SearchParams } from "@/app/lib/types/pageParams";
 import { PaginationLink } from "../../components/pagination";
 import { deepMerge, encodeSearchParams, decodeSearchParams } from "@/app/lib/searchParams";
 
 interface LayoutSelectorProps {
-  type: PaginationType;
+  type: keyof SearchParams
 }
 
-function getLayout(params: SearchParams, type: PaginationType) {
+function getLayout(params: SearchParams, type: keyof SearchParams) {
   if (params[type]?.pagination?.layout) {
     return params[type]?.pagination?.layout;
   }
@@ -22,9 +22,11 @@ type DefaultGridColumn = {
   [K in keyof SearchParams]: number;
 }
 
-const defaultGridColumn = {
+const defaultGridColumn: DefaultGridColumn = {
   zones: 3,
   aisles: 3,
+  racks: 3,
+  shelfs: 3,
 }
 
 export default function LayoutSelector({
@@ -46,14 +48,14 @@ export default function LayoutSelector({
   };
 
   return (
-    <div className="flex flex-row items-center gap-1">
+    <div className="hidden xl:flex flex-row items-center gap-1">
       <PaginationLink className={
         "w-8 h-8 p-0 aspect-square" + currentLayout &&
         currentLayout > 1
         ? "pointer-events-none opacity-50"
         : ""
       }
-      href={createPageURL(defaultGridColumn[type])}
+      href={createPageURL(defaultGridColumn[type] as number)}
       >
         <LayoutGrid className="h-4 w-4" />
       </PaginationLink>

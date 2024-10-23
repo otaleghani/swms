@@ -11,7 +11,6 @@ import {
   PaginationPrevious,
 } from "@/app/ui/components/pagination"
 import { ChevronsLeft, ChevronsRight } from "lucide-react";
-import { KeySearchParams } from "@/app/lib/types/pageParams";
 
 import { usePathname, useSearchParams } from 'next/navigation';
 import PageSizeSelector from "./PageSizeSelector";
@@ -19,12 +18,12 @@ import LayoutSelector from "./LayoutSelector";
 
 interface PaginationPatternProps {
   totalPages: number;
-  type: KeySearchParams;
+  type: keyof SearchParams;
 }
 
 function getPage(
   params: SearchParams, 
-  type: KeySearchParams,
+  type: keyof SearchParams,
   totalPages: number,
 ) {
   if (params[type]?.pagination?.page) {
@@ -57,7 +56,7 @@ export default function PaginationPattern({
   };
 
   return (
-    <div className="p-4 flex gap-4 items-center justify-end">
+    <div className="p-2 flex gap-4 items-center justify-end flex-wrap">
       <LayoutSelector type={type} />
       <PageSizeSelector type={type} />
       <Pagination className="flex items-center">

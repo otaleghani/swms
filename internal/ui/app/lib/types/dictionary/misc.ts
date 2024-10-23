@@ -1,3 +1,8 @@
+export interface DictFilters {
+  title: string;
+  trigger: string;
+}
+
 export interface DictDialog {
   title: string;
   description: string;
