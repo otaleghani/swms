@@ -1,6 +1,7 @@
 export interface DictFilters {
   title: string;
   trigger: string;
+  button: string;
 }
 
 export interface DictDialog {

@@ -24,7 +24,7 @@ export const useFilterTicketStates = (
 
   useEffect(() => {
     let diff: SearchParams = {};
-    diff[type] = { ...{ filters: { ticketState: zone.id }}};
+    diff[type] = { ...{ filters: { ticketState: ticketState.id }}};
     const newParams = deepMerge({...params}, diff);
     setParams(newParams);
   }, [ticketState]);

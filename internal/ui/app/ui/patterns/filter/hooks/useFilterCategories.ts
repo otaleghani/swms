@@ -29,4 +29,6 @@ export const useFilterCategories = (
     const newParams = deepMerge({...params}, diff);
     setParams(newParams);
   }, [category]);
+
+  return { category, setCategory }
 };

@@ -1,15 +1,19 @@
 "use client";
 
+// Types and interfaces
+import { Categories } from "@/app/lib/types/data/categories";
+
 // Dictionaries
 import { DictInputField, DictSelectField } from "@/app/lib/types/dictionary/form";
 import { DictFilters } from "@/app/lib/types/dictionary/misc";
 
 // Components
-import SheetWrapper from "@/app/ui/wrappers/sheets/SheetWrapper";
 import { Button } from "@/app/ui/components/button";
 import { Input } from "@/app/ui/components/input";
 import { Label } from "@/app/ui/components/label";
+import SheetWrapper from "@/app/ui/wrappers/sheets/SheetWrapper";
 import { FilterSheetTrigger, FilterSheetHeader } from "../FilterSheetTrigger";
+import ForeignKeyFilter from "../ForeignKeyFilter";
 
 // Next components
 import Link from "next/link";
@@ -17,9 +21,14 @@ import Link from "next/link";
 // Filters
 import { useFilterParams } from "../hooks/useFilter";
 import { useFilterSearch } from "../hooks/useFilterSearch";
+import { useFilterCategories } from "../hooks/useFilterCategories";
 
 interface Props {
   fields: {
+    categories: {
+      list: Categories;
+      dict: DictSelectField;
+    };
     search: {
       dict: DictInputField;
     };
@@ -27,17 +36,33 @@ interface Props {
   dict: DictFilters;
 };
 
-
 const SheetPatternBody = ({fields, dict}: Props) => {
   const { params, setParams, link } = useFilterParams();
 
+  const { category, setCategory } = useFilterCategories(
+    params, 
+    fields.categories.list, 
+    "subcategories", 
+    setParams
+  );
+
   const { searchTerm, setSearchTerm, handleInput } = 
-    useFilterSearch(params, "zones", setParams);
+    useFilterSearch(params, "aisles", setParams);
 
   return (
     <>
       <FilterSheetHeader dict={dict} />
       <div className="mb-4 grid gap-2">
+        <div>
+          <Label>{fields.categories.dict.select.label}</Label>
+          <ForeignKeyFilter<"Zone"> 
+            name="Zone"
+            list={fields.categories.list}
+            dict={fields.categories.dict}
+            element={category}
+            setElement={setCategory}
+          />
+        </div> 
         <div>
           <Label>{fields.search.dict.label}</Label>
           <Input 
@@ -48,11 +73,13 @@ const SheetPatternBody = ({fields, dict}: Props) => {
           />
         </div>
       </div>
+
       <div className="flex gap-2">
         <Button asChild> 
-          <Link href={link}>{dict.button}</Link>
+          <Link href={link}>Filtra</Link>
         </Button>
         <Button variant="secondary" onClick={() => {
+          setCategory({id: "", name: ""});
           setSearchTerm("");
         }}> 
           Reset
@@ -62,7 +89,7 @@ const SheetPatternBody = ({fields, dict}: Props) => {
   )
 }
 
-export default function FilterZones({
+export default function FilterSubcategories({
   fields,
   dict,
 }: Props) {

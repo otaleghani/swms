@@ -1,7 +1,7 @@
 "use client";
 
 // Dictionaries
-import { DictInputField, DictSelectField } from "@/app/lib/types/dictionary/form";
+import { DictCheckboxField, DictInputField, DictSelectField } from "@/app/lib/types/dictionary/form";
 import { DictFilters } from "@/app/lib/types/dictionary/misc";
 
 // Components
@@ -17,11 +17,19 @@ import Link from "next/link";
 // Filters
 import { useFilterParams } from "../hooks/useFilter";
 import { useFilterSearch } from "../hooks/useFilterSearch";
+import { useFilterIsBusiness } from "../hooks/useFilterIsBusiness";
+import { Checkbox } from "@/app/ui/components/checkbox";
+import { ChangeEvent, FormEventHandler } from "react";
+import { is } from "date-fns/locale";
+import { CheckedState } from "@radix-ui/react-checkbox";
 
 interface Props {
   fields: {
     search: {
       dict: DictInputField;
+    };
+    isBusiness: {
+      dict: DictCheckboxField;
     };
   };
   dict: DictFilters;
@@ -33,6 +41,9 @@ const SheetPatternBody = ({fields, dict}: Props) => {
 
   const { searchTerm, setSearchTerm, handleInput } = 
     useFilterSearch(params, "zones", setParams);
+
+  const { isBusiness, setIsBusiness, handleIsBusiness } =
+    useFilterIsBusiness(params, "clients", setParams)
 
   return (
     <>
@@ -47,12 +58,21 @@ const SheetPatternBody = ({fields, dict}: Props) => {
             value={searchTerm}
           />
         </div>
+        <div className="flex items-center space-x-2">
+          <Checkbox 
+            id="isBusiness"
+            checked={isBusiness as CheckedState} 
+            onCheckedChange={handleIsBusiness} 
+          />
+          <Label htmlFor="isBusiness">{fields.isBusiness.dict.label}</Label>
+        </div>
       </div>
       <div className="flex gap-2">
         <Button asChild> 
           <Link href={link}>{dict.button}</Link>
         </Button>
         <Button variant="secondary" onClick={() => {
+          setIsBusiness(false);
           setSearchTerm("");
         }}> 
           Reset
@@ -62,7 +82,7 @@ const SheetPatternBody = ({fields, dict}: Props) => {
   )
 }
 
-export default function FilterZones({
+export default function FilterClients({
   fields,
   dict,
 }: Props) {

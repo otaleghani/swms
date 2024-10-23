@@ -32,7 +32,7 @@ const SheetPatternBody = ({fields, dict}: Props) => {
   const { params, setParams, link } = useFilterParams();
 
   const { searchTerm, setSearchTerm, handleInput } = 
-    useFilterSearch(params, "zones", setParams);
+    useFilterSearch(params, "suppliers", setParams);
 
   return (
     <>
@@ -62,7 +62,7 @@ const SheetPatternBody = ({fields, dict}: Props) => {
   )
 }
 
-export default function FilterZones({
+export default function FilterSuppliers({
   fields,
   dict,
 }: Props) {

@@ -8,6 +8,7 @@ export interface FiltersParams {
   category?: string;
   subcategory?: string;
   isBusiness?: string;
+  isArchived?: string;
   client?: string;
   supplier?: string;
   open?: string;

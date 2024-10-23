@@ -32,7 +32,7 @@ const SheetPatternBody = ({fields, dict}: Props) => {
   const { params, setParams, link } = useFilterParams();
 
   const { searchTerm, setSearchTerm, handleInput } = 
-    useFilterSearch(params, "zones", setParams);
+    useFilterSearch(params, "categories", setParams);
 
   return (
     <>
