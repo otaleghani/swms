@@ -32,7 +32,7 @@ export type Filters = {
   suppliers: SupplierFiltersParams;
   supplierCodes: SupplierCodeFiltersParams;
   tickets: TicketFiltersParams;
-  transaction: TransactionFiltersParams;
+  transactions: TransactionFiltersParams;
 };
 
 // prettier-ignore
