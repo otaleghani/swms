@@ -1,35 +1,33 @@
-import { Aisles, Aisle } from "@/app/lib/types/data/aisles";
+import { Items, Item } from "@/app/lib/types/data/items";
 import { SearchParams } from "@/app/lib/types/pageParams";
 import { useState, useEffect, Dispatch, SetStateAction } from "react";
 import { deepMerge } from "@/app/lib/searchParams";
 
 type PossibleParams = keyof Pick<SearchParams, 
-  "racks" |
-  "shelfs" |
-  "items"
+  "transactions"
 >;
 
 /** Manages the creation of a compatible URL for filtering data. */
-export const useFilterAisles = (
+export const useFilterItems = (
   params: SearchParams,
-  aisles: Aisles,
+  items: Items,
   type: PossibleParams,
   setParams: Dispatch<SetStateAction<SearchParams>>,
 ) => {
-  const [aisle, setAisle] = useState(
-    params[type]?.filters?.aisle
-    ? aisles.find(
-      (item) => item.id == params[type]?.filters?.aisle) 
-        || {id: "", name: ""} as Aisle
-    : {id: "", name: ""} as Aisle
+  const [item, setItem] = useState(
+    params[type]?.filters?.item
+    ? items.find(
+      (item) => item.id == params[type]?.filters?.item) 
+        || {id: "", name: ""} as Item
+    : {id: "", name: ""} as Item
   );
 
   useEffect(() => {
     let diff: SearchParams = {};
-    diff[type] = { ...{ filters: { aisle: aisle.id }}};
+    diff[type] = { ...{ filters: { item: item.id }}};
     const newParams = deepMerge({...params}, diff);
     setParams(newParams);
-  }, [aisle]);
+  }, [item]);
 
-  return { aisle, setAisle };
+  return { item, setItem };
 };

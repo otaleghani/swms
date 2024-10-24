@@ -1,7 +1,6 @@
 "use client";
 
 // Types and interfaces
-import { Zones } from "@/app/lib/types/data/zones";
 import { Products, Product } from "@/app/lib/types/data/products";
 import { TicketTypes, TicketType } from "@/app/lib/types/data/tickets";
 import { TicketStates, TicketState } from "@/app/lib/types/data/tickets";
@@ -32,8 +31,10 @@ import { useFilterProducts } from "../hooks/useFilterProducts";
 import { useFilterTicketTypes } from "../hooks/useFilterTypes";
 import { useFilterTicketStates } from "../hooks/useFilterStates";
 import { DateRangePickerPattern } from "../../form/input/DateRangePickerPattern";
+import { AcceptedLocales } from "@/app/lib/types/misc";
 
 interface Props {
+  locale: AcceptedLocales;
   fields: {
     open: {
       dict: DictDatePickerField;
@@ -64,7 +65,7 @@ interface Props {
   dict: DictFilters;
 };
 
-const SheetPatternBody = ({fields, dict}: Props) => {
+const SheetPatternBody = ({fields, dict, locale}: Props) => {
   const { params, setParams, link } = useFilterParams();
 
   const { client, setClient } = 
@@ -134,7 +135,7 @@ const SheetPatternBody = ({fields, dict}: Props) => {
             setDate={setOpen}
             field="openDate"
             dict={fields.close.dict}
-            locale="it"
+            locale={locale}
           />
         </div> 
         <div>
@@ -144,7 +145,7 @@ const SheetPatternBody = ({fields, dict}: Props) => {
             setDate={setClose}
             field="closeDate"
             dict={fields.close.dict}
-            locale="it"
+            locale={locale}
           />
         </div> 
         <div>
@@ -181,12 +182,13 @@ const SheetPatternBody = ({fields, dict}: Props) => {
 export default function FilterTickets({
   fields,
   dict,
+  locale,
 }: Props) {
   const SheetHead = () => {
     return (<FilterSheetTrigger dict={dict} />)
   }
   const SheetBody = () => {
-    return (<SheetPatternBody fields={fields} dict={dict}/>)
+    return (<SheetPatternBody locale={locale} fields={fields} dict={dict}/>)
   }
   return (
     <>

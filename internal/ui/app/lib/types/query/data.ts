@@ -7,13 +7,17 @@ export interface FiltersParams {
   shelf?: string;
   category?: string;
   subcategory?: string;
+  item?: string;
+  variant?: string;
   isBusiness?: string;
   isArchived?: string;
   client?: string;
   supplier?: string;
   open?: string;
   close?: string;
+  date?: string;
   product?: string;
+  ticket?: string;
   ticketType?: string;
   ticketState?: string;
   user?: string;
@@ -147,5 +151,9 @@ export type TransactionFiltersParams = {
   [K in keyof FiltersParams]:
     K extends "search" ? FiltersParams[K] :
     K extends "user" ? FiltersParams[K] :
+    K extends "item" ? FiltersParams[K] :
+    K extends "variant" ? FiltersParams[K] :
+    K extends "ticket" ? FiltersParams[K] :
+    K extends "date" ? FiltersParams[K] :
     undefined;
 };

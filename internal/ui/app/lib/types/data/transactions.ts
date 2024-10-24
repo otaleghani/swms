@@ -19,10 +19,5 @@ export const defaultTransactionFormState: TransactionFormState = {
   errorMessages: {
     quantity: [],
     ticket: [],
-
-    //date: [],
-    //user: [],
-    //item: [],
-    //variant: [],
   }
 }

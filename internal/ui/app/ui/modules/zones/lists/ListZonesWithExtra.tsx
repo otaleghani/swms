@@ -8,10 +8,9 @@ import { ScrollArea } from "@/app/ui/components/scroll-area";
 import PaginationPattern from "@/app/ui/patterns/pagination/PaginationPattern";
 import FetchToastPattern from "@/app/ui/patterns/FetchToast";
 import ZoneWithExtraCard from "../cards/ZoneWithExtraCard";
-import ForeignKeyFilter from "@/app/ui/patterns/filter/ForeignKeyFilter";
 import FilterZones from "@/app/ui/patterns/filter/data/FilterZones";
-import FilterClients from "@/app/ui/patterns/filter/data/FilterClients";
 import FilterTickets from "@/app/ui/patterns/filter/data/FilterTickets";
+import { AcceptedLocales } from "@/app/lib/types/misc";
 
 interface Props {
   searchParams?: SearchParams["zones"];
@@ -60,6 +59,7 @@ export default async function ListZonesWithExtra({
           type="zones"
         />
         <FilterTickets 
+          locale={locale as AcceptedLocales}
           dict={dict.filters}
           fields={{
             open: {dict: dict.form.fields.openDate},

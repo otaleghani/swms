@@ -1,6 +1,5 @@
 /** Actions and defaults */
 import { getDictionary, Locale } from "@/lib/dictionaries";
-import { retrieve } from "@/app/lib/requests/generics/retrieve";
 import { fieldsDefaultProps } from "@/app/lib/types/form/fields";
 import { createFormAction } from "@/app/lib/actions/create/createFormAction";
 import { defaultZonesBulkFormState, ZonesWithExtra } from "@/app/lib/types/data/zones";
@@ -11,7 +10,6 @@ import DialogFormPattern from "@/app/ui/patterns/dialog/DialogFormPattern";
 
 /** Types and interfaces */
 import { DefaultPageProps } from "@/app/lib/types/pageParams";
-import { Suspense } from "react";
 import { decodeSearchParams } from "@/app/lib/searchParams";
 import ListZonesWithExtra from "@/app/ui/modules/zones/lists/ListZonesWithExtra";
 

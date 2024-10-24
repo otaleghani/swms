@@ -2,17 +2,17 @@ package database
 
 import ()
 
-type Transition struct {
+type Transaction struct {
   Id string `json:"id"`
-  Date string `json:"data"`
+  Date string `json:"date"`
   Quantity int `json:"quantity"`
   User_id string `json:"user"`
   Item_id string `json:"item"`
-  Variant_id string `json:"variant`
+  Variant_id string `json:"variant"`
 }
 
-func (db *Database) SelectTransitions(condition string, args ...interface{}) ([]Transition, error) {
-  list := []Transition{}
+func (db *Database) SelectTransactions(condition string, args ...interface{}) ([]Transaction, error) {
+  list := []Transaction{}
   err := db.Sorm.Select(&list, condition, args...)
   if err != nil {
     return nil, err

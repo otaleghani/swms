@@ -18,7 +18,7 @@ import { AcceptedLocales } from "@/app/lib/types/misc"
 import { DictDatePickerField } from "@/app/lib/types/dictionary/form"
 
 interface Props {
-  field: "openDate" | "closeDate";
+  field: "openDate" | "closeDate" | "date";
   date: DateRange | undefined;
   setDate: Dispatch<SetStateAction<DateRange | undefined>>;
   locale: AcceptedLocales;
