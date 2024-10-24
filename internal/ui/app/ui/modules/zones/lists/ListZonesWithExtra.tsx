@@ -27,6 +27,7 @@ export default async function ListZonesWithExtra({
     request: "ZonesWithExtra",
     page: searchParams?.pagination?.page,
     perPage: searchParams?.pagination?.perPage,
+    filters: JSON.stringify(searchParams?.filters),
   });
 
   return (

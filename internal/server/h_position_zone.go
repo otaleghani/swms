@@ -10,6 +10,10 @@ import (
   "github.com/otaleghani/spg"
 )
 
+type ZonesFilters struct {
+  Search string `json:"search,omitempty"`
+}
+
 func getZones(db *database.Database) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
@@ -23,26 +27,42 @@ func getZones(db *database.Database) http.HandlerFunc {
 			return
 		}
 
-    // Todo: filters...
+    // Filter
+    queryFilters := r.URL.Query().Get("filters")
     filteredRows := rows
 
-    queryPagination := r.URL.Query().Get("paginationOff")
-    if queryPagination == "true" {
+    if queryFilters != "" {
+		  var filters ZonesFilters
+		  err = json.Unmarshal([]byte(queryFilters), &filters)
+      // If the filters are valid, filter the content, else skip.
+		  if err == nil {
+        // Checks if every field is not an empty string and filters.
+        if filters.Search != "" {
+          filteredRows, err = FilterBySearch(
+            filteredRows, "Name", filters.Search)
+        }
+		  }
+    }
+
+    // Pagination
+    queryPaginationOff := r.URL.Query().Get("paginationOff")
+    if queryPaginationOff == "true" {
+      // if paginationOff is set to "true", returns the data
+      // without pagination
 		  SuccessResponse{Data: rows}.r200(w, r)
       return
     }
 
     queryPage := r.URL.Query().Get("page")
     queryPerPage := r.URL.Query().Get("perPage")
-    //querySearchTerm := r.URL.Query().Get("search")
-
-
-    resultedItems, page, perPage, totalItems, totalPages, err := paginateItems(queryPage, queryPerPage, filteredRows)
+    resultedItems, page, perPage, totalItems, totalPages, err := 
+      paginateItems(queryPage, queryPerPage, filteredRows)
 
 		if err != nil {
 			ErrorResponse{Message: err.Error()}.r500(w, r)
 			return
 		}
+
 		SuccessResponse{
       Data: resultedItems,
       Page: page,
@@ -241,18 +261,36 @@ func getZonesWithData(db *database.Database) http.HandlerFunc {
 			ErrorResponse{Message: err.Error()}.r500(w, r)
 			return
 		}
+    // Filter
+    queryFilters := r.URL.Query().Get("filters")
+    filteredRows := zones
+
+    if queryFilters != "" {
+		  var filters ZonesFilters
+		  err = json.Unmarshal([]byte(queryFilters), &filters)
+      // If the filters are valid, filter the content, else skip.
+		  if err == nil {
+        // Checks if every field is not an empty string and filters.
+        if filters.Search != "" {
+          filteredRows, err = FilterBySearch(
+            filteredRows, "Name", filters.Search)
+        }
+		  }
+    }
+
+    // Construct zones with extra
     var data []struct {
       Zone database.Zone `json:"zone"`
       Aisle_count int `json:"aislesCount"`
       Items_count int `json:"itemsCount"`
     }
-    for i := 0; i < len(zones); i++ {
-      aisles, err := db.SelectAislesByZone(zones[i].Id)
+    for i := 0; i < len(filteredRows); i++ {
+      aisles, err := db.SelectAislesByZone(filteredRows[i].Id)
 		  if err != nil {
 		  	ErrorResponse{Message: err.Error()}.r500(w, r)
 		  	return
 		  }
-      items, err := db.SelectItems("Zone_id = ?", zones[i].Id)
+      items, err := db.SelectItems("Zone_id = ?", filteredRows[i].Id)
 		  if err != nil {
 		  	ErrorResponse{Message: err.Error()}.r500(w, r)
 		  	return
@@ -262,19 +300,31 @@ func getZonesWithData(db *database.Database) http.HandlerFunc {
           Aisle_count int `json:"aislesCount"`
           Items_count int `json:"itemsCount"`
         }{
-          Zone: zones[i],
+          Zone: filteredRows[i],
           Aisle_count: len(aisles),
           Items_count: len(items),
         },
       )
     }
 
+    // Pagination
+    queryPaginationOff := r.URL.Query().Get("paginationOff")
+    if queryPaginationOff == "true" {
+      // if paginationOff is set to "true", returns the data
+      // without pagination
+		  SuccessResponse{Data: data}.r200(w, r)
+      return
+    }
+
     queryPage := r.URL.Query().Get("page")
     queryPerPage := r.URL.Query().Get("perPage")
-    // Todo: filters...
-    filteredRows := data
+    resultedItems, page, perPage, totalItems, totalPages, err := 
+      paginateItems(queryPage, queryPerPage, data)
 
-    resultedItems, page, perPage, totalItems, totalPages, err := paginateItems(queryPage, queryPerPage, filteredRows)
+		if err != nil {
+			ErrorResponse{Message: err.Error()}.r500(w, r)
+			return
+		}
 
 		SuccessResponse{
       Data: resultedItems,

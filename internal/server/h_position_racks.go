@@ -10,6 +10,12 @@ import (
   "github.com/otaleghani/spg"
 )
 
+type RacksFilters struct {
+  Search string `json:"search,omitempty"`
+  Zone string `json:"zone,omitempty"`
+  Aisle string `json:"aisle,omitempty"`
+}
+
 func getRacks(db *database.Database) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
@@ -22,7 +28,55 @@ func getRacks(db *database.Database) http.HandlerFunc {
 			ErrorResponse{Message: err.Error()}.r500(w, r)
 			return
 		}
-		SuccessResponse{Data: rows}.r200(w, r)
+
+    // Filter
+    queryFilters := r.URL.Query().Get("filters")
+    filteredRows := rows
+		var filters RacksFilters
+    if queryFilters != "" {
+		  err = json.Unmarshal([]byte(queryFilters), &filters)
+		  if err != nil {
+		  	ErrorResponse{Message: err.Error()}.r400(w, r)
+		  	return
+		  }
+      if filters.Zone != "" {
+        filteredRows, err = FilterByField(
+          filteredRows, "Zone", filters.Zone)
+      }
+      if filters.Aisle != "" {
+        filteredRows, err = FilterByField(
+          filteredRows, "Aisle", filters.Aisle)
+      }
+      if filters.Search != "" {
+        filteredRows, err = FilterBySearch(
+          filteredRows, "Name", filters.Search)
+      }
+    }
+
+    // Pagination
+    queryPagination := r.URL.Query().Get("paginationOff")
+    if queryPagination == "true" {
+		  SuccessResponse{Data: filteredRows}.r200(w, r)
+      return
+    }
+
+    queryPage := r.URL.Query().Get("page")
+    queryPerPage := r.URL.Query().Get("perPage")
+
+    resultedItems, page, perPage, totalItems, totalPages, err := 
+      paginateItems(queryPage, queryPerPage, filteredRows)
+
+		if err != nil {
+			ErrorResponse{Message: err.Error()}.r500(w, r)
+			return
+		}
+		SuccessResponse{
+      Data: resultedItems,
+      Page: page,
+      PerPage: perPage,
+      TotalItems: totalItems,
+      TotalPages: totalPages,
+    }.r200(w, r)
 	}
 }
 
@@ -174,18 +228,46 @@ func getRacksByAisleWithData(db *database.Database) http.HandlerFunc {
 			ErrorResponse{Message: err.Error()}.r500(w, r)
 			return
 		}
+
+    // Filters
+    queryFilters := r.URL.Query().Get("filters")
+    filteredRows := racks
+
+		var filters RacksFilters
+    if queryFilters != "" {
+		  err = json.Unmarshal([]byte(queryFilters), &filters)
+		  if err != nil {
+		  	ErrorResponse{Message: err.Error()}.r400(w, r)
+		  	return
+		  }
+
+      if filters.Zone != "" {
+        filteredRows, err = FilterByField(
+          filteredRows, "Zone", filters.Zone)
+      }
+      if filters.Aisle != "" {
+        filteredRows, err = FilterByField(
+          filteredRows, "Aisle", filters.Aisle)
+      }
+      if filters.Search != "" {
+        filteredRows, err = FilterBySearch(
+          filteredRows, "Name", filters.Search)
+      }
+    }
+
+    // Data construction
     var data []struct {
       Rack database.Rack `json:"rack"`
       Shelfs_count int `json:"shelfs_count"`
       Items_count int `json:"items_count"`
     }
-    for i := 0; i < len(racks); i++ {
-      shelfs, err := db.SelectShelfsByRack(racks[i].Id)
+    for i := 0; i < len(filteredRows); i++ {
+      shelfs, err := db.SelectShelfsByRack(filteredRows[i].Id)
 		  if err != nil {
 		  	ErrorResponse{Message: err.Error()}.r500(w, r)
 		  	return
 		  }
-      items, err := db.SelectItems("Rack_id = ?", racks[i].Id)
+      items, err := db.SelectItems("Rack_id = ?", filteredRows[i].Id)
 		  if err != nil {
 		  	ErrorResponse{Message: err.Error()}.r500(w, r)
 		  	return
@@ -195,14 +277,38 @@ func getRacksByAisleWithData(db *database.Database) http.HandlerFunc {
           Shelfs_count int `json:"shelfs_count"`
           Items_count int `json:"items_count"`
         }{
-          Rack: racks[i],
+          Rack: filteredRows[i],
           Shelfs_count: len(shelfs),
           Items_count: len(items),
         },
       )
     }
-		SuccessResponse{Data: data}.r200(w, r)
-  }
+
+    // Pagination
+    queryPagination := r.URL.Query().Get("paginationOff")
+    if queryPagination == "true" {
+		  SuccessResponse{Data: filteredRows}.r200(w, r)
+      return
+    }
+
+    queryPage := r.URL.Query().Get("page")
+    queryPerPage := r.URL.Query().Get("perPage")
+
+    resultedItems, page, perPage, totalItems, totalPages, err := 
+      paginateItems(queryPage, queryPerPage, filteredRows)
+
+		if err != nil {
+			ErrorResponse{Message: err.Error()}.r500(w, r)
+			return
+		}
+		SuccessResponse{
+      Data: resultedItems,
+      Page: page,
+      PerPage: perPage,
+      TotalItems: totalItems,
+      TotalPages: totalPages,
+    }.r200(w, r)
+	}
 }
 
 func getRacksWithData(db *database.Database) http.HandlerFunc {
@@ -217,18 +323,46 @@ func getRacksWithData(db *database.Database) http.HandlerFunc {
 			ErrorResponse{Message: err.Error()}.r500(w, r)
 			return
 		}
+
+    // Filters
+    queryFilters := r.URL.Query().Get("filters")
+    filteredRows := racks
+
+		var filters RacksFilters
+    if queryFilters != "" {
+		  err = json.Unmarshal([]byte(queryFilters), &filters)
+		  if err != nil {
+		  	ErrorResponse{Message: err.Error()}.r400(w, r)
+		  	return
+		  }
+
+      if filters.Zone != "" {
+        filteredRows, err = FilterByField(
+          filteredRows, "Zone", filters.Zone)
+      }
+      if filters.Aisle != "" {
+        filteredRows, err = FilterByField(
+          filteredRows, "Aisle", filters.Aisle)
+      }
+      if filters.Search != "" {
+        filteredRows, err = FilterBySearch(
+          filteredRows, "Name", filters.Search)
+      }
+    }
+
+    // Data construction
     var data []struct {
       Rack database.Rack `json:"rack"`
       Shelfs_count int `json:"shelfs_count"`
       Items_count int `json:"items_count"`
     }
-    for i := 0; i < len(racks); i++ {
-      shelfs, err := db.SelectShelfsByRack(racks[i].Id)
+    for i := 0; i < len(filteredRows); i++ {
+      shelfs, err := db.SelectShelfsByRack(filteredRows[i].Id)
 		  if err != nil {
 		  	ErrorResponse{Message: err.Error()}.r500(w, r)
 		  	return
 		  }
-      items, err := db.SelectItems("Rack_id = ?", racks[i].Id)
+      items, err := db.SelectItems("Rack_id = ?", filteredRows[i].Id)
 		  if err != nil {
 		  	ErrorResponse{Message: err.Error()}.r500(w, r)
 		  	return
@@ -238,13 +372,34 @@ func getRacksWithData(db *database.Database) http.HandlerFunc {
           Shelfs_count int `json:"shelfs_count"`
           Items_count int `json:"items_count"`
         }{
-          Rack: racks[i],
+          Rack: filteredRows[i],
           Shelfs_count: len(shelfs),
           Items_count: len(items),
         },
       )
     }
-		SuccessResponse{Data: data}.r200(w, r)
+
+    // Pagination
+    queryPagination := r.URL.Query().Get("paginationOff")
+    if queryPagination == "true" {
+		  SuccessResponse{Data: filteredRows}.r200(w, r)
+      return
+    }
+    queryPage := r.URL.Query().Get("page")
+    queryPerPage := r.URL.Query().Get("perPage")
+    resultedItems, page, perPage, totalItems, totalPages, err := 
+      paginateItems(queryPage, queryPerPage, filteredRows)
+		if err != nil {
+			ErrorResponse{Message: err.Error()}.r500(w, r)
+			return
+		}
+		SuccessResponse{
+      Data: resultedItems,
+      Page: page,
+      PerPage: perPage,
+      TotalItems: totalItems,
+      TotalPages: totalPages,
+    }.r200(w, r)
   }
 }
 

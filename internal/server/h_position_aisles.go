@@ -28,27 +28,36 @@ func getAisles(db *database.Database) http.HandlerFunc {
 			return
 		}
 
+    // Filters
     queryFilters := r.URL.Query().Get("filters")
+    filteredRows := rows
 		var filters AislesFilters
-		err = json.Unmarshal([]byte(queryFilters), &filters)
-		if err != nil {
-			ErrorResponse{Message: err.Error()}.r400(w, r)
-			return
-		}
-    filteredRows, err := FilterByField(rows, "zone", filters.Zone)
-
-    // Checks if the pagination is On or Off
-    queryPagination := r.URL.Query().Get("paginationOff")
-    if queryPagination == "true" {
-		  SuccessResponse{Data: rows}.r200(w, r)
-      return
+    if queryFilters != "" {
+		  err = json.Unmarshal([]byte(queryFilters), &filters)
+		  if err != nil {
+		  	ErrorResponse{Message: err.Error()}.r400(w, r)
+		  	return
+		  }
+      if filters.Zone != "" {
+        filteredRows, err = FilterByField(
+          filteredRows, "Zone", filters.Zone)
+      }
+      if filters.Search != "" {
+        filteredRows, err = FilterBySearch(
+          filteredRows, "Name", filters.Search)
+      }
     }
 
+    // Pagination
+    queryPagination := r.URL.Query().Get("paginationOff")
+    if queryPagination == "true" {
+		  SuccessResponse{Data: filteredRows}.r200(w, r)
+      return
+    }
     queryPage := r.URL.Query().Get("page")
     queryPerPage := r.URL.Query().Get("perPage")
-
-    resultedItems, page, perPage, totalItems, totalPages, err := paginateItems(queryPage, queryPerPage, filteredRows)
-
+    resultedItems, page, perPage, totalItems, totalPages, err := 
+      paginateItems(queryPage, queryPerPage, filteredRows)
 		if err != nil {
 			ErrorResponse{Message: err.Error()}.r500(w, r)
 			return
@@ -174,11 +183,56 @@ func getAislesByZone(db *database.Database) http.HandlerFunc {
 			ErrorResponse{Message: err.Error()}.r500(w, r)
 			return
 		}
-		if len(list) == 0 {
-			ErrorResponse{Message: "Not found"}.r404(w, r)
+
+    // Filters
+    queryFilters := r.URL.Query().Get("filters")
+    filteredRows := list
+
+    if queryFilters != "" {
+		  var filters AislesFilters
+		  err = json.Unmarshal([]byte(queryFilters), &filters)
+      // If the filters are valid, filter the content, else skip.
+		  if err == nil {
+        // Checks if every field is not an empty string and filters.
+        if filters.Search != "" {
+          filteredRows, err = FilterBySearch(
+            filteredRows, "Name", filters.Search)
+        }
+        // In this case you don't want to filter per zones,
+        // because you already did it to begin with.
+        // if filters.Zone != "" {
+        //   filteredRows, err = FilterBySearch(
+        //     filteredRows, "Name", filters.Search)
+        // }
+		  }
+    }
+
+    // Pagination
+    queryPaginationOff := r.URL.Query().Get("paginationOff")
+    if queryPaginationOff == "true" {
+      // if paginationOff is set to "true", returns the data
+      // without pagination
+		  SuccessResponse{Data: list}.r200(w, r)
+      return
+    }
+
+    queryPage := r.URL.Query().Get("page")
+    queryPerPage := r.URL.Query().Get("perPage")
+    resultedItems, page, perPage, totalItems, totalPages, err := 
+      paginateItems(queryPage, queryPerPage, filteredRows)
+
+		if err != nil {
+			ErrorResponse{Message: err.Error()}.r500(w, r)
 			return
 		}
-		SuccessResponse{Data: list}.r200(w, r)
+
+		SuccessResponse{
+      Data: resultedItems,
+      Page: page,
+      PerPage: perPage,
+      TotalItems: totalItems,
+      TotalPages: totalPages,
+    }.r200(w, r)
   }
 }
 
@@ -230,7 +284,7 @@ func getAislesWithData(db *database.Database) http.HandlerFunc {
 			return
 		}
 
-    // FILTER THE AISLES
+    // Filter
     queryFilters := r.URL.Query().Get("filters")
     filteredRows := aisles
 
@@ -241,24 +295,18 @@ func getAislesWithData(db *database.Database) http.HandlerFunc {
 		  	ErrorResponse{Message: err.Error()}.r400(w, r)
 		  	return
 		  }
-
-      // If the filter params for Zone exists, then filter for the 
-      // given zone
       if filters.Zone != "" {
-        filteredRows, err = FilterByField(filteredRows, "Zone_id", filters.Zone)
+        filteredRows, err = FilterByField(
+          filteredRows, "Zone_id", filters.Zone)
       } 
 
       if filters.Search != "" {
-        filteredRows, err = FilterBySearch(filteredRows, "Name", filters.Search)
+        filteredRows, err = FilterBySearch(
+          filteredRows, "Name", filters.Search)
       } 
-      //if filter.Search != "" {
-      //  // filter per search
-      //} else {
-      //  // smae result
-      //}
     }
 
-    // CONSTRUCT EXTRA DATA
+    // Construct data
     var data []struct {
       Aisle database.Aisle `json:"aisle"`
       Racks_count int `json:"racksCount"`
@@ -287,7 +335,7 @@ func getAislesWithData(db *database.Database) http.HandlerFunc {
       )
     }
 
-    // PAGINATION
+    // Pagination
     queryPagination := r.URL.Query().Get("paginationOff")
     if queryPagination == "true" {
 		  SuccessResponse{Data: data}.r200(w, r)
