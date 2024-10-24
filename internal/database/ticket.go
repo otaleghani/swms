@@ -18,8 +18,8 @@ type Ticket struct {
   Id string `json:"id"`
   Name string `json:"name"`
   Description string `json:"description"`
-  OpenData string `json:"open_data"`
-  CloseData string `json:"close_data"` 
+  Open string `json:"open"`
+  Close string `json:"close"` 
   Client_id string `json:"client"`
   Product_id string `json:"product"`
   TicketType_id string `json:"type"`

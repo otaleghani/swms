@@ -9,6 +9,21 @@ import (
 	"github.com/otaleghani/swms/internal/database"
 )
 
+type DataRange struct {
+  From string `json:"from,omitempty"`
+  To string `json:"to,omitempty"`
+}
+
+type TicketsFilters struct {
+  Search string `json:"search,omitempty"`
+  Open DataRange `json:"open,omitempty"`
+  Close DataRange `json:"close,omitempty"`
+  Client string `json:"client,omitempty"`
+  Product string `json:"product,omitempty"`
+  TicketState string `json:"ticketState,omitempty"`
+  TicketType string `json:"ticketType,omitempty"`
+}
+
 func getTickets(db *database.Database) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
@@ -21,7 +36,68 @@ func getTickets(db *database.Database) http.HandlerFunc {
 			ErrorResponse{Message: err.Error()}.r500(w, r)
 			return
 		}
-		SuccessResponse{Data: rows}.r200(w, r)
+
+    // Filters
+    queryFilters := r.URL.Query().Get("filters")
+    filteredRows := rows
+		var filters TicketsFilters
+    if queryFilters != "" {
+		  err = json.Unmarshal([]byte(queryFilters), &filters)
+		  if err != nil {
+		  	ErrorResponse{Message: err.Error()}.r400(w, r)
+		  	return
+		  }
+      if filters.Search != "" {
+        filteredRows, err = FilterBySearch(
+          filteredRows, "Name", filters.Search)
+      }
+      if filters.Open.From != "" || filters.Open.To != "" {
+        filteredRows, err = FilterByDataRange(
+          filteredRows, "Open", filters.Open.From, filters.Open.To)
+      }
+      if filters.Close.From != "" || filters.Close.To != "" {
+        filteredRows, err = FilterByDataRange(
+          filteredRows, "Close", filters.Close.From, filters.Close.To)
+      }
+      if filters.Client != "" {
+        filteredRows, err = FilterByField(
+          filteredRows, "Client", filters.Client)
+      }
+      if filters.Product != "" {
+        filteredRows, err = FilterByField(
+          filteredRows, "Product", filters.Product)
+      }
+      if filters.TicketType != "" {
+        filteredRows, err = FilterByField(
+          filteredRows, "TicketType", filters.TicketType)
+      }
+      if filters.TicketState != "" {
+        filteredRows, err = FilterByField(
+          filteredRows, "TicketState", filters.TicketState)
+      }
+    }
+
+    // Pagination
+    queryPagination := r.URL.Query().Get("paginationOff")
+    if queryPagination == "true" {
+		  SuccessResponse{Data: filteredRows}.r200(w, r)
+      return
+    }
+    queryPage := r.URL.Query().Get("page")
+    queryPerPage := r.URL.Query().Get("perPage")
+    resultedItems, page, perPage, totalItems, totalPages, err := 
+      paginateItems(queryPage, queryPerPage, filteredRows)
+		if err != nil {
+			ErrorResponse{Message: err.Error()}.r500(w, r)
+			return
+		}
+		SuccessResponse{
+      Data: resultedItems,
+      Page: page,
+      PerPage: perPage,
+      TotalItems: totalItems,
+      TotalPages: totalPages,
+    }.r200(w, r)
 	}
 }
 

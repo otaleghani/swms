@@ -6,7 +6,7 @@ type Client struct {
   Id string `json:"id"`
   Name string `json:"name"`
   Surname string `json:"surname"`
-  IsBusiness string `json:"isBusiness"`
+  IsBusiness bool `json:"isBusiness"`
 }
 
 func (db *Database) SelectClients(condition string, args ...interface{}) ([]Client, error) {
