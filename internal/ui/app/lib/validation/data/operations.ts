@@ -13,10 +13,10 @@ import { getDictionary, Locale } from "@/lib/dictionaries";
 /** Types and interfaces */
 import { FormState } from "../../types/form/form";
 
-export async function validateTransaction(
-  state: FormState<"Transaction">,
+export async function validateOperation(
+  state: FormState<"Operation">,
   locale: string,
-): Promise<FormState<"Transaction">> {
+): Promise<FormState<"Operation">> {
   const dictPromise = getDictionary(locale as Locale);
   const [ dict ] = await Promise.all([ dictPromise ]);
 
@@ -28,7 +28,7 @@ export async function validateTransaction(
 
   if (state.result.id) {
     state = await validateExisting(
-      "Transaction", 
+      "Operation", 
       state, 
       state.result.id, 
       locale

@@ -10,7 +10,7 @@ import (
 	"github.com/otaleghani/swms/internal/database"
 )
 
-type TransactionsFilters struct {
+type OperationsFilters struct {
   Search string `json:"search,omitempty"`
   User string `json:"user,omitempty"`
   Item string `json:"item,omitempty"`
@@ -19,14 +19,14 @@ type TransactionsFilters struct {
   Date DataRange `json:"date,omitempty"`
 }
 
-func getTransactions(db *database.Database) http.HandlerFunc {
+func getOperations(db *database.Database) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
 		if err := checkAccessToken(token, db); err != nil {
 			ErrorResponse{Message: err.Error()}.r401(w, r)
 			return
 		}
-		rows, err := db.SelectTransactions("")
+		rows, err := db.SelectOperations("")
 		if err != nil {
 			ErrorResponse{Message: err.Error()}.r500(w, r)
 			return
@@ -35,7 +35,7 @@ func getTransactions(db *database.Database) http.HandlerFunc {
     // Filters
     queryFilters := r.URL.Query().Get("filters")
     filteredRows := rows
-		var filters TransactionsFilters
+		var filters OperationsFilters
     if queryFilters != "" {
 		  err = json.Unmarshal([]byte(queryFilters), &filters)
 		  if err != nil {
@@ -92,7 +92,7 @@ func getTransactions(db *database.Database) http.HandlerFunc {
 	}
 }
 
-func getTransactionById(db *database.Database) http.HandlerFunc {
+func getOperationById(db *database.Database) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
 		if err := checkAccessToken(token, db); err != nil {
@@ -100,7 +100,7 @@ func getTransactionById(db *database.Database) http.HandlerFunc {
 			return
 		}
 		path := r.PathValue("id")
-		rows, _ := db.SelectTransactions("Id = ?", path)
+		rows, _ := db.SelectOperations("Id = ?", path)
 		if len(rows) == 0 {
 			ErrorResponse{Message: "Not found"}.r404(w, r)
 			return
@@ -109,14 +109,14 @@ func getTransactionById(db *database.Database) http.HandlerFunc {
 	}
 }
 
-func postTransaction(db *database.Database) http.HandlerFunc {
+func postOperation(db *database.Database) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
 		if err := checkAccessToken(token, db); err != nil {
 			ErrorResponse{Message: err.Error()}.r401(w, r)
 			return
 		}
-		var data database.Transaction
+		var data database.Operation
 		err := json.NewDecoder(r.Body).Decode(&data)
 		if err != nil {
 			ErrorResponse{Message: err.Error()}.r400(w, r)
@@ -133,7 +133,7 @@ func postTransaction(db *database.Database) http.HandlerFunc {
 	}
 }
 
-func putTransaction(db *database.Database) http.HandlerFunc {
+func putOperation(db *database.Database) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
 		if err := checkAccessToken(token, db); err != nil {
@@ -141,7 +141,7 @@ func putTransaction(db *database.Database) http.HandlerFunc {
 			return
 		}
 		id := r.PathValue("id")
-		rows, err := db.SelectTransactions("Id = ?", id)
+		rows, err := db.SelectOperations("Id = ?", id)
 		if err != nil {
 			ErrorResponse{Message: err.Error()}.r500(w, r)
 			return
@@ -150,7 +150,7 @@ func putTransaction(db *database.Database) http.HandlerFunc {
 			ErrorResponse{Message: "Not found"}.r404(w, r)
 			return
 		}
-		var data database.Transaction
+		var data database.Operation
 		err = json.NewDecoder(r.Body).Decode(&data)
 		if err != nil {
 			ErrorResponse{Message: err.Error()}.r400(w, r)
@@ -165,7 +165,7 @@ func putTransaction(db *database.Database) http.HandlerFunc {
 	}
 }
 
-func deleteTransaction(db *database.Database) http.HandlerFunc {
+func deleteOperation(db *database.Database) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
 		if err := checkAccessToken(token, db); err != nil {
@@ -173,7 +173,7 @@ func deleteTransaction(db *database.Database) http.HandlerFunc {
 			return
 		}
 		path := r.PathValue("id")
-		rows, err := db.SelectTransactions("Id = ?", path)
+		rows, err := db.SelectOperations("Id = ?", path)
 		if err != nil {
 			ErrorResponse{Message: "Not found"}.r500(w, r)
 			return

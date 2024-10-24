@@ -19,7 +19,7 @@ import { Product, ProductWithImages } from "../data/products";
 import { Supplier } from "../data/suppliers";
 import { SupplierCode } from "../data/supplierCodes";
 import { Ticket, TicketState, TicketType } from "../data/tickets";
-import { Transaction } from "../data/transactions";
+import { Operation } from "../data/operations";
 import { User } from "../data/users";
 import { Variant } from "../data/variants";
 
@@ -54,7 +54,7 @@ export interface FormMap {
   Ticket: Ticket;
   TicketType: TicketType;
   TicketState: TicketState;
-  Transaction: Transaction;
+  Operation: Operation;
   User: User;
 
   Delete: {

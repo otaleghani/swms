@@ -2,7 +2,7 @@ package database
 
 import ()
 
-type Transaction struct {
+type Operation struct {
   Id string `json:"id"`
   Date string `json:"date"`
   Quantity int `json:"quantity"`
@@ -11,8 +11,8 @@ type Transaction struct {
   Variant_id string `json:"variant"`
 }
 
-func (db *Database) SelectTransactions(condition string, args ...interface{}) ([]Transaction, error) {
-  list := []Transaction{}
+func (db *Database) SelectOperations(condition string, args ...interface{}) ([]Operation, error) {
+  list := []Operation{}
   err := db.Sorm.Select(&list, condition, args...)
   if err != nil {
     return nil, err

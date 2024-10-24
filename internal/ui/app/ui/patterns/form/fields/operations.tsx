@@ -4,11 +4,11 @@ import InputPattern from "../input/InputPattern";
 /** Types and interfaces */
 import { FormFieldsPropsWithDictCompleteMap } from "@/app/lib/types/form/fields";
 
-export const TransactionFormFields = ({
+export const OperationsFormFields = ({
   fields,
   result,
   errorMessages
-}: FormFieldsPropsWithDictCompleteMap["Transaction"]) => {
+}: FormFieldsPropsWithDictCompleteMap["Operation"]) => {
   return (
     <>
       <InputPattern 
@@ -19,7 +19,7 @@ export const TransactionFormFields = ({
         label={true}
         errorMessages={errorMessages.quantity}
       />
-      <input type="hidden" name="type" value="Transaction" />
+      <input type="hidden" name="type" value="Operation" />
     </>
   )
 }

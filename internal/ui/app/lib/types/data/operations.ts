@@ -1,6 +1,6 @@
 import { FormState } from "../form/form";
 
-export type Transaction = {
+export type Operation = {
   id?: string;
   date: string; // date
   quantity: number;
@@ -10,10 +10,10 @@ export type Transaction = {
   variant: string;
   ticket?: string;
 }
-export type Transactions = Transaction[];
+export type Operations = Operation[];
 
-export type TransactionFormState = FormState<"Transaction">
-export const defaultTransactionFormState: TransactionFormState = {
+export type OperationFormState = FormState<"Operation">
+export const defaultOperationFormState: OperationFormState = {
   error: false,
   message: "",
   errorMessages: {

@@ -154,11 +154,11 @@ func Serve(path, port string) {
 	mux.HandleFunc("PUT /api/v1/supplier-codes/{id}", putSupplierCode(&dbConn))
 	mux.HandleFunc("DELETE /api/v1/supplier-codes/{id}", deleteSupplierCode(&dbConn))
 
-	mux.HandleFunc("GET /api/v1/transactions/{$}", getTransactions(&dbConn))
-	mux.HandleFunc("POST /api/v1/transactions/{$}", postTransaction(&dbConn))
-	mux.HandleFunc("GET /api/v1/transactions/{id}", getTransactionById(&dbConn))
-	mux.HandleFunc("PUT /api/v1/transactions/{id}", putTransaction(&dbConn))
-	mux.HandleFunc("DELETE /api/v1/transactions/{id}", deleteTransaction(&dbConn))
+	mux.HandleFunc("GET /api/v1/operations/{$}", getOperations(&dbConn))
+	mux.HandleFunc("POST /api/v1/operations/{$}", postOperation(&dbConn))
+	mux.HandleFunc("GET /api/v1/operations/{id}", getOperationById(&dbConn))
+	mux.HandleFunc("PUT /api/v1/operations/{id}", putOperation(&dbConn))
+	mux.HandleFunc("DELETE /api/v1/operations/{id}", deleteOperation(&dbConn))
 
 	mux.HandleFunc("GET /api/v1/products/{$}", getProducts(&dbConn))
 	mux.HandleFunc("POST /api/v1/products/{$}", postProducts(&dbConn))

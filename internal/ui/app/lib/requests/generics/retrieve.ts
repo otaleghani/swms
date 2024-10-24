@@ -19,23 +19,23 @@ type RetrieveMapOptions = {
 
 const options: RetrieveMapOptions = {
   "Zones":                  { path: "zones/",               type: "Zones" },
-  "ZonesWithExtra":         { path: "zones/extra/",          type: "Zones" },
+  "ZonesWithExtra":         { path: "zones/extra/",         type: "Zones" },
   "Aisles":                 { path: "aisles/",              type: "Aisles" },
-  "AislesWithExtra":        { path: "aisles/extra/",         type: "Aisles" },
+  "AislesWithExtra":        { path: "aisles/extra/",        type: "Aisles" },
   "Racks":                  { path: "racks/",               type: "Racks" },
-  "RacksWithExtra":         { path: "racks/extra/",          type: "Racks" },
+  "RacksWithExtra":         { path: "racks/extra/",         type: "Racks" },
   "Shelfs":                 { path: "shelfs/",              type: "Shelfs" },
-  "ShelfsWithExtra":        { path: "shelfs/extra/",         type: "Shelfs" },
+  "ShelfsWithExtra":        { path: "shelfs/extra/",        type: "Shelfs" },
   "Categories":             { path: "categories/",          type: "Categories" },
   "Subcategories":          { path: "subcategories/",       type: "Subcategories" },
   "Suppliers":              { path: "suppliers/",           type: "Suppliers" },
-  "SuppliersWithExtra":     { path: "suppliers/extra/",      type: "Suppliers" },
+  "SuppliersWithExtra":     { path: "suppliers/extra/",     type: "Suppliers" },
   "SupplierCodes":          { path: "supplier-codes/",      type: "SupplierCodes" },
   "SupplierCodesWithExtra": { path: "supplier-codes/extra", type: "SupplierCodes" },
   "ItemWithSupplierCodes":  { path: "items/supplier-codes", type: "SupplierCodes" },
   "Items":                  { path: "items/",               type: "Items" },
   "ItemImages":             { path: "item-images/",         type: "ItemImage" },
-  "Transactions":           { path: "transitions/",         type: "Transactions" },
+  "Operations":             { path: "operations/",          type: "Operations" },
   "Variants":               { path: "variants/",            type: "Variants" },
   "Tickets":                { path: "tickets/",             type: "Tickets" },
   "TicketTypes":            { path: "ticket-types/",        type: "TicketTypes" },
@@ -73,7 +73,6 @@ export async function retrieve<T extends keyof RetrieveMapOptions>({
   if (perPage) {
     path += `&perPage=${perPage}`
   }
-
   if (paginationOff) {
     path += `&paginationOff=${paginationOff}`
   }
@@ -87,5 +86,5 @@ export async function retrieve<T extends keyof RetrieveMapOptions>({
     tag: revalidateTags[option.type],
   })
 
-  return response
+  return response;
 }

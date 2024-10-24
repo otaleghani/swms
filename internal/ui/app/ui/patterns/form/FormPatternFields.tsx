@@ -15,7 +15,7 @@ import { SupplierFormFields } from "./fields/suppliers";
 import { SupplierCodeFormFields } from "./fields/supplierCodes";
 import { ItemCompleteFormFields } from "./fields/items";
 import { VariantsFormFields } from "./fields/variants";
-import { TransactionFormFields } from "./fields/transactions";
+import { OperationsFormFields } from "./fields/operations";
 import { UserFormFields } from "./fields/users";
 import { ReplaceFormFields } from "./fields/replace";
 
@@ -48,7 +48,7 @@ export {
 
   ItemCompleteFormFields as ItemComplete,
   VariantsFormFields as Variants,
-  TransactionFormFields as Transaction,
+  OperationsFormFields as Operation,
 
   UserFormFields as User,
 

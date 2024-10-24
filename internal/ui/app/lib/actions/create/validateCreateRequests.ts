@@ -19,7 +19,7 @@ import { createSupplierCode } from "./data/supplierCodes";
 import { createTicket } from "./data/tickets";
 import { createTicketType } from "./data/ticketTypes";
 import { createTicketState } from "./data/ticketStates";
-import { createTransaction } from "./data/transactions";
+import { createOperation } from "./data/operations";
 import { createUser } from "./data/users";
 
 export async function validateCreateRequests<K extends keyof FormMap>(
@@ -122,8 +122,8 @@ export async function validateCreateRequests<K extends keyof FormMap>(
       result = await createTicketState(state, locale);
       break;
 
-    case "Transaction":
-      result = await createTransaction(state, locale);
+    case "Operation":
+      result = await createOperation(state, locale);
       break;
 
     case "User":

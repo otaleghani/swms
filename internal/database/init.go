@@ -92,7 +92,7 @@ func Init(path string) (Database, error) {
   if err != nil {
     return Database{}, err
   }
-  err = db.Sorm.CreateTable(Transition{})
+  err = db.Sorm.CreateTable(Operation{})
   if err != nil {
     return Database{}, err
   }

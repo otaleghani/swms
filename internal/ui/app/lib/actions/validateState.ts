@@ -17,7 +17,7 @@ import { validateSupplier } from "../validation/data/suppliers";
 import { validateTicket } from "../validation/data/tickets";
 import { validateTicketType } from "../validation/data/ticketTypes";
 import { validateTicketState } from "../validation/data/ticketStates";
-import { validateTransaction } from "../validation/data/transactions";
+import { validateOperation } from "../validation/data/operations";
 import { validateUser } from "../validation/data/users";
 import { validateZone, validateZonesBulk } from "../validation/data/zones";
 
@@ -216,9 +216,9 @@ export async function validateState<K extends keyof FormMap>(
       );
       break;
 
-    case "Transaction":
-      stateValidation = await validateTransaction(
-        state as FormState<"Transaction">,
+    case "Operation":
+      stateValidation = await validateOperation(
+        state as FormState<"Operation">,
         locale as string
       );
       break;

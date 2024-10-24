@@ -39,7 +39,7 @@ export type SelectableItem = keyof Omit<
   | "SupplierCode"
   | "ItemComplete"
   | "ItemCompleteFormFieldsProps"
-  | "Transaction"
+  | "Operation"
   | "ProductWithImages"
   | "Delete"
   | "Replace"
@@ -458,7 +458,7 @@ export type TicketTypeFormFieldsProps = {
 };
 
 // prettier-ignore
-export type TransactionFormFieldsProps = {
+export type OperationFormFieldsProps = {
   // Remember that the transaction type will be unchangeable
   [K in keyof FieldsPropsMap]: 
     K extends "quantity" ? FieldsPropsMap[K] :
@@ -525,7 +525,7 @@ export type FormFieldsPropsMap = {
     K extends "Ticket" ? TicketFormFieldsProps :
     K extends "TicketState" ? TicketStateFormFieldsProps :
     K extends "TicketType" ? TicketTypeFormFieldsProps :
-    K extends "Transaction" ? TransactionFormFieldsProps :
+    K extends "Operation" ? OperationFormFieldsProps :
     K extends "User" ? UserFormFieldsProps :
     K extends "Delete" ? DeleteFormFieldsProps :
     K extends "Replace" ? ReplaceFormFieldsProps :

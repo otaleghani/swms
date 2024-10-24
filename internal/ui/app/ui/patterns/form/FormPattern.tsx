@@ -37,7 +37,7 @@ import {
   SupplierCodeFormFieldsProps,
   ItemCompleteFormFieldsProps,
   VariantFormFieldsProps,
-  TransactionFormFieldsProps,
+  OperationFormFieldsProps,
   UserFormFieldsProps,
   ReplaceFormFieldsProps,
 } from "@/app/lib/types/form/fields";
@@ -250,11 +250,11 @@ export default function FormPattern<K extends keyof FormPropsMap>({
               [T in keyof FormFieldsPropsMap["Variant"]]: string[]}}
           />
         )}
-        { type === "Transaction" && (
-          <FormFields.Transaction
-            fields={self.fields as TransactionFormFieldsProps}
+        { type === "Operation" && (
+          <FormFields.Operation
+            fields={self.fields as OperationFormFieldsProps}
             errorMessages={state.errorMessages as {
-              [T in keyof FormFieldsPropsMap["Transaction"]]: string[]}}
+              [T in keyof FormFieldsPropsMap["Operation"]]: string[]}}
           />
         )}
         { type === "User" && (

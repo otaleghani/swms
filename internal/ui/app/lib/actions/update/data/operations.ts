@@ -3,13 +3,13 @@
 import { FormMap, FormState } from "@/app/lib/types/form/form"
 import { update } from "@/app/lib/requests/generics/update"
 import validateResponse from "@/app/lib/validation/response";
-import { Transaction } from "@/app/lib/types/data/transactions";
+import { Operation } from "@/app/lib/types/data/operations";
 
-export async function updateTransaction<K extends keyof FormMap>(
+export async function updateOperation<K extends keyof FormMap>(
   state: FormState<K>,
   locale: string,
 ){
-  const result = state.result as Transaction;
+  const result = state.result as Operation;
 
   if (result.id === undefined) {
     state.error = true;
@@ -17,10 +17,10 @@ export async function updateTransaction<K extends keyof FormMap>(
     return state
   }
 
-  const response = await update("Transaction", result.id, result);
+  const response = await update("Operation", result.id, result);
   const stateValidation = await validateResponse(
     response,
-    state as FormState<"Transaction">, 
+    state as FormState<"Operation">, 
     locale as string
   );
 

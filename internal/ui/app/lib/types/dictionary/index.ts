@@ -9,6 +9,7 @@ import { DictZone } from "./data/zone"
 import { DictForms } from "./form";
 import { DictToasts } from "./toasts";
 import { DictFilters } from "./misc";
+import { DictPages } from "./pages";
 
 /** Every one-off term that do not fit in any cat */
 export interface DictMisc {
@@ -24,8 +25,8 @@ export type Dictionary = {
   subcategory: DictSubcategory;
   supplier: DictSupplier;
   supplierCode: DictSupplierCode;
-  // item:
-  // variant:
+
+  pages: DictPages;
 
   form: DictForms;
   toasts: DictToasts;

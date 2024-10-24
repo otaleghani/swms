@@ -42,8 +42,8 @@ const options: RetrieveByIdMapOptions = {
     type: "SupplierCodeWithExtra" 
   },
   "Item":           { path: "items/{{id}}",          type: "Item" },
-  "ItemImage":      { path: "item-images/{{id}}",    type: "ItemImage" },
-  "Transaction":    { path: "transition/{{id}}",     type: "Transaction" },
+  "ItemImage":      { path: "item-images/{{id}}",    type: "ItemImages" },
+  "Operation":    { path: "operation/{{id}}",     type: "Operations" },
   "Variant":        { path: "variants/{{id}}",       type: "Variant" },
   "Ticket":         { path: "tickets/{{id}}",        type: "Ticket" },
   "TicketType":     { path: "ticket-types/{{id}}",   type: "TicketType" },

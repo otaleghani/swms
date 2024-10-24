@@ -20,6 +20,7 @@ export const dictionary: Dictionary = {
   subcategory: dictionarySubcategories,
   supplier: dictionarySuppliers,
   supplierCode: dictionarySupplierCodes,
+
   form: dictionaryForm,
   toasts: dictionaryToasts,
   filters: dictionaryFilters,

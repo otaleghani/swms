@@ -17,7 +17,7 @@ import { updateSupplierCode } from "./data/supplierCodes";
 import { updateTicket } from "./data/tickets";
 import { updateTicketType } from "./data/ticketTypes";
 import { updateTicketState } from "./data/ticketStates";
-import { updateTransaction } from "./data/transactions";
+import { updateOperation } from "./data/operations";
 import { updateUser } from "./data/users";
 
 export async function validateUpdateRequests<K extends keyof FormMap>(
@@ -88,8 +88,8 @@ export async function validateUpdateRequests<K extends keyof FormMap>(
       result = await updateTicketState(state, locale)
       break;
 
-    case "Transaction":
-      result = await updateTransaction(state, locale)
+    case "Operation":
+      result = await updateOperation(state, locale)
       break;
 
     case "User":
