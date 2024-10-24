@@ -9,6 +9,10 @@ import (
 	"github.com/otaleghani/swms/internal/database"
 )
 
+type CategoriesFilters struct {
+  Search string `json:"search,omitempty"`
+}
+
 func getCategories(db *database.Database) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
@@ -21,7 +25,42 @@ func getCategories(db *database.Database) http.HandlerFunc {
 			ErrorResponse{Message: err.Error()}.r500(w, r)
 			return
 		}
-		SuccessResponse{Data: rows}.r200(w, r)
+
+    // Filters
+    queryFilters := r.URL.Query().Get("filters")
+    filteredRows := rows
+    if queryFilters != "" {
+		  var filters CategoriesFilters
+		  err = json.Unmarshal([]byte(queryFilters), &filters)
+		  if err == nil {
+        if filters.Search != "" {
+          filteredRows, err = FilterBySearch(
+            filteredRows, "Name", filters.Search)
+        }
+		  }
+    }
+
+    // Pagination
+    queryPaginationOff := r.URL.Query().Get("paginationOff")
+    if queryPaginationOff == "true" {
+		  SuccessResponse{Data: rows}.r200(w, r)
+      return
+    }
+    queryPage := r.URL.Query().Get("page")
+    queryPerPage := r.URL.Query().Get("perPage")
+    resultedItems, page, perPage, totalItems, totalPages, err := 
+      paginateItems(queryPage, queryPerPage, filteredRows)
+		if err != nil {
+			ErrorResponse{Message: err.Error()}.r500(w, r)
+			return
+		}
+		SuccessResponse{
+      Data: resultedItems,
+      Page: page,
+      PerPage: perPage,
+      TotalItems: totalItems,
+      TotalPages: totalPages,
+    }.r200(w, r)
 	}
 }
 

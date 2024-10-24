@@ -9,6 +9,11 @@ import (
 	"github.com/otaleghani/swms/internal/database"
 )
 
+type SupplierCodesFilters struct {
+  Search string `json:"search,omitempty"`
+  Supplier string `json:"supplier,omitempty"`
+}
+
 func getSupplierCodes(db *database.Database) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
@@ -21,7 +26,48 @@ func getSupplierCodes(db *database.Database) http.HandlerFunc {
 			ErrorResponse{Message: err.Error()}.r500(w, r)
 			return
 		}
-		SuccessResponse{Data: rows}.r200(w, r)
+
+    // Filter
+    queryFilters := r.URL.Query().Get("filters")
+    filteredRows := rows
+    if queryFilters != "" {
+		  var filters SupplierCodesFilters
+		  err = json.Unmarshal([]byte(queryFilters), &filters)
+		  if err == nil {
+        if filters.Supplier != "" {
+          filteredRows, err = FilterByField(
+            filteredRows, "Supplier", filters.Supplier)
+        }
+        if filters.Search != "" {
+          filteredRows, err = FilterBySearch(
+            filteredRows, "Name", filters.Search)
+        }
+		  }
+    }
+
+    // Pagination
+    queryPaginationOff := r.URL.Query().Get("paginationOff")
+    if queryPaginationOff == "true" {
+      // if paginationOff is set to "true", returns the data
+      // without pagination
+		  SuccessResponse{Data: rows}.r200(w, r)
+      return
+    }
+    queryPage := r.URL.Query().Get("page")
+    queryPerPage := r.URL.Query().Get("perPage")
+    resultedItems, page, perPage, totalItems, totalPages, err := 
+      paginateItems(queryPage, queryPerPage, filteredRows)
+		if err != nil {
+			ErrorResponse{Message: err.Error()}.r500(w, r)
+			return
+		}
+		SuccessResponse{
+      Data: resultedItems,
+      Page: page,
+      PerPage: perPage,
+      TotalItems: totalItems,
+      TotalPages: totalPages,
+    }.r200(w, r)
 	}
 }
 
@@ -135,12 +181,28 @@ func getSupplierCodesWithData(db *database.Database) http.HandlerFunc {
       ErrorResponse{Message: err.Error()}.r500(w, r)
       return
     }
+
+    // Filter
+    queryFilters := r.URL.Query().Get("filters")
+    filteredRows := supplierCodes
+    if queryFilters != "" {
+		  var filters ZonesFilters
+		  err = json.Unmarshal([]byte(queryFilters), &filters)
+		  if err == nil {
+        if filters.Search != "" {
+          filteredRows, err = FilterBySearch(
+            filteredRows, "Name", filters.Search)
+        }
+		  }
+    }
+
+    // Construct supplier codes data
     var data []struct {
       Supplier_code database.SupplierCode `json:"supplier_code"`
       Supplier_name string `json:"supplier_name"`
     }
-    for i := 0; i < len(supplierCodes); i++ {
-      supplier, err := db.SelectSupplierById(supplierCodes[i].Supplier_id)
+    for i := 0; i < len(filteredRows); i++ {
+      supplier, err := db.SelectSupplierById(filteredRows[i].Supplier_id)
       if err != nil {
         ErrorResponse{Message: err.Error()}.r500(w, r)
         return
@@ -149,11 +211,34 @@ func getSupplierCodesWithData(db *database.Database) http.HandlerFunc {
         Supplier_code database.SupplierCode `json:"supplier_code"`
         Supplier_name string `json:"supplier_name"`
       }{
-        Supplier_code: supplierCodes[i],
+        Supplier_code: filteredRows[i],
         Supplier_name: supplier.Name,
       })
     }
-    SuccessResponse{Data: data}.r200(w, r)
+
+    // Pagination
+    queryPaginationOff := r.URL.Query().Get("paginationOff")
+    if queryPaginationOff == "true" {
+      // if paginationOff is set to "true", returns the data
+      // without pagination
+		  SuccessResponse{Data: data}.r200(w, r)
+      return
+    }
+    queryPage := r.URL.Query().Get("page")
+    queryPerPage := r.URL.Query().Get("perPage")
+    resultedItems, page, perPage, totalItems, totalPages, err := 
+      paginateItems(queryPage, queryPerPage, data)
+		if err != nil {
+			ErrorResponse{Message: err.Error()}.r500(w, r)
+			return
+		}
+		SuccessResponse{
+      Data: resultedItems,
+      Page: page,
+      PerPage: perPage,
+      TotalItems: totalItems,
+      TotalPages: totalPages,
+    }.r200(w, r)
   }
 }
 

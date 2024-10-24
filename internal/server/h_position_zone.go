@@ -30,7 +30,6 @@ func getZones(db *database.Database) http.HandlerFunc {
     // Filter
     queryFilters := r.URL.Query().Get("filters")
     filteredRows := rows
-
     if queryFilters != "" {
 		  var filters ZonesFilters
 		  err = json.Unmarshal([]byte(queryFilters), &filters)
@@ -52,17 +51,14 @@ func getZones(db *database.Database) http.HandlerFunc {
 		  SuccessResponse{Data: rows}.r200(w, r)
       return
     }
-
     queryPage := r.URL.Query().Get("page")
     queryPerPage := r.URL.Query().Get("perPage")
     resultedItems, page, perPage, totalItems, totalPages, err := 
       paginateItems(queryPage, queryPerPage, filteredRows)
-
 		if err != nil {
 			ErrorResponse{Message: err.Error()}.r500(w, r)
 			return
 		}
-
 		SuccessResponse{
       Data: resultedItems,
       Page: page,
@@ -315,12 +311,10 @@ func getZonesWithData(db *database.Database) http.HandlerFunc {
 		  SuccessResponse{Data: data}.r200(w, r)
       return
     }
-
     queryPage := r.URL.Query().Get("page")
     queryPerPage := r.URL.Query().Get("perPage")
     resultedItems, page, perPage, totalItems, totalPages, err := 
       paginateItems(queryPage, queryPerPage, data)
-
 		if err != nil {
 			ErrorResponse{Message: err.Error()}.r500(w, r)
 			return

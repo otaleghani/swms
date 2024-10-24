@@ -4,11 +4,11 @@ type Item struct {
   Id string                 `json:"id"`
   Name string               `json:"name"`
   Description string        `json:"description"`
-  Archive bool              `json:"archive"`
+  IsArchive bool              `json:"isArchive"`
   Zone_id string            `json:"zone"`
-  Aisle_id string            `json:"aisle"`
+  Aisle_id string           `json:"aisle"`
   Rack_id string            `json:"rack"`
-  Shelf_id string            `json:"shelf"`
+  Shelf_id string           `json:"shelf"`
   Category_id string        `json:"category"`
   Subcategory_id string     `json:"subcategory"`
 }
