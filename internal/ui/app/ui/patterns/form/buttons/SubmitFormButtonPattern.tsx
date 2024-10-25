@@ -21,19 +21,18 @@ export default function SubmitFormButtonPattern({
   dict
 }: SubmitFormButtonPatternProps ) {
   return (
-    <div className={className}>
-      <Button 
-        disabled={isPending} 
-        type="submit" 
-        form={formName}
-      >
-        {isPending ? 
-        <>
-          <Loader2 className="h-4 w-4 mr-2 animate-spin"/>
-          {dict.pending}
-        </>
-        : dict.active}
-      </Button>
-    </div>
+    <Button 
+      className={className}
+      disabled={isPending} 
+      type="submit" 
+      form={formName}
+    >
+      {isPending ? 
+      <>
+        <Loader2 className="h-4 w-4 mr-2 animate-spin"/>
+        {dict.pending}
+      </>
+      : dict.active}
+    </Button>
   );
 }

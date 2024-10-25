@@ -4,6 +4,17 @@ import { getDictionary, Locale } from "@/lib/dictionaries";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 
+export type RegisterFormState = {
+  error: true | false,
+  errorMessages: {
+    email: string[];
+    password: string[];
+    name: string[];
+    surname: string[];
+  }
+  message?: string;
+}
+
 export type LoginFormState = {
   error: true | false,
   errorMessages: {

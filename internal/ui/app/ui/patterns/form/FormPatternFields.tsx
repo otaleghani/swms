@@ -18,8 +18,13 @@ import { VariantsFormFields } from "./fields/variants";
 import { OperationsFormFields } from "./fields/operations";
 import { UserFormFields } from "./fields/users";
 import { ReplaceFormFields } from "./fields/replace";
+import { LoginFormFields } from "./fields/login";
+import { RegisterFormFields } from "./fields/register";
 
 export {
+  LoginFormFields as Login,
+  RegisterFormFields as Register,
+
   ZoneFormFields as Zone,
   ZonesBulkFormFields as ZonesBulk,
 

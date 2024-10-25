@@ -79,12 +79,14 @@ export type SelectFieldPatternWithAddProps<T extends SelectableItem> =
 
 /** Maps every field */
 export type FieldsPropsMap = {
+  email: InputFieldProps;
+  password: InputFieldProps;
+
   name: InputFieldProps;
   surname: InputFieldProps;
   description: InputFieldProps;
   identifier: InputFieldProps;
   code: InputFieldProps;
-  email: InputFieldProps;
 
   quantity: InputFieldProps;
   length: InputFieldProps;
@@ -154,12 +156,13 @@ type FieldsPropsNullMap = {
   [K in keyof FieldsPropsMap]: null;
 };
 export const fieldsDefaultProps: FieldsPropsNullMap = {
+  email: null,
+  password: null,
   name: null,
   surname: null,
   description: null,
   identifier: null,
   code: null,
-  email: null,
   quantity: null,
   length: null,
   width: null,
@@ -499,6 +502,25 @@ export type ReplaceFormFieldsProps = {
 };
 
 // prettier-ignore
+export type LoginFormFieldsProps = {
+  [K in keyof FieldsPropsMap]:
+    K extends "email" ? FieldsPropsMap[K] :
+    K extends "password" ? FieldsPropsMap[K] :
+    K extends "button" ? FieldsPropsMap[K] :
+    null;
+}
+
+export type RegisterFormFieldsProps = {
+  [K in keyof FieldsPropsMap]:
+    K extends "email" ? FieldsPropsMap[K] :
+    K extends "password" ? FieldsPropsMap[K] :
+    K extends "name" ? FieldsPropsMap[K] :
+    K extends "surname" ? FieldsPropsMap[K] :
+    K extends "button" ? FieldsPropsMap[K] :
+    null;
+}
+
+// prettier-ignore
 /** Maps every fields for each type */
 export type FormFieldsPropsMap = {
   [K in keyof FormMap]: 
@@ -529,6 +551,8 @@ export type FormFieldsPropsMap = {
     K extends "User" ? UserFormFieldsProps :
     K extends "Delete" ? DeleteFormFieldsProps :
     K extends "Replace" ? ReplaceFormFieldsProps :
+    K extends "Login" ? LoginFormFieldsProps :
+    K extends "Register" ? RegisterFormFieldsProps :
     null;
 };
 

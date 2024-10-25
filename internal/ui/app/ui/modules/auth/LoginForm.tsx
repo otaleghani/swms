@@ -1,82 +1,63 @@
-'use client';
+"use client";
 
+// Hooks and actions
 import { useSearchParams } from "next/navigation";
-import { useActionState } from "react";
-import { LoginFormState, loginAction } from "@/app/ui/login/action";
+import { useEffect } from "react";
 
-// Icons
-import { Button } from "@/components/button";
-import { Input } from "@/components/input"
-import { Loader2 } from "lucide-react";
-
-// 
-import FormFieldErrorsPattern from "../../patterns/form/FormFieldErrorsPattern";
-import FormSuccessPattern from "../../patterns/form/FormSuccessPattern";
-import FormErrorPattern from "../../patterns/form/FormErrorPatter";
+// Types and interfaces
+import { DictFormButton, DictInputField } from "@/app/lib/types/dictionary/form";
+import { DictLoginErrors } from "@/app/lib/types/dictionary/pages/login";
+import FormPattern from "../../patterns/form/FormPattern";
+import { fieldsDefaultProps } from "@/app/lib/types/form/fields";
+import { defaultLoginState } from "@/app/lib/types/data/auth";
+import { authFormAction } from "@/app/lib/actions/auth/authFormAction";
 
 interface LoginFormProps {
-  label: {
-    email: string;
-    password: string;
-    button: string;
-    pending: string;
-    invalid_token: string;
-  };
-  lang: string;
+  fields: {
+    email: DictInputField;
+    password: DictInputField;
+    button: DictFormButton;
+  }
+  dictErrors: DictLoginErrors;
 }
 
-export default function LoginForm({ label, lang }: LoginFormProps) {
-  const error = useSearchParams().get("error") ? label.invalid_token : undefined
+export default function LoginForm({ 
+  fields,
+  dictErrors,
+}: LoginFormProps) {
+  const error = useSearchParams().get("error") ? dictErrors.invalidToken : undefined
+  const formName = "loginForm";
 
-  const initialState: LoginFormState = {
-    error: error ? true : false, 
-    errorMessages: {
-      email: [],
-      password: [],
-    },
-    message: error,
-  }
-  const [state, formAction, isPending] = useActionState(loginAction, initialState);
-  
+  useEffect(() => {
+    if (error) {
+      defaultLoginState.error = true;
+      defaultLoginState.message = dictErrors.invalidToken;
+    }
+  }, []);
 
   return (
     <>
-      <form action={formAction} className="flex flex-col gap-2 items-start" id="login-form">
-        <input type="hidden" name="locale" value={lang} />
-        <Input 
-          className={`${state.errorMessages.email.length != 0 
-          ? "border-red-500" 
-          : ""}`}
-          name="email"
-          type="email" 
-          required
-          aria-describedby="email-error"
-          placeholder={label.email} />
-        <FormFieldError 
-          id="email-error" 
-          description={state.errorMessages.email} />
-        <Input 
-          className={`${state.errorMessages.email.length != 0 
-          ? "border-red-500" 
-          : ""}`}
-          name="password"
-          type="password" 
-          placeholder={label.password} />
-        <FormFieldError 
-          id="email-error" 
-          description={state.errorMessages.password} />
-        <Button disabled={isPending} className="mt-2 w-full" type="submit" form="login-form">
-          {isPending ? <><Loader2 className="h-4 w-4 mr-2 animate-spin" />{label.pending}</>
-          : label.button}
-        </Button>
-        {state.error ? (
-          <FormError 
-            message={state.message!} />
-        ) 
-        : (
-          <FormSuccess message={state.message!} />
-        )}
-      </form>
+      <FormPattern<"Login"> 
+        showButton
+        type="Login"
+        form={{
+          formName: formName,
+          initialState: defaultLoginState,
+          formAction: authFormAction<"Login">,
+        }}
+        self={{
+          fields: {
+            ...fieldsDefaultProps,
+            email: {
+              dict: fields.email,
+            },
+            password: {
+              dict: fields.password,
+            },
+            button: fields.button
+          }
+        }}
+      />
     </>
   );
-}
+};

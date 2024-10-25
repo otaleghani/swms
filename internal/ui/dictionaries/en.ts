@@ -10,6 +10,7 @@ import { dictionarySupplierCodes } from "./en/supplierCodes"
 import { dictionaryForm } from "./en/form"
 import { dictionaryToasts } from "./en/toasts"
 import { dictionaryFilters } from "./en/filters"
+import { dictionaryPages } from "./en/pages"
 
 export const dictionary: Dictionary = {
   zone: dictionaryZones,
@@ -26,5 +27,7 @@ export const dictionary: Dictionary = {
   filters: dictionaryFilters,
   misc: {
     notFound: "Nothing was found."
-  }
+  },
+
+  pages: dictionaryPages,
 }

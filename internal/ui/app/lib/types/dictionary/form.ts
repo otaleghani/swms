@@ -20,11 +20,19 @@ export interface DictFormMessages {
     client:       string,
     server:       string,
     unknown:      string,
+    login: {
+      match:      string,
+    };
+    register: {
+      alreadyInUse:      string,
+    };
   };
-}
+};
 
 export interface DictFormFields {
-  search:           DictInputField;
+  email:          DictInputField;
+  password:       DictInputField;
+  search:         DictInputField;
 
   date:           DictInputField;
   name:           DictInputField;

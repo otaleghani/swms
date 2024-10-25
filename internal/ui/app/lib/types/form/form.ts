@@ -22,9 +22,14 @@ import { Ticket, TicketState, TicketType } from "../data/tickets";
 import { Operation } from "../data/operations";
 import { User } from "../data/users";
 import { Variant } from "../data/variants";
+import { LoginRequestBody, RegisterRequestBody } from "../../types/data/auth";
 
 // Lists all the possible forms
+// maps every request body  
 export interface FormMap {
+  Login: LoginRequestBody;
+  Register: RegisterRequestBody;
+
   Zone: Zone;
   Aisle: Aisle;
   Rack: Rack;
@@ -62,7 +67,6 @@ export interface FormMap {
     type: string;
   };
   Replace: {
-    //id: string;
     itemToDelete: string;
     itemThatReplaces: string;
     type: string;

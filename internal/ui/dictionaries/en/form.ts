@@ -18,9 +18,37 @@ export const dictionaryForm: DictForms = {
       client: "The request was malformed. Refresh the page and retry.",
       server: "The server is momentarialy not available. Try again soon.",
       unknown: "Oh-oh. This should not happen. Open a github issue and ask the lead developer for help.",
+      login: {
+        match: "The user/password combination is incorrect. Try again."
+      },
+      register: {
+        alreadyInUse: "The email is already used. Log in instead.",
+      },
     }
   },
   fields: {
+    password  : {
+      label: "Password",
+      placeholder: "Enter a strong password",
+      validation: {
+        empty: "The password cannot be empty.",
+        max: `The password cannot exceed ${VALIDATION_SETTINGS.shortString.maxLength} characters`,
+        min: `The password cannot be shorter than ${VALIDATION_SETTINGS.shortString.minLength} characters`,
+        type: "The type of the password is not acceptable.",
+        valid: "The password input is not valid.",
+      },
+    },
+    email: {
+      label: "Email",
+      placeholder: "Enter your email",
+      validation: {
+        empty: "The email cannot be empty.",
+        max: `The email cannot exceed ${VALIDATION_SETTINGS.shortString.maxLength} characters`,
+        min: `The email cannot be shorter than ${VALIDATION_SETTINGS.shortString.minLength} characters`,
+        type: "The type of the email is not acceptable.",
+        valid: "The email input is not valid.",
+      },
+    },
     search: {
       label: "Search",
       placeholder: "Enter the name",

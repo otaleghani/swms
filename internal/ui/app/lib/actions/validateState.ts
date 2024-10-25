@@ -25,6 +25,8 @@ import { validateZone, validateZonesBulk } from "../validation/data/zones";
 import { FormMap, FormState } from "../types/form/form";
 import { validateDelete } from "../validation/delete";
 import { validateReplace } from "../validation/replace";
+import { validateLogin } from "../validation/data/login";
+import { validateRegister } from "../validation/data/register";
 
 type ValidationsMap = {
   [K in keyof FormMap]: (
@@ -40,9 +42,22 @@ export async function validateState<K extends keyof FormMap>(
 ) {
   let stateValidation;
 
-
-
   switch (type) {
+
+    case "Login":
+      stateValidation = await validateLogin(
+        state as FormState<"Login">, 
+        locale as string
+      );
+      break;
+
+    case "Register":
+      stateValidation = await validateRegister(
+        state as FormState<"Register">, 
+        locale as string
+      );
+      break;
+
     case "Replace":
       stateValidation = await validateReplace(
         state as FormState<"Replace">, 

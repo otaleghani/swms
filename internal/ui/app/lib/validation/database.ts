@@ -16,7 +16,9 @@ export async function validateExisting<
     "ItemComplete" |
     "ProductWithImages" |
     "Delete" |
-    "Replace"
+    "Replace" |
+    "Login" |
+    "Register"
   >,
 >(
   type: K,
@@ -42,7 +44,9 @@ export async function checkExisting<
     "ItemComplete" |
     "ProductWithImages" |
     "Delete" |
-    "Replace"
+    "Replace" |
+    "Login" |
+    "Register"
   >,
 >(
   type: K,

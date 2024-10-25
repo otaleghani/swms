@@ -45,7 +45,7 @@ func postUsers(db *database.Database) http.HandlerFunc {
 			return
 		}
 		if len(rows) != 0 {
-			ErrorResponse{Message: "Email already in use"}.r400(w, r)
+			ErrorResponse{Message: "Email already in use"}.r403(w, r)
 			return
 		}
 		data.Id = uuid.NewString()

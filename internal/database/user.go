@@ -12,7 +12,6 @@ type User struct {
   Password string `json:"password"`
 }
 
-
 func (db *Database) SelectUser(condition string, args ...interface{}) ([]User, error) {
   list := []User{}
   err := db.Sorm.Select(&list, condition, args...)

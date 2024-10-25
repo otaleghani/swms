@@ -63,6 +63,10 @@ func login(db *database.Database) http.HandlerFunc {
 			return
 		}
 
+    // This one is used if someone does a revoke for said token
+    // TO DO: Connect the user with it's access tokens.
+    // You should also add the email here, so that you can recuperate
+    // this one easly and you could even revoke access to other sessions
 		err = db.Insert(database.RefreshToken{
 			Id:    uuid.NewString(),
 			Token: refreshToken,

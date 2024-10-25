@@ -12,6 +12,7 @@ import {
   TypeMap,
   TypeMapFilterLists,
 } from "../../types/requests";
+import { redirect } from "next/navigation";
 
 type RetrieveMapOptions = {
   [K in keyof TypeMapFilterLists]: RequestOptions;
@@ -85,6 +86,10 @@ export async function retrieve<T extends keyof RetrieveMapOptions>({
     method: "GET",
     tag: revalidateTags[option.type],
   })
+
+  if (response.code != 200 && response.code != 201) {
+    redirect("/login?error=true");
+  }
 
   return response;
 }

@@ -1,10 +1,8 @@
 "use client";
 
 /** React hooks */
+import { useLocale } from "@/app/lib/hooks/useLocale";
 import { useActionState, useEffect } from "react";
-
-/** Next hooks */
-import { usePathname } from "next/navigation";
 
 /** Local components */
 import SubmitFormButtonPattern from "@/app/ui/patterns/form/buttons/SubmitFormButtonPattern";
@@ -16,8 +14,7 @@ import * as FormFields from "./FormPatternFields";
 import { FormPropsMap } from "@/app/lib/types/form/form";
 
 import { 
-  ZoneFormFieldsProps,
-  AisleFormFieldsProps,
+  ZoneFormFieldsProps, AisleFormFieldsProps,
   ZonesBulkFormFieldsProps,
   AislesBulkFormFieldsProps,
   ProductFormFieldsProps,
@@ -40,9 +37,9 @@ import {
   OperationFormFieldsProps,
   UserFormFieldsProps,
   ReplaceFormFieldsProps,
+  LoginFormFieldsProps,
+  RegisterFormFieldsProps,
 } from "@/app/lib/types/form/fields";
-import { AcceptedLocales } from "@/app/lib/types/misc";
-import SelectFieldPattern from "./select/SelectFieldPattern";
 
 export default function FormPattern<K extends keyof FormPropsMap>({
   self,
@@ -50,7 +47,7 @@ export default function FormPattern<K extends keyof FormPropsMap>({
   type,
   showButton,
 }: FormPropsMap[K] & { showButton?: boolean }) {
-  let locale = usePathname().split("/")[1] as AcceptedLocales;
+  const { locale } = useLocale();
   let values = form.initialState.result as any;
   const [state, action, isPending] = useActionState(
     form.formAction,
@@ -70,7 +67,26 @@ export default function FormPattern<K extends keyof FormPropsMap>({
 
   return (
     <form id={form.formName} action={action}>
-      <div className="grid gap-4 py-4">
+      <div className="grid gap-2 py-4">
+
+        {type === "Login" && values && (
+          <FormFields.Login 
+            fields={self.fields as LoginFormFieldsProps}
+            errorMessages={state.errorMessages as {
+              [T in keyof FormFieldsPropsMap["Replace"]]: string[]}}
+            result={state.result}
+          />
+        )}
+
+        {type === "Register" && values && (
+          <FormFields.Register 
+            fields={self.fields as RegisterFormFieldsProps}
+            errorMessages={state.errorMessages as {
+              [T in keyof FormFieldsPropsMap["Register"]]: string[]}}
+            result={state.result}
+          />
+        )}
+
 
         {type === "Replace" && values && (
           <FormFields.Replace
@@ -269,7 +285,7 @@ export default function FormPattern<K extends keyof FormPropsMap>({
           <SubmitFormButtonPattern 
             formName={form.formName}
             isPending={isPending}
-            className=""
+            className="mt-4"
             dict={self.fields?.button}
           />
         )}

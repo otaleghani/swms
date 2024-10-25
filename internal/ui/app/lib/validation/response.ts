@@ -31,6 +31,11 @@ export default async function validateResponse<Entity, Type extends keyof FormMa
     state.error = true;
     return state;
   }
+  if (response.code === 403) {
+    state.message = dict.form.messages.errors.unknown;
+    state.error = true;
+    return state;
+  }
   if (response.code === 404) {
     state.message = dict.form.messages.errors.not_found;
     state.error = true;
