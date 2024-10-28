@@ -1,4 +1,4 @@
-import { CategorySubmenu, DictSidebar, DictSidebarContentInventory, DictSidebarFooter, DictSidebarHeader, DictSidebarMenuPosition, DictSidebarSubmenu, PositionSubmenu } from "@/app/lib/types/dictionary/sidebar";
+import { CategorySubmenu, DictSidebar, DictSidebarContentInventory, DictSidebarContentTickets, DictSidebarFooter, DictSidebarHeader, DictSidebarMenuPosition, DictSidebarSubmenu, PositionSubmenu } from "@/app/lib/types/dictionary/sidebar";
 
 const dictionarySidebarHeader: DictSidebarHeader = {
     title: "title",
@@ -90,10 +90,38 @@ const dictionarySidebarInventory: DictSidebarContentInventory = {
   }
 }
 
+const dictionarySidebarTicket: DictSidebarContentTickets = {
+  title: "Production",
+  menu: {
+    ticket: {
+      label: "Tickets",
+      url: "/tickets"
+    },
+    product: {
+      label: "Products",
+      url: "/products"
+    },
+    setting: {
+      title: "Settings",
+      submenu: {
+        type: {
+          label: "Types",
+          url: "ticket-types",
+        },
+        state: {
+          label: "States",
+          url: "ticket-states",
+        },
+      }
+    }
+  }
+}
+
 export const dictionarySidebar: DictSidebar = {
   header: dictionarySidebarHeader,
   footer: dictionarySidebarFooter,
   content: {
+    ticket: dictionarySidebarTicket,
     inventory: dictionarySidebarInventory,
   }
 }

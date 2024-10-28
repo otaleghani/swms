@@ -12,6 +12,7 @@ import DefaultSidebarCollapsibleGroup from "./DefaultSidebarGroup"
 import { DefaultSidebarFooter } from "./DefaultSidebarFooter"
 import { DictSidebar } from "@/app/lib/types/dictionary/sidebar"
 import SidebarInventory from "./SidebarInvetory"
+import SidebarTicket from "./SidebarTickets"
  
 interface Props {
   dict: DictSidebar
@@ -45,6 +46,10 @@ export function DefaultSidebar({dict}: Props) {
         <SidebarInventory
           title={dict.content.inventory.title}
           menu={dict.content.inventory.menu}
+        />
+        <SidebarTicket 
+          title={dict.content.ticket.title}
+          menu={dict.content.ticket.menu}
         />
 
       </SidebarContent>

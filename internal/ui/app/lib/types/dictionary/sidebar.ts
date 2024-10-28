@@ -21,6 +21,7 @@ export type DictSidebarFooter = {
 /** Contains all the different sections */
 export type DictSidebarContent = {
   inventory: DictSidebarContentInventory;
+  ticket: DictSidebarContentTickets;
 }
 
 export type PositionSubmenu = "zone" | "aisle" | "rack" | "shelf";
@@ -44,8 +45,8 @@ export type DictSidebarContentTickets = {
     ticket: DictSidebarMenuItem;
     product: DictSidebarMenuItem;
     setting: DictSidebarSubmenu<TicketSettingSubmenu>
-  }
-}
+  };
+};
 
 export type DictSidebarSubmenu<SubmenuList extends string> = {
   title: string;
