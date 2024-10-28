@@ -31,6 +31,7 @@ export async function createZonesBulk<K extends keyof FormMap>(
     "Zones", 
     state.result as ZonesBulkPostRequestBody
   );
+  //console.log(response)
   const stateValidation = await validateResponse(
     response,
     state as FormState<"ZonesBulk">, 

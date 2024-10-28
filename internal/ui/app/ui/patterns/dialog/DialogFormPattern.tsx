@@ -4,7 +4,7 @@
 import { useState } from "react";
 
 /** Third party components */
-import { PlusIcon } from "lucide-react";
+import { EditIcon, PlusIcon, TrashIcon } from "lucide-react";
 
 /** Local components */
 import DialogWrapper from "@/app/ui/wrappers/dialogs/DialogWrapper"
@@ -22,7 +22,7 @@ import { FormPropsMap } from "@/app/lib/types/form/form";
 /** Props */
 export interface DialogFormPatternProps<T extends keyof FormPropsMap> {
   self: {
-    triggerType: "button" | "icon";
+    triggerType: "button" | "iconEdit" | "iconAdd" | "iconDelete";
     dict: DictDialog;
   }
   formPattern: FormPropsMap[T];
@@ -56,24 +56,51 @@ export default function DialogFormPattern<T extends keyof FormPropsMap>({
   }
 
   const DialogFormPatternTrigger = () => {
-    return (
-      <>
-        {self.triggerType === "button" 
-          ? ( 
-            <DialogTrigger asChild>
-              <Button>{self.dict.trigger.label}</Button>
-            </DialogTrigger>
-          ) : ( 
-            <DialogTrigger asChild>
-              <Button 
-                variant="outline"
-                className="aspect-square p-0"
-              ><PlusIcon className="w-4 h-4"/></Button>
-            </DialogTrigger>
-          )
-        }
-      </>
-    )
+    if (self.triggerType === "button") {
+      return (
+        <>
+          <DialogTrigger asChild>
+            <Button>{self.dict.trigger.label}</Button>
+          </DialogTrigger>
+        </>
+      )
+    }
+    if (self.triggerType === "iconAdd") {
+      return (
+        <>
+          <DialogTrigger asChild>
+            <Button 
+              variant="outline"
+              className="aspect-square p-0"
+            ><PlusIcon className="w-4 h-4"/></Button>
+          </DialogTrigger>
+        </>
+      )
+    }
+    if (self.triggerType === "iconEdit") {
+      return (
+        <>
+          <DialogTrigger asChild>
+            <Button 
+              variant="outline"
+              className="aspect-square p-0"
+            ><EditIcon className="w-4 h-4"/></Button>
+          </DialogTrigger>
+        </>
+      )
+    }
+    if (self.triggerType === "iconDelete") {
+      return (
+        <>
+          <DialogTrigger asChild>
+            <Button 
+              variant="outline"
+              className="aspect-square p-0"
+            ><TrashIcon className="w-4 h-4"/></Button>
+          </DialogTrigger>
+        </>
+      )
+    }
   }
 
   return (

@@ -3,6 +3,7 @@ package server
 import (
 	"encoding/json"
 	"net/http"
+  "strings"
 
 	"github.com/google/uuid"
 	"github.com/otaleghani/swms/internal/database"
@@ -104,5 +105,32 @@ func putUser(db *database.Database) http.HandlerFunc {
 			return
 		}
 		SuccessResponse{Message: "Item updated"}.r200(w, r)
+	}
+}
+
+func getCurrentUser(db *database.Database) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
+		if err := checkAccessToken(token, db); err != nil {
+			ErrorResponse{Message: err.Error()}.r401(w, r)
+			return
+		}
+
+    email, err := getTokenSubject(token, db)
+    if err != nil {
+			ErrorResponse{Message: err.Error()}.r500(w, r)
+			return
+    }
+
+		rows, err := db.SelectUser("Email = ?", email)
+		if err != nil {
+			ErrorResponse{Message: err.Error()}.r500(w, r)
+			return
+		}
+		if len(rows) == 0 {
+			ErrorResponse{Message: "Not found"}.r404(w, r)
+			return
+		}
+		SuccessResponse{Data: rows[0]}.r200(w, r)
 	}
 }

@@ -10,11 +10,18 @@ export async function authLogin(
   locale: string,
 ) {
   const response = await login(state.result as LoginRequestBody);
+  console.log(response)
 
   const stateValidation = await validateLoginResponse(
     response,
     state, 
     locale,
   );
+
+  // If everything went a-okay, we want to return the response,
+  // not the state.
+  if (!stateValidation.error && response.data) {
+    stateValidation.misc = response.data;
+  }
   return stateValidation;
 }

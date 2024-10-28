@@ -267,7 +267,7 @@ func getShelfsByRackWithData(db *database.Database) http.HandlerFunc {
 }
 
 type BodyRequestBulkPostShelfs struct {
-  Number int `json:"number"`
+  Number int `json:"quantity"`
   Zone_id string `json:"zone"`
   Aisle_id string `json:"aisle"`
   Rack_id string `json:"rack"`

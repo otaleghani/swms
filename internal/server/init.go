@@ -50,6 +50,7 @@ func Serve(path, port string) {
 	mux.HandleFunc("PUT /api/v1/items/{id}", putItem(&dbConn))
 	mux.HandleFunc("DELETE /api/v1/items/{id}", deleteItem(&dbConn))
 
+	mux.HandleFunc("GET /api/v1/users/current/{$}", getCurrentUser(&dbConn))
 	mux.HandleFunc("GET /api/v1/users/{$}", getUsers(&dbConn))
 	mux.HandleFunc("POST /api/v1/users/{$}", postUsers(&dbConn))
 	mux.HandleFunc("GET /api/v1/users/{id}", getUserById(&dbConn))

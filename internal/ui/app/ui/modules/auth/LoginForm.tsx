@@ -2,15 +2,14 @@
 
 // Hooks and actions
 import { useSearchParams } from "next/navigation";
-import { useEffect } from "react";
 
 // Types and interfaces
 import { DictFormButton, DictInputField } from "@/app/lib/types/dictionary/form";
 import { DictLoginErrors } from "@/app/lib/types/dictionary/pages/login";
 import FormPattern from "../../patterns/form/FormPattern";
 import { fieldsDefaultProps } from "@/app/lib/types/form/fields";
-import { defaultLoginState } from "@/app/lib/types/data/auth";
 import { authFormAction } from "@/app/lib/actions/auth/authFormAction";
+import { FormState } from "@/app/lib/types/form/form";
 
 interface LoginFormProps {
   fields: {
@@ -25,15 +24,21 @@ export default function LoginForm({
   fields,
   dictErrors,
 }: LoginFormProps) {
-  const error = useSearchParams().get("error") ? dictErrors.invalidToken : undefined
-  const formName = "loginForm";
-
-  useEffect(() => {
-    if (error) {
-      defaultLoginState.error = true;
-      defaultLoginState.message = dictErrors.invalidToken;
+  const error = useSearchParams().get("error") ? dictErrors.invalidToken : "";
+  const initialState: FormState<"Login"> = {
+    error: error ? true : false, 
+    errorMessages: {
+      email: [],
+      password: [],
+    },
+    message: error,
+    result: {
+      email: "",
+      password: "",
     }
-  }, []);
+  }
+
+  const formName = "loginForm";
 
   return (
     <>
@@ -42,7 +47,7 @@ export default function LoginForm({
         type="Login"
         form={{
           formName: formName,
-          initialState: defaultLoginState,
+          initialState: initialState,
           formAction: authFormAction<"Login">,
         }}
         self={{

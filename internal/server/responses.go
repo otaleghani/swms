@@ -68,7 +68,7 @@ type SuccessResponse struct {
 }
 
 func (s SuccessResponse) Send(w http.ResponseWriter, r *http.Request) {
-	body, err := json.Marshal(s)
+	body, err := json.MarshalIndent(s, "", " ")
 	if err != nil {
 		http.Error(w, "Error parsing json error message", 500)
 	}

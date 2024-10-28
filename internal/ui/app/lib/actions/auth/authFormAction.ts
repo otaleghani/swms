@@ -5,6 +5,9 @@ import { FormMap, FormState } from "../../types/form/form";
 import { validateState } from "../validateState";
 import { validateAuthRequest } from "./validateAuthRequest";
 
+import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
+
 export type AuthTypes = Pick<FormMap, "Login" | "Register">
 export async function authFormAction<K extends keyof AuthTypes>(
   currentState: FormState<K>,
@@ -28,7 +31,6 @@ export async function authFormAction<K extends keyof AuthTypes>(
     }
   });
   state.result = result;
-  console.log(state.result)
 
   const stateValidation = await validateState<K>(
     state, 
@@ -46,10 +48,24 @@ export async function authFormAction<K extends keyof AuthTypes>(
     locale as string,
   );
 
-  if (requestValidation.error) {
-    // Change the message with the one that you want, because the 403
-    // returns a default unknown error.
-
+  if (!requestValidation.error && requestValidation.misc) {
+    // Everything went a-okay, setting the access token
+    //requestValidation
+    cookies().set({
+      name: "access",
+      value: requestValidation.misc.accessToken,
+      path: "/",
+      httpOnly: true,
+      sameSite: true,
+    });
+    cookies().set({
+      name: "refresh",
+      value: requestValidation.misc.refreshToken,
+      path: "/",
+      httpOnly: true,
+      sameSite: true,
+    });
+    redirect("/")
   }
 
   return requestValidation;

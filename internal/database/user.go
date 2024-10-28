@@ -9,7 +9,7 @@ type User struct {
   Name string `json:"name"`
   Surname string `json:"surname"`
   Email string `json:"email"`
-  Password string `json:"password"`
+  Password string `json:"-"`
 }
 
 func (db *Database) SelectUser(condition string, args ...interface{}) ([]User, error) {

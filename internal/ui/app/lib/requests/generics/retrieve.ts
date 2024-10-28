@@ -87,7 +87,7 @@ export async function retrieve<T extends keyof RetrieveMapOptions>({
     tag: revalidateTags[option.type],
   })
 
-  if (response.code != 200 && response.code != 201) {
+  if (response.code === 401) {
     redirect("/login?error=true");
   }
 

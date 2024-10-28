@@ -41,6 +41,14 @@ export default async function ListZonesWithExtra({
             <ZoneWithExtraCard 
               key={item.zone.id}
               item={item}
+              dictDialogEdit={dict.zone.dialogs.edit}
+              dictDialogReplace={dict.zone.dialogs.replace}
+              dictCard={dict.zone.card}
+              dictFields={{
+                name: dict.form.fields.name,
+                button: dict.form.buttons.submit,
+              }}
+              dictButton={dict.form.buttons.submit}
             />
           ))}
         </div>
@@ -57,19 +65,6 @@ export default async function ListZonesWithExtra({
         <PaginationPattern 
           totalPages={zonesWithExtra.totalPages as number} 
           type="zones"
-        />
-        <FilterTickets 
-          locale={locale as AcceptedLocales}
-          dict={dict.filters}
-          fields={{
-            open: {dict: dict.form.fields.openDate},
-            close: {dict: dict.form.fields.closeDate},
-            clients: {list: [], dict: dict.form.fields.clients},
-            products: {list: [], dict: dict.form.fields.products},
-            ticketTypes: {list: [], dict: dict.form.fields.ticketTypes},
-            ticketStates: {list: [], dict: dict.form.fields.ticketStates},
-            search: {dict: dict.form.fields.search}
-          }}
         />
       </div>
       <FetchToastPattern

@@ -237,7 +237,7 @@ func getAislesByZone(db *database.Database) http.HandlerFunc {
 }
 
 type BodyRequestBulkPostAisles struct {
-  Number int `json:"number"`
+  Number int `json:"quantity"`
   Zone_id string `json:"zone"`
 }
 

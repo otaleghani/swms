@@ -2,10 +2,11 @@
 
 /** Next */
 import { cookies } from "next/headers"
+import { redirect } from "next/navigation";
 
 /** Types and interfaces */
 import { Response } from "../types/misc";
-import { TypeMap } from "../types/requests";
+import { revalidateTag } from "next/cache";
 
 export type RequestAttributes = {
   path: string;
@@ -21,7 +22,7 @@ export default async function fetchData<Entity>(
   const { path, method = "GET", tag, payload, headers } = attributes;
   const jwt = cookies().get("access")?.value;
 
-  if (!jwt) {
+  if (!jwt && path != "login/") {
     return {
       code: 401,
       message: "Not authorized",
@@ -52,9 +53,14 @@ export default async function fetchData<Entity>(
     typeof responseBody.code === "number"
   )) {
     return {
-      code: 401,
+      code: 501,
       message: "Server error",
     } as Response<Entity>;
+  }
+
+  if (method !== "GET") {
+    console.log("revalidated tag: " + tag)
+    revalidateTag(tag);
   }
 
   return responseBody as Response<Entity>;

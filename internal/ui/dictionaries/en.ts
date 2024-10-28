@@ -11,6 +11,7 @@ import { dictionaryForm } from "./en/form"
 import { dictionaryToasts } from "./en/toasts"
 import { dictionaryFilters } from "./en/filters"
 import { dictionaryPages } from "./en/pages"
+import { dictionarySidebar } from "./en/sidebar"
 
 export const dictionary: Dictionary = {
   zone: dictionaryZones,
@@ -30,4 +31,5 @@ export const dictionary: Dictionary = {
   },
 
   pages: dictionaryPages,
+  sidebar: dictionarySidebar,
 }

@@ -211,7 +211,7 @@ func deleteZone(db *database.Database) http.HandlerFunc {
 
 // export a type for this creating
 type BodyRequestBulkPostZones struct {
-  Number int `json:"number"`
+  Number int `json:"quantity"`
 }
 
 func postBulkZones(db *database.Database) http.HandlerFunc {

@@ -39,7 +39,7 @@ export const defaultZonesBulkFormState: ZonesBulkFormState = {
     quantity: [],
   },
   result: {
-    number: 0,
+    quantity: 0,
   }
 }
 
@@ -49,5 +49,5 @@ export type ZoneWithExtraRP = Promise<Response<ZoneWithExtra>>;
 export type ZonesWithExtraRP = Promise<Response<ZonesWithExtra>>;
 
 export type ZonesBulkPostRequestBody = {
-  number: number;
+  quantity: number;
 }

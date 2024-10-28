@@ -83,6 +83,51 @@ func getRefreshToken(id string, db *database.Database) (string, error) {
 	return ss, nil
 }
 
+func getTokenSubject(tokenStr string, db *database.Database) (string, error) {
+  metadata := []database.Metadata{}
+  err := db.Sorm.Select(&metadata, "")
+  if err != nil {
+    return "", err
+  }
+  var claims jwt.RegisteredClaims
+  token, err := jwt.ParseWithClaims(tokenStr, &claims,
+		func(token *jwt.Token) (interface{}, error) {
+			return []byte(metadata[1].Secret), nil
+		},
+	)
+	if err != nil {
+		return "", err
+	}
+	if !token.Valid {
+		return "", errors.New("jwt token invalid")
+	}
+	if claims.Issuer != "swms" {
+		return "", errors.New("jwt token issuer does not match")
+	}
+
+	return claims.Subject, nil
+}
+
+//func refreshAccessToken(tokenStr string, db *database.Database) (string, error) {
+//	metadata := []database.Metadata{}
+//	err := db.Sorm.Select(&metadata, "")
+//	if err != nil {
+//		return "", err
+//	}
+//	var claims jwt.RegisteredClaims
+//	token, err := jwt.ParseWithClaims(tokenStr, &claims,
+//		func(token *jwt.Token) (interface{}, error) {
+//			return []byte(metadata[1].Secret), nil
+//		},
+//	)
+//	if err != nil {
+//		return "", err
+//	}
+//	if !token.Valid {
+//		return "", errors.New("jwt token invalid")
+//	}
+//}
+
 func checkAccessToken(tokenStr string, db *database.Database) error {
 	metadata := []database.Metadata{}
 	err := db.Sorm.Select(&metadata, "")
@@ -98,6 +143,7 @@ func checkAccessToken(tokenStr string, db *database.Database) error {
 	if err != nil {
 		return err
 	}
+
 	if !token.Valid {
 		return errors.New("jwt token invalid")
 	}

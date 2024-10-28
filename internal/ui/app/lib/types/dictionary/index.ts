@@ -10,6 +10,7 @@ import { DictForms } from "./form";
 import { DictToasts } from "./toasts";
 import { DictFilters } from "./misc";
 import { DictPages } from "./pages";
+import { DictSidebar } from "./sidebar";
 
 /** Every one-off term that do not fit in any cat */
 export interface DictMisc {
@@ -32,4 +33,6 @@ export type Dictionary = {
   toasts: DictToasts;
   filters: DictFilters;
   misc: DictMisc;
+  
+  sidebar: DictSidebar;
 }

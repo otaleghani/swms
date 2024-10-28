@@ -5,6 +5,9 @@ import { getDictionary, Locale } from "@/lib/dictionaries";
 import { ThemeProvider } from "@/app/[lang]/theme";
 import Navbar from "@/app/ui/navbar";
 import { Toaster } from "../ui/components/toaster";
+import { SidebarProvider, SidebarTrigger } from "../ui/components/sidebar";
+import { DefaultSidebar } from "../ui/modules/sidebar/DefaultSidebar";
+import getCurrentUser from "../lib/requests/currentUser";
 
 export const metadata: Metadata = {
   title: "swms",
@@ -28,22 +31,33 @@ interface LayoutProps {
 
 export default async function RootLayout({ params, children }: LayoutProps) {
   const dict = await getDictionary(params.lang as Locale);
+  const currentUser = await getCurrentUser();
+  console.log(currentUser)
 
   return (
     <html lang={params.lang} suppressHydrationWarning>
-      <body>
-        <div className={`${GeistSans.className}`}>
+      <body className={`${GeistSans.className}`}>
+        <SidebarProvider>
           <ThemeProvider
             attribute="class"
             defaultTheme="system"
             enableSystem
             disableTransitionOnChange
           >
-            <Navbar />
-            <div className="xl:ml-[57px] xl:mb-0 mb-[57px]">{children}</div>
+            <DefaultSidebar dict={dict.sidebar} />
+            <main className="w-full">
+                <div className="w-full">
+                  {children}
+               </div> 
+               {
+                //<Navbar />
+                //<div className="xl:ml-[57px] xl:mb-0 mb-[57px]">{children}</div>
+                }
+                
+            </main>
+          <Toaster />
           </ThemeProvider>
-        </div>
-        <Toaster />
+        </SidebarProvider>
       </body>
     </html>
   );

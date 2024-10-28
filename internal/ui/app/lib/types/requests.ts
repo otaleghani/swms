@@ -97,6 +97,7 @@ import { Client, Clients } from "./data/clients";
 /** Maps every type that can be the body of the return of Response<Entity>
   */
 export type TypeMap = {
+
   // Positions
   Zone: Zone;
   Zones: Zones;

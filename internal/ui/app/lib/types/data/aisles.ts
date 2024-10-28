@@ -27,7 +27,8 @@ export const defaultAisleFormState: AisleFormState = {
   errorMessages: {
     name: [],
     zone: [],
-  }
+  },
+  result: emptyAisle,
 }
 
 export type AislesBulkFormState = FormState<"AislesBulk">;
@@ -37,6 +38,10 @@ export const defaultAislesBulkFormState: AislesBulkFormState = {
   errorMessages: {
     quantity: [],
     zone: [],
+  },
+  result: {
+    quantity: 0,
+    zone: "",
   }
 }
 
@@ -46,6 +51,6 @@ export type AisleWithExtraRP = Promise<Response<AisleWithExtra>>;
 export type AislesWithExtraRP = Promise<Response<AislesWithExtra>>;
 
 export type AislesBulkPostRequestBody = {
-  number: number;
+  quantity: number;
   zone: string;
 }

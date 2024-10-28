@@ -20,7 +20,6 @@ export async function validateZone(
   state: FormState<"Zone">,
   locale: string,
 ): Promise<FormState<"Zone">> {
-  console.log("somehow, I fired this")
   const dictPromise = getDictionary(locale as Locale);
   const [ dict ] = await Promise.all([ dictPromise ]);
   
@@ -74,7 +73,7 @@ export async function validateZonesBulk(
   }
 
   (state.errorMessages.quantity = validateNumber(
-    String(state.result.number), 
+    String(state.result.quantity), 
     dict.form.fields.quantity.validation, 
     VALIDATION_SETTINGS.bigUnsignedNumber.minLength,
     VALIDATION_SETTINGS.bigUnsignedNumber.maxLength,

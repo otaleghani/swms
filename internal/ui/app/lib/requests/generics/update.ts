@@ -68,6 +68,7 @@ export async function update<T extends keyof UpdateMapOptions>(
     tag: revalidateTags[option.type],
   })
 
+  console.log("requested tag: " + option.type)
   const response = await fetchData<undefined>({
     path: option.path.replace(/{{id}}/g, id),
     method: "PUT",

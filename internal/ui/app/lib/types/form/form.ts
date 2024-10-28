@@ -83,7 +83,8 @@ export interface FormState<X extends keyof FormMap> {
         T extends "button" ? never :
         T 
       ]: string[];
-  }
+  };
+  misc?: any;
 }
 
 interface FormProps<T extends keyof FormMap> {
