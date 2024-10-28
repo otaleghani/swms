@@ -4,7 +4,7 @@ type Item struct {
   Id string                 `json:"id"`
   Name string               `json:"name"`
   Description string        `json:"description"`
-  IsArchive bool              `json:"isArchive"`
+  IsArchive bool            `json:"isArchive"`
   Zone_id string            `json:"zone"`
   Aisle_id string           `json:"aisle"`
   Rack_id string            `json:"rack"`

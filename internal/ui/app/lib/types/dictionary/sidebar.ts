@@ -18,23 +18,43 @@ export type DictSidebarFooter = {
   }
 }
 
+/** Contains all the different sections */
 export type DictSidebarContent = {
-
-
-  position: DictSidebarContentPositions;
+  inventory: DictSidebarContentInventory;
 }
 
-export type DictSidebarContentPositions = {
+export type PositionSubmenu = "zone" | "aisle" | "rack" | "shelf";
+export type CategorySubmenu = "category" | "subcategory"
+
+export type DictSidebarContentInventory = {
   title: string;
-  menuItems: {
-    zone: DictSidebarMenuItem;
-    aisle: DictSidebarMenuItem;
-    rack: DictSidebarMenuItem;
-    shelf: DictSidebarMenuItem;
+  menu: {
+    item: DictSidebarMenuItem;
+    supplier: DictSidebarMenuItem;
+    position: DictSidebarSubmenu<PositionSubmenu>;
+    category: DictSidebarSubmenu<CategorySubmenu>
   }
 }
 
-interface DictSidebarMenuItem {
+export type TicketSettingSubmenu = "type" | "state";
+
+export type DictSidebarContentTickets = {
+  title: string;
+  menu: {
+    ticket: DictSidebarMenuItem;
+    product: DictSidebarMenuItem;
+    setting: DictSidebarSubmenu<TicketSettingSubmenu>
+  }
+}
+
+export type DictSidebarSubmenu<SubmenuList extends string> = {
+  title: string;
+  submenu: {
+    [K in SubmenuList]: DictSidebarMenuItem;
+  }
+}
+
+export interface DictSidebarMenuItem {
   label: string;
   url: string;
   action?: {

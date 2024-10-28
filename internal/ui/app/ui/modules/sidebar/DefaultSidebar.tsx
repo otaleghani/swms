@@ -11,6 +11,7 @@ import { Warehouse } from "lucide-react"
 import DefaultSidebarCollapsibleGroup from "./DefaultSidebarGroup"
 import { DefaultSidebarFooter } from "./DefaultSidebarFooter"
 import { DictSidebar } from "@/app/lib/types/dictionary/sidebar"
+import SidebarInventory from "./SidebarInvetory"
  
 interface Props {
   dict: DictSidebar
@@ -41,15 +42,11 @@ export function DefaultSidebar({dict}: Props) {
       </SidebarHeader>
 
       <SidebarContent>
-        <DefaultSidebarCollapsibleGroup 
-          triggerLabel={dict.content.position.title}
-          menuItems={[
-            {...dict.content.position.menuItems.zone},
-            {...dict.content.position.menuItems.aisle},
-            {...dict.content.position.menuItems.rack},
-            {...dict.content.position.menuItems.shelf},
-          ]}
+        <SidebarInventory
+          title={dict.content.inventory.title}
+          menu={dict.content.inventory.menu}
         />
+
       </SidebarContent>
 
       <SidebarFooter>
