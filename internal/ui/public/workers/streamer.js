@@ -5,6 +5,7 @@ let jwt = "";
 // Handles the messages from the server
 sse.onmessage = (event) => {
     const eventData = JSON.parse(event.data);
+    //console.log(eventData)
     // If the event.data contains the field jwt, then it's the first
     // response. In this special case we would just save the jwt for
     // future usage and return.
@@ -24,6 +25,7 @@ sse.onmessage = (event) => {
 // worker asking for a specific resource. The event.data sent would be
 // an object containing the type of resource to request and it's id.
 onmessage = (event) => {
+    console.log(event.data);
     clientRetrieve(event.data.type, event.data.id, jwt);
 };
 // List all the possible endpoints that can be hit

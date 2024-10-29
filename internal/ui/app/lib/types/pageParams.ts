@@ -26,3 +26,5 @@ export type PaginationParams = {
   perPage?: number;
   layout?: number;
 };
+
+export type PaginationType = keyof Filters

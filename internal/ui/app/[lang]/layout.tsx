@@ -32,7 +32,6 @@ interface LayoutProps {
 export default async function RootLayout({ params, children }: LayoutProps) {
   const dict = await getDictionary(params.lang as Locale);
   const currentUser = await getCurrentUser();
-  console.log(currentUser)
 
   return (
     <html lang={params.lang} suppressHydrationWarning>

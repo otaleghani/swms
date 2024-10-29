@@ -1,7 +1,7 @@
 "use client";
 
 /** React hooks */
-import { useState, useEffect } from "react";
+import { useState, useEffect, FunctionComponent } from "react";
 
 /** Components */
 import CardWrapper from "@/app/ui/wrappers/cards/CardWrapper";
@@ -10,36 +10,36 @@ import CardWrapper from "@/app/ui/wrappers/cards/CardWrapper";
 import streamer from "@/app/lib/workers";
 import CardWrapperHeader from "@/app/ui/wrappers/cards/CardWrapperHeader";
 import { defaultZoneFormState, ZoneWithExtra } from "@/app/lib/types/data/zones";
-import { delaySyncStateToNone, SyncState } from "@/app/lib/synchronizers/utils";
+import { SyncState } from "@/app/lib/synchronizers/utils";
 import { synchronizeZoneWithExtraSingle } from "@/app/lib/synchronizers/data/zonesWithExtra";
 import { Button } from "@/app/ui/components/button";
 import Link from "next/link";
 import DialogFormPattern from "@/app/ui/patterns/dialog/DialogFormPattern";
-import { fieldsDefaultProps } from "@/app/lib/types/form/fields";
+import { fieldsDefaultProps, InputFieldProps, SelectFieldProps } from "@/app/lib/types/form/fields";
 import { updateFormAction } from "@/app/lib/actions/update/updateFormAction";
 import { DictDialog, DictLabelList } from "@/app/lib/types/dictionary/misc";
 import { DictFormButton, DictInputField } from "@/app/lib/types/dictionary/form";
+import { replaceFormAction } from "@/app/lib/actions/replace/replaceFormAction";
+import { defaultReplaceFormState } from "@/app/lib/types/data/replacer";
 
 interface ZoneWithExtraCardProps {
   item: ZoneWithExtra, 
-
   dictCard: DictLabelList<"aisles" | "items">
   dictDialogEdit: DictDialog;
   dictDialogReplace: DictDialog;
-  dictButton: DictFormButton;
-  dictFields: {
-    name: DictInputField;
+  fields: {
+    name: InputFieldProps;
     button: DictFormButton;
+    zone: SelectFieldProps<"Zone">;
   };
 };
 
-export default function ZoneWithExtraCard({
+export default function CardZoneWithExtra({
   item,
   dictCard,
   dictDialogEdit,
   dictDialogReplace,
-  dictButton,
-  dictFields,
+  fields
 }: ZoneWithExtraCardProps) {
   const [zoneWithExtra, setZoneWithExtra] = useState(item);
   const [syncState, setSyncState] = useState("none" as SyncState);
@@ -57,8 +57,83 @@ export default function ZoneWithExtraCard({
     };
   }, []);
 
+  const CardFooter = () => {
+    return (
+      <div className="flex gap-2">
+        <DialogFormPattern<"Replace"> 
+          showButton
+          self={{
+            triggerType: "iconDelete",
+            dict: dictDialogReplace,
+          }}
+          formPattern={{
+            type: "Replace",
+            self: {
+              fields: {
+                ...fieldsDefaultProps,
+                id: item.zone.id ? item.zone.id : "",
+                zone: fields.zone,
+                button: fields.button,
+              },
+            },
+            form: {
+              formName: "Replace",
+              formAction: replaceFormAction,
+              initialState: {
+                ...defaultReplaceFormState,
+                result: {
+                  itemToDelete: item.zone.id as string,
+                  itemThatReplaces: "",
+                  type: "Zone",
+                }
+              }
+            }
+          }}
+        />
+
+        <DialogFormPattern<"Zone"> 
+          showButton
+          self={{
+            triggerType: "iconEdit",
+            dict: dictDialogEdit,
+          }}
+          formPattern={{
+            type: "Zone",
+            self: {
+              fields: {
+                ...fieldsDefaultProps,
+                name: fields.name,
+                button: fields.button,
+              },
+            },
+            form: {
+              formName: "Zone",
+              formAction: updateFormAction,
+              initialState: {
+                ...defaultZoneFormState,
+                result: {
+                  id: zoneWithExtra.zone.id,
+                  name: zoneWithExtra.zone.name,
+                }
+              }
+            }
+          }}
+        />
+
+        <Button
+          size="sm"
+          asChild
+        >
+          <Link href={`/zones/${item.zone.id}`}>
+            View
+          </Link>
+        </Button>
+      </div>
+    )
+  }
+
   return (
-    <>
+    <div>
       { syncState != "hidden" && (
         <CardWrapper 
           className={
@@ -88,49 +163,10 @@ export default function ZoneWithExtraCard({
               </div>
             )
           }}
-          Footer={() => {
-            return (
-              <div>
-                <DialogFormPattern<"Zone"> 
-                  showButton
-                  self={{
-                    triggerType: "iconEdit",
-                    dict: dictDialogEdit,
-                  }}
-                  formPattern={{
-                    type: "Zone",
-                    self: {
-                      fields: {
-                        ...fieldsDefaultProps,
-                        name: {
-                          dict: dictFields.name,
-                        },
-                        button: dictFields.button,
-                      },
-                    },
-                    form: {
-                      formName: "Zone",
-                      formAction: updateFormAction,
-                      initialState: {
-                        ...defaultZoneFormState,
-                        result: {
-                          id: item.zone.id,
-                          name: item.zone.name
-                        }
-                      }
-                    }
-                  }}
-                />
-                <Button>
-                  <Link href={`/zones/${zoneWithExtra.zone.id}`}>
-                    View
-                  </Link>
-                </Button>
-              </div>
-            )
-          }}
+          Footer={CardFooter}
         />
       )}
-    </>
+    </div>
   )
 } 
+

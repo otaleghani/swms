@@ -18,7 +18,6 @@ interface PageSizeSelectorProps {
 
 function getPerPage(params: SearchParams, type: PaginationType) {
   if (params[type]?.pagination?.perPage) {
-  console.log(params)
     return params[type]?.pagination?.perPage;
   }
   return 10;

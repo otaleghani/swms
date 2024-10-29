@@ -43,7 +43,6 @@ export async function replaceFormAction(
     locale as string
   );
 
-  console.log(stateValidation)
   if (stateValidation.error === true) {
     return stateValidation;
   }

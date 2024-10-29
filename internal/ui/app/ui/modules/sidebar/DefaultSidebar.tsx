@@ -12,6 +12,7 @@ import { DefaultSidebarFooter } from "./DefaultSidebarFooter"
 import { DictSidebar } from "@/app/lib/types/dictionary/sidebar"
 import SidebarInventory from "./SidebarInvetory"
 import SidebarTicket from "./SidebarTickets"
+import Link from "next/link"
  
 interface Props {
   dict: DictSidebar
@@ -24,19 +25,21 @@ export function DefaultSidebar({dict}: Props) {
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton size={"lg"}>
-              <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-                <Warehouse className="size-4" />
-              </div>
-              <div className="flex flex-col gap-0.5 leading-none">
-                <span className="font-semibold">
-                  {dict.header.title}
-                </span>
-                <span className="">
-                  {dict.header.subtitle}
-                </span>
-              </div>
-            </SidebarMenuButton>
+            <Link className="block" href="/">
+              <SidebarMenuButton size={"lg"}>
+                <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
+                  <Warehouse className="size-4" />
+                </div>
+                <div className="flex flex-col gap-0.5 leading-none">
+                  <span className="font-semibold">
+                    {dict.header.title}
+                  </span>
+                  <span className="">
+                    {dict.header.subtitle}
+                  </span>
+                </div>
+              </SidebarMenuButton>
+            </Link>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>

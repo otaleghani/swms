@@ -9,21 +9,21 @@ import { FormMap } from "./form";
 import { DialogFormPatternProps } from "@/app/ui/patterns/dialog/DialogFormPattern";
 
 /** Defines the props for an input field */
-interface InputFieldProps {
+export interface InputFieldProps {
   dict: DictInputField;
 }
 
-interface DatePickerProps {
+export interface DatePickerProps {
   dict: DictDatePickerField;
 }
 
 /** Defines the props for a JSON field */
-interface JSONHiddenFieldProps {
+export interface JSONHiddenFieldProps {
   data: string;
 }
 
 /** Defines the props for checkboxes */
-interface CheckboxFieldProps {
+export interface CheckboxFieldProps {
   dict: DictCheckboxField;
 }
 

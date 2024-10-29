@@ -4,7 +4,6 @@ import * as React from "react"
 import { Moon, Sun } from "lucide-react"
 import { useTheme } from "next-themes"
 
-import { Button } from "@/app/ui/components/button"
 import {
   DropdownMenuItem,
   DropdownMenuPortal,

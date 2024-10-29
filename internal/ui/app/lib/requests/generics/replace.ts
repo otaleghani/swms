@@ -16,6 +16,8 @@ import {
   TypeMap,
   TypeMapFilterSingles
 } from "../../types/requests";
+import { retrieve } from "./retrieve";
+import { retrieveById } from "./retrieveById";
 
 type ReplaceMapOptions = {
   [K in Extract<keyof TypeMapFilterSingles,
@@ -70,26 +72,19 @@ export async function replace<T extends keyof ReplaceMapOptions>(
     replace(/{{replaced}}/g, itemToDelete).
     replace(/{{replacer}}/g, itemThatReplaces);
 
-  const before = await fetchData<TypeMap[T]>({
-    path: option.path.replace(/{{id}}/g, itemToDelete),
-    method: "GET",
-    tag: revalidateTags[option.type],
-  });
-  const after = await fetchData<TypeMap[T]>({
-    path: option.path.replace(/{{id}}/g, itemThatReplaces),
-    method: "GET",
-    tag: revalidateTags[option.type],
-  });
-
+  // Get first off the data of the item to delete
+  const before = await retrieveById(request, itemToDelete)
   const response = await fetchData<undefined>({
     path: path,
     method: "POST",
     tag: revalidateTags[option.type],
   });
 
+  // Second off we want to get the new data of the revalidate
+  const after = await retrieveById(request, itemThatReplaces)
+
   const streamedChange: ServerSentEventData = {
     id: itemToDelete,
-    //content: itemThatReplaces,
     type: request,
     action: "replace",
     before: before.data,

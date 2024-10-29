@@ -1,5 +1,5 @@
 /** Local components */
-import { Button } from "@/components/button";
+import { Button } from "@/app/ui/components/button";
 
 /** Types and interfaces */
 import { DictFormButton } from "@/app/lib/types/dictionary/form";

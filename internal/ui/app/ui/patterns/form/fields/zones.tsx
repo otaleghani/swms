@@ -31,7 +31,7 @@ export const ZonesBulkFormFields = ({
     <InputPattern 
       field="quantityWithButtons"
       dict={fields.quantity.dict}
-      defaultValue={String(result?.number)}
+      defaultValue={String(result?.quantity)}
       className=""
       label={true}
       errorMessages={errorMessages.quantity}

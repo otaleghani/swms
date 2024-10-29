@@ -52,8 +52,8 @@ export const revalidateTags: Record<keyof TypeMap, string> = {
   "ItemImagesPostBody": "item-images",
   "ItemImages": "item-images",
 
-  "Transaction": "transitions",
-  "Transactions": "transitions",
+  "Operation": "operations",
+  "Operations": "operations",
 
   "Variant": "variants",
   "Variants": "variants",

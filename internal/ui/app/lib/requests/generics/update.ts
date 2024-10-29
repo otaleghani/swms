@@ -1,7 +1,7 @@
 "use server";
 
 /** SSE fields */
-import stringEmitter from "../../emitters";
+import stringEmitter from "@/app/lib/emitters";
 import { ServerSentEventData } from "@/app/api/stream/route";
 
 /** Actions */
@@ -16,8 +16,6 @@ import {
   TypeMap,
   TypeMapFilterSingles
 } from "../../types/requests";
-import { retrieve } from "./retrieve";
-import { retrieveById } from "./retrieveById";
 
 type UpdateMapOptions = {
   [K in Exclude<keyof TypeMapFilterSingles, 
@@ -68,7 +66,6 @@ export async function update<T extends keyof UpdateMapOptions>(
     tag: revalidateTags[option.type],
   })
 
-  console.log("requested tag: " + option.type)
   const response = await fetchData<undefined>({
     path: option.path.replace(/{{id}}/g, id),
     method: "PUT",
@@ -80,10 +77,10 @@ export async function update<T extends keyof UpdateMapOptions>(
     id: id,
     type: request,
     action: "update",
-    before: before.data,
+    before: before,
     after: payload,
   };
-  stringEmitter.emit('message', streamedChange);
+  stringEmitter.emit("message", streamedChange);
 
   return response
 }

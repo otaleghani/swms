@@ -5,6 +5,7 @@ let jwt = "";
 // Handles the messages from the server
 sse.onmessage = (event: MessageEvent<any>) => {
   const eventData = JSON.parse(event.data);
+  //console.log(eventData)
 
   // If the event.data contains the field jwt, then it's the first
   // response. In this special case we would just save the jwt for
@@ -29,6 +30,7 @@ sse.onmessage = (event: MessageEvent<any>) => {
 // worker asking for a specific resource. The event.data sent would be
 // an object containing the type of resource to request and it's id.
 onmessage = (event) => {
+  console.log(event.data)
   clientRetrieve(event.data.type, event.data.id, jwt)
 }
 
@@ -86,7 +88,7 @@ const clientRetrieve = async (
   const path = option.replace(/{{id}}/g, id);
   const apiPath = "http://localhost:8080/api/v1/";
   const endpoint = apiPath + path;
-
+  
   const response = await fetch(endpoint, {
     method: "GET",
     headers: { 

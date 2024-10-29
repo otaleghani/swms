@@ -7,8 +7,8 @@ import { gridCols } from "@/app/lib/searchParams";
 import { ScrollArea } from "@/app/ui/components/scroll-area";
 import PaginationPattern from "@/app/ui/patterns/pagination/PaginationPattern";
 import FetchToastPattern from "@/app/ui/patterns/FetchToast";
-import ZoneWithExtraCard from "../cards/ZoneWithExtraCard";
 import FilterZones from "@/app/ui/patterns/filter/data/FilterZones";
+import CardZoneWithExtra from "../cards/CardZoneWithExtra";
 
 interface Props {
   searchParams?: SearchParams["zones"];
@@ -26,6 +26,7 @@ export default async function ListZonesWithExtra({
     perPage: searchParams?.pagination?.perPage,
     filters: JSON.stringify(searchParams?.filters),
   });
+  const zones = await retrieve({request: "Zones"});
 
   return (
     <>
@@ -36,17 +37,21 @@ export default async function ListZonesWithExtra({
             : "xl:grid-cols-3"
         }`}>
           {zonesWithExtra.data?.map((item) => (
-            <ZoneWithExtraCard 
+            <CardZoneWithExtra
               key={item.zone.id}
               item={item}
               dictDialogEdit={dict.zone.dialogs.edit}
               dictDialogReplace={dict.zone.dialogs.replace}
               dictCard={dict.zone.card}
-              dictFields={{
-                name: dict.form.fields.name,
+              fields={{
+                name: {dict: dict.form.fields.name},
                 button: dict.form.buttons.submit,
+                zone: {
+                  list: zones.data ? zones.data : [], 
+                  name: "Zone",
+                  dict: dict.form.fields.zones,
+                }
               }}
-              dictButton={dict.form.buttons.submit}
             />
           ))}
         </div>
@@ -65,10 +70,12 @@ export default async function ListZonesWithExtra({
           type="zones"
         />
       </div>
+      {
       <FetchToastPattern
         type={[ "Zones", "Zone" ]}
         dict={dict.toasts.fetching}
       />
+      }
     </>
   )
 }

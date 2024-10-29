@@ -7,7 +7,7 @@ import { VALIDATION_SETTINGS } from "../validation.config";
 import validateString from "../strings";
 import validateImages from "../images";
 import { getDictionary, Locale } from "@/lib/dictionaries";
-import { validateExisting, checkExisting } from "../database";
+import { checkExisting } from "../database";
 
 /** Types and interfaces */
 import { FormState } from "../../types/form/form";

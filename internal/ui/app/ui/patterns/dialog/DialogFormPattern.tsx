@@ -60,7 +60,9 @@ export default function DialogFormPattern<T extends keyof FormPropsMap>({
       return (
         <>
           <DialogTrigger asChild>
-            <Button>{self.dict.trigger.label}</Button>
+            <Button
+              size="sm"
+            >{self.dict.trigger.label}</Button>
           </DialogTrigger>
         </>
       )
@@ -70,6 +72,7 @@ export default function DialogFormPattern<T extends keyof FormPropsMap>({
         <>
           <DialogTrigger asChild>
             <Button 
+              size="sm"
               variant="outline"
               className="aspect-square p-0"
             ><PlusIcon className="w-4 h-4"/></Button>
@@ -82,6 +85,7 @@ export default function DialogFormPattern<T extends keyof FormPropsMap>({
         <>
           <DialogTrigger asChild>
             <Button 
+              size="sm"
               variant="outline"
               className="aspect-square p-0"
             ><EditIcon className="w-4 h-4"/></Button>
@@ -94,6 +98,7 @@ export default function DialogFormPattern<T extends keyof FormPropsMap>({
         <>
           <DialogTrigger asChild>
             <Button 
+              size="sm"
               variant="outline"
               className="aspect-square p-0"
             ><TrashIcon className="w-4 h-4"/></Button>

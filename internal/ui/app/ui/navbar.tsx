@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Button } from "@/components/button"
+import { Button } from "@/app/ui/components/button"
 import { Mail, House, Warehouse, Tag, CircleUserRound, CirclePlus, UserCircle } from "lucide-react"
 import { usePathname } from "next/navigation";
 import { ModeToggle } from "./toggle_mode";

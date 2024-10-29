@@ -1,17 +1,26 @@
-/** Actions and defaults */
-import { getDictionary, Locale } from "@/lib/dictionaries";
+// Default states
+import { defaultZonesBulkFormState } from "@/app/lib/types/data/zones";
 import { fieldsDefaultProps } from "@/app/lib/types/form/fields";
-import { createFormAction } from "@/app/lib/actions/create/createFormAction";
-import { defaultZonesBulkFormState, ZonesWithExtra } from "@/app/lib/types/data/zones";
 
-/** Components */
+// Actions
+import { getDictionary, Locale } from "@/lib/dictionaries";
+import { createFormAction } from "@/app/lib/actions/create/createFormAction";
+import { decodeSearchParams } from "@/app/lib/searchParams";
+import { updateFormAction } from "@/app/lib/actions/update/updateFormAction";
+import { defaultZoneFormState } from "@/app/lib/types/data/zones";
+import { retrieve } from "@/app/lib/requests/generics/retrieve";
+
+// Components
 import HeaderWrapper from "@/app/ui/wrappers/headers/HeaderWrapper";
 import DialogFormPattern from "@/app/ui/patterns/dialog/DialogFormPattern";
-
-/** Types and interfaces */
-import { DefaultPageProps } from "@/app/lib/types/pageParams";
-import { decodeSearchParams } from "@/app/lib/searchParams";
 import ListZonesWithExtra from "@/app/ui/modules/zones/lists/ListZonesWithExtra";
+import { BreadcrumbsPattern } from "@/app/ui/patterns/BreadcrumbsPattern";
+import CardZoneWithExtra from "@/app/ui/modules/zones/cards/CardZoneWithExtra";
+
+// Types and interfaces
+import { DefaultPageProps } from "@/app/lib/types/pageParams";
+import { replaceFormAction } from "@/app/lib/actions/replace/replaceFormAction";
+import { defaultReplaceFormState } from "@/app/lib/types/data/replacer";
 
 export default async function ZonesPage({ 
   params, 
@@ -20,43 +29,60 @@ export default async function ZonesPage({
   const dict = await getDictionary(params.lang as Locale);
   const currentSearchParams = decodeSearchParams(searchParams.q)
 
+  const zonesWithExtra = await retrieve({
+    request: "ZonesWithExtra",
+    page: currentSearchParams?.zones?.pagination?.page,
+    perPage: currentSearchParams?.zones?.pagination?.perPage,
+    filters: JSON.stringify(currentSearchParams?.zones?.filters),
+  });
+  const zones = await retrieve({request: "Zones"});
+  const replace = replaceFormAction
+  const update = updateFormAction
+
+  const HeaderWrapperLeft = () => {
+    return (
+      <BreadcrumbsPattern 
+        itemsList={[]}
+        currentItem={dict.zone.header.title}
+      />
+  )}
+  
+  const HeaderWrapperRight = () => {
+    return (
+      <>
+      <DialogFormPattern<"ZonesBulk"> 
+        showButton
+        self={{
+          triggerType: "button",
+          dict: dict.zone.dialogs.addBulk
+        }}
+        formPattern={{
+          type: "ZonesBulk",
+          self: {
+            fields: {
+              ...fieldsDefaultProps,
+              quantity: {dict: dict.form.fields.quantity},
+              button: dict.form.buttons.add
+            },
+          },
+          form: {
+            formName: "ZoneAddBulk",
+            formAction: createFormAction,
+            initialState: defaultZonesBulkFormState,
+          }
+        }}
+      />
+      </>
+    )
+  }
+
   return (
     <>
       <HeaderWrapper 
-        Left={() => {
-          return (
-            <h1>{dict.zone.header.title}</h1>
-          )
-        }}
-        Right={() => {
-          return (
-            <DialogFormPattern<"ZonesBulk"> 
-              showButton
-              self={{
-                triggerType: "button",
-                dict: dict.zone.dialogs.addBulk
-              }}
-              formPattern={{
-                type: "ZonesBulk",
-                self: {
-                  fields: {
-                    ...fieldsDefaultProps,
-                    quantity: {
-                      dict: dict.form.fields.quantity
-                    },
-                    button: dict.form.buttons.add
-                  },
-                },
-                form: {
-                  formName: "ZoneAddBulk",
-                  formAction: createFormAction,
-                  initialState: defaultZonesBulkFormState,
-                }
-              }}
-            />
-          )
-        }}
+        Left={HeaderWrapperLeft}
+        Right={HeaderWrapperRight}
       />
+
       <ListZonesWithExtra 
         locale={params.lang as Locale}
         searchParams={currentSearchParams.zones}
@@ -64,3 +90,4 @@ export default async function ZonesPage({
     </>
   )
 }
+

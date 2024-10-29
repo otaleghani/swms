@@ -77,7 +77,7 @@ export async function validateAislesBulk(
   }
 
   (state.errorMessages.quantity = validateNumber(
-    String(state.result.number), 
+    String(state.result.quantity), 
     dict.form.fields.quantity.validation, 
     VALIDATION_SETTINGS.bigUnsignedNumber.minLength,
     VALIDATION_SETTINGS.bigUnsignedNumber.maxLength,

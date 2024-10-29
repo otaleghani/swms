@@ -1,7 +1,7 @@
 "use server";
 
 /** SSE fields */
-import stringEmitter from "../../emitters";
+import stringEmitter from "@/app/lib/emitters";
 import { ServerSentEventData } from "@/app/api/stream/route";
 
 /** Actions */
@@ -60,7 +60,7 @@ export async function createInBulk<T extends keyof CreateInBulkMapOptions>(
     before: payload,
     after: response.data,
   };
-  stringEmitter.emit('message', streamedChange);
+  stringEmitter.emit("message", streamedChange);
 
   return response
 }

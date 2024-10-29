@@ -42,16 +42,16 @@ export async function loginAction(
   if (typeof data.email === "string") {
     if (data.email === "" || 
         data.email === undefined) {
-      state.errorMessages.email.push(dict.login.form.errors.email.empty);
+      //state.errorMessages.email.push(dict.login.form.errors.email.empty);
       state.error = true;
     }
     if (!data.email.includes("@") ||
         !data.email.includes(".")) {
-      state.errorMessages.email.push(dict.login.form.errors.email.not_valid);
+      //state.errorMessages.email.push(dict.login.form.errors.email.not_valid);
       state.error = true;
     }
   } else {
-    state.errorMessages.email.push(dict.login.form.errors.email.type)
+    // state.errorMessages.email.push(dict.login.form.errors.email.type)
     state.error = true;
   }
 
@@ -59,19 +59,19 @@ export async function loginAction(
   if (typeof data.password === "string") {
     if (data.password === "" ||
         data.password === undefined) {
-      state.errorMessages.email.push(dict.login.form.errors.email.empty);
+      //state.errorMessages.email.push(dict.login.form.errors.email.empty);
       state.error = true;
     }
     if (data.password.length > 20) {
-      state.errorMessages.password.push(dict.login.form.errors.password.max);
+      //state.errorMessages.password.push(dict.login.form.errors.password.max);
       state.error = true;
     }
     if (data.password.length < 8) {
-      state.errorMessages.password.push(dict.login.form.errors.password.min);
+      //state.errorMessages.password.push(dict.login.form.errors.password.min);
       state.error = true;
     }
   } else {
-    state.errorMessages.password.push(dict.login.form.errors.password.type)
+    //state.errorMessages.password.push(dict.login.form.errors.password.type)
     state.error = true;
   }
 
@@ -89,12 +89,12 @@ export async function loginAction(
     const resBody = await res.json()
 
     if (resBody.code === 403) {
-      state.message = dict.login.form.errors.general.auth;
+      //state.message = dict.login.form.errors.general.auth;
       state.error = true;
     }
     if (resBody.code === 200) {
       state.error = false;
-      state.message = dict.login.form.success
+      //state.message = dict.login.form.success
 
       cookies().set({
         name: "access",

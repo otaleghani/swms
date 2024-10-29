@@ -11,8 +11,6 @@ export function synchronizeList({
   setShowToast,
   type
 }: SynchronizeListProps) {
-
-
   const handler = (message: MessageEvent<WorkerMessage>) => {
     if (isServerSentMessage(message.data)) {
       console.log(message.data)

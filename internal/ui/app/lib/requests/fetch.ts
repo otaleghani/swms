@@ -59,7 +59,6 @@ export default async function fetchData<Entity>(
   }
 
   if (method !== "GET") {
-    console.log("revalidated tag: " + tag)
     revalidateTag(tag);
   }
 

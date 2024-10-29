@@ -1,4 +1,4 @@
-import { ZoneWithExtra, ZonesWithExtra } from "@/app/lib/types/data/zones";
+import { ZoneWithExtra } from "@/app/lib/types/data/zones";
 import { Dispatch, SetStateAction } from "react";
 import { 
   delaySyncStateToHidden, 
@@ -7,7 +7,6 @@ import {
   isFetchResultMessage, 
   WorkerMessage,
   SyncState,
-  ToastType,
 } from "../utils";
 
 export type SyncZoneWithExtra = {
@@ -17,11 +16,11 @@ export type SyncZoneWithExtra = {
   setZoneWithExtra: Dispatch<SetStateAction<ZoneWithExtra>>,
 }
 
-type SyncZonesWithExtra = {
-  streamer: Worker,
-  zonesWithExtra: ZonesWithExtra,
-  setShowToast: Dispatch<SetStateAction<ToastType>>,
-}
+//type SyncZonesWithExtra = {
+//  streamer: Worker,
+//  zonesWithExtra: ZonesWithExtra,
+//  setShowToast: Dispatch<SetStateAction<ToastType>>,
+//}
 
 export function synchronizeZoneWithExtraSingle({
   streamer,
@@ -30,10 +29,10 @@ export function synchronizeZoneWithExtraSingle({
   setZoneWithExtra,
 }: SyncZoneWithExtra) {
   const handler = (message: MessageEvent<WorkerMessage>) => {
-
     if (isFetchResultMessage(message.data)) {
       if (message.data.type == "ZoneWithExtra" && 
         message.data.content.zone.id == zoneWithExtra.zone.id) {
+        //console.log(message.data.content)
         setSyncState("update");
         setZoneWithExtra(message.data.content);
         delaySyncStateToNone(setSyncState);
@@ -84,9 +83,10 @@ export function synchronizeZoneWithExtraSingle({
           });
         }
         if (message.data.action == "replace") {
-          if (message.data.before == zoneWithExtra.zone.id) {
-            setSyncState("remove");
-            delaySyncStateToHidden(setSyncState);
+          if (message.data.before.id == zoneWithExtra.zone.id) {
+            //setSyncState("remove");
+            //delaySyncStateToHidden(setSyncState);
+            //streamer.postMessage("sus")
           } else {
             streamer.postMessage({
                type: "ZoneWithExtra",
@@ -105,46 +105,46 @@ export function synchronizeZoneWithExtraSingle({
   streamer.addEventListener("message", handler)
 }
 
-export function synchronizeZoneWithExtraList({
-  streamer,
-  zonesWithExtra,
-  setShowToast,
-}: SyncZonesWithExtra) {
-  const handler = (message: MessageEvent<WorkerMessage>) => {
-
-    if (isFetchResultMessage(message.data)) {
-      if (message.data.error) {
-        setShowToast("error");
-      }
-      let content = message.data.content
-      if (message.data.type == "ZoneWithExtra") {
-        if (!zonesWithExtra.some(item => (item.zone.id === content.zone.id))) {
-          setShowToast("success");
-        }
-      };
-    }
-
-    if (isServerSentMessage(message.data)) {
-      if (message.data.type == "Zone" && (
-      message.data.action == "create" || 
-      message.data.action == "createInBulk")) {
-        if (message.data.action == "create") {
-          streamer.postMessage({
-             type: "ZoneWithExtra",
-             id: message.data.id,
-          });
-        }
-        if (message.data.action == "createInBulk") {
-          for (let i = 0; i < message.data.after; i++) {
-            streamer.postMessage({
-               type: "ZoneWithExtra",
-               id: message.data.after[i],
-            });
-          }
-        }
-      };
-    };
-  };
-
-  streamer.addEventListener("message", handler);
-}
+//export function synchronizeZoneWithExtraList({
+//  streamer,
+//  zonesWithExtra,
+//  setShowToast,
+//}: SyncZonesWithExtra) {
+//  const handler = (message: MessageEvent<WorkerMessage>) => {
+//
+//    if (isFetchResultMessage(message.data)) {
+//      if (message.data.error) {
+//        setShowToast("error");
+//      }
+//      let content = message.data.content
+//      if (message.data.type == "ZoneWithExtra") {
+//        if (!zonesWithExtra.some(item => (item.zone.id === content.zone.id))) {
+//          setShowToast("success");
+//        }
+//      };
+//    }
+//
+//    if (isServerSentMessage(message.data)) {
+//      if (message.data.type == "Zone" && (
+//      message.data.action == "create" || 
+//      message.data.action == "createInBulk")) {
+//        if (message.data.action == "create") {
+//          streamer.postMessage({
+//             type: "ZoneWithExtra",
+//             id: message.data.id,
+//          });
+//        }
+//        if (message.data.action == "createInBulk") {
+//          for (let i = 0; i < message.data.after; i++) {
+//            streamer.postMessage({
+//               type: "ZoneWithExtra",
+//               id: message.data.after[i],
+//            });
+//          }
+//        }
+//      };
+//    };
+//  };
+//
+//  streamer.addEventListener("message", handler);
+//}

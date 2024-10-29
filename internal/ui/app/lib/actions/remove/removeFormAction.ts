@@ -16,7 +16,9 @@ type RemovableItem = Exclude<keyof FormMap,
     "ItemComplete" |
     "ProductWithImages" |
     "Delete" |
-    "Replace"
+    "Replace" |
+    "Login" |
+    "Register"
   >;
 
 export async function removeFormAction(
