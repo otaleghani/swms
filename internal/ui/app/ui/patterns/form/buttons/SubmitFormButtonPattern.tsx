@@ -1,5 +1,5 @@
 /** Local components */
-import { Button } from "@/components/button"
+import { Button } from "@/app/ui/components/button"
 
 /** Third-party components */
 import { Loader2 } from "lucide-react"

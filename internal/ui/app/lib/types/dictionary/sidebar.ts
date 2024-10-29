@@ -11,6 +11,12 @@ export type DictSidebarHeader = {
 
 export type DictSidebarFooter = {
   dropdown: {
+    theme: {
+      label: string;
+      light: string;
+      dark: string;
+      system: string;
+    },
     accountPage: string;
     githubStar: string;
     logIn: string;

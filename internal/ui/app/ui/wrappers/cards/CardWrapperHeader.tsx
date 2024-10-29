@@ -2,7 +2,7 @@
 import { 
   CardTitle, 
   CardDescription, 
-} from "@/components/card"
+} from "@/app/ui/components/card"
 
 interface CardWrapperHeaderProps {
   title: string;

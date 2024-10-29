@@ -4,7 +4,7 @@ import {
   CardHeader, 
   CardFooter, 
   CardContent 
-} from "@/components/card"
+} from "@/app/ui/components/card"
 
 interface CardWrapperProps {
   Header: React.FunctionComponent;

@@ -9,8 +9,6 @@ import PaginationPattern from "@/app/ui/patterns/pagination/PaginationPattern";
 import FetchToastPattern from "@/app/ui/patterns/FetchToast";
 import ZoneWithExtraCard from "../cards/ZoneWithExtraCard";
 import FilterZones from "@/app/ui/patterns/filter/data/FilterZones";
-import FilterTickets from "@/app/ui/patterns/filter/data/FilterTickets";
-import { AcceptedLocales } from "@/app/lib/types/misc";
 
 interface Props {
   searchParams?: SearchParams["zones"];
@@ -31,7 +29,7 @@ export default async function ListZonesWithExtra({
 
   return (
     <>
-      <ScrollArea scrollHideDelay={10000} className="xl:h-[calc(100vh_-_114px)] bg-gray-50">
+      <ScrollArea scrollHideDelay={10000} className="xl:h-[calc(100vh_-_114px)] ">
         <div className={`grid gap-2 p-4 ${
           searchParams?.pagination?.layout 
             ? `${gridCols[searchParams.pagination.layout]}`
@@ -53,7 +51,7 @@ export default async function ListZonesWithExtra({
           ))}
         </div>
       </ScrollArea>
-      <div className="flex items-center justify-end bg-gray-50 border-t xl:h-[57px]">
+      <div className="flex items-center justify-end border-t xl:h-[57px]">
         <FilterZones 
           dict={dict.filters}
           fields={{

@@ -43,6 +43,8 @@ export type SelectableItem = keyof Omit<
   | "ProductWithImages"
   | "Delete"
   | "Replace"
+  | "Login"
+  | "Register"
 >;
 
 /**

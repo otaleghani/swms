@@ -66,6 +66,7 @@ export default function PaginationPattern({
         <PaginationContent>
             <PaginationItem>
               <PaginationLink
+                size="default"
                 key="next"  
                 href={createPageURL(1)} 
                 className={
@@ -78,6 +79,7 @@ export default function PaginationPattern({
             </PaginationItem>
           <PaginationItem>
             <PaginationPrevious 
+              size="default"
               key="previous"  
               href={createPageURL(currentPage-1)} 
               className={
@@ -89,6 +91,7 @@ export default function PaginationPattern({
           </PaginationItem>
             <PaginationItem>
               <PaginationNext 
+                size="default"
                 key="next"  
                 href={createPageURL(currentPage+1)} 
                 className={
@@ -100,6 +103,7 @@ export default function PaginationPattern({
             </PaginationItem>
             <PaginationItem>
               <PaginationLink
+                size="default"
                 key="next"  
                 href={createPageURL(totalPages)} 
                 className={

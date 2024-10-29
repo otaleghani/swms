@@ -1,4 +1,4 @@
-import { CategorySubmenu, DictSidebar, DictSidebarContentInventory, DictSidebarContentTickets, DictSidebarFooter, DictSidebarHeader, DictSidebarMenuPosition, DictSidebarSubmenu, PositionSubmenu } from "@/app/lib/types/dictionary/sidebar";
+import { CategorySubmenu, DictSidebar, DictSidebarContentInventory, DictSidebarContentTickets, DictSidebarFooter, DictSidebarHeader, DictSidebarSubmenu, PositionSubmenu } from "@/app/lib/types/dictionary/sidebar";
 
 const dictionarySidebarHeader: DictSidebarHeader = {
     title: "title",
@@ -7,6 +7,12 @@ const dictionarySidebarHeader: DictSidebarHeader = {
 
 const dictionarySidebarFooter: DictSidebarFooter = {
     dropdown: {
+      theme: {
+        label: "Toggle theme",
+        light: "Light",
+        dark: "Dark",
+        system: "System",
+      },
       logIn: "Log in",
       logOut: "Log out",
       accountPage: "Accout",

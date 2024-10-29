@@ -7,6 +7,7 @@ import {
   CreditCard,
   LogOut,
   Sparkles,
+  Star,
 } from "lucide-react"
 
 import {
@@ -29,21 +30,21 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/app/ui/components/sidebar"
+import { DictSidebarFooter } from "@/app/lib/types/dictionary/sidebar"
+import { User } from "@/app/lib/types/data/users"
+import { ThemeToggle } from "../ThemeToggle"
+import Link from "next/link"
 
 interface Props {
-
+  content: DictSidebarFooter;
+  user: User;
 }
 
 export function DefaultSidebarFooter({
+  content,
   user,
-}: {
-  user: {
-    name: string
-    surname: string
-    email: string
-    avatar: string
-  }
-}) {
+}: Props
+) {
   const { isMobile } = useSidebar()
 
   return (
@@ -56,7 +57,9 @@ export function DefaultSidebarFooter({
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
               <Avatar className="h-8 w-8 rounded-lg">
-                <AvatarImage src={user.avatar} alt={user.name} />
+              {
+                //<AvatarImage src={user.avatar} alt={user.name} />
+              }
                 <AvatarFallback className="rounded-lg">CN</AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
@@ -75,42 +78,55 @@ export function DefaultSidebarFooter({
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
-                  <AvatarImage src={user.avatar} alt={user.name} />
+                {
+                  //<AvatarImage src={user.avatar} alt={user.name} />
+                }
                   <AvatarFallback className="rounded-lg">CN</AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-semibold">{user.name}</span>
+                  <span className="truncate font-semibold">{user.name} {user.surname}</span>
                   <span className="truncate text-xs">{user.email}</span>
                 </div>
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
+
+
             <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <Sparkles className="h-4 w-4 mr-2" />
-                Upgrade to Pro
-              </DropdownMenuItem>
+              <Link href="/account">
+                <DropdownMenuItem>
+                    <BadgeCheck className="h-4 w-4 mr-2" />
+                    {content.dropdown.accountPage}
+                </DropdownMenuItem>
+              </Link>
+
+              <ThemeToggle 
+                label={content.dropdown.theme.label}
+                light={content.dropdown.theme.light}
+                dark={content.dropdown.theme.dark}
+                system={content.dropdown.theme.system}
+              />
             </DropdownMenuGroup>
+
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <BadgeCheck className="h-4 w-4 mr-2" />
-                Account
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <CreditCard className="h-4 w-4 mr-2" />
-                Billing
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Bell className="h-4 w-4 mr-2" />
-                Notifications
-              </DropdownMenuItem>
+              <Link href="https://github.com/otaleghani" target="_blank">
+                <DropdownMenuItem>
+                  <Star className="h-4 w-4 mr-2" />
+                  {content.dropdown.githubStar}
+                </DropdownMenuItem>
+              </Link>
             </DropdownMenuGroup>
+
+
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <LogOut className="h-4 w-4 mr-2" />
-              Log out
-            </DropdownMenuItem>
+
+            <Link href="/logout">
+              <DropdownMenuItem>
+                <LogOut className="h-4 w-4 mr-2" />
+                {content.dropdown.logOut}
+              </DropdownMenuItem>
+            </Link>
           </DropdownMenuContent>
         </DropdownMenu>
       </SidebarMenuItem>

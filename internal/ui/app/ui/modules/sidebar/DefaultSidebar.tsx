@@ -8,7 +8,6 @@ import {
   SidebarFooter,
 } from "@/app/ui/components/sidebar"
 import { Warehouse } from "lucide-react"
-import DefaultSidebarCollapsibleGroup from "./DefaultSidebarGroup"
 import { DefaultSidebarFooter } from "./DefaultSidebarFooter"
 import { DictSidebar } from "@/app/lib/types/dictionary/sidebar"
 import SidebarInventory from "./SidebarInvetory"
@@ -56,11 +55,12 @@ export function DefaultSidebar({dict}: Props) {
 
       <SidebarFooter>
         <DefaultSidebarFooter
+          content={dict.footer}
           user={{
             email: "o.taleghani@gmail.com",
             name: "Oliviero",
-            surname: "Oliviero",
-            avatar: ""
+            surname: "Taleghani",
+            //avatar: ""
           }}
         />
       </SidebarFooter>
