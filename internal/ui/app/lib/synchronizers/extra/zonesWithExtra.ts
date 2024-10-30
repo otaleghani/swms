@@ -16,12 +16,6 @@ export type SyncZoneWithExtra = {
   setZoneWithExtra: Dispatch<SetStateAction<ZoneWithExtra>>,
 }
 
-//type SyncZonesWithExtra = {
-//  streamer: Worker,
-//  zonesWithExtra: ZonesWithExtra,
-//  setShowToast: Dispatch<SetStateAction<ToastType>>,
-//}
-
 export function synchronizeZoneWithExtraSingle({
   streamer,
   setSyncState,
@@ -29,10 +23,10 @@ export function synchronizeZoneWithExtraSingle({
   setZoneWithExtra,
 }: SyncZoneWithExtra) {
   const handler = (message: MessageEvent<WorkerMessage>) => {
+
     if (isFetchResultMessage(message.data)) {
       if (message.data.type == "ZoneWithExtra" && 
         message.data.content.zone.id == zoneWithExtra.zone.id) {
-        //console.log(message.data.content)
         setSyncState("update");
         setZoneWithExtra(message.data.content);
         delaySyncStateToNone(setSyncState);
@@ -82,18 +76,15 @@ export function synchronizeZoneWithExtraSingle({
              id: zoneWithExtra.zone.id
           });
         }
+
         if (message.data.action == "replace") {
-          if (message.data.before.id == zoneWithExtra.zone.id) {
-            //setSyncState("remove");
-            //delaySyncStateToHidden(setSyncState);
-            //streamer.postMessage("sus")
-          } else {
-            streamer.postMessage({
-               type: "ZoneWithExtra",
-               id: zoneWithExtra.zone.id
-            });
-          }
+          if (message.data.before.id == zoneWithExtra.zone.id &&
+              message.data.before.id != message.data.after.id) {
+            setSyncState("remove");
+            delaySyncStateToHidden(setSyncState);
+          } 
         }
+
         if (message.data.action == "remove") {
           setSyncState("remove");
           delaySyncStateToHidden(setSyncState);
@@ -105,6 +96,11 @@ export function synchronizeZoneWithExtraSingle({
   streamer.addEventListener("message", handler)
 }
 
+//type SyncZonesWithExtra = {
+//  streamer: Worker,
+//  zonesWithExtra: ZonesWithExtra,
+//  setShowToast: Dispatch<SetStateAction<ToastType>>,
+//}
 //export function synchronizeZoneWithExtraList({
 //  streamer,
 //  zonesWithExtra,

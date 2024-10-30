@@ -13,7 +13,6 @@ export function synchronizeList({
 }: SynchronizeListProps) {
   const handler = (message: MessageEvent<WorkerMessage>) => {
     if (isServerSentMessage(message.data)) {
-      console.log(message.data)
       if (message.data.action == "create" ||
           message.data.action == "createInBulk") {
         if (type.includes(message.data.type)) {

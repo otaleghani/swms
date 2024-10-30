@@ -83,14 +83,23 @@ export async function replace<T extends keyof ReplaceMapOptions>(
   // Second off we want to get the new data of the revalidate
   const after = await retrieveById(request, itemThatReplaces)
 
-  const streamedChange: ServerSentEventData = {
+  const replaceChange: ServerSentEventData = {
     id: itemToDelete,
     type: request,
     action: "replace",
     before: before.data,
     after: after.data,
   };
-  stringEmitter.emit('message', streamedChange);
+  stringEmitter.emit("message", replaceChange);
+
+  const updateChange: ServerSentEventData = {
+    id: itemThatReplaces,
+    type: request,
+    action: "update",
+    before: after.data,
+    after: after.data,
+  }
+  stringEmitter.emit("message", updateChange);
 
   return response
 }

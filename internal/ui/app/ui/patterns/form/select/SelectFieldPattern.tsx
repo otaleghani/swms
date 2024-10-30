@@ -30,7 +30,7 @@ export default function SelectFieldPattern<T extends SelectableItem>({
         required
         type="hidden" 
         id={`${name}-${inputId}`}
-        name={name}
+        name={name.toLowerCase()}
         value={element.id} 
       />
       <Label>{dict.select.label}</Label>

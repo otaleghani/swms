@@ -23,14 +23,13 @@ sse.onmessage = (event: MessageEvent<any>) => {
 // Cases where you want to fetch data client side:
 // - When a foreign key changes, e.g. You are in the aisles/[id] and you
 // change the zone of that id. You want to fetch the new zone.
-// - When 
 
 // The main thread can request some other data if needed for rendering
 // purposes. In that case the main thread would send a message to this 
 // worker asking for a specific resource. The event.data sent would be
 // an object containing the type of resource to request and it's id.
 onmessage = (event) => {
-  console.log(event.data)
+  //console.log(event.data)
   clientRetrieve(event.data.type, event.data.id, jwt)
 }
 
@@ -46,7 +45,7 @@ interface WorkerResponse {
   error: boolean,
 }
 
-type AcceptedTypes = "Zone" | "ZoneWithExtra" | "Aisle" | "Rack" | "Shelf" | "Category" | "Subcategory" | "Supplier" | "SupplierCode" | "Item" | "ItemImage" | "Transaction" | "Variant" | "Ticket" | "TicketType" | "TicketState" | "Product" | "ProductImage" | "Client" | "User";
+type AcceptedTypes = "Zone" | "ZoneWithExtra" | "Aisle" | "AisleWithExtra"|  "Rack" | "Shelf" | "Category" | "Subcategory" | "Supplier" | "SupplierCode" | "Item" | "ItemImage" | "Transaction" | "Variant" | "Ticket" | "TicketType" | "TicketState" | "Product" | "ProductImage" | "Client" | "User";
 
 type ClientRetrieveMapOptions = {
   [K in AcceptedTypes]: string;
@@ -57,6 +56,7 @@ const options: ClientRetrieveMapOptions = {
   "Zone": "zones/{{id}}",
   "ZoneWithExtra": "zones/{{id}}/extra",
   "Aisle": "aisles/{{id}}",
+  "AisleWithExtra": "aisles/{{id}}/extra",
   "Rack": "racks/{{id}}",
   "Shelf": "shelfs/{{id}}",
   "Category": "catories/{{id}}",
@@ -84,9 +84,48 @@ const clientRetrieve = async (
   id: string, 
   jwt: string, 
 ) => {
+  const apiPath = "http://localhost:8080/api/v1/";
+
+  if (type == "AisleWithExtra") {
+    const aisleOption = options["AisleWithExtra"]
+    const aislePath = aisleOption.replace(/{{id}}/g, id);
+    const aisleEndpoint = apiPath + aislePath;
+    const aisleResponse = await fetch(aisleEndpoint, {
+      method: "GET",
+      headers: { 
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${jwt}`,
+      }
+    });
+    const aisleBody = await aisleResponse.json();
+
+    const zoneOption = options["Zone"]
+    const zonePath = zoneOption.replace(/{{id}}/g, aisleBody.data.aisle.zone);
+    const zoneEndpoint = apiPath + zonePath;
+    const zoneResponse = await fetch(zoneEndpoint, {
+      method: "GET",
+      headers: { 
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${jwt}`,
+      }
+    });
+    const zoneBody = await zoneResponse.json();
+
+    const notification: WorkerResponse = {
+      content: {
+        aisleWithExtra: aisleBody.data,
+        zone: zoneBody.data,
+      },
+      type: type,
+      id: id,
+      error: false,
+    };
+    postMessage(notification);
+    return;
+  }
+
   const option = options[type as AcceptedTypes];
   const path = option.replace(/{{id}}/g, id);
-  const apiPath = "http://localhost:8080/api/v1/";
   const endpoint = apiPath + path;
   
   const response = await fetch(endpoint, {

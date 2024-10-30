@@ -5,6 +5,8 @@ import (
 	"reflect"
 	"strings"
 	"time"
+
+	"github.com/otaleghani/swms/internal/database"
 )
 
 // Filters a slice of structs based on a specified field and value.
@@ -232,4 +234,13 @@ func FilterByDataRange[T any](
   }
 
 	return filteredItems, nil
+}
+
+func deleteNilValue[T database.Identifiable](slice []T) []T {
+  for i := range slice {
+    if slice[i].GetId() == "nil" {
+      return append(slice[:i], slice[i+1:]...)
+    }
+  }
+  return slice
 }

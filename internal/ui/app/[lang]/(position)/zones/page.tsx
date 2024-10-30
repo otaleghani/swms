@@ -15,12 +15,10 @@ import HeaderWrapper from "@/app/ui/wrappers/headers/HeaderWrapper";
 import DialogFormPattern from "@/app/ui/patterns/dialog/DialogFormPattern";
 import ListZonesWithExtra from "@/app/ui/modules/zones/lists/ListZonesWithExtra";
 import { BreadcrumbsPattern } from "@/app/ui/patterns/BreadcrumbsPattern";
-import CardZoneWithExtra from "@/app/ui/modules/zones/cards/CardZoneWithExtra";
 
 // Types and interfaces
 import { DefaultPageProps } from "@/app/lib/types/pageParams";
 import { replaceFormAction } from "@/app/lib/actions/replace/replaceFormAction";
-import { defaultReplaceFormState } from "@/app/lib/types/data/replacer";
 
 export default async function ZonesPage({ 
   params, 

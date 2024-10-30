@@ -83,7 +83,7 @@ export async function validateAislesBulk(
     VALIDATION_SETTINGS.bigUnsignedNumber.maxLength,
   )).length != 0 && (state.error = true);
 
-  if (await checkExisting("Zone", state.result.zone)) {
+  if (!await checkExisting("Zone", state.result.zone)) {
     state.errorMessages.zone.push(
       dict.form.fields.zones.validation.not_found);
     state.error = true;

@@ -16,6 +16,8 @@ import { ZonesBulkPostRequestBody } from "../../types/data/zones";
 import { AislesBulkPostRequestBody } from "../../types/data/aisles";
 import { RacksBulkPostRequestBody } from "../../types/data/racks";
 import { ShelfsBulkPostRequestBody } from "../../types/data/shelfs";
+import { retrieveById } from "./retrieveById";
+import { retrieve } from "./retrieve";
 
 type CreateInBulkMapOptions = {
   [K in Extract<keyof TypeMapFilterLists, 
@@ -53,14 +55,55 @@ export async function createInBulk<T extends keyof CreateInBulkMapOptions>(
     payload: payload,
   });
 
-  const streamedChange: ServerSentEventData = {
-    id: "",
-    type: request,
-    action: "createInBulk",
-    before: payload,
-    after: response.data,
-  };
-  stringEmitter.emit("message", streamedChange);
+  const data: any = response.data;
+
+  for (let i = 0; i < data.length; i++) {
+    let item;
+    if (request == "Zones") {
+      item = await retrieveById("Zone", data[i]);
+      const streamedChange: ServerSentEventData = {
+        id: item.data?.id as string,
+        type: "Zone",
+        action: "create",
+        before: payload,
+        after: item.data,
+      };
+      stringEmitter.emit("message", streamedChange);
+    }
+    if (request == "Aisles") {
+      item = await retrieveById("Aisle", data[i]);
+      const streamedChange: ServerSentEventData = {
+        id: item.data?.id as string,
+        type: "Aisle",
+        action: "create",
+        before: payload,
+        after: item.data,
+      };
+      stringEmitter.emit("message", streamedChange);
+    }
+    if (request == "Racks") {
+      item = await retrieveById("Rack", data[i]);
+      const streamedChange: ServerSentEventData = {
+        id: item.data?.id as string,
+        type: "Rack",
+        action: "create",
+        before: payload,
+        after: item.data,
+      };
+      stringEmitter.emit("message", streamedChange);
+    }
+    if (request == "Shelfs") {
+      item = await retrieveById("Shelf", data[i]);
+      const streamedChange: ServerSentEventData = {
+        id: item.data?.id as string,
+        type: "Shelf",
+        action: "create",
+        before: payload,
+        after: item.data,
+      };
+      stringEmitter.emit("message", streamedChange);
+    }
+  }
 
   return response
 }

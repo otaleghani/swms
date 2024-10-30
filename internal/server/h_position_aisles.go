@@ -89,6 +89,53 @@ func getAisleById(db *database.Database) http.HandlerFunc {
 	}
 }
 
+func getAisleWithExtraById(db *database.Database) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
+		if err := checkAccessToken(token, db); err != nil {
+			ErrorResponse{Message: err.Error()}.r401(w, r)
+			return
+		}
+		path := r.PathValue("id")
+		rows, _ := db.SelectAisles("Id = ?", path)
+		if len(rows) == 0 {
+			ErrorResponse{Message: "Not found"}.r404(w, r)
+			return
+		}
+
+    var data []struct {
+      Aisle database.Aisle `json:"aisle"`
+      Racks_count int `json:"racksCount"`
+      Items_count int `json:"itemsCount"`
+    }
+    for i := 0; i < len(rows); i++ {
+      racks, err := db.SelectRacksByAisle(rows[i].Id)
+		  if err != nil {
+		  	ErrorResponse{Message: err.Error()}.r500(w, r)
+		  	return
+		  }
+      items, err := db.SelectItems("Aisle_id = ?", rows[i].Id)
+		  if err != nil {
+		  	ErrorResponse{Message: err.Error()}.r500(w, r)
+		  	return
+		  }
+      data = append(data, struct{
+          Aisle database.Aisle `json:"aisle"`
+          Racks_count int `json:"racksCount"`
+          Items_count int `json:"itemsCount"`
+        }{
+          Aisle: rows[i],
+          Racks_count: len(racks),
+          Items_count: len(items),
+        },
+      )
+    }
+
+
+		SuccessResponse{Data: data[0]}.r200(w, r)
+	}
+}
+
 func postAisles(db *database.Database) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")

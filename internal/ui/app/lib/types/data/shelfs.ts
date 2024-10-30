@@ -17,7 +17,8 @@ export const emptyShelf: Shelf = {
   rack: "",
 }
 
-export type ShelfWithExtra = Shelf & {
+export type ShelfWithExtra = {
+  shelf: Shelf;
   itemsCount: number;
 };
 export type ShelfsWithExtra = ShelfWithExtra[];

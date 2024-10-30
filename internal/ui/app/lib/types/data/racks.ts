@@ -15,7 +15,8 @@ export const emptyRack: Rack = {
   aisle: "",
 }
 
-export type RackWithExtra = Rack & {
+export type RackWithExtra = {
+  rack: Rack;
   shelfsCount: number;
   itemsCount: number;
 };

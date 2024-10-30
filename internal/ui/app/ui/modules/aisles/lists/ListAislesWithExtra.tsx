@@ -8,6 +8,7 @@ import FilterAisles from "@/app/ui/patterns/filter/data/FilterAisles";
 import { AisleWithExtra } from "@/app/lib/types/data/aisles";
 import PaginationPattern from "@/app/ui/patterns/pagination/PaginationPattern";
 import FetchToastPattern from "@/app/ui/patterns/FetchToast";
+import CardAisleWithExtra from "../cards/CardAisleWithExtra";
 
 interface Props {
   searchParams?: SearchParams["aisles"];
@@ -23,6 +24,10 @@ export default async function ListAislesWithExtra({
     request: "Zones", 
     paginationOff: "true"
   });
+  const aisles = await retrieve({
+    request: "Aisles", 
+    paginationOff: "true"
+  });
 
   const aislesWithExtra = await retrieve({
     request: "AislesWithExtra",
@@ -31,22 +36,36 @@ export default async function ListAislesWithExtra({
     filters: JSON.stringify(searchParams?.filters),
   })
 
-  console.log(aislesWithExtra)
   return (
     <>
-    {
-    //className="xl:h-[calc(100vh_-_121px)]">
-    }
-      <ScrollArea scrollHideDelay={10000} className="xl:h-[calc(100vh_-_57px)]">
+      <ScrollArea scrollHideDelay={10000} className="xl:h-[calc(100vh_-_114px)]">
         <div className={`grid gap-2 p-4 ${
           searchParams?.pagination?.layout 
             ? `${gridCols[searchParams.pagination.layout]}`
             : "grid-cols-3"
         }`}>
           {aislesWithExtra.data?.map((item: AisleWithExtra) => (
-            <div key={item.aisle.id}>
-              {item.aisle.id}
-            </div>
+            <CardAisleWithExtra 
+              key={item.aisle.id}
+              item={item}
+              dictCard={dict.aisle.card}
+              dictDialogEdit={dict.aisle.dialogs.edit}
+              dictDialogReplace={dict.aisle.dialogs.replace}
+              fields={{
+                name: {dict: dict.form.fields.name},
+                button: dict.form.buttons.submit,
+                zone: {
+                  list: zones.data ? zones.data : [], 
+                  name: "Zone",
+                  dict: dict.form.fields.zones,
+                },
+                aisle: {
+                  list: aisles.data ? aisles.data : [], 
+                  name: "Aisle",
+                  dict: dict.form.fields.aisles,
+                },
+              }}
+            />
           ))} 
           {aislesWithExtra.data === null && <>{dict.misc.notFound}</>}
         </div>

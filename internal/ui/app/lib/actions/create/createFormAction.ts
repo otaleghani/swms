@@ -13,6 +13,7 @@ export async function createFormAction<K extends keyof FormMap>(
   let locale = formData.get("locale");
   let type = formData.get("type");
 
+
   formData.forEach((value, key) => {
     if (key in result) {
       const currentValue = (result as any)[key];
@@ -26,12 +27,14 @@ export async function createFormAction<K extends keyof FormMap>(
     }
   });
   state.result = result;
+  console.log(state)
 
   const stateValidation = await validateState<K>(
     state, 
     type as string, 
     locale as string,
   );
+  console.log(state)
 
   if (stateValidation.error) { 
     return stateValidation 

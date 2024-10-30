@@ -77,7 +77,7 @@ export async function update<T extends keyof UpdateMapOptions>(
     id: id,
     type: request,
     action: "update",
-    before: before,
+    before: before.data,
     after: payload,
   };
   stringEmitter.emit("message", streamedChange);

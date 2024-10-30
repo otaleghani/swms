@@ -6,8 +6,8 @@ import (
 	"strings"
 
 	"github.com/google/uuid"
+	"github.com/otaleghani/spg"
 	"github.com/otaleghani/swms/internal/database"
-  "github.com/otaleghani/spg"
 )
 
 type ZonesFilters struct {
@@ -29,7 +29,8 @@ func getZones(db *database.Database) http.HandlerFunc {
 
     // Filter
     queryFilters := r.URL.Query().Get("filters")
-    filteredRows := rows
+    filteredRows := deleteNilValue(rows)
+
     if queryFilters != "" {
 		  var filters ZonesFilters
 		  err = json.Unmarshal([]byte(queryFilters), &filters)
@@ -48,7 +49,7 @@ func getZones(db *database.Database) http.HandlerFunc {
     if queryPaginationOff == "true" {
       // if paginationOff is set to "true", returns the data
       // without pagination
-		  SuccessResponse{Data: rows}.r200(w, r)
+		  SuccessResponse{Data: filteredRows}.r200(w, r)
       return
     }
     queryPage := r.URL.Query().Get("page")
@@ -257,9 +258,10 @@ func getZonesWithData(db *database.Database) http.HandlerFunc {
 			ErrorResponse{Message: err.Error()}.r500(w, r)
 			return
 		}
+
     // Filter
     queryFilters := r.URL.Query().Get("filters")
-    filteredRows := zones
+    filteredRows := deleteNilValue(zones)
 
     if queryFilters != "" {
 		  var filters ZonesFilters
