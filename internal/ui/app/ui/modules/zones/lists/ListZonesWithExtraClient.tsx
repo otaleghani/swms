@@ -52,16 +52,18 @@ export default function ListZonesWithExtraClient({
     // I need another one to manage the pagination
     // This one 
     // HERE PERPAGE
+    if (currentZonesWithExtra) {
     synchronizeZonesWithExtraList({
       streamer: streamer as Worker,
       list: currentZonesWithExtra,
       setList: setCurrentZonesWithExtra,
     });
+    }
   }, [])
 
   return (
     <>
-      {currentZonesWithExtra.map((item: ZoneWithExtra) => (
+      {currentZonesWithExtra && currentZonesWithExtra.map((item: ZoneWithExtra) => (
         <CardZoneWithExtra
           key={item.zone.id}
           item={item}

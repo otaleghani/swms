@@ -68,7 +68,6 @@ const clientRetrieve = async (type, id, jwt, request) => {
     const option = options[type];
     const path = option.replace(/{{id}}/g, id);
     const endpoint = apiPath + path;
-    //console.log(endpoint)
     const response = await fetch(endpoint, {
         method: "GET",
         headers: {
@@ -76,7 +75,6 @@ const clientRetrieve = async (type, id, jwt, request) => {
             "Authorization": `Bearer ${jwt}`,
         }
     });
-    console.log(response);
     if (!response.ok) {
         const notification = {
             content: null,

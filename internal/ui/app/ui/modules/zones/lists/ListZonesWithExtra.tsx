@@ -29,6 +29,7 @@ export default async function ListZonesWithExtra({
     filters: JSON.stringify(searchParams?.filters),
   });
   const zones = await retrieve({request: "Zones"});
+  console.log(searchParams?.filters)
 
   return (
     <>

@@ -100,7 +100,6 @@ const clientRetrieve = async (
   const option = options[type as AcceptedTypes];
   const path = option.replace(/{{id}}/g, id);
   const endpoint = apiPath + path;
-  //console.log(endpoint)
   const response = await fetch(endpoint, {
     method: "GET",
     headers: { 
@@ -108,7 +107,6 @@ const clientRetrieve = async (
       "Authorization": `Bearer ${jwt}`,
     }
   });
-  console.log(response)
 
   if (!response.ok) {
     const notification: WorkerResponse = {

@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 
 /** Components */
 import CardWrapper from "@/app/ui/wrappers/cards/CardWrapper";
+import { CardTitle, CardDescription } from "@/app/ui/components/card";
 
 /** Web workers */
 import streamer from "@/app/lib/workers";
@@ -48,21 +49,12 @@ export default function CardZoneWithExtra({
   const [syncState, setSyncState] = useState("none" as SyncState);
 
   useEffect(() => {
-    // Here I need a specif syncher for ZoneWithExtra, not just plain zone
-    //synchronizeElement<"Zone">({
-    //  streamer: streamer as Worker,
-    //  setSyncState: setSyncState,
-    //  element: zone,
-    //  setElement: setZone,
-    //  type: "Zone"
-    //});
-    //
-    //synchronizeZoneWithExtra({
-    //  streamer: streamer as Worker,
-    //  setSyncState: setSyncState,
-    //  element: zoneWithExtra,
-    //  setElement: setZoneWithExtra,
-    //})
+    synchronizeZoneWithExtra({
+      streamer: streamer as Worker,
+      setSyncState: setSyncState,
+      element: zoneWithExtra,
+      setElement: setZoneWithExtra,
+    })
   }, []);
 
   const CardFooter = () => {
@@ -153,6 +145,21 @@ export default function CardZoneWithExtra({
       </div>
     )
   }
+
+
+  const CardHeader = () => {
+    return (
+      <>
+        <CardTitle>
+          <span className="text-2xl font-semibold tracking-tight">
+            {zoneWithExtra.zone.name}
+          </span>
+        </CardTitle>
+        <CardDescription>{zoneWithExtra.zone.id}</CardDescription>
+      </>
+    )
+  }
+
   if (syncState != "hidden") {
     return (
       <>
@@ -163,14 +170,7 @@ export default function CardZoneWithExtra({
               syncState === "update" ? "animate-update" :
               ""
             }
-            Header={() => {
-              return (
-                <CardWrapperHeader
-                  title={zoneWithExtra.zone.name}
-                  description={zoneWithExtra.zone.id}
-                />
-              )
-            }}
+            Header={CardHeader}
             Content={CardContent}
             Footer={CardFooter}
           />

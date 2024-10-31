@@ -58,13 +58,13 @@ export function synchronizeZonesWithExtraList({
     if (isServerSentMessage(message.data)) {
       if (list && message.data.type == "Zone") {
 
-        //if (message.data.action == "update") {
-        //  const newElement = message.data.after;
-        //  list = list.map(element => (
-        //    element.zone.id === newElement.id ? {...element, zone: newElement} : element
-        //  ));
-        //  setList(list);
-        //};
+        if (message.data.action == "update") {
+          const newElement = message.data.after;
+          list = list.map(element => (
+            element.zone.id === newElement.id ? {...element, zone: newElement} : element
+          ));
+          setList(list);
+        };
 
         if (message.data.action == "replace") {
           const toPop = message.data.before.id;
@@ -73,7 +73,7 @@ export function synchronizeZonesWithExtraList({
 
           // Here we fetch client side the data
           streamer.postMessage({
-            type: "Zone",
+            type: "ZoneWithExtra",
             id: message.data.after.id,
             request: "replace"
           })
@@ -81,7 +81,7 @@ export function synchronizeZonesWithExtraList({
 
         if (message.data.action == "create") {
           streamer.postMessage({
-            type: "Zone",
+            type: "ZoneWithExtra",
             id: message.data.after.id,
             request: "create"
           });
@@ -107,27 +107,38 @@ export function synchronizeZoneWithExtra({
   setElement,
 }: SyncZoneWithExtra) {
   const handler = (message: MessageEvent<WorkerMessage>) => {
+    // If a fetch comes back it means that either:
+    // - a related aisle or item got changed
+    // - a zone was created
+    // - a zone was replaced
+    if (isFetchResultMessage(message.data)) {
+      if (message.data.type == "ZoneWithExtra" &&
+      message.data.id == element.zone.id) {
+        setSyncState("update");
+        element = message.data.content;
+        setElement(element);
+        delaySyncStateToNone(setSyncState);
+      };
+    };
+
     if (isServerSentMessage(message.data)) {
       // If the zone was updated, we want to update it here.
       if (message.data.action == "update" &&
-          message.data.type == "Zone" &&
-          message.data.id == element.zone.id) {
-        // here we want to update 
-
-          setSyncState("update");
-          element = {...element, zone: message.data.after};
-          setElement(element);
-          delaySyncStateToNone(setSyncState);
+      message.data.type == "Zone" &&
+      message.data.id == element.zone.id) {
+        setSyncState("update");
+        element = {...element, zone: message.data.after};
+        setElement(element);
+        delaySyncStateToNone(setSyncState);
       }
 
       // Everytime an Aisle or an Item get's changed, this function 
       // checks if that change impacted this zone. If yes, we just
       // re-fetch that data. If no, we ignore.
       if (( message.data.type == "Aisle" ||
-            message.data.type == "Item") &&
-          ( message.data.after.zone == element.zone.id ||
-            message.data.before.zone == element.zone.id
-          )) {
+      message.data.type == "Item") &&
+      (message.data.after.zone == element.zone.id ||
+      message.data.before.zone == element.zone.id)) {
         if (message.data.before.zone != message.data.after.zone) {
           streamer.postMessage({
             type: "ZoneWithExtra",
