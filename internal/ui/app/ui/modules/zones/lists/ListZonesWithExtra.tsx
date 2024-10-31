@@ -6,9 +6,11 @@ import { gridCols } from "@/app/lib/searchParams";
 // Local components
 import { ScrollArea } from "@/app/ui/components/scroll-area";
 import PaginationPattern from "@/app/ui/patterns/pagination/PaginationPattern";
-import FetchToastPattern from "@/app/ui/patterns/FetchToast";
+//import FetchToastPattern from "@/app/ui/patterns/FetchToast";
 import FilterZones from "@/app/ui/patterns/filter/data/FilterZones";
 import CardZoneWithExtra from "../cards/CardZoneWithExtra";
+import ListZonesWithExtraClient from "./ListZonesWithExtraClient";
+import { Zone, Zones, ZonesWithExtra } from "@/app/lib/types/data/zones";
 
 interface Props {
   searchParams?: SearchParams["zones"];
@@ -36,24 +38,25 @@ export default async function ListZonesWithExtra({
             ? `${gridCols[searchParams.pagination.layout]}`
             : "xl:grid-cols-3"
         }`}>
-          {zonesWithExtra.data?.map((item) => (
-            <CardZoneWithExtra
-              key={item.zone.id}
-              item={item}
-              dictDialogEdit={dict.zone.dialogs.edit}
-              dictDialogReplace={dict.zone.dialogs.replace}
-              dictCard={dict.zone.card}
-              fields={{
-                name: {dict: dict.form.fields.name},
-                button: dict.form.buttons.submit,
-                zone: {
-                  list: zones.data ? zones.data : [], 
-                  name: "Zone",
-                  dict: dict.form.fields.zones,
-                }
-              }}
-            />
-          ))}
+
+          <ListZonesWithExtraClient 
+            perPage={searchParams?.pagination?.perPage}
+            zonesWithExtra={zonesWithExtra.data as ZonesWithExtra}
+            zones={zones.data as Zones}
+            dictDialogReplace={dict.zone.dialogs.replace}
+            dictDialogEdit={dict.zone.dialogs.edit}
+            dictCard={dict.zone.card}
+            fields={{
+              name: {dict: dict.form.fields.name},
+              button: dict.form.buttons.submit,
+              zone: {
+                list: zones.data ? zones.data : [], 
+                name: "Zone",
+                dict: dict.form.fields.zones,
+              }
+            }}
+          />
+
         </div>
       </ScrollArea>
       <div className="flex items-center justify-end border-t xl:h-[57px]">
@@ -71,10 +74,10 @@ export default async function ListZonesWithExtra({
         />
       </div>
       {
-      <FetchToastPattern
-        type={[ "Zones", "Zone" ]}
-        dict={dict.toasts.fetching}
-      />
+      //<FetchToastPattern
+      //  type={[ "Zones", "Zone" ]}
+      //  dict={dict.toasts.fetching}
+      ///>
       }
     </>
   )

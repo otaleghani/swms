@@ -54,6 +54,7 @@ export function synchronizeElement<T extends ValidTypes>({
       message.data.id == element.id) {
 
         if (message.data.action == "update") {
+  //const [zone, setZone] = useState(item.zone);
           setSyncState("update");
           element = message.data.after;
           setElement(message.data.after);
@@ -63,9 +64,10 @@ export function synchronizeElement<T extends ValidTypes>({
         if (message.data.action == "replace") {
           if (message.data.before.id == element.id &&
               message.data.before.id != message.data.after.id) {
-            setSyncState("update");
-            element = message.data.after;
-            setElement(message.data.after);
+            console.log("REPLACED FIRED IN ELEMENT")
+            setSyncState("remove");
+            //element = message.data.after;
+            //setElement(message.data.after);
             delaySyncStateToNone(setSyncState);
           };
         };

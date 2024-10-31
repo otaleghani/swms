@@ -21,6 +21,9 @@ import { DictDialog, DictLabelList } from "@/app/lib/types/dictionary/misc";
 import { DictFormButton, DictInputField } from "@/app/lib/types/dictionary/form";
 import { replaceFormAction } from "@/app/lib/actions/replace/replaceFormAction";
 import { defaultReplaceFormState } from "@/app/lib/types/data/replacer";
+import { synchronizeElement } from "@/app/lib/synchronizers/genericSync";
+import { synchronizeList } from "@/app/lib/synchronizers/lists";
+import { synchronizeZoneWithExtra } from "@/app/lib/synchronizers/extra/zones";
 
 interface ZoneWithExtraCardProps {
   item: ZoneWithExtra, 
@@ -45,17 +48,21 @@ export default function CardZoneWithExtra({
   const [syncState, setSyncState] = useState("none" as SyncState);
 
   useEffect(() => {
-    synchronizeZoneWithExtraSingle({
-      streamer: streamer as Worker,
-      setSyncState: setSyncState,
-      zoneWithExtra: zoneWithExtra,
-      setZoneWithExtra: setZoneWithExtra,
-    });
-
-    //return () => {
-    //  console.log("CALLED TERMINATE")
-    //  streamer?.terminate();
-    //};
+    // Here I need a specif syncher for ZoneWithExtra, not just plain zone
+    //synchronizeElement<"Zone">({
+    //  streamer: streamer as Worker,
+    //  setSyncState: setSyncState,
+    //  element: zone,
+    //  setElement: setZone,
+    //  type: "Zone"
+    //});
+    //
+    //synchronizeZoneWithExtra({
+    //  streamer: streamer as Worker,
+    //  setSyncState: setSyncState,
+    //  element: zoneWithExtra,
+    //  setElement: setZoneWithExtra,
+    //})
   }, []);
 
   const CardFooter = () => {
@@ -83,7 +90,7 @@ export default function CardZoneWithExtra({
               initialState: {
                 ...defaultReplaceFormState,
                 result: {
-                  itemToDelete:zoneWithExtra.zone.id ? zoneWithExtra.zone.id : "",
+                  itemToDelete: zoneWithExtra.zone.id ? zoneWithExtra.zone.id : "",
                   itemThatReplaces: "",
                   type: "Zone",
                 }
@@ -114,7 +121,7 @@ export default function CardZoneWithExtra({
                 ...defaultZoneFormState,
                 result: {
                   id: zoneWithExtra.zone.id,
-                  name: zoneWithExtra.zone.name,
+                  name: zoneWithExtra.zone.name, 
                 }
               }
             }
@@ -125,48 +132,50 @@ export default function CardZoneWithExtra({
           size="sm"
           asChild
         >
-          <Link href={`/zones/${item.zone.id}`}>
+          <Link href={`/zones/${zoneWithExtra.zone.id}`}>
             View
           </Link>
         </Button>
       </div>
     )
   }
-
-  return (
-    <div>
-      { syncState != "hidden" && (
-        <CardWrapper 
-          className={
-            syncState === "remove" ? "animate-delete" :
-            syncState === "update" ? "animate-update" :
-            ""
-          }
-          Header={() => {
-            return (
-              <CardWrapperHeader
-                title={zoneWithExtra.zone.name}
-                description={zoneWithExtra.zone.id}
-              />
-            )
-          }}
-          Content={() => {
-            return (
-              <div>
-                <div className="border-t w-full flex justify-between py-2">
-                  <span>{dictCard.labels.aisles}</span>
-                  <span>{zoneWithExtra.aislesCount}</span>
-                </div>
-                <div className="border-y w-full flex justify-between py-2">
-                  <span>{dictCard.labels.items}</span>
-                  <span>{zoneWithExtra.itemsCount}</span>
-                </div>
-              </div>
-            )
-          }}
-          Footer={CardFooter}
-        />
-      )}
-    </div>
-  )
+  const CardContent = () => {
+    return (
+      <div>
+        <div className="border-t w-full flex justify-between py-2">
+          <span>{dictCard.labels.aisles}</span>
+          <span>{zoneWithExtra.aislesCount}</span>
+        </div>
+        <div className="border-y w-full flex justify-between py-2">
+          <span>{dictCard.labels.items}</span>
+          <span>{zoneWithExtra.itemsCount}</span>
+        </div>
+      </div>
+    )
+  }
+  if (syncState != "hidden") {
+    return (
+      <>
+        { 
+          <CardWrapper 
+            className={
+              syncState === "remove" ? "animate-delete" :
+              syncState === "update" ? "animate-update" :
+              ""
+            }
+            Header={() => {
+              return (
+                <CardWrapperHeader
+                  title={zoneWithExtra.zone.name}
+                  description={zoneWithExtra.zone.id}
+                />
+              )
+            }}
+            Content={CardContent}
+            Footer={CardFooter}
+          />
+        }
+      </>
+    )
+  }
 } 

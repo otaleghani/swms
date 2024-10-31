@@ -5,13 +5,14 @@ import { useToast } from "../components/hooks/use-toast";
 import { ToastType } from "@/app/lib/synchronizers/utils";
 import streamer from "@/app/lib/workers";
 import { ToastAction } from "@radix-ui/react-toast";
-import { synchronizeList } from "@/app/lib/synchronizers/lists";
+import { synchronizeBreakingChange, synchronizeList } from "@/app/lib/synchronizers/lists";
 import { DictFetchingToasts } from "@/app/lib/types/dictionary/toasts";
+import { SelectableItem } from "@/app/lib/types/form/fields";
 
 interface FetchToastPatternProps {
   /** view generic create and createInBulk for a list of valid types */
-  type: string[]; 
-  dict: DictFetchingToasts
+  type: SelectableItem;
+  dict: DictFetchingToasts;
 }
 
 export default function FetchToastPattern({
@@ -22,15 +23,7 @@ export default function FetchToastPattern({
   const [ showToast, setShowToast ] = useState("none" as ToastType);
 
   useEffect(() => {
-    synchronizeList({
-      streamer: streamer as Worker,
-      setShowToast: setShowToast,
-      type: type,
-    });
-
-    return () => {
-      streamer?.terminate();
-    };
+    synchronizeBreakingChange(streamer as Worker, setShowToast, type)
   }, []);
 
   useEffect(() => {

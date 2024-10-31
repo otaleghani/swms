@@ -23,7 +23,6 @@ import { replaceFormAction } from "@/app/lib/actions/replace/replaceFormAction";
 import { defaultReplaceFormState } from "@/app/lib/types/data/replacer";
 import { Zone } from "@/app/lib/types/data/zones";
 import ZoneNameWidget from "./ZoneNameWidget";
-import { synchronizeList } from "@/app/lib/synchronizers/list/zones";
 
 interface AisleWithExtraCardProps {
   item: AisleWithExtra, 
@@ -53,12 +52,12 @@ export default function CardAisleWithExtra({
   // zones, setZones...
 
   useEffect(() => {
-    synchronizeList({
-      streamer: streamer as Worker,
-      list: zones,
-      setList: setZones,
-      type:"Zone"
-    })
+    //synchronizeList({
+    //  streamer: streamer as Worker,
+    //  list: zones,
+    //  setList: setZones,
+    //  type:"Zone"
+    //})
     //synchronizeAisleWithExtraSingle({
     //  streamer: streamer as Worker,
     //  setSyncState: setSyncState,

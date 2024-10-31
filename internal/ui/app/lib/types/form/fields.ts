@@ -45,7 +45,14 @@ export type SelectableItem = keyof Omit<
   | "Replace"
   | "Login"
   | "Register"
->;
+  | "ItemImagesPostBody"
+  | "ProductImagesPostBody"
+  | "ZoneWithExtra"
+  | "AisleWithExtra"
+  | "RackWithExtra"
+  | "ShelfWithExtra"
+  | "SupplierWithExtra"
+  | "SupplierCodeWithExtra" >
 
 /**
  * Usually used by the component that is rendering

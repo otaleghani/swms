@@ -29,8 +29,16 @@ sse.onmessage = (event: MessageEvent<any>) => {
 // worker asking for a specific resource. The event.data sent would be
 // an object containing the type of resource to request and it's id.
 onmessage = (event) => {
-  //console.log(event.data)
-  clientRetrieve(event.data.type, event.data.id, jwt)
+  if (event.data.refresh) {
+    // If event.data.refresh exists we want to notify the FetchToastPattern to
+    // request a change.
+    postMessage({
+      type: event.data.type,
+      refresh: true,
+    });
+  } else {
+    clientRetrieve(event.data.type, event.data.id, jwt, event.data.request)
+  }
 }
 
 
@@ -42,7 +50,9 @@ interface WorkerResponse {
   type: string;
   id: string;
   content: any;
-  error: boolean,
+  /** Request is used by the syncher to understand what kind of 
+  * operation to do to the list. */
+  request: "create" | "replace" | "delete" | "error"
 }
 
 type AcceptedTypes = "Zone" | "ZoneWithExtra" | "Aisle" | "AisleWithExtra"|  "Rack" | "Shelf" | "Category" | "Subcategory" | "Supplier" | "SupplierCode" | "Item" | "ItemImage" | "Transaction" | "Variant" | "Ticket" | "TicketType" | "TicketState" | "Product" | "ProductImage" | "Client" | "User";
@@ -56,7 +66,7 @@ const options: ClientRetrieveMapOptions = {
   "Zone": "zones/{{id}}",
   "ZoneWithExtra": "zones/{{id}}/extra",
   "Aisle": "aisles/{{id}}",
-  "AisleWithExtra": "aisles/{{id}}/extra",
+  "AisleWithExtra": "aisles/{{id}}/extra/",
   "Rack": "racks/{{id}}",
   "Shelf": "shelfs/{{id}}",
   "Category": "catories/{{id}}",
@@ -83,51 +93,14 @@ const clientRetrieve = async (
   type: AcceptedTypes,
   id: string, 
   jwt: string, 
+  request: "create" | "replace" | "delete" | "error"
 ) => {
   const apiPath = "http://localhost:8080/api/v1/";
-
-  if (type == "AisleWithExtra") {
-    const aisleOption = options["AisleWithExtra"]
-    const aislePath = aisleOption.replace(/{{id}}/g, id);
-    const aisleEndpoint = apiPath + aislePath;
-    const aisleResponse = await fetch(aisleEndpoint, {
-      method: "GET",
-      headers: { 
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${jwt}`,
-      }
-    });
-    const aisleBody = await aisleResponse.json();
-
-    const zoneOption = options["Zone"]
-    const zonePath = zoneOption.replace(/{{id}}/g, aisleBody.data.aisle.zone);
-    const zoneEndpoint = apiPath + zonePath;
-    const zoneResponse = await fetch(zoneEndpoint, {
-      method: "GET",
-      headers: { 
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${jwt}`,
-      }
-    });
-    const zoneBody = await zoneResponse.json();
-
-    const notification: WorkerResponse = {
-      content: {
-        aisleWithExtra: aisleBody.data,
-        zone: zoneBody.data,
-      },
-      type: type,
-      id: id,
-      error: false,
-    };
-    postMessage(notification);
-    return;
-  }
 
   const option = options[type as AcceptedTypes];
   const path = option.replace(/{{id}}/g, id);
   const endpoint = apiPath + path;
-  
+  //console.log(endpoint)
   const response = await fetch(endpoint, {
     method: "GET",
     headers: { 
@@ -135,13 +108,14 @@ const clientRetrieve = async (
       "Authorization": `Bearer ${jwt}`,
     }
   });
+  console.log(response)
 
   if (!response.ok) {
     const notification: WorkerResponse = {
       content: null,
       type: type,
       id: id,
-      error: true,
+      request: "error"
     };
     postMessage(notification);
     return;
@@ -154,7 +128,7 @@ const clientRetrieve = async (
       content: null,
       type: type,
       id: id,
-      error: true,
+      request: "error"
     };
     postMessage(notification);
     return;
@@ -164,7 +138,8 @@ const clientRetrieve = async (
     content: body.data,
     type: type,
     id: id,
-    error: false,
+    request: request
   };
+  //console.log(notification)
   postMessage(notification);
 }

@@ -26,7 +26,12 @@ export type FetchResultMessage = {
   type: string;
   id: string;
   content: any;
-  error: boolean,
+  request: "create" | "replace" | "delete" | "error",
+}
+
+export type RefreshMessage = {
+  type: string;
+  refresh: boolean;
 }
 
 /** 
@@ -61,12 +66,16 @@ export const delaySyncStateToHidden = (
   });
 }
 
-export type WorkerMessage = ServerSentEventData | FetchResultMessage
+export type WorkerMessage = ServerSentEventData | FetchResultMessage | RefreshMessage
 export function isServerSentMessage(m: WorkerMessage): 
   m is ServerSentEventData {
     return (m as ServerSentEventData).after !== undefined;
 }
 export function isFetchResultMessage(m: WorkerMessage):
   m is FetchResultMessage {
-  return (m as FetchResultMessage).error !== undefined;
+  return (m as FetchResultMessage).content !== undefined;
+}
+export function isRefreshMessage(m: WorkerMessage):
+  m is RefreshMessage {
+  return (m as RefreshMessage).refresh !== undefined;
 }

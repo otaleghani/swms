@@ -75,7 +75,7 @@ export default function PositionSelectField({
   const [filteredAisles, setFilteredAisles] = useState(fields.aisle?.select.list);
   const [filteredRacks, setFilteredRacks] = useState(fields.rack?.select.list);
   const [filteredShelfs, setFilteredShelfs] = useState(fields.shelf?.select.list);
-
+  
   useEffect(() => {
     if (listAisles) {
       if (selectedAisle.zone !== selectedZone.id) {

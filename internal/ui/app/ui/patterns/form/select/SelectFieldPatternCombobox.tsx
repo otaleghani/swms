@@ -32,12 +32,14 @@ import {
 } from "@/app/lib/types/form/fields";
 
 export function SelectFieldPatternCombobox<T extends SelectableItem>({
+  name,
   list, 
   element, 
   setElement, 
   dict,
 }: SelectFieldPatternProps<T>) {
   const [open, setOpen] = useState(false);
+
   return (
     <>
       <Popover open={open} onOpenChange={setOpen}>
