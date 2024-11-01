@@ -10,7 +10,8 @@ import { synchronizeList } from "@/app/lib/synchronizers/lists";
 
 
 interface Props {
-  perPage?: number;
+  filters?: ZoneFiltersParams;
+  pagination?: PaginationParams;
   zonesWithExtra: ZoneWithExtra[];
   zones: Zone[];
   dictDialogEdit: DictDialog;
@@ -24,11 +25,14 @@ interface Props {
 }
 
 import streamer from "@/app/lib/workers";
-import { synchronizeZonesWithExtraList } from "@/app/lib/synchronizers/extra/zones";
+import { synchronizePaginatedZonesWithExtra, synchronizeZonesWithExtraList } from "@/app/lib/synchronizers/extra/zones";
+import { ZoneFiltersParams } from "@/app/lib/types/query/data";
+import { PaginationParams } from "@/app/lib/types/pageParams";
 
 // Client function to handle changes on list client side
 export default function ListZonesWithExtraClient({
-  perPage,
+  pagination,
+  filters,
   zonesWithExtra,
   zones,
   dictDialogEdit,
@@ -52,13 +56,18 @@ export default function ListZonesWithExtraClient({
     // I need another one to manage the pagination
     // This one 
     // HERE PERPAGE
-    if (currentZonesWithExtra) {
-    synchronizeZonesWithExtraList({
+    //synchronizeZonesWithExtraList({
+    //  streamer: streamer as Worker,
+    //  list: currentZonesWithExtra,
+    //  setList: setCurrentZonesWithExtra,
+    //});
+    synchronizePaginatedZonesWithExtra({
+      filters: filters,
+      pagination: pagination,
       streamer: streamer as Worker,
       list: currentZonesWithExtra,
       setList: setCurrentZonesWithExtra,
-    });
-    }
+    })
   }, [])
 
   return (

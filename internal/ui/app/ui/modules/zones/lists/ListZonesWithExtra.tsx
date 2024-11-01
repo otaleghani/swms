@@ -41,7 +41,8 @@ export default async function ListZonesWithExtra({
         }`}>
 
           <ListZonesWithExtraClient 
-            perPage={searchParams?.pagination?.perPage}
+            filters={searchParams?.filters}
+            pagination={searchParams?.pagination}
             zonesWithExtra={zonesWithExtra.data as ZonesWithExtra}
             zones={zones.data as Zones}
             dictDialogReplace={dict.zone.dialogs.replace}

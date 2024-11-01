@@ -26,7 +26,7 @@ export type FetchResultMessage = {
   type: string;
   id: string;
   content: any;
-  request: "create" | "replace" | "delete" | "error",
+  request: "create" | "replace" | "delete" | "error" | "refresh",
 }
 
 export type RefreshMessage = {

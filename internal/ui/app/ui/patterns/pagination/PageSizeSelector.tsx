@@ -26,7 +26,6 @@ function getPerPage(params: SearchParams, type: PaginationType) {
 export default function PageSizeSelector({
   type
 }: PageSizeSelectorProps) {
-  const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
   
@@ -50,7 +49,7 @@ export default function PageSizeSelector({
 
   useEffect(() => {
     if (Number(perPage) != currentPerPage) {
-      router.push(createPageURL(Number(perPage)))
+      window.location.href = createPageURL(Number(perPage))
     }
   }, [perPage]);
 

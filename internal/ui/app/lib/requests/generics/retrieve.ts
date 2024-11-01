@@ -81,6 +81,7 @@ export async function retrieve<T extends keyof RetrieveMapOptions>({
     path += `&filters=${filters}`
   }
 
+  console.log(path)
   const response = await fetchData<TypeMap[T]>({
     path: path,
     method: "GET",
