@@ -12,7 +12,6 @@ import streamer from "@/app/lib/workers";
 import CardWrapperHeader from "@/app/ui/wrappers/cards/CardWrapperHeader";
 import { defaultZoneFormState, ZoneWithExtra } from "@/app/lib/types/data/zones";
 import { SyncState } from "@/app/lib/synchronizers/utils";
-import { synchronizeZoneWithExtraSingle } from "@/app/lib/synchronizers/extra/zonesWithExtra";
 import { Button } from "@/app/ui/components/button";
 import Link from "next/link";
 import DialogFormPattern from "@/app/ui/patterns/dialog/DialogFormPattern";
@@ -22,8 +21,6 @@ import { DictDialog, DictLabelList } from "@/app/lib/types/dictionary/misc";
 import { DictFormButton, DictInputField } from "@/app/lib/types/dictionary/form";
 import { replaceFormAction } from "@/app/lib/actions/replace/replaceFormAction";
 import { defaultReplaceFormState } from "@/app/lib/types/data/replacer";
-import { synchronizeElement } from "@/app/lib/synchronizers/genericSync";
-import { synchronizeList } from "@/app/lib/synchronizers/lists";
 import { synchronizeZoneWithExtra } from "@/app/lib/synchronizers/extra/zones";
 
 interface ZoneWithExtraCardProps {

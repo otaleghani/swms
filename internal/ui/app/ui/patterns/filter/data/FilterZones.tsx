@@ -1,7 +1,7 @@
 "use client";
 
 // Dictionaries
-import { DictInputField, DictSelectField } from "@/app/lib/types/dictionary/form";
+import { DictInputField } from "@/app/lib/types/dictionary/form";
 import { DictFilters } from "@/app/lib/types/dictionary/misc";
 
 // Components
@@ -50,7 +50,7 @@ const SheetPatternBody = ({fields, dict}: Props) => {
       </div>
       <div className="flex gap-2">
         <Button asChild> 
-          <Link href={link}>{dict.button}</Link>
+          <a href={link}>{dict.button}</a>
         </Button>
         <Button variant="secondary" onClick={() => {
           setSearchTerm("");

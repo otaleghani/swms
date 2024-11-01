@@ -38,7 +38,7 @@ export default function DialogFormPattern<T extends keyof FormPropsMap>({
 
   const DialogFormPatternBody = () => {
     return (
-      <>
+      <div className="p-4 md:p-0">
         <DialogWrapperHeader 
           title={self.dict.title}
           description={self.dict.description}
@@ -51,7 +51,7 @@ export default function DialogFormPattern<T extends keyof FormPropsMap>({
           }}
           showButton={showButton}
         />
-      </>
+      </div>
     )
   }
 

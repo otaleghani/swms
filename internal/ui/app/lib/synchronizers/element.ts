@@ -39,7 +39,8 @@ export type SyncElement<T extends ValidTypes> = {
 }
 
 /** Generic version of the synchronizer that handles
-* element specific changes, like direct update, delete, replace
+* element specific changes, like direct update, delete, replace.
+* It's mainly used in generic cards and widgets for foreign keys
 * */
 export function synchronizeElement<T extends ValidTypes>({
   streamer,
@@ -64,10 +65,10 @@ export function synchronizeElement<T extends ValidTypes>({
         if (message.data.action == "replace") {
           if (message.data.before.id == element.id &&
               message.data.before.id != message.data.after.id) {
-            console.log("REPLACED FIRED IN ELEMENT")
+            //console.log("REPLACED FIRED IN ELEMENT")
             setSyncState("remove");
-            //element = message.data.after;
-            //setElement(message.data.after);
+            element = message.data.after;
+            setElement(message.data.after);
             delaySyncStateToNone(setSyncState);
           };
         };

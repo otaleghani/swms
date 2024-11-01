@@ -15,13 +15,14 @@ import {
   DrawerFooter,
 } from "@/app/ui/components/drawer"
 import { Button } from "@/app/ui/components/button";
+import { DictDialog } from "@/app/lib/types/dictionary/misc";
 
 interface DialogWrapperProps {
   Trigger: React.FunctionComponent;
   Body: React.FunctionComponent;
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  dict: any;
+  dict: DictDialog;
 }
 
 /**
@@ -52,14 +53,9 @@ export default function DialogWrapper({
       <Trigger />
       <DrawerContent>
         <Body />
-        <DrawerFooter className="pt-2">
+        <DrawerFooter className="-mt-9">
           <DrawerClose asChild>
-            <Button variant="outline">
-
-              {
-                //dict.buttons.clear.active
-              }
-            </Button>
+            <Button variant="outline">{dict.clear}</Button>
           </DrawerClose>
         </DrawerFooter>
       </DrawerContent>

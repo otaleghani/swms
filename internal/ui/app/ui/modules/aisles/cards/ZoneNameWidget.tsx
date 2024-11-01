@@ -1,4 +1,4 @@
-import { synchronizeElement } from "@/app/lib/synchronizers/genericSync";
+import { synchronizeElement } from "@/app/lib/synchronizers/element";
 import { SyncState } from "@/app/lib/synchronizers/utils";
 import { Zone } from "@/app/lib/types/data/zones"
 import streamer from "@/app/lib/workers";
