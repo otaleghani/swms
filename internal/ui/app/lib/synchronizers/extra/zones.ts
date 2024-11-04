@@ -12,68 +12,12 @@ import { ServerSentEventData } from "@/app/api/stream/route";
 import { ZoneFiltersParams } from "../../types/query/data";
 import { PaginationParams } from "../../types/pageParams";
 
-export type SyncZonesWithExtra = {
-  streamer: Worker,
-  list: ZoneWithExtra[],
-  setList: Dispatch<SetStateAction<ZoneWithExtra[]>>,
-}
-
 export type SyncPaginatedZonesWithExtra = {
   pagination?: PaginationParams;
   filters?: ZoneFiltersParams;
   streamer: Worker,
   list: ZoneWithExtra[],
   setList: Dispatch<SetStateAction<ZoneWithExtra[]>>,
-}
-
-export function synchronizeZonesWithExtraList({
-  streamer,
-  list,
-  setList
-}: SyncZonesWithExtra) {
-  const handleFetchResultMessage = (data: FetchResultMessage) => {
-    if (data.type !== "ZoneWithExtra") return;
-    switch (data.request) {
-      case "error":
-        console.error("Something went wrong with client-side fetching");
-        break;
-      case "create":
-        list = [...list, data.content];
-        setList(list)
-        break;
-      case "delete":
-        list = list.filter((item) => item !== data.content.zone.id);
-        setList(list)
-        break;
-      default:
-        console.warn(`Unhandled action type: ${data.request}`);
-    };
-  };
-
-  const handleServerSentMessage = (data: ServerSentEventData) => {
-    if (!list || data.type !== "Zone") return;
-
-    switch (data.action) {
-      case "replace":
-        list = list.filter((item) => item.zone.id !== data.before.id);
-        setList(list);
-        streamer.postMessage({type: "ZoneWithExtra", id: data.after.id, request: "replace"});
-        break;
-
-      case "create":
-        streamer.postMessage({type: "ZoneWithExtra", id: data.after.id, request: "create"});
-        break;
-        
-      default:
-        console.warn(`Unhandled action type: ${data.action}`);
-    };
-  };
-
-  const handler = (message: MessageEvent<WorkerMessage>) => {
-    if (isFetchResultMessage(message.data)) { handleFetchResultMessage(message.data) };
-    if (isServerSentMessage(message.data)) { handleServerSentMessage(message.data) };
-  };
-  streamer.addEventListener("message", handler);
 }
 
 export function synchronizePaginatedZonesWithExtra({
@@ -95,7 +39,6 @@ export function synchronizePaginatedZonesWithExtra({
         break;
     };
   };
-
   const handleServerSentMessage = (data: ServerSentEventData) => {
     if (!list || data.type !== "Zone") return;
     if (data.action !== "update") {
@@ -164,3 +107,60 @@ export function synchronizeZoneWithExtra({
   };
   streamer.addEventListener("message", handler);
 }
+
+// TO ARCHIVE
+//export type SyncZonesWithExtra = {
+//  streamer: Worker,
+//  list: ZoneWithExtra[],
+//  setList: Dispatch<SetStateAction<ZoneWithExtra[]>>,
+//}
+// old version without pagination. 
+//export function synchronizeZonesWithExtraList({
+//  streamer,
+//  list,
+//  setList
+//}: SyncZonesWithExtra) {
+//  const handleFetchResultMessage = (data: FetchResultMessage) => {
+//    if (data.type !== "ZoneWithExtra") return;
+//    switch (data.request) {
+//      case "error":
+//        console.error("Something went wrong with client-side fetching");
+//        break;
+//      case "create":
+//        list = [...list, data.content];
+//        setList(list)
+//        break;
+//      case "delete":
+//        list = list.filter((item) => item !== data.content.zone.id);
+//        setList(list)
+//        break;
+//      default:
+//        console.warn(`Unhandled action type: ${data.request}`);
+//    };
+//  };
+//
+//  const handleServerSentMessage = (data: ServerSentEventData) => {
+//    if (!list || data.type !== "Zone") return;
+//
+//    switch (data.action) {
+//      case "replace":
+//        list = list.filter((item) => item.zone.id !== data.before.id);
+//        setList(list);
+//        streamer.postMessage({type: "ZoneWithExtra", id: data.after.id, request: "replace"});
+//        break;
+//
+//      case "create":
+//        streamer.postMessage({type: "ZoneWithExtra", id: data.after.id, request: "create"});
+//        break;
+//        
+//      default:
+//        console.warn(`Unhandled action type: ${data.action}`);
+//    };
+//  };
+//
+//  const handler = (message: MessageEvent<WorkerMessage>) => {
+//    if (isFetchResultMessage(message.data)) { handleFetchResultMessage(message.data) };
+//    if (isServerSentMessage(message.data)) { handleServerSentMessage(message.data) };
+//  };
+//  streamer.addEventListener("message", handler);
+//}

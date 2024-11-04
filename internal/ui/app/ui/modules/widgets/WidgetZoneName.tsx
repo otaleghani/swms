@@ -14,6 +14,7 @@ export default function WidgetZoneName({
   id,
   name,
 }: Props) {
+  // He don't know about the state of the parent...
   const [zone, setZone] = useState({id: "", name: ""});
   const [syncState, setSyncState] = useState("none" as SyncState);
 

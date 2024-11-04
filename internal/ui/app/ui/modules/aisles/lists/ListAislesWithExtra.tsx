@@ -5,10 +5,11 @@ import { ScrollArea } from "@/app/ui/components/scroll-area";
 import { gridCols } from "@/app/lib/searchParams";
 import { Zones } from "@/app/lib/types/data/zones";
 import FilterAisles from "@/app/ui/patterns/filter/data/FilterAisles";
-import { AisleWithExtra } from "@/app/lib/types/data/aisles";
+import { Aisles, AislesWithExtra, AisleWithExtra } from "@/app/lib/types/data/aisles";
 import PaginationPattern from "@/app/ui/patterns/pagination/PaginationPattern";
 import FetchToastPattern from "@/app/ui/patterns/FetchToast";
 import CardAisleWithExtra from "../cards/CardAisleWithExtra";
+import ListAislesWithExtraClient from "./ListAislesWithExtraClient";
 
 interface Props {
   searchParams?: SearchParams["aisles"];
@@ -44,29 +45,28 @@ export default async function ListAislesWithExtra({
             ? `${gridCols[searchParams.pagination.layout]}`
             : "grid-cols-3"
         }`}>
-          {aislesWithExtra.data?.map((item: AisleWithExtra) => (
-            <CardAisleWithExtra 
-              key={item.aisle.id}
-              item={item}
-              dictCard={dict.aisle.card}
-              dictDialogEdit={dict.aisle.dialogs.edit}
-              dictDialogReplace={dict.aisle.dialogs.replace}
-              fields={{
-                name: {dict: dict.form.fields.name},
-                button: dict.form.buttons.submit,
-                zone: {
-                  list: zones.data ? zones.data : [], 
-                  name: "Zone",
-                  dict: dict.form.fields.zones,
-                },
-                aisle: {
-                  list: aisles.data ? aisles.data : [], 
-                  name: "Aisle",
-                  dict: dict.form.fields.aisles,
-                },
-              }}
-            />
-          ))} 
+          <ListAislesWithExtraClient 
+            pagination={searchParams?.pagination}
+            filters={searchParams?.filters}
+            aislesWithExtra={aislesWithExtra.data as AislesWithExtra}
+            dictDialogEdit={dict.aisle.dialogs.edit}
+            dictDialogReplace={dict.aisle.dialogs.replace}
+            dictCard={dict.aisle.card}
+            fields={{
+              name: { dict: dict.form.fields.name },
+              button: dict.form.buttons.submit,
+              zone: { 
+                dict: dict.form.fields.zones,
+                list: zones.data as Zones,
+                name: "Zone",
+              },
+              aisle: { 
+                dict: dict.form.fields.aisles,
+                list: aisles.data as Aisles,
+                name: "Aisle",
+              },
+            }}
+          />
           {aislesWithExtra.data === null && <>{dict.misc.notFound}</>}
         </div>
       </ScrollArea>
@@ -87,10 +87,6 @@ export default async function ListAislesWithExtra({
         <PaginationPattern 
           totalPages={aislesWithExtra.totalPages as number} 
           type="aisles"
-        />
-        <FetchToastPattern
-          type={[ "Aisle", "Aisles" ]}
-          dict={dict.toasts.fetching}
         />
       </div>
     </>

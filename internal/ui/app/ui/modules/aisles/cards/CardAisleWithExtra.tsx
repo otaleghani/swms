@@ -11,7 +11,7 @@ import streamer from "@/app/lib/workers";
 import CardWrapperHeader from "@/app/ui/wrappers/cards/CardWrapperHeader";
 import { defaultAisleFormState, AisleWithExtra } from "@/app/lib/types/data/aisles";
 import { SyncState } from "@/app/lib/synchronizers/utils";
-import { synchronizeAisleWithExtraSingle } from "@/app/lib/synchronizers/extra/aislesWithExtra";
+//import { synchronizeAisleWithExtraSingle } from "@/app/lib/synchronizers/extra/aislesWithExtra";
 import { Button } from "@/app/ui/components/button";
 import Link from "next/link";
 import DialogFormPattern from "@/app/ui/patterns/dialog/DialogFormPattern";
@@ -44,34 +44,22 @@ export default function CardAisleWithExtra({
   dictDialogReplace,
   fields
 }: AisleWithExtraCardProps) {
-  const initialItem = fields.zone.list.find((zone) => zone.id === item.aisle.zone)
   const [aisleWithExtra, setAisleWithExtra] = useState(item);
+
+  const initialItem = fields.zone.list.find((zone) => zone.id === aisleWithExtra.aisle.zone) as Zone;
+
   const [zone, setZone] = useState(initialItem);
   const [syncState, setSyncState] = useState("none" as SyncState);
   const [zones, setZones] = useState(fields.zone.list)
-  // zones, setZones...
 
   useEffect(() => {
-    //synchronizeList({
-    //  streamer: streamer as Worker,
-    //  list: zones,
-    //  setList: setZones,
-    //  type:"Zone"
-    //})
-    //synchronizeAisleWithExtraSingle({
-    //  streamer: streamer as Worker,
-    //  setSyncState: setSyncState,
-    //  aisleWithExtra: aisleWithExtra,
-    //  setAisleWithExtra: setAisleWithExtra,
-    //  setZone: setZone,
-    //});
+
   }, []);
 
   useEffect(() => {
-    //console.log(zone?.id == aisleWithExtra.aisle.zone ? "true" : "false")
-    //console.log("Client zone: ", zone?.id)
-    //console.log("Client aisle.zone: ", aisleWithExtra.aisle?.zone)
-  }, [zone])
+    console.log("fired")
+    setZone(fields.zone.list.find((zone) => zone.id === aisleWithExtra.aisle.zone) as Zone);
+  }, [aisleWithExtra]);
 
   const CardFooter = () => {
     return (
@@ -109,34 +97,36 @@ export default function CardAisleWithExtra({
       //    }}
       //  />
 
-      //  <DialogFormPattern<"Aisle"> 
-      //    showButton
-      //    self={{
-      //      triggerType: "iconEdit",
-      //      dict: dictDialogEdit,
-      //    }}
-      //    formPattern={{
-      //      type: "Aisle",
-      //      self: {
-      //        fields: {
-      //          ...fieldsDefaultProps,
-      //          name: fields.name,
-      //          button: fields.button,
-      //        },
-      //      },
-      //      form: {
-      //        formName: "Aisle",
-      //        formAction: updateFormAction,
-      //        initialState: {
-      //          ...defaultAisleFormState,
-      //          result: {
-      //            id: aisleWithExtra.aisle.id,
-      //            name: aisleWithExtra.aisle.name,
-      //          }
-      //        }
-      //      }
-      //    }}
-      //  />
+      <DialogFormPattern<"Aisle"> 
+        showButton
+        self={{
+          triggerType: "iconEdit",
+          dict: dictDialogEdit,
+        }}
+        formPattern={{
+          type: "Aisle",
+          self: {
+            fields: {
+              ...fieldsDefaultProps,
+              name: fields.name,
+              zone: fields.zone,
+              button: fields.button,
+            },
+          },
+          form: {
+            formName: "Aisle",
+            formAction: updateFormAction,
+            initialState: {
+              ...defaultAisleFormState,
+              result: {
+                id: aisleWithExtra.aisle.id,
+                zone: aisleWithExtra.aisle.zone,
+                name: aisleWithExtra.aisle.name,
+              }
+            }
+          }
+        }}
+      />
 
       //  <Button
       //    size="sm"
@@ -165,13 +155,9 @@ export default function CardAisleWithExtra({
         </div>
         <div className="border-y w-full flex justify-between py-2">
           <span>{dictCard.labels.zone}</span>
-          {
-            //<span>{zone?.name}</span>
-          }
           <ZoneNameWidget 
-            zoneInitialValue={initialItem as Zone}
-            //syncState={syncState}
-            //setSyncState={setSyncState}
+            zone={zone}
+            setZone={setZone}
           />
         </div>
         {zones.map(item => (

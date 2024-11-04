@@ -54,7 +54,7 @@ export async function validateAisle(
     VALIDATION_SETTINGS.foreignKeys.maxLength,
   )).length != 0 && (state.error = true);
 
-  if (await checkExisting("Zone", state.result.zone)) {
+  if (!await checkExisting("Zone", state.result.zone)) {
     state.errorMessages.zone.push(
       dict.form.fields.zones.validation.not_found)
     state.error = true;

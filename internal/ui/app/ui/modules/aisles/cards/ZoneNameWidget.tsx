@@ -2,18 +2,20 @@ import { synchronizeElement } from "@/app/lib/synchronizers/element";
 import { SyncState } from "@/app/lib/synchronizers/utils";
 import { Zone } from "@/app/lib/types/data/zones"
 import streamer from "@/app/lib/workers";
-import { useState, useEffect} from "react";
+import { useState, useEffect, Dispatch, SetStateAction} from "react";
 import Link from "next/link";
 
 interface Props {
-  zoneInitialValue: Zone;
+  zone: Zone;
+  setZone: Dispatch<SetStateAction<Zone>>;
 }
 
 /** Creates a span */
 export default function ZoneNameWidget({
-  zoneInitialValue,
+  zone,
+  setZone,
 }: Props) {
-  const [zone, setZone] = useState(zoneInitialValue);
+  //const [zone, setZone] = useState(zoneInitialValue);
   const [syncState, setSyncState] = useState("none" as SyncState);
 
   useEffect(() => {
