@@ -53,14 +53,6 @@ export default function ListZonesWithExtraClient({
       type:"Zone",
     });
 
-    // I need another one to manage the pagination
-    // This one 
-    // HERE PERPAGE
-    //synchronizeZonesWithExtraList({
-    //  streamer: streamer as Worker,
-    //  list: currentZonesWithExtra,
-    //  setList: setCurrentZonesWithExtra,
-    //});
     synchronizePaginatedZonesWithExtra({
       filters: filters,
       pagination: pagination,

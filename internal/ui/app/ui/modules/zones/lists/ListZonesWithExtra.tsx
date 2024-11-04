@@ -28,7 +28,7 @@ export default async function ListZonesWithExtra({
     perPage: searchParams?.pagination?.perPage,
     filters: JSON.stringify(searchParams?.filters),
   });
-  const zones = await retrieve({request: "Zones"});
+  const zones = await retrieve({request: "Zones", paginationOff: true});
   console.log(searchParams?.filters)
 
   return (

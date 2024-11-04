@@ -13,11 +13,11 @@ import {
   delaySyncStateToHidden, 
   delaySyncStateToNone, 
   isServerSentMessage, 
-  isFetchResultMessage, 
   WorkerMessage,
   SyncState,
 } from "./utils";
 import { TypeMapFilterSingles, TypeMap } from "./../types/requests";
+import { ServerSentEventData } from "@/app/api/stream/route";
 
 type ValidTypes = keyof Omit<TypeMapFilterSingles, 
   "ItemImagesPostBody" |
@@ -28,7 +28,6 @@ type ValidTypes = keyof Omit<TypeMapFilterSingles,
   "ShelfWithExtra" |
   "SupplierWithExtra" |
   "SupplierCodeWithExtra" >
-
 
 export type SyncElement<T extends ValidTypes> = {
   streamer:  Worker,
@@ -49,36 +48,30 @@ export function synchronizeElement<T extends ValidTypes>({
   setElement,
   type,
 }: SyncElement<T>) {
-  const handler = (message: MessageEvent<WorkerMessage>) => {
-    if (isServerSentMessage(message.data)) {
-      if (element && message.data.type == type &&
-      message.data.id == element.id) {
-
-        if (message.data.action == "update") {
-  //const [zone, setZone] = useState(item.zone);
-          setSyncState("update");
-          element = message.data.after;
-          setElement(message.data.after);
-          delaySyncStateToNone(setSyncState);
-        };
-
-        if (message.data.action == "replace") {
-          if (message.data.before.id == element.id &&
-              message.data.before.id != message.data.after.id) {
-            //console.log("REPLACED FIRED IN ELEMENT")
-            setSyncState("remove");
-            element = message.data.after;
-            setElement(message.data.after);
-            delaySyncStateToNone(setSyncState);
-          };
-        };
-
-        if (message.data.action == "remove") {
-          setSyncState("remove");
-          delaySyncStateToHidden(setSyncState);
-        };
-      };
+  const handleServerSentMessage = (data: ServerSentEventData) => {
+    if (!element || data.type !== type || data.id !== element.id) return;
+    switch (data.action) {
+      case "update": 
+        setSyncState("update");
+        element = data.after;
+        setElement(element);
+        delaySyncStateToNone(setSyncState)
+        break;
+      case "replace":
+        setSyncState("update");
+        element = data.after;
+        setElement(element);
+        delaySyncStateToNone(setSyncState)
+        break;
+      case "remove": 
+        setSyncState("remove");
+        delaySyncStateToHidden(setSyncState);
+        break;
     };
+  };
+
+  const handler = (message: MessageEvent<WorkerMessage>) => {
+    if (isServerSentMessage(message.data)) { handleServerSentMessage(message.data) }
   };
 
   streamer.addEventListener("message", handler);

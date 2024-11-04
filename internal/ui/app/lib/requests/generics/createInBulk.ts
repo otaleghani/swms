@@ -55,54 +55,45 @@ export async function createInBulk<T extends keyof CreateInBulkMapOptions>(
     payload: payload,
   });
 
-  const data: any = response.data;
-
-  for (let i = 0; i < data.length; i++) {
-    let item;
-    if (request == "Zones") {
-      item = await retrieveById("Zone", data[i]);
-      const streamedChange: ServerSentEventData = {
-        id: item.data?.id as string,
-        type: "Zone",
-        action: "create",
-        before: payload,
-        after: item.data,
-      };
-      stringEmitter.emit("message", streamedChange);
-    }
-    if (request == "Aisles") {
-      item = await retrieveById("Aisle", data[i]);
-      const streamedChange: ServerSentEventData = {
-        id: item.data?.id as string,
-        type: "Aisle",
-        action: "create",
-        before: payload,
-        after: item.data,
-      };
-      stringEmitter.emit("message", streamedChange);
-    }
-    if (request == "Racks") {
-      item = await retrieveById("Rack", data[i]);
-      const streamedChange: ServerSentEventData = {
-        id: item.data?.id as string,
-        type: "Rack",
-        action: "create",
-        before: payload,
-        after: item.data,
-      };
-      stringEmitter.emit("message", streamedChange);
-    }
-    if (request == "Shelfs") {
-      item = await retrieveById("Shelf", data[i]);
-      const streamedChange: ServerSentEventData = {
-        id: item.data?.id as string,
-        type: "Shelf",
-        action: "create",
-        before: payload,
-        after: item.data,
-      };
-      stringEmitter.emit("message", streamedChange);
-    }
+  if (request == "Zones") {
+    const streamedChange: ServerSentEventData = {
+      id: "",
+      type: "Zone",
+      action: "createInBulk",
+      before: "",
+      after: "",
+    };
+    stringEmitter.emit("message", streamedChange);
+  }
+  if (request == "Aisles") {
+    const streamedChange: ServerSentEventData = {
+      id: "",
+      type: "Aisle",
+      action: "createInBulk",
+      before: "",
+      after: "",
+    };
+    stringEmitter.emit("message", streamedChange);
+  }
+  if (request == "Racks") {
+    const streamedChange: ServerSentEventData = {
+      id: "",
+      type: "Rack",
+      action: "createInBulk",
+      before: "",
+      after: "",
+    };
+    stringEmitter.emit("message", streamedChange);
+  }
+  if (request == "Shelfs") {
+    const streamedChange: ServerSentEventData = {
+      id: "",
+      type: "Shelfs",
+      action: "createInBulk",
+      before: "",
+      after: "",
+    };
+    stringEmitter.emit("message", streamedChange);
   }
 
   return response

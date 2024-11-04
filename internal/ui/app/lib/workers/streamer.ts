@@ -33,6 +33,7 @@ onmessage = (event) => {
       page: event.data.page,
       perPage: event.data.perPage,
       filters: event.data.filters,
+      paginationOff: event.data.paginationOff,
       type: event.data.type,
       jwt: jwt,
       request: "refresh"
@@ -61,7 +62,7 @@ interface WorkerResponse {
   content: any;
   /** Request is used by the syncher to understand what kind of 
   * operation to do to the list. */
-  request: "create" | "replace" | "delete" | "error"
+  request: "create" | "replace" | "delete" | "error" | "refresh"
 }
 
 type AcceptedTypes = "Zone" | "ZoneWithExtra" | "Aisle" | "AisleWithExtra"|  "Rack" | "Shelf" | "Category" | "Subcategory" | "Supplier" | "SupplierCode" | "Item" | "ItemImage" | "Transaction" | "Variant" | "Ticket" | "TicketType" | "TicketState" | "Product" | "ProductImage" | "Client" | "User";
@@ -169,6 +170,7 @@ const clientListRetrieve = async ({
   page,
   perPage,
   filters,
+  paginationOff,
   type,
   jwt,
   request,
@@ -176,6 +178,7 @@ const clientListRetrieve = async ({
   page: number,
   perPage: number,
   filters: any,
+  paginationOff: boolean,
   type: AcceptedTypes,
   jwt: string, 
   request: "create" | "replace" | "delete" | "error" | "refresh"
@@ -184,18 +187,12 @@ const clientListRetrieve = async ({
   const option = optionsList[type as AcceptedTypes];
   let path = option + `?q=""`
 
-  if (page) {
-    path += `&page=${page}`
-  }
-  if (perPage) {
-    path += `&perPage=${perPage}`
-  }
-  if (filters) {
-    path += `&filters=${filters}`
-  }
+  if (paginationOff) { path += `&paginationOff=${paginationOff}` }
+  if (page) { path += `&page=${page}` };
+  if (perPage) { path += `&perPage=${perPage}` };
+  if (filters) { path += `&filters=${filters}` };
 
   const endpoint = apiPath + path;
-  console.log(endpoint)
   const response = await fetch(endpoint, {
     method: "GET",
     headers: { 

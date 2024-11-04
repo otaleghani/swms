@@ -1,7 +1,6 @@
 import { ZoneWithExtra } from "@/app/lib/types/data/zones";
 import { Dispatch, SetStateAction } from "react";
 import { 
-  delaySyncStateToHidden, 
   delaySyncStateToNone, 
   isServerSentMessage, 
   isFetchResultMessage, 
@@ -34,22 +33,18 @@ export function synchronizeZonesWithExtraList({
 }: SyncZonesWithExtra) {
   const handleFetchResultMessage = (data: FetchResultMessage) => {
     if (data.type !== "ZoneWithExtra") return;
-
     switch (data.request) {
       case "error":
         console.error("Something went wrong with client-side fetching");
         break;
-
       case "create":
         list = [...list, data.content];
         setList(list)
         break;
-
       case "delete":
         list = list.filter((item) => item !== data.content.zone.id);
         setList(list)
         break;
-
       default:
         console.warn(`Unhandled action type: ${data.request}`);
     };
@@ -90,46 +85,27 @@ export function synchronizePaginatedZonesWithExtra({
 }: SyncPaginatedZonesWithExtra) {
   const handleFetchResultMessage = (data: FetchResultMessage) => {
     if (data.type !== "ZoneWithExtra") return;
-
     switch (data.request) {
       case "error":
         console.error("Something went wrong with client-side fetching");
         break;
-
       case "refresh": 
         list = data.content;
         setList(list);
         break;
-
-      case "replace":
-      case "create":
-      case "delete":
-        break;
-
-      default:
-        console.warn(`Unhandled action type: ${data.request}`);
     };
   };
 
   const handleServerSentMessage = (data: ServerSentEventData) => {
     if (!list || data.type !== "Zone") return;
-
-    switch (data.action) {
-      case "update":
-        break;
-      case "replace":
-      case "create":
-      case "remove":
-        streamer.postMessage({
-          type: "ZoneWithExtra", 
-          page: pagination?.page,
-          perPage: pagination?.perPage,
-          filters: JSON.stringify(filters),
-          request: "refresh",
-        });
-        break;
-      default:
-        console.warn(`Unhandled action type: ${data.action}`);
+    if (data.action !== "update") {
+      streamer.postMessage({
+        type: "ZoneWithExtra", 
+        page: pagination?.page,
+        perPage: pagination?.perPage,
+        filters: JSON.stringify(filters),
+        request: "refresh",
+      });
     };
   };
 

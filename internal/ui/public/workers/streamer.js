@@ -30,6 +30,7 @@ onmessage = (event) => {
             page: event.data.page,
             perPage: event.data.perPage,
             filters: event.data.filters,
+            paginationOff: event.data.paginationOff,
             type: event.data.type,
             jwt: jwt,
             request: "refresh"
@@ -124,21 +125,26 @@ const optionsList = {
     "Client": "clients/",
     "User": "users/",
 };
-const clientListRetrieve = async ({ page, perPage, filters, type, jwt, request, }) => {
+const clientListRetrieve = async ({ page, perPage, filters, paginationOff, type, jwt, request, }) => {
     const apiPath = "http://localhost:8080/api/v1/";
     const option = optionsList[type];
     let path = option + `?q=""`;
+    if (paginationOff) {
+        path += `&paginationOff=${paginationOff}`;
+    }
     if (page) {
         path += `&page=${page}`;
     }
+    ;
     if (perPage) {
         path += `&perPage=${perPage}`;
     }
+    ;
     if (filters) {
         path += `&filters=${filters}`;
     }
+    ;
     const endpoint = apiPath + path;
-    console.log(endpoint);
     const response = await fetch(endpoint, {
         method: "GET",
         headers: {
