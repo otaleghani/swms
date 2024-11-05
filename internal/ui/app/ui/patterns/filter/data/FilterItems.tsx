@@ -184,7 +184,7 @@ const SheetPatternBody = ({fields, dict}: Props) => {
 
       <div className="flex gap-2">
         <Button asChild> 
-          <Link href={link}>{dict.button}</Link>
+          <a href={link}>{dict.button}</a>
         </Button>
         <Button variant="secondary" onClick={() => {
           setZone({id: "", name: ""});
@@ -196,7 +196,7 @@ const SheetPatternBody = ({fields, dict}: Props) => {
           setIsArchived(false);
           setSearchTerm("");
         }}> 
-          Reset
+        {dict.reset}
         </Button>
       </div>
     </>
@@ -207,8 +207,10 @@ export default function FilterItems({
   fields,
   dict,
 }: Props) {
+  const { params, setParams, link } = useFilterParams();
+
   const SheetHead = () => {
-    return (<FilterSheetTrigger dict={dict} />)
+    return (<FilterSheetTrigger dict={dict} params={params.items}/>)
   }
   const SheetBody = () => {
     return (<SheetPatternBody fields={fields} dict={dict}/>)

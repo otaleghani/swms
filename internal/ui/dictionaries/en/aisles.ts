@@ -2,7 +2,7 @@ import { DictAisle } from "@/app/lib/types/dictionary/data/aisle";
 
 export const dictionaryAisles: DictAisle = {
   header: {
-    title: "Zones",
+    title: "Aisles",
     breadcrumbs: {
       home: "Home",
       zone: "Zones",

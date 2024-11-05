@@ -39,6 +39,12 @@ export async function validateReplace(
     return state;
   }
 
+  if (state.result.itemThatReplaces == state.result.itemThatReplaces) {
+    state.error = true;
+    state.message = dict.form.messages.errors.replace.equals;
+    return state;
+  }
+
   const checkItemToDelete = await retrieveById(
     state.result.type as RetrievableItem, 
     state.result.itemToDelete

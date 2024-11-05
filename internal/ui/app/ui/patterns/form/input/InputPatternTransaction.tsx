@@ -12,15 +12,17 @@ import { GeistSans } from "geist/font/sans";
 
 
 interface InputProps {
+  defaultValue?: number;
   name: string;
   id: string;
 }
 
 export function InputPatternNumberWithButtons({
+  defaultValue,
   name,
   id,
 }: InputProps) {
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState(defaultValue ? defaultValue : 0);
 
   const subOne = (() => {
     if (value > 0) {
@@ -36,10 +38,6 @@ export function InputPatternNumberWithButtons({
     if (!isNaN(parseInt(event.target.value))) {
       setValue(Number(event.target.value))
     }
-    //if (event.target.value.startsWith("0")) {
-    //  setValue(Number(String(value).replace(/^0+/, "")));
-    //  //event.target.value = event.target.value.replace(/^0+/, '');
-    //}
   }
 
   const handleKeyDown = (event: any) => {

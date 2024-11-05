@@ -46,9 +46,13 @@ export function synchronizeList<T extends SelectableItem>({
         setList(list);
         break;
       case "replace":
+        const replaceElement = data.before;
+        list = list.filter(e => (e.id !== replaceElement.id));
+        setList(list);
+        break;
       case "remove":
-        const popElement = data.after;
-        list = list.filter(e => (e.id !== popElement.id));
+        const removeElement = data.after;
+        list = list.filter(e => (e.id !== removeElement.id));
         setList(list);
         break;
       case "create":

@@ -1,31 +1,37 @@
 "use client";
 
-/** React hooks */
+// Actions
 import { useState, useEffect } from "react";
+import { updateFormAction } from "@/app/lib/actions/update/updateFormAction";
+import { replaceFormAction } from "@/app/lib/actions/replace/replaceFormAction";
+import { synchronizeZoneWithExtra } from "@/app/lib/synchronizers/extra/zones";
 
-/** Components */
+// Components
 import CardWrapper from "@/app/ui/wrappers/cards/CardWrapper";
 import { CardTitle, CardDescription } from "@/app/ui/components/card";
-
-/** Web workers */
-import streamer from "@/app/lib/workers";
-import CardWrapperHeader from "@/app/ui/wrappers/cards/CardWrapperHeader";
-import { defaultZoneFormState, ZoneWithExtra } from "@/app/lib/types/data/zones";
-import { SyncState } from "@/app/lib/synchronizers/utils";
 import { Button } from "@/app/ui/components/button";
 import Link from "next/link";
 import DialogFormPattern from "@/app/ui/patterns/dialog/DialogFormPattern";
-import { fieldsDefaultProps, InputFieldProps, SelectFieldProps } from "@/app/lib/types/form/fields";
-import { updateFormAction } from "@/app/lib/actions/update/updateFormAction";
-import { DictDialog, DictLabelList } from "@/app/lib/types/dictionary/misc";
-import { DictFormButton, DictInputField } from "@/app/lib/types/dictionary/form";
-import { replaceFormAction } from "@/app/lib/actions/replace/replaceFormAction";
+
+// Worker
+import streamer from "@/app/lib/workers";
+
+// Default values
+import { defaultZoneFormState } from "@/app/lib/types/data/zones";
 import { defaultReplaceFormState } from "@/app/lib/types/data/replacer";
-import { synchronizeZoneWithExtra } from "@/app/lib/synchronizers/extra/zones";
+import { fieldsDefaultProps } from "@/app/lib/types/form/fields";
+
+// Types and interfaces
+import { ZoneWithExtra } from "@/app/lib/types/data/zones";
+import { SyncState } from "@/app/lib/synchronizers/utils";
+import { InputFieldProps, SelectFieldProps, } from "@/app/lib/types/form/fields";
+import { DictDialog, DictLabelList } from "@/app/lib/types/dictionary/misc";
+import { DictFormButton } from "@/app/lib/types/dictionary/form";
+import { Eye } from "lucide-react";
 
 interface ZoneWithExtraCardProps {
-  item: ZoneWithExtra, 
-  dictCard: DictLabelList<"aisles" | "items">
+  item: ZoneWithExtra;
+  dictCard: DictLabelList<"aisles" | "items">;
   dictDialogEdit: DictDialog;
   dictDialogReplace: DictDialog;
   fields: {
@@ -33,14 +39,14 @@ interface ZoneWithExtraCardProps {
     button: DictFormButton;
     zone: SelectFieldProps<"Zone">;
   };
-};
+}
 
 export default function CardZoneWithExtra({
   item,
   dictCard,
   dictDialogEdit,
   dictDialogReplace,
-  fields
+  fields,
 }: ZoneWithExtraCardProps) {
   const [zoneWithExtra, setZoneWithExtra] = useState(item);
   const [syncState, setSyncState] = useState("none" as SyncState);
@@ -51,13 +57,13 @@ export default function CardZoneWithExtra({
       setSyncState: setSyncState,
       element: zoneWithExtra,
       setElement: setZoneWithExtra,
-    })
+    });
   }, []);
 
   const CardFooter = () => {
     return (
       <div className="flex gap-2">
-        <DialogFormPattern<"Replace"> 
+        <DialogFormPattern<"Replace">
           showButton
           self={{
             triggerType: "iconDelete",
@@ -79,16 +85,18 @@ export default function CardZoneWithExtra({
               initialState: {
                 ...defaultReplaceFormState,
                 result: {
-                  itemToDelete: zoneWithExtra.zone.id ? zoneWithExtra.zone.id : "",
+                  itemToDelete: zoneWithExtra.zone.id
+                    ? zoneWithExtra.zone.id
+                    : "",
                   itemThatReplaces: "",
                   type: "Zone",
-                }
-              }
-            }
+                },
+              },
+            },
           }}
         />
 
-        <DialogFormPattern<"Zone"> 
+        <DialogFormPattern<"Zone">
           showButton
           self={{
             triggerType: "iconEdit",
@@ -110,24 +118,27 @@ export default function CardZoneWithExtra({
                 ...defaultZoneFormState,
                 result: {
                   id: zoneWithExtra.zone.id,
-                  name: zoneWithExtra.zone.name, 
-                }
-              }
-            }
+                  name: zoneWithExtra.zone.name,
+                },
+              },
+            },
           }}
         />
-
-        <Button
-          size="sm"
-          asChild
-        >
-          <Link href={`/zones/${zoneWithExtra.zone.id}`}>
-            View
-          </Link>
+        <Button size="sm" asChild>
+          <Button
+            size="sm"
+            asChild
+            className="aspect-square p-0"
+          >
+            <Link href={`/zones/${item.zone.id}`}>
+              <Eye className="w-4 h-4"/>
+            </Link>
+          </Button>
         </Button>
       </div>
-    )
-  }
+    );
+  };
+
   const CardContent = () => {
     return (
       <div>
@@ -140,9 +151,8 @@ export default function CardZoneWithExtra({
           <span>{zoneWithExtra.itemsCount}</span>
         </div>
       </div>
-    )
-  }
-
+    );
+  };
 
   const CardHeader = () => {
     return (
@@ -154,18 +164,20 @@ export default function CardZoneWithExtra({
         </CardTitle>
         <CardDescription>{zoneWithExtra.zone.id}</CardDescription>
       </>
-    )
-  }
+    );
+  };
 
   if (syncState != "hidden") {
     return (
       <>
-        { 
-          <CardWrapper 
+        {
+          <CardWrapper
             className={
-              syncState === "remove" ? "animate-delete" :
-              syncState === "update" ? "animate-update" :
-              ""
+              syncState === "remove"
+                ? "animate-delete"
+                : syncState === "update"
+                  ? "animate-update"
+                  : ""
             }
             Header={CardHeader}
             Content={CardContent}
@@ -173,6 +185,6 @@ export default function CardZoneWithExtra({
           />
         }
       </>
-    )
+    );
   }
-} 
+}

@@ -149,7 +149,7 @@ const SheetPatternBody = ({locale, fields, dict}: Props) => {
 
       <div className="flex gap-2">
         <Button asChild> 
-          <Link href={link}>Filtra</Link>
+          <a href={link}>{dict.button}</a>
         </Button>
         <Button variant="secondary" onClick={() => {
           setUser({id: "", name: ""} as User);
@@ -158,7 +158,7 @@ const SheetPatternBody = ({locale, fields, dict}: Props) => {
           setTicket({id: "", name: ""} as Ticket);
           setSearchTerm("");
         }}> 
-          Reset
+        {dict.reset}
         </Button>
       </div>
     </>
@@ -170,8 +170,10 @@ export default function FilterAisles({
   fields,
   dict,
 }: Props) {
+  const { params, setParams, link } = useFilterParams();
+
   const SheetHead = () => {
-    return (<FilterSheetTrigger dict={dict} />)
+    return (<FilterSheetTrigger dict={dict} params={params.transactions}/>)
   }
   const SheetBody = () => {
     return (<SheetPatternBody locale={locale} fields={fields} dict={dict}/>)

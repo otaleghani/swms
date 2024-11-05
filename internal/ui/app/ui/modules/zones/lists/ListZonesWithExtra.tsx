@@ -12,73 +12,75 @@ import FilterZones from "@/app/ui/patterns/filter/data/FilterZones";
 import ListZonesWithExtraClient from "./ListZonesWithExtraClient";
 
 // Types and interfaces
-import { Zones, ZonesWithExtra } from "@/app/lib/types/data/zones";
+import { ZonesWithExtra } from "@/app/lib/types/data/zones";
 import { SearchParams } from "@/app/lib/types/pageParams";
 import { Locale } from "@/lib/dictionaries";
+import { Response } from "@/app/lib/types/misc";
 
 interface Props {
   searchParams?: SearchParams["zones"];
-  locale: Locale
+  locale: Locale;
+  list: Response<ZonesWithExtra>;
 }
 
 export default async function ListZonesWithExtra({
   searchParams,
   locale,
+  list,
 }: Props) {
   const dict = await getDictionary(locale);
-  const zonesWithExtra = await retrieve({
-    request: "ZonesWithExtra",
-    page: searchParams?.pagination?.page,
-    perPage: searchParams?.pagination?.perPage,
-    filters: JSON.stringify(searchParams?.filters),
-  });
   const zones = await retrieve({
-    request: "Zones", 
-    paginationOff: "true"
+    request: "Zones",
+    paginationOff: "true",
   });
 
   return (
     <>
-      <ScrollArea scrollHideDelay={10000} className="xl:h-[calc(100vh_-_114px)] ">
-        <div className={`grid gap-2 p-4 ${
-          searchParams?.pagination?.layout 
-            ? `${gridCols[searchParams.pagination.layout]}`
-            : "xl:grid-cols-3"
-        }`}>
-
-          <ListZonesWithExtraClient 
+      <ScrollArea
+        scrollHideDelay={10000}
+        className="xl:h-[calc(100vh_-_114px)] "
+      >
+        <div
+          className={`grid gap-2 p-4 ${
+            searchParams?.pagination?.layout
+              ? `${gridCols[searchParams.pagination.layout]}`
+              : "xl:grid-cols-3"
+          }`}
+        >
+          <ListZonesWithExtraClient
             filters={searchParams?.filters}
             pagination={searchParams?.pagination}
-            zonesWithExtra={zonesWithExtra.data as ZonesWithExtra}
+            zonesWithExtra={list.data as ZonesWithExtra}
             dictDialogReplace={dict.zone.dialogs.replace}
             dictDialogEdit={dict.zone.dialogs.edit}
             dictCard={dict.zone.card}
             fields={{
-              name: {dict: dict.form.fields.name},
+              name: { dict: dict.form.fields.name },
               button: dict.form.buttons.submit,
               zone: {
-                list: zones.data ? zones.data : [], 
+                list: zones.data ? zones.data : [],
                 name: "Zone",
                 dict: dict.form.fields.zones,
-              }
+              },
             }}
           />
+          {list.data === null && <>{dict.misc.notFound}</>}
         </div>
       </ScrollArea>
       <div className="flex items-center justify-end border-t xl:h-[57px]">
-        <FilterZones 
+        <FilterZones
           dict={dict.filters}
           fields={{
             search: {
-              dict: dict.form.fields.search
-            }
+              dict: dict.form.fields.search,
+            },
           }}
         />
-        <PaginationPattern 
-          totalPages={zonesWithExtra.totalPages as number} 
+        <PaginationPattern
+          totalPages={list.totalPages as number}
           type="zones"
         />
       </div>
     </>
   );
-};
+}

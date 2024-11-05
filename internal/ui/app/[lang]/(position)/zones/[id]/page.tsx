@@ -1,17 +1,19 @@
 // Default states
 
 // Actions
-import { getDictionary, Locale } from "@/lib/dictionaries";
-import { createFormAction } from "@/app/lib/actions/create/createFormAction";
+import { getDictionary } from "@/lib/dictionaries";
 import { decodeSearchParams } from "@/app/lib/searchParams";
+import { retrieveById } from "@/app/lib/requests/generics/retrieveById";
+import retrieveByForeignId from "@/app/lib/requests/generics/retrieveByForeignId";
 
 // Components
-import HeaderWrapper from "@/app/ui/wrappers/headers/HeaderWrapper";
-import { BreadcrumbsPattern } from "@/app/ui/patterns/BreadcrumbsPattern";
+import HeaderZoneSingle from "@/app/ui/modules/zones/headers/HeaderZoneSingle";
 
 // Types and interfaces
 import { DefaultPageProps } from "@/app/lib/types/pageParams";
-import { retrieveById } from "@/app/lib/requests/generics/retrieveById";
+import { Zone } from "@/app/lib/types/data/zones";
+import { Locale } from "@/lib/dictionaries";
+import ListAislesWithExtra from "@/app/ui/modules/aisles/lists/ListAislesWithExtra";
 
 export default async function ZonesIdPage({
   params,
@@ -21,25 +23,24 @@ export default async function ZonesIdPage({
   const dict = await getDictionary(params.lang as Locale);
   const currentSearchParams = decodeSearchParams(searchParams.q)
 
-  const HeaderWrapperLeft = () => {
-    return (
-      <BreadcrumbsPattern 
-        itemsList={[{label: dict.zone.header.title, url: "/zones"}]}
-        currentItem={zone.data?.name ? zone.data.name : ""}
-      />
-    )
-  }
-  
-  const HeaderWrapperRight = () => {
-    return (
-      <></>
-    )
-  }
+  const aislesWithExtra = await retrieveByForeignId({
+    request: "AislesWithExtra",
+    foreign: "Zone",
+    id: zone.data?.id as string,
+    page: currentSearchParams.zones?.pagination?.page,
+    perPage: currentSearchParams.zones?.pagination?.perPage,
+    filters: JSON.stringify(currentSearchParams.zones?.filters),
+  });
+
   return (
     <>
-      <HeaderWrapper
-        Left={HeaderWrapperLeft}
-        Right={HeaderWrapperRight}
+      <HeaderZoneSingle 
+        zone={zone.data as Zone}
+        locale={params.lang as Locale}
+      />
+      <ListAislesWithExtra 
+        locale={params.lang as Locale}
+        list={aislesWithExtra}
       />
     </>
   )

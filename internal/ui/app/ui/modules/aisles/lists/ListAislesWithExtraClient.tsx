@@ -1,17 +1,24 @@
 "use client"
 
-import { Aisle, AisleWithExtra } from "@/app/lib/types/data/aisles"
+// Actions
+import { useEffect, useState } from "react";
+import { synchronizeList } from "@/app/lib/synchronizers/lists";
+import { synchronizePaginatedAislesWithExtra } from "@/app/lib/synchronizers/extra/aisles";
+
+// Workers
+import streamer from "@/app/lib/workers";
+
+// Components
 import CardAisleWithExtra from "../cards/CardAisleWithExtra";
+
+// Types and interfaces
+import { AisleWithExtra } from "@/app/lib/types/data/aisles"
 import { DictDialog, DictLabelList } from "@/app/lib/types/dictionary/misc";
 import { DictFormButton } from "@/app/lib/types/dictionary/form";
 import { InputFieldProps, SelectFieldProps } from "@/app/lib/types/form/fields";
-import { useEffect, useState } from "react";
-import { synchronizeList } from "@/app/lib/synchronizers/lists";
 import { AisleFiltersParams } from "@/app/lib/types/query/data";
 import { PaginationParams } from "@/app/lib/types/pageParams";
 
-import streamer from "@/app/lib/workers";
-import { synchronizePaginatedAislesWithExtra } from "@/app/lib/synchronizers/extra/aisles";
 
 interface Props {
   filters?: AisleFiltersParams;

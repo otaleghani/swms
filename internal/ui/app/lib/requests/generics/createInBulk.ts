@@ -16,8 +16,6 @@ import { ZonesBulkPostRequestBody } from "../../types/data/zones";
 import { AislesBulkPostRequestBody } from "../../types/data/aisles";
 import { RacksBulkPostRequestBody } from "../../types/data/racks";
 import { ShelfsBulkPostRequestBody } from "../../types/data/shelfs";
-import { retrieveById } from "./retrieveById";
-import { retrieve } from "./retrieve";
 
 type CreateInBulkMapOptions = {
   [K in Extract<keyof TypeMapFilterLists, 
@@ -61,7 +59,7 @@ export async function createInBulk<T extends keyof CreateInBulkMapOptions>(
       type: "Zone",
       action: "createInBulk",
       before: "",
-      after: "",
+      after: payload,
     };
     stringEmitter.emit("message", streamedChange);
   }
@@ -71,7 +69,7 @@ export async function createInBulk<T extends keyof CreateInBulkMapOptions>(
       type: "Aisle",
       action: "createInBulk",
       before: "",
-      after: "",
+      after: payload,
     };
     stringEmitter.emit("message", streamedChange);
   }
@@ -81,7 +79,7 @@ export async function createInBulk<T extends keyof CreateInBulkMapOptions>(
       type: "Rack",
       action: "createInBulk",
       before: "",
-      after: "",
+      after: payload,
     };
     stringEmitter.emit("message", streamedChange);
   }
@@ -91,7 +89,7 @@ export async function createInBulk<T extends keyof CreateInBulkMapOptions>(
       type: "Shelfs",
       action: "createInBulk",
       before: "",
-      after: "",
+      after: payload,
     };
     stringEmitter.emit("message", streamedChange);
   }

@@ -1,7 +1,12 @@
 export interface DictFilters {
   title: string;
-  trigger: string;
+  trigger: {
+    singular: string;
+    plural: string;
+    empty: string;
+  };
   button: string;
+  reset: string;
 }
 
 export interface DictDialog {

@@ -74,22 +74,56 @@ const options: MapOptions = {
   "SupplierCodes_Supplier": { path: "aisles/{{id}}/racks", type: "Racks"  },
 }
 
+interface RetrieveData<
+  T extends keyof ForeignTypeMap,
+  U extends ForeignTypeMap[T] extends Array<keyof TypeMap>
+    ? ForeignTypeMap[T][number]
+    : ForeignTypeMap[T],
+> {
+  request: T;
+  foreign: U;
+  id: string;
+  page?: number;
+  perPage?: number;
+  paginationOff?: "true" | "false";
+  filters?: any;
+}
+
 export default async function retrieveByForeignId<
   T extends keyof ForeignTypeMap,
   U extends ForeignTypeMap[T] extends Array<keyof TypeMap>
     ? ForeignTypeMap[T][number]
     : ForeignTypeMap[T],
->(
-  request: T,
-  foreign: U,
-  id: string,
-) {
+>({
+  request,
+  foreign,
+  id,
+  page,
+  perPage,
+  paginationOff,
+  filters,
+}: RetrieveData<T, U>) {
   const option = options[
     `${request}_${foreign}` as keyof MapOptions
   ]
 
+  let path = option.path.replace(/{{id}}/g, id) + `?q=""`
+
+  if (page) {
+    path += `&page=${page}`
+  }
+  if (perPage) {
+    path += `&perPage=${perPage}`
+  }
+  if (paginationOff) {
+    path += `&paginationOff=${paginationOff}`
+  }
+  if (filters) {
+    path += `&filters=${filters}`
+  }
+
   const response = await fetchData<TypeMap[T]>({
-    path: option.path.replace(/{{id}}/g, id),
+    path: path,
     method: "GET",
     tag: revalidateTags[option.type],
   })

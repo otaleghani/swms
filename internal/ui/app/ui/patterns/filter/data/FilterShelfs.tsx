@@ -110,7 +110,7 @@ const SheetPatternBody = ({fields, dict}: Props) => {
 
       <div className="flex gap-2">
         <Button asChild> 
-          <Link href={link}>{dict.button}</Link>
+          <a href={link}>{dict.button}</a>
         </Button>
         <Button variant="secondary" onClick={() => {
           setRack({id: "", name: ""} as Rack);
@@ -118,7 +118,7 @@ const SheetPatternBody = ({fields, dict}: Props) => {
           setZone({id: "", name: ""});
           setSearchTerm("");
         }}> 
-          Reset
+        {dict.reset}
         </Button>
       </div>
     </>
@@ -129,8 +129,10 @@ export default function FilterShelfs({
   fields,
   dict,
 }: Props) {
+  const { params, setParams, link } = useFilterParams();
+
   const SheetHead = () => {
-    return (<FilterSheetTrigger dict={dict} />)
+    return (<FilterSheetTrigger dict={dict} params={params.shelfs} />)
   }
   const SheetBody = () => {
     return (<SheetPatternBody fields={fields} dict={dict}/>)

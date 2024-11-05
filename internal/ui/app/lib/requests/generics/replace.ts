@@ -74,6 +74,7 @@ export async function replace<T extends keyof ReplaceMapOptions>(
 
   // Get first off the data of the item to delete
   const before = await retrieveById(request, itemToDelete)
+
   const response = await fetchData<undefined>({
     path: path,
     method: "POST",
@@ -88,7 +89,7 @@ export async function replace<T extends keyof ReplaceMapOptions>(
     type: request,
     action: "replace",
     before: before.data,
-    after: after.data,
+    after: "",
   };
   stringEmitter.emit("message", replaceChange);
 

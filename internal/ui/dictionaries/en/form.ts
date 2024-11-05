@@ -24,6 +24,9 @@ export const dictionaryForm: DictForms = {
       register: {
         alreadyInUse: "The email is already used. Log in instead.",
       },
+      replace: {
+        equals: "You are trying to replace this entry with itself!"
+      }
     }
   },
   fields: {

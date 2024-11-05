@@ -55,7 +55,7 @@ const SheetPatternBody = ({fields, dict}: Props) => {
         <Button variant="secondary" onClick={() => {
           setSearchTerm("");
         }}> 
-          Reset
+        {dict.reset}
         </Button>
       </div>
     </>
@@ -66,8 +66,10 @@ export default function FilterZones({
   fields,
   dict,
 }: Props) {
+  const { params, setParams, link } = useFilterParams();
+
   const SheetHead = () => {
-    return (<FilterSheetTrigger dict={dict} />)
+    return (<FilterSheetTrigger dict={dict} params={params.zones} />)
   }
   const SheetBody = () => {
     return (<SheetPatternBody fields={fields} dict={dict}/>)

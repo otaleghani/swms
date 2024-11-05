@@ -53,6 +53,7 @@ export const AislesBulkFormFields = ({
       <PositionSelectField 
         fields={{ 
           zone: {
+            defaultValue: fields.zone.list.find(e => (e.id == result?.zone)),
             select: fields.zone,
             errorMessages: errorMessages.zone,
           },

@@ -26,6 +26,9 @@ export interface DictFormMessages {
     register: {
       alreadyInUse:      string,
     };
+    replace: {
+      equals: string,
+    }
   };
 };
 

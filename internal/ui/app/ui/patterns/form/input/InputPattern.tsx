@@ -128,6 +128,7 @@ export default function InputPattern({
       case "quantityWithButtons":
         return (
           <InputPatternNumberWithButtons 
+            defaultValue={Number(defaultValue)}
             name="quantity"
             id={`${field}-${inputId}`}
           />
