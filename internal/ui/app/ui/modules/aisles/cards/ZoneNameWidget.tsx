@@ -15,7 +15,6 @@ export default function ZoneNameWidget({
   zone,
   setZone,
 }: Props) {
-  //const [zone, setZone] = useState(zoneInitialValue);
   const [syncState, setSyncState] = useState("none" as SyncState);
 
   useEffect(() => {
@@ -26,7 +25,11 @@ export default function ZoneNameWidget({
       setElement: setZone,
       type: "Zone",
     })
-  }, [])
+  }, []);
+
+  useEffect(() => {
+    //console.log(zone)
+  }, [zone]);
 
   return (
     <Link

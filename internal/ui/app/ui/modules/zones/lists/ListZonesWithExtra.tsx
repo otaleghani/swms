@@ -1,16 +1,20 @@
-import { SearchParams } from "@/app/lib/types/pageParams";
-import { retrieve } from "@/app/lib/requests/generics/retrieve";
-import { getDictionary, Locale } from "@/lib/dictionaries";
+// Default values
 import { gridCols } from "@/app/lib/searchParams";
+
+// Actions
+import { retrieve } from "@/app/lib/requests/generics/retrieve";
+import { getDictionary } from "@/lib/dictionaries";
 
 // Local components
 import { ScrollArea } from "@/app/ui/components/scroll-area";
 import PaginationPattern from "@/app/ui/patterns/pagination/PaginationPattern";
-//import FetchToastPattern from "@/app/ui/patterns/FetchToast";
 import FilterZones from "@/app/ui/patterns/filter/data/FilterZones";
-import CardZoneWithExtra from "../cards/CardZoneWithExtra";
 import ListZonesWithExtraClient from "./ListZonesWithExtraClient";
-import { Zone, Zones, ZonesWithExtra } from "@/app/lib/types/data/zones";
+
+// Types and interfaces
+import { Zones, ZonesWithExtra } from "@/app/lib/types/data/zones";
+import { SearchParams } from "@/app/lib/types/pageParams";
+import { Locale } from "@/lib/dictionaries";
 
 interface Props {
   searchParams?: SearchParams["zones"];
@@ -28,8 +32,10 @@ export default async function ListZonesWithExtra({
     perPage: searchParams?.pagination?.perPage,
     filters: JSON.stringify(searchParams?.filters),
   });
-  const zones = await retrieve({request: "Zones", paginationOff: true});
-  console.log(searchParams?.filters)
+  const zones = await retrieve({
+    request: "Zones", 
+    paginationOff: "true"
+  });
 
   return (
     <>
@@ -44,7 +50,6 @@ export default async function ListZonesWithExtra({
             filters={searchParams?.filters}
             pagination={searchParams?.pagination}
             zonesWithExtra={zonesWithExtra.data as ZonesWithExtra}
-            zones={zones.data as Zones}
             dictDialogReplace={dict.zone.dialogs.replace}
             dictDialogEdit={dict.zone.dialogs.edit}
             dictCard={dict.zone.card}
@@ -58,7 +63,6 @@ export default async function ListZonesWithExtra({
               }
             }}
           />
-
         </div>
       </ScrollArea>
       <div className="flex items-center justify-end border-t xl:h-[57px]">
@@ -75,12 +79,6 @@ export default async function ListZonesWithExtra({
           type="zones"
         />
       </div>
-      {
-      //<FetchToastPattern
-      //  type={[ "Zones", "Zone" ]}
-      //  dict={dict.toasts.fetching}
-      ///>
-      }
     </>
-  )
-}
+  );
+};

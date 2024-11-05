@@ -11,7 +11,6 @@ import streamer from "@/app/lib/workers";
 import CardWrapperHeader from "@/app/ui/wrappers/cards/CardWrapperHeader";
 import { defaultAisleFormState, AisleWithExtra } from "@/app/lib/types/data/aisles";
 import { SyncState } from "@/app/lib/synchronizers/utils";
-//import { synchronizeAisleWithExtraSingle } from "@/app/lib/synchronizers/extra/aislesWithExtra";
 import { Button } from "@/app/ui/components/button";
 import Link from "next/link";
 import DialogFormPattern from "@/app/ui/patterns/dialog/DialogFormPattern";
@@ -23,6 +22,7 @@ import { replaceFormAction } from "@/app/lib/actions/replace/replaceFormAction";
 import { defaultReplaceFormState } from "@/app/lib/types/data/replacer";
 import { Zone } from "@/app/lib/types/data/zones";
 import ZoneNameWidget from "./ZoneNameWidget";
+import { synchronizeAisleWithExtra } from "@/app/lib/synchronizers/extra/aisles";
 
 interface AisleWithExtraCardProps {
   item: AisleWithExtra, 
@@ -53,7 +53,12 @@ export default function CardAisleWithExtra({
   const [zones, setZones] = useState(fields.zone.list)
 
   useEffect(() => {
-
+    synchronizeAisleWithExtra({
+      streamer: streamer as Worker,
+      setSyncState: setSyncState,
+      element: aisleWithExtra,
+      setElement: setAisleWithExtra,
+    });
   }, []);
 
   useEffect(() => {
@@ -64,80 +69,78 @@ export default function CardAisleWithExtra({
   const CardFooter = () => {
     return (
       <>
-      {
-      //<div className="flex gap-2">
-      //  <DialogFormPattern<"Replace"> 
-      //    showButton
-      //    self={{
-      //      triggerType: "iconDelete",
-      //      dict: dictDialogReplace,
-      //    }}
-      //    formPattern={{
-      //      type: "Replace",
-      //      self: {
-      //        fields: {
-      //          ...fieldsDefaultProps,
-      //          id: aisleWithExtra.aisle.id ? aisleWithExtra.aisle.id : "",
-      //          aisle: fields.aisle,
-      //          button: fields.button,
-      //        },
-      //      },
-      //      form: {
-      //        formName: "Replace",
-      //        formAction: replaceFormAction,
-      //        initialState: {
-      //          ...defaultReplaceFormState,
-      //          result: {
-      //            itemToDelete:aisleWithExtra.aisle.id ? aisleWithExtra.aisle.id : "",
-      //            itemThatReplaces: "",
-      //            type: "Aisle",
-      //          }
-      //        }
-      //      }
-      //    }}
-      //  />
-
-      <DialogFormPattern<"Aisle"> 
-        showButton
-        self={{
-          triggerType: "iconEdit",
-          dict: dictDialogEdit,
-        }}
-        formPattern={{
-          type: "Aisle",
-          self: {
-            fields: {
-              ...fieldsDefaultProps,
-              name: fields.name,
-              zone: fields.zone,
-              button: fields.button,
-            },
-          },
-          form: {
-            formName: "Aisle",
-            formAction: updateFormAction,
-            initialState: {
-              ...defaultAisleFormState,
-              result: {
-                id: aisleWithExtra.aisle.id,
-                zone: aisleWithExtra.aisle.zone,
-                name: aisleWithExtra.aisle.name,
+        <div className="flex gap-2">
+          <DialogFormPattern<"Replace"> 
+            showButton
+            self={{
+              triggerType: "iconDelete",
+              dict: dictDialogReplace,
+            }}
+            formPattern={{
+              type: "Replace",
+              self: {
+                fields: {
+                  ...fieldsDefaultProps,
+                  id: aisleWithExtra.aisle.id ? aisleWithExtra.aisle.id : "",
+                  zone: fields.zone,
+                  aisle: fields.aisle,
+                  button: fields.button,
+                },
+              },
+              form: {
+                formName: "Replace",
+                formAction: replaceFormAction,
+                initialState: {
+                  ...defaultReplaceFormState,
+                  result: {
+                    itemToDelete:aisleWithExtra.aisle.id ? aisleWithExtra.aisle.id : "",
+                    itemThatReplaces: "",
+                    type: "Aisle",
+                  }
+                }
               }
-            }
-          }
-        }}
-      />
+            }}
+          />
 
-      //  <Button
-      //    size="sm"
-      //    asChild
-      //  >
-      //    <Link href={`/aisles/${item.aisle.id}`}>
-      //      View
-      //    </Link>
-      //  </Button>
-      //</div>
-      }
+          <DialogFormPattern<"Aisle"> 
+            showButton
+            self={{
+              triggerType: "iconEdit",
+              dict: dictDialogEdit,
+            }}
+            formPattern={{
+              type: "Aisle",
+              self: {
+                fields: {
+                  ...fieldsDefaultProps,
+                  name: fields.name,
+                  zone: fields.zone,
+                  button: fields.button,
+                },
+              },
+              form: {
+                formName: "Aisle",
+                formAction: updateFormAction,
+                initialState: {
+                  ...defaultAisleFormState,
+                  result: {
+                    id: aisleWithExtra.aisle.id,
+                    zone: aisleWithExtra.aisle.zone,
+                    name: aisleWithExtra.aisle.name,
+                  }
+                }
+              }
+            }}
+          />
+          <Button
+            size="sm"
+            asChild
+          >
+            <Link href={`/aisles/${item.aisle.id}`}>
+              View
+            </Link>
+          </Button>
+        </div>
       </>
     )
   }
@@ -160,10 +163,6 @@ export default function CardAisleWithExtra({
             setZone={setZone}
           />
         </div>
-        {zones.map(item => (
-          <div key={item.id} className="truncate">{item.name}</div>
-        ))}
-
       </div>
     )
   }

@@ -27,6 +27,7 @@ export function synchronizePaginatedAislesWithExtra({
   list,
   setList
 }: SyncPaginatedAislesWithExtra) {
+  console.log("list initiated")
   const handleFetchResultMessage = (data: FetchResultMessage) => {
     if (data.type !== "AisleWithExtra") return;
     switch (data.request) {
@@ -53,6 +54,7 @@ export function synchronizePaginatedAislesWithExtra({
   };
 
   const handler = (message: MessageEvent<WorkerMessage>) => {
+    console.log("list fired")
     if (isFetchResultMessage(message.data)) { handleFetchResultMessage(message.data) };
     if (isServerSentMessage(message.data)) { handleServerSentMessage(message.data) };
   };
@@ -73,6 +75,7 @@ export function synchronizeAisleWithExtra({
   setElement,
 }: SyncAisleWithExtra) {
 
+  console.log("single initiated")
   const handleFetchResultMessage = (data: FetchResultMessage) => {
     if (data.type !== "AisleWithExtra" || data.id !== element.aisle.id) return;
     setSyncState("update");
@@ -104,6 +107,7 @@ export function synchronizeAisleWithExtra({
   }
 
   const handler = (message: MessageEvent<WorkerMessage>) => {
+    console.log("single fired")
     if (isFetchResultMessage(message.data)) { handleFetchResultMessage(message.data) };
     if (isServerSentMessage(message.data)) { handleServerSentMessage(message.data) };
   };

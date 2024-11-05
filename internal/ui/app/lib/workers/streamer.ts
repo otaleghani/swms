@@ -5,7 +5,7 @@ let jwt = "";
 // Handles the messages from the server
 sse.onmessage = (event: MessageEvent<any>) => {
   const eventData = JSON.parse(event.data);
-  //console.log(eventData)
+  console.log(eventData)
 
   // If the event.data contains the field jwt, then it's the first
   // response. In this special case we would just save the jwt for

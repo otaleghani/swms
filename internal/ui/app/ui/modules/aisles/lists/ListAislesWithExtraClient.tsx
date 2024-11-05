@@ -62,7 +62,7 @@ export default function ListAislesWithExtraClient({
       streamer: streamer as Worker,
       list: currentAislesWithExtra,
       setList: setCurrentAislesWithExtra,
-    })
+    });
   }, [])
 
   return (

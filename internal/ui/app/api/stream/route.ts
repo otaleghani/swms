@@ -28,7 +28,6 @@ const headers = {
 };
 
 export const GET = async (request: NextRequest) => {
-  console.log("Im in the route")
   const encoder = new TextEncoder();
   let isClosed = false;
 
@@ -56,9 +55,8 @@ export const GET = async (request: NextRequest) => {
 
       // Get's the data from the emitters and sends it over all the 
       // connected clients.
-      stringEmitter.on("message", (data: ServerSentEventData) => {
-        console.log("fired")
-        console.log(data)
+      stringEmitter.on("message", (data: any) => {
+        console.log("fired emitter")
         sendData(data);
       }); 
       //stringEmitter.addListener("message", (data: ServerSentEventData) => {

@@ -33,7 +33,6 @@ export async function createFormAction<K extends keyof FormMap>(
     type as string, 
     locale as string,
   );
-  console.log(state)
 
   if (stateValidation.error) { 
     return stateValidation 

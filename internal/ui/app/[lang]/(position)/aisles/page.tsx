@@ -10,6 +10,11 @@ import { BreadcrumbsPattern } from "@/app/ui/patterns/BreadcrumbsPattern";
 import { retrieve } from "@/app/lib/requests/generics/retrieve";
 import HeaderWrapper from "@/app/ui/wrappers/headers/HeaderWrapper";
 
+// Always import the actions that you want to use. If you don't the event emitters
+// would not be initialized and then fired.
+import { replaceFormAction } from "@/app/lib/actions/replace/replaceFormAction";
+import { updateFormAction } from "@/app/lib/actions/update/updateFormAction";
+
 export default async function AislesPage({
   params,
   searchParams
@@ -20,6 +25,10 @@ export default async function AislesPage({
     request: "Zones",
     paginationOff: "true",
   });
+
+  // REQUIRED for correct streamer
+  const replace = replaceFormAction;
+  const update = updateFormAction;
 
   const HeaderWrapperLeft = () => {
     return (
