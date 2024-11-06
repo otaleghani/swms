@@ -1,10 +1,11 @@
 // Default states
 
 // Actions
-import { getDictionary } from "@/lib/dictionaries";
 import { decodeSearchParams } from "@/app/lib/searchParams";
 import { retrieveById } from "@/app/lib/requests/generics/retrieveById";
-import retrieveByForeignId from "@/app/lib/requests/generics/retrieveByForeignId";
+import { createFormAction } from "@/app/lib/actions/create/createFormAction";
+import { updateFormAction } from "@/app/lib/actions/update/updateFormAction";
+import { replaceFormAction } from "@/app/lib/actions/replace/replaceFormAction";
 
 // Components
 import HeaderZoneSingle from "@/app/ui/modules/zones/headers/HeaderZoneSingle";
@@ -20,17 +21,11 @@ export default async function ZonesIdPage({
   searchParams
 }: DefaultPageProps) {
   const zone = await retrieveById("Zone", params.id ? params.id : "")
-  const dict = await getDictionary(params.lang as Locale);
   const currentSearchParams = decodeSearchParams(searchParams.q)
 
-  const aislesWithExtra = await retrieveByForeignId({
-    request: "AislesWithExtra",
-    foreign: "Zone",
-    id: zone.data?.id as string,
-    page: currentSearchParams.zones?.pagination?.page,
-    perPage: currentSearchParams.zones?.pagination?.perPage,
-    filters: JSON.stringify(currentSearchParams.zones?.filters),
-  });
+  const replace = replaceFormAction;
+  const update = updateFormAction;
+  const create = createFormAction;
 
   return (
     <>
@@ -39,8 +34,11 @@ export default async function ZonesIdPage({
         locale={params.lang as Locale}
       />
       <ListAislesWithExtra 
+        hideFilters={{ zones: true }}
         locale={params.lang as Locale}
-        list={aislesWithExtra}
+        searchParams={currentSearchParams.aisles}
+        type="zone"
+        zone={zone.data as Zone}
       />
     </>
   )

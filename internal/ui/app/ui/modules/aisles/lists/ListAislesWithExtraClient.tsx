@@ -3,7 +3,7 @@
 // Actions
 import { useEffect, useState } from "react";
 import { synchronizeList } from "@/app/lib/synchronizers/lists";
-import { synchronizePaginatedAislesWithExtra } from "@/app/lib/synchronizers/extra/aisles";
+import { synchronizePaginatedAislesWithExtra, syncPaginatedAislesByZoneWithExtra } from "@/app/lib/synchronizers/extra/aisles";
 
 // Workers
 import streamer from "@/app/lib/workers";
@@ -18,32 +18,47 @@ import { DictFormButton } from "@/app/lib/types/dictionary/form";
 import { InputFieldProps, SelectFieldProps } from "@/app/lib/types/form/fields";
 import { AisleFiltersParams } from "@/app/lib/types/query/data";
 import { PaginationParams } from "@/app/lib/types/pageParams";
+import { Zone } from "@/app/lib/types/data/zones";
 
 
-interface Props {
-  filters?: AisleFiltersParams;
-  pagination?: PaginationParams;
-  aislesWithExtra: AisleWithExtra[];
-  dictDialogEdit: DictDialog;
-  dictDialogReplace: DictDialog;
-  dictCard: DictLabelList<"racks" | "items" | "zone">;
-  fields: {
-    name: InputFieldProps;
-    button: DictFormButton;
-    zone: SelectFieldProps<"Zone">;
-    aisle: SelectFieldProps<"Aisle">;
-  };
-};
+type Props = 
+  | {
+    type: "complete";
+    filters?: AisleFiltersParams;
+    pagination?: PaginationParams;
+    aislesWithExtra: AisleWithExtra[];
+    dictDialogEdit: DictDialog;
+    dictDialogReplace: DictDialog;
+    dictCard: DictLabelList<"racks" | "items" | "zone">;
+    fields: {
+      name: InputFieldProps;
+      button: DictFormButton;
+      zone: SelectFieldProps<"Zone">;
+      aisle: SelectFieldProps<"Aisle">;
+    };
+  } | {
+    type: "zone";
+    zone: Zone;
+    filters?: AisleFiltersParams;
+    pagination?: PaginationParams;
+    aislesWithExtra: AisleWithExtra[];
+    dictDialogEdit: DictDialog;
+    dictDialogReplace: DictDialog;
+    dictCard: DictLabelList<"racks" | "items" | "zone">;
+    fields: {
+      name: InputFieldProps;
+      button: DictFormButton;
+      zone: SelectFieldProps<"Zone">;
+      aisle: SelectFieldProps<"Aisle">;
+    };
+  }
 
-export default function ListAislesWithExtraClient({
-  pagination,
-  filters,
-  aislesWithExtra,
-  dictDialogEdit,
-  dictDialogReplace,
-  dictCard,
-  fields
-}: Props) {
+// Needs to know what kind of list it is
+// and needs to communicate it to the syncher
+export default function ListAislesWithExtraClient(props: Props) {
+  const { type, pagination, filters, aislesWithExtra, dictDialogEdit, dictDialogReplace,
+  dictCard, fields} = props;
+
   const [currentZones, setCurrentZones] = useState(fields.zone.list);
   const [currentAisles, setCurrentAisles] = useState(fields.aisle.list);
   const [currentAislesWithExtra, setCurrentAislesWithExtra] = 
@@ -63,13 +78,30 @@ export default function ListAislesWithExtraClient({
       type:"Aisle",
     });
 
-    synchronizePaginatedAislesWithExtra({
-      filters: filters,
-      pagination: pagination,
-      streamer: streamer as Worker,
-      list: currentAislesWithExtra,
-      setList: setCurrentAislesWithExtra,
-    });
+    if (type === "complete") {
+      console.log("fired in complete")
+      synchronizePaginatedAislesWithExtra({
+        // kind: "AislesWithExtraById"
+        filters: filters,
+        pagination: pagination,
+        streamer: streamer as Worker,
+        list: currentAislesWithExtra,
+        setList: setCurrentAislesWithExtra,
+      });
+    }
+
+    if (type === "zone") {
+      const { zone } = props;
+      console.log(`fired on zone ${zone.id}`)
+      syncPaginatedAislesByZoneWithExtra({
+        zone: zone.id as string,
+        filters: filters,
+        pagination: pagination,
+        streamer: streamer as Worker,
+        list: currentAislesWithExtra,
+        setList: setCurrentAislesWithExtra,
+      });
+    }
   }, [])
 
   return (

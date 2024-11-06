@@ -1,3 +1,5 @@
+const BACKEND_ENDPOINT = "http://" + self.location.hostname + ":8080";
+
 // Sources the Server Sent Event
 let sse = new EventSource("/api/stream")
 let jwt = ""; 
@@ -5,7 +7,7 @@ let jwt = "";
 // Handles the messages from the server
 sse.onmessage = (event: MessageEvent<any>) => {
   const eventData = JSON.parse(event.data);
-  console.log(eventData)
+  //console.log(eventData)
 
   // If the event.data contains the field jwt, then it's the first
   // response. In this special case we would just save the jwt for
@@ -25,7 +27,18 @@ sse.onmessage = (event: MessageEvent<any>) => {
 // an object containing the type of resource to request, it's id and
 // the request type (create, update, delete).
 onmessage = (event) => {
-  if (event.data.request === "refresh") {
+  if (event.data.foreignId) {
+    clientListByForeignRetrive({
+      page: event.data.page,
+      perPage: event.data.perPage,
+      filters: event.data.filters,
+      paginationOff: event.data.paginationOff,
+      type: event.data.type,
+      foreignId: event.data.foreignId,
+      jwt: jwt,
+      request: "refresh"
+    })
+  } else if (event.data.request === "refresh") {
     // If event.data.refresh exists we want to notify the FetchToastPattern to
     // request a change. Here we want to change
     // Actually here we want to fetch the list
@@ -38,10 +51,6 @@ onmessage = (event) => {
       jwt: jwt,
       request: "refresh"
     })
-    //postMessage({
-    //  type: event.data.type,
-    //  refresh: true,
-    //});
   } else {
     clientElementRetrieve({
       type: event.data.type, 
@@ -110,7 +119,7 @@ const clientElementRetrieve = async ({
   jwt: string, 
   request: "create" | "replace" | "delete" | "error" | "refresh"
 }) => {
-  const apiPath = "http://localhost:8080/api/v1/";
+  const apiPath = BACKEND_ENDPOINT + "/api/v1/";
 
   const option = optionsElement[type as AcceptedTypes];
   const path = option.replace(/{{id}}/g, id);
@@ -183,9 +192,89 @@ const clientListRetrieve = async ({
   jwt: string, 
   request: "create" | "replace" | "delete" | "error" | "refresh"
 }) => {
-  const apiPath = "http://localhost:8080/api/v1/";
+  const apiPath = BACKEND_ENDPOINT + "/api/v1/";
   const option = optionsList[type as AcceptedTypes];
   let path = option + `?q=""`
+
+  if (paginationOff) { path += `&paginationOff=${paginationOff}` }
+  if (page) { path += `&page=${page}` };
+  if (perPage) { path += `&perPage=${perPage}` };
+  if (filters) { path += `&filters=${filters}` };
+
+  const endpoint = apiPath + path;
+  const response = await fetch(endpoint, {
+    method: "GET",
+    headers: { 
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${jwt}`,
+    }
+  });
+
+  if (!response.ok) {
+    const notification: WorkerResponse = { content: null, type: type, id: "", request: "error" };
+    postMessage(notification);
+    return;
+  }
+
+  const body = await response.json();
+
+  if (body.code !== 200) {
+    const notification: WorkerResponse = {content: null, type: type, id: "", request: "error"};
+    postMessage(notification);
+    return;
+  }
+
+  const notification: WorkerResponse = {content: body.data, type: type, id: "", request: request};
+  postMessage(notification);
+}
+
+
+const optionsListByForeign = {
+  "Zone_Aisle":             { path: "aisles/{{id}}/zone", type: "Zone" },
+  "Zone_Rack":              { path: "racks/{{id}}/zone", type: "Zone" },
+  "Zone_Shelf":             { path: "shelfs/{{id}}/zone", type: "Zone" },
+
+  "Aisle_Rack":             { path: "racks/{{id}}/aisle", type: "Aisle" },
+  "Aisle_Shelf":            { path: "shelfs/{{id}}/aisle", type: "Aisle" },
+  "Aisles_Zone":            { path: "zones/{{id}}/aisles", type: "Aisles"  },
+  "AislesWithExtra_Zone":   { path: "zones/{{id}}/aisles/extra", type: "AislesWithExtra" },
+
+  "Rack_Shelf":             { path: "shelfs/{{id}}/rack", type: "Rack" },
+  "Racks_Zone":             { path: "zones/{{id}}/racks", type: "Racks"  },
+  "Racks_Aisle":            { path: "aisles/{{id}}/racks", type: "Racks"  },
+  "RacksWithExtra_Aisle":   { path: "aisles/{{id}}/racks/extra", type: "RacksWithExtra" },
+
+  "Shelfs_Rack":            { path: "aisles/{{id}}/racks", type: "Racks"  },
+  "Shelfs_Aisle":           { path: "aisles/{{id}}/racks", type: "Racks"  },
+  "Shelfs_Zone":            { path: "aisles/{{id}}/racks", type: "Racks"  },
+
+  "SupplierCodes_Supplier": { path: "aisles/{{id}}/racks", type: "Racks"  },
+}
+
+type ListByForeignAcceptedType = "AislesWithExtra_Zone" | "RacksWithExtra_Aisle" | "SupplierCodes_Supplier"
+
+const clientListByForeignRetrive = async ({
+  page,
+  perPage,
+  filters,
+  paginationOff,
+  type,
+  foreignId,
+  jwt,
+  request,
+}: {
+  page: number,
+  perPage: number,
+  filters: any,
+  paginationOff: boolean,
+  type: ListByForeignAcceptedType,
+  jwt: string, 
+  foreignId: string, 
+  request: "refresh"
+}) => {
+  const apiPath = BACKEND_ENDPOINT + "/api/v1/";
+  const option = optionsListByForeign[type].path;
+  let path = option.replace(/{{id}}/g, foreignId); + `?q=""`
 
   if (paginationOff) { path += `&paginationOff=${paginationOff}` }
   if (page) { path += `&page=${page}` };

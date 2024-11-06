@@ -2,7 +2,6 @@
 import { replaceFormAction } from "@/app/lib/actions/replace/replaceFormAction";
 import { updateFormAction } from "@/app/lib/actions/update/updateFormAction";
 import { createFormAction } from "@/app/lib/actions/create/createFormAction";
-import { retrieve } from "@/app/lib/requests/generics/retrieve";
 import { decodeSearchParams } from "@/app/lib/searchParams";
 
 
@@ -20,13 +19,6 @@ export default async function AislesPage({
 }: DefaultPageProps) {
   const currentSearchParams = decodeSearchParams(searchParams.q);
 
-  const aislesWithExtra = await retrieve({
-    request: "AislesWithExtra",
-    page: currentSearchParams.aisles?.pagination?.page,
-    perPage: currentSearchParams.aisles?.pagination?.perPage,
-    filters: JSON.stringify(currentSearchParams.aisles?.filters),
-  });
-  
   const replace = replaceFormAction;
   const update = updateFormAction;
   const create = createFormAction;
@@ -35,9 +27,10 @@ export default async function AislesPage({
     <>
       <HeaderAisleCollection locale={params.lang as Locale} />
       <ListAislesWithExtra
+        hideFilters={{}}
         locale={params.lang as Locale}
         searchParams={currentSearchParams.aisles}
-        list={aislesWithExtra}
+        type="complete"
       />
     </>
   );

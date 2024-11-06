@@ -88,10 +88,7 @@ export function synchronizeZoneWithExtra({
 
   const handleRelatedZoneChange = (data: ServerSentEventData) => {
     if (data.type !== "Zone" || data.id !== element.zone.id) return;
-    setSyncState("update");
-    element = {...element, zone: data.after};
-    setElement(element);
-    delaySyncStateToNone(setSyncState);
+    streamer.postMessage({type: "ZoneWithExtra", id: element.zone.id, request: "update"});
   }
 
   const handleRelevantForeignKeyChange = (data: ServerSentEventData) => {

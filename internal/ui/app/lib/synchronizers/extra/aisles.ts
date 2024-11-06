@@ -27,7 +27,6 @@ export function synchronizePaginatedAislesWithExtra({
   list,
   setList
 }: SyncPaginatedAislesWithExtra) {
-  console.log("list initiated")
   const handleFetchResultMessage = (data: FetchResultMessage) => {
     if (data.type !== "AisleWithExtra") return;
     switch (data.request) {
@@ -54,7 +53,6 @@ export function synchronizePaginatedAislesWithExtra({
   };
 
   const handler = (message: MessageEvent<WorkerMessage>) => {
-    console.log("list fired")
     if (isFetchResultMessage(message.data)) { handleFetchResultMessage(message.data) };
     if (isServerSentMessage(message.data)) { handleServerSentMessage(message.data) };
   };
@@ -75,7 +73,6 @@ export function synchronizeAisleWithExtra({
   setElement,
 }: SyncAisleWithExtra) {
 
-  console.log("single initiated")
   const handleFetchResultMessage = (data: FetchResultMessage) => {
     if (data.type !== "AisleWithExtra" || data.id !== element.aisle.id) return;
     setSyncState("update");
@@ -107,7 +104,56 @@ export function synchronizeAisleWithExtra({
   }
 
   const handler = (message: MessageEvent<WorkerMessage>) => {
-    console.log("single fired")
+    if (isFetchResultMessage(message.data)) { handleFetchResultMessage(message.data) };
+    if (isServerSentMessage(message.data)) { handleServerSentMessage(message.data) };
+  };
+  streamer.addEventListener("message", handler);
+}
+
+export type SyncPaginatedAislesByZoneWithExtra = {
+  zone: string;
+  pagination?: PaginationParams;
+  filters?: AisleFiltersParams;
+  streamer: Worker,
+  list: AislesWithExtra,
+  setList: Dispatch<SetStateAction<AislesWithExtra>>,
+}
+
+export function syncPaginatedAislesByZoneWithExtra({
+  zone,
+  pagination,
+  filters,
+  streamer,
+  list,
+  setList
+}: SyncPaginatedAislesByZoneWithExtra) {
+  const handleFetchResultMessage = (data: FetchResultMessage) => {
+    if (data.type !== "AislesWithExtra_Zone") return;
+    switch (data.request) {
+      case "error":
+        console.error("Something went wrong with client-side fetching");
+        break;
+      case "refresh": 
+        list = data.content;
+        setList(list);
+        break;
+    };
+  };
+  const handleServerSentMessage = (data: ServerSentEventData) => {
+    if (!list || data.type !== "Aisle") return;
+    if (data.action !== "update") {
+      streamer.postMessage({
+        type: "AislesWithExtra_Zone", 
+        foreignId: zone,
+        page: pagination?.page,
+        perPage: pagination?.perPage,
+        filters: JSON.stringify(filters),
+        request: "refresh",
+      });
+    };
+  };
+
+  const handler = (message: MessageEvent<WorkerMessage>) => {
     if (isFetchResultMessage(message.data)) { handleFetchResultMessage(message.data) };
     if (isServerSentMessage(message.data)) { handleServerSentMessage(message.data) };
   };

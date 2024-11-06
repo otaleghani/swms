@@ -421,34 +421,80 @@ func getAislesByZoneWithData(db *database.Database) http.HandlerFunc {
 			ErrorResponse{Message: err.Error()}.r500(w, r)
 			return
 		}
+
+    // Filter
+    queryFilters := r.URL.Query().Get("filters")
+    filteredRows := aisles
+
+    if queryFilters != "" {
+		  var filters AislesFilters
+		  err = json.Unmarshal([]byte(queryFilters), &filters)
+		  if err != nil {
+		  	ErrorResponse{Message: err.Error()}.r400(w, r)
+		  	return
+		  }
+      if filters.Zone != "" {
+        filteredRows, err = FilterByField(
+          filteredRows, "Zone_id", filters.Zone)
+      } 
+
+      if filters.Search != "" {
+        filteredRows, err = FilterBySearch(
+          filteredRows, "Name", filters.Search)
+      } 
+    }
+
     var data []struct {
       Aisle database.Aisle `json:"aisle"`
-      Racks_count int `json:"racks_count"`
-      Items_count int `json:"items_count"`
+      Racks_count int `json:"racksCount"`
+      Items_count int `json:"itemsCount"`
     }
-    for i := 0; i < len(aisles); i++ {
-      racks, err := db.SelectRacksByAisle(aisles[i].Id)
+    for i := 0; i < len(filteredRows); i++ {
+      racks, err := db.SelectRacksByAisle(filteredRows[i].Id)
 		  if err != nil {
 		  	ErrorResponse{Message: err.Error()}.r500(w, r)
 		  	return
 		  }
-      items, err := db.SelectItems("Aisle_id = ?", aisles[i].Id)
+      items, err := db.SelectItems("Aisle_id = ?", filteredRows[i].Id)
 		  if err != nil {
 		  	ErrorResponse{Message: err.Error()}.r500(w, r)
 		  	return
 		  }
       data = append(data, struct{
           Aisle database.Aisle `json:"aisle"`
-          Racks_count int `json:"racks_count"`
-          Items_count int `json:"items_count"`
+          Racks_count int `json:"racksCount"`
+          Items_count int `json:"itemsCount"`
         }{
-          Aisle: aisles[i],
+          Aisle: filteredRows[i],
           Racks_count: len(racks),
           Items_count: len(items),
         },
       )
     }
-		SuccessResponse{Data: data}.r200(w, r)
+
+    // Pagination
+    queryPagination := r.URL.Query().Get("paginationOff")
+    if queryPagination == "true" {
+		  SuccessResponse{Data: data}.r200(w, r)
+      return
+    }
+
+    queryPage := r.URL.Query().Get("page")
+    queryPerPage := r.URL.Query().Get("perPage")
+
+    resultedItems, page, perPage, totalItems, totalPages, err := paginateItems(queryPage, queryPerPage, data)
+
+		if err != nil {
+			ErrorResponse{Message: err.Error()}.r500(w, r)
+			return
+		}
+		SuccessResponse{
+      Data: resultedItems,
+      Page: page,
+      PerPage: perPage,
+      TotalItems: totalItems,
+      TotalPages: totalPages,
+    }.r200(w, r)
   }
 }
 

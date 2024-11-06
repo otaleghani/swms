@@ -126,6 +126,6 @@ export default async function retrieveByForeignId<
     path: path,
     method: "GET",
     tag: revalidateTags[option.type],
-  })
+  });
   return response;
 }

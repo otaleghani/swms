@@ -1,5 +1,5 @@
-"use strict";
-const BACKEND_ENDPOINT = "http://" + self.location.hostname + ":8080";
+import { BACKEND_ENDPOINT } from "@/lib/config";
+//import { BACKEND_ENDPOINT } from "@/lib/config";
 // Sources the Server Sent Event
 let sse = new EventSource("/api/stream");
 let jwt = "";
@@ -23,19 +23,7 @@ sse.onmessage = (event) => {
 // an object containing the type of resource to request, it's id and
 // the request type (create, update, delete).
 onmessage = (event) => {
-    if (event.data.foreignId) {
-        clientListByForeignRetrive({
-            page: event.data.page,
-            perPage: event.data.perPage,
-            filters: event.data.filters,
-            paginationOff: event.data.paginationOff,
-            type: event.data.type,
-            foreignId: event.data.foreignId,
-            jwt: jwt,
-            request: "refresh"
-        });
-    }
-    else if (event.data.request === "refresh") {
+    if (event.data.request === "refresh") {
         // If event.data.refresh exists we want to notify the FetchToastPattern to
         // request a change. Here we want to change
         // Actually here we want to fetch the list
@@ -136,67 +124,9 @@ const optionsList = {
 };
 const clientListRetrieve = async ({ page, perPage, filters, paginationOff, type, jwt, request, }) => {
     const apiPath = BACKEND_ENDPOINT + "/api/v1/";
+    console.log(apiPath);
     const option = optionsList[type];
     let path = option + `?q=""`;
-    if (paginationOff) {
-        path += `&paginationOff=${paginationOff}`;
-    }
-    if (page) {
-        path += `&page=${page}`;
-    }
-    ;
-    if (perPage) {
-        path += `&perPage=${perPage}`;
-    }
-    ;
-    if (filters) {
-        path += `&filters=${filters}`;
-    }
-    ;
-    const endpoint = apiPath + path;
-    const response = await fetch(endpoint, {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${jwt}`,
-        }
-    });
-    if (!response.ok) {
-        const notification = { content: null, type: type, id: "", request: "error" };
-        postMessage(notification);
-        return;
-    }
-    const body = await response.json();
-    if (body.code !== 200) {
-        const notification = { content: null, type: type, id: "", request: "error" };
-        postMessage(notification);
-        return;
-    }
-    const notification = { content: body.data, type: type, id: "", request: request };
-    postMessage(notification);
-};
-const optionsListByForeign = {
-    "Zone_Aisle": { path: "aisles/{{id}}/zone", type: "Zone" },
-    "Zone_Rack": { path: "racks/{{id}}/zone", type: "Zone" },
-    "Zone_Shelf": { path: "shelfs/{{id}}/zone", type: "Zone" },
-    "Aisle_Rack": { path: "racks/{{id}}/aisle", type: "Aisle" },
-    "Aisle_Shelf": { path: "shelfs/{{id}}/aisle", type: "Aisle" },
-    "Aisles_Zone": { path: "zones/{{id}}/aisles", type: "Aisles" },
-    "AislesWithExtra_Zone": { path: "zones/{{id}}/aisles/extra", type: "AislesWithExtra" },
-    "Rack_Shelf": { path: "shelfs/{{id}}/rack", type: "Rack" },
-    "Racks_Zone": { path: "zones/{{id}}/racks", type: "Racks" },
-    "Racks_Aisle": { path: "aisles/{{id}}/racks", type: "Racks" },
-    "RacksWithExtra_Aisle": { path: "aisles/{{id}}/racks/extra", type: "RacksWithExtra" },
-    "Shelfs_Rack": { path: "aisles/{{id}}/racks", type: "Racks" },
-    "Shelfs_Aisle": { path: "aisles/{{id}}/racks", type: "Racks" },
-    "Shelfs_Zone": { path: "aisles/{{id}}/racks", type: "Racks" },
-    "SupplierCodes_Supplier": { path: "aisles/{{id}}/racks", type: "Racks" },
-};
-const clientListByForeignRetrive = async ({ page, perPage, filters, paginationOff, type, foreignId, jwt, request, }) => {
-    const apiPath = BACKEND_ENDPOINT + "/api/v1/";
-    const option = optionsListByForeign[type].path;
-    let path = option.replace(/{{id}}/g, foreignId);
-    +`?q=""`;
     if (paginationOff) {
         path += `&paginationOff=${paginationOff}`;
     }

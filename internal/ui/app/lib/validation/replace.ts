@@ -39,7 +39,9 @@ export async function validateReplace(
     return state;
   }
 
-  if (state.result.itemThatReplaces == state.result.itemThatReplaces) {
+  if (state.result.itemToDelete === state.result.itemThatReplaces) {
+    console.log(state.result.itemToDelete)
+    console.log(state.result.itemThatReplaces)
     state.error = true;
     state.message = dict.form.messages.errors.replace.equals;
     return state;
