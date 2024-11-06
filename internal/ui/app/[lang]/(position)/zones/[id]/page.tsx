@@ -15,6 +15,7 @@ import { DefaultPageProps } from "@/app/lib/types/pageParams";
 import { Zone } from "@/app/lib/types/data/zones";
 import { Locale } from "@/lib/dictionaries";
 import ListAislesWithExtra from "@/app/ui/modules/aisles/lists/ListAislesWithExtra";
+import HeroZoneSingle from "@/app/ui/modules/zones/HeroZoneSingle";
 
 export default async function ZonesIdPage({
   params,
@@ -34,7 +35,8 @@ export default async function ZonesIdPage({
         locale={params.lang as Locale}
       />
       <div className="grid xl:grid-cols-2">
-        <div className="border-r">
+        <div className="flex flex-col border-r xl:h-[calc(100vh_-_57px)]">
+          <HeroZoneSingle />
           <ListAislesWithExtra 
             hideFilters={{ zones: true }}
             locale={params.lang as Locale}

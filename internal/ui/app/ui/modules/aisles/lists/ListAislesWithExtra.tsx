@@ -75,7 +75,7 @@ export default async function ListAislesWithExtra(props: Props) {
 
   return (
     <>
-      <ScrollArea scrollHideDelay={10000} className="xl:h-[calc(100vh_-_114px)]">
+      <ScrollArea scrollHideDelay={10000} className="h-full">
         <div className={`grid gap-2 p-4 ${
           forceLayout === "list"
           ? "xl:grid-cols-1"

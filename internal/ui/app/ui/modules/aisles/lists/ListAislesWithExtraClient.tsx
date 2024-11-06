@@ -92,7 +92,6 @@ export default function ListAislesWithExtraClient(props: Props) {
 
     if (type === "zone") {
       const { zone } = props;
-      console.log(`fired on zone ${zone.id}`)
       syncPaginatedAislesByZoneWithExtra({
         zone: zone.id as string,
         filters: filters,

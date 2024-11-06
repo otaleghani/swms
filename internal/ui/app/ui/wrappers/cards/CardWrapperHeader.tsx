@@ -16,7 +16,7 @@ export default function CardWrapperHeader({
   return (
     <>
       <CardTitle>
-        <span className="text-2xl font-semibold tracking-tight">
+        <span className="text-xl font-semibold tracking-tight">
           {title}
         </span>
       </CardTitle>

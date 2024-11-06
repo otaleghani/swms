@@ -28,6 +28,9 @@ import { InputFieldProps, SelectFieldProps, } from "@/app/lib/types/form/fields"
 import { DictDialog, DictLabelList } from "@/app/lib/types/dictionary/misc";
 import { DictFormButton } from "@/app/lib/types/dictionary/form";
 import { Eye } from "lucide-react";
+import DialogZoneReplace from "../dialogs/DialogZoneReplace";
+import { useLocale } from "@/app/lib/hooks/useLocale";
+import DialogZoneEdit from "../dialogs/DialogZoneEdit";
 
 interface ZoneWithExtraCardProps {
   item: ZoneWithExtra;
@@ -50,6 +53,7 @@ export default function CardZoneWithExtra({
 }: ZoneWithExtraCardProps) {
   const [zoneWithExtra, setZoneWithExtra] = useState(item);
   const [syncState, setSyncState] = useState("none" as SyncState);
+  const { locale } = useLocale();
 
   useEffect(() => {
     synchronizeZoneWithExtra({
@@ -63,77 +67,19 @@ export default function CardZoneWithExtra({
   const CardFooter = () => {
     return (
       <div className="flex gap-2">
-        <DialogFormPattern<"Replace">
-          showButton
-          self={{
-            triggerType: "iconDelete",
-            dict: dictDialogReplace,
-          }}
-          formPattern={{
-            type: "Replace",
-            self: {
-              fields: {
-                ...fieldsDefaultProps,
-                id: zoneWithExtra.zone.id ? zoneWithExtra.zone.id : "",
-                zone: fields.zone,
-                button: fields.button,
-              },
-            },
-            form: {
-              formName: "Replace",
-              formAction: replaceFormAction,
-              initialState: {
-                ...defaultReplaceFormState,
-                result: {
-                  itemToDelete: zoneWithExtra.zone.id
-                    ? zoneWithExtra.zone.id
-                    : "",
-                  itemThatReplaces: "",
-                  type: "Zone",
-                },
-              },
-            },
-          }}
+        <DialogZoneReplace 
+          zone={zoneWithExtra.zone}
+          fields={fields}
+          dict={dictDialogReplace}
         />
-
-        <DialogFormPattern<"Zone">
-          showButton
-          self={{
-            triggerType: "iconEdit",
-            dict: dictDialogEdit,
-          }}
-          formPattern={{
-            type: "Zone",
-            self: {
-              fields: {
-                ...fieldsDefaultProps,
-                name: fields.name,
-                button: fields.button,
-              },
-            },
-            form: {
-              formName: "Zone",
-              formAction: updateFormAction,
-              initialState: {
-                ...defaultZoneFormState,
-                result: {
-                  id: zoneWithExtra.zone.id,
-                  name: zoneWithExtra.zone.name,
-                },
-              },
-            },
-          }}
+        <DialogZoneEdit
+          zone={zoneWithExtra.zone}
+          locale={locale}
         />
-        <Button size="sm" asChild>
-          <Button
-            size="sm"
-            asChild
-            className="aspect-square p-0"
-          >
-            <Link href={`/zones/${item.zone.id}`}>
-              <Eye className="w-4 h-4"/>
-            </Link>
-          </Button>
+        <Button size="sm" asChild className="aspect-square p-0">
+          <Link href={`/zones/${item.zone.id}`}>
+            <Eye className="w-4 h-4"/>
+          </Link>
         </Button>
       </div>
     );

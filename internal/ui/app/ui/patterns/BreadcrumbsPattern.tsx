@@ -36,14 +36,14 @@ export function BreadcrumbsPattern({
           <BreadcrumbSeparator />
         </>
         {itemsList.length < 2 ? itemsList.map((item: any) => (
-          <>
+          <div key={item.url} className="flex items-center gap-1.5">
             <BreadcrumbItem>
               <BreadcrumbLink asChild>
                 <Link href={item.url}>{item.label}</Link>
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
-          </>
+          </div>
         )) : (
           <>
             <BreadcrumbItem>

@@ -13,6 +13,8 @@ import { ZoneFiltersParams } from "../../types/query/data";
 import { PaginationParams } from "../../types/pageParams";
 
 export type SyncPaginatedZonesWithExtra = {
+  kind?: string;
+  relatedId: string;
   pagination?: PaginationParams;
   filters?: ZoneFiltersParams;
   streamer: Worker,
@@ -21,6 +23,8 @@ export type SyncPaginatedZonesWithExtra = {
 }
 
 export function synchronizePaginatedZonesWithExtra({
+  kind,
+  relatedId,
   pagination,
   filters,
   streamer,
@@ -39,6 +43,7 @@ export function synchronizePaginatedZonesWithExtra({
         break;
     };
   };
+
   const handleServerSentMessage = (data: ServerSentEventData) => {
     if (!list || data.type !== "Zone") return;
     if (data.action !== "update") {
