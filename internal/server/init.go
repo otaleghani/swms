@@ -49,6 +49,18 @@ func Serve(path, port string) {
 	mux.HandleFunc("GET /api/v1/items/{id}", getItemById(&dbConn))
 	mux.HandleFunc("PUT /api/v1/items/{id}", putItem(&dbConn))
 	mux.HandleFunc("DELETE /api/v1/items/{id}", deleteItem(&dbConn))
+  mux.HandleFunc("GET /api/v1/zones/{id}/items/{$}", 
+    getItemsByKeyWithExtra(&dbConn, Zone))
+  mux.HandleFunc("GET /api/v1/aisles/{id}/items/{$}", 
+    getItemsByKeyWithExtra(&dbConn, Aisle))
+  mux.HandleFunc("GET /api/v1/racks/{id}/items/{$}", 
+    getItemsByKeyWithExtra(&dbConn, Rack))
+  mux.HandleFunc("GET /api/v1/shelfs/{id}/items/{$}", 
+    getItemsByKeyWithExtra(&dbConn, Shelf))
+  mux.HandleFunc("GET /api/v1/categories/{id}/items/{$}", 
+    getItemsByKeyWithExtra(&dbConn, Category))
+  mux.HandleFunc("GET /api/v1/subcategories/{id}/items/{$}", 
+    getItemsByKeyWithExtra(&dbConn, Subcategory))
 
 	mux.HandleFunc("GET /api/v1/users/current/{$}", getCurrentUser(&dbConn))
 	mux.HandleFunc("GET /api/v1/users/{$}", getUsers(&dbConn))

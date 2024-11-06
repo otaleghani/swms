@@ -19,6 +19,7 @@ import LayoutSelector from "./LayoutSelector";
 interface PaginationPatternProps {
   totalPages: number;
   type: keyof SearchParams;
+  forceLayout: "list" | "dynamic"
 }
 
 function getPage(
@@ -37,7 +38,8 @@ function getPage(
 
 export default function PaginationPattern({ 
   totalPages,
-  type
+  type,
+  forceLayout
 }: PaginationPatternProps) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -57,8 +59,13 @@ export default function PaginationPattern({
 
   return (
     <div className="p-2 flex gap-4 items-center justify-end flex-wrap">
-      <LayoutSelector type={type} />
-      <PageSizeSelector type={type} />
+
+      {forceLayout !== "list" && (
+        <>
+          <LayoutSelector type={type} />
+          <PageSizeSelector type={type} />
+        </>
+      )}
       <Pagination className="flex items-center">
         <div className="pr-2 text-sm font-medium">
           Page: {currentPage} / {totalPages}

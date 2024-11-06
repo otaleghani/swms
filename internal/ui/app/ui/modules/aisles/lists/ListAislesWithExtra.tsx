@@ -27,6 +27,7 @@ type Props =
       searchParams?: SearchParams["aisles"];
       locale: Locale;
       type: "complete";
+      forceLayout: "list" | "dynamic";
     }
   | {
       hideFilters: {
@@ -37,10 +38,11 @@ type Props =
       locale: Locale;
       type: "zone";
       zone: Zone;
+      forceLayout: "list" | "dynamic";
   };
 
 export default async function ListAislesWithExtra(props: Props) {
-  const { searchParams, locale, type, hideFilters } = props;
+  const { searchParams, locale, type, hideFilters, forceLayout } = props;
   let currentZone;
 
   // Here decides if what data we need to handle
@@ -75,7 +77,9 @@ export default async function ListAislesWithExtra(props: Props) {
     <>
       <ScrollArea scrollHideDelay={10000} className="xl:h-[calc(100vh_-_114px)]">
         <div className={`grid gap-2 p-4 ${
-          searchParams?.pagination?.layout 
+          forceLayout === "list"
+          ? "xl:grid-cols-1"
+          : searchParams?.pagination?.layout
             ? `${gridCols[searchParams.pagination.layout]}`
             : "xl:grid-cols-3"
         }`}>
@@ -148,6 +152,7 @@ export default async function ListAislesWithExtra(props: Props) {
           hide={hideFilters}
         />
         <PaginationPattern 
+          forceLayout={forceLayout}
           totalPages={list.totalPages as number} 
           type="aisles"
         />

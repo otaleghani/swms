@@ -33,13 +33,19 @@ export default async function ZonesIdPage({
         zone={zone.data as Zone}
         locale={params.lang as Locale}
       />
-      <ListAislesWithExtra 
-        hideFilters={{ zones: true }}
-        locale={params.lang as Locale}
-        searchParams={currentSearchParams.aisles}
-        type="zone"
-        zone={zone.data as Zone}
-      />
+      <div className="grid xl:grid-cols-2">
+        <div className="border-r">
+          <ListAislesWithExtra 
+            hideFilters={{ zones: true }}
+            locale={params.lang as Locale}
+            searchParams={currentSearchParams.aisles}
+            type="zone"
+            zone={zone.data as Zone}
+            forceLayout="list"
+          />
+        </div>
+        <div className="xl:block hidden">sus</div>
+      </div>
     </>
   )
 }
