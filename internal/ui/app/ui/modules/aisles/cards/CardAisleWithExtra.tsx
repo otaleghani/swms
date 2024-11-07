@@ -10,7 +10,7 @@ import { replaceFormAction } from "@/app/lib/actions/replace/replaceFormAction";
 import CardWrapper from "@/app/ui/wrappers/cards/CardWrapper";
 import Link from "next/link";
 import DialogFormPattern from "@/app/ui/patterns/dialog/DialogFormPattern";
-import ZoneNameWidget from "./ZoneNameWidget";
+import LabelZone from "../../labels/LabelZone";
 import { Eye } from "lucide-react";
 
 // Worker
@@ -168,7 +168,7 @@ export default function CardAisleWithExtra({
         </div>
         <div className="last:border-y border-t w-full flex justify-between py-2">
           <span>{dictCard.labels.zone}</span>
-          <ZoneNameWidget 
+          <LabelZone 
             zone={zone}
             setZone={setZone}
           />

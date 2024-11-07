@@ -1,19 +1,18 @@
 import { synchronizeElement } from "@/app/lib/synchronizers/element";
 import { SyncState } from "@/app/lib/synchronizers/utils";
-import { Zone } from "@/app/lib/types/data/zones"
+import { Category } from "@/app/lib/types/data/categories"
 import streamer from "@/app/lib/workers";
 import { useState, useEffect, Dispatch, SetStateAction} from "react";
-import Link from "next/link";
+import { Badge } from "../../components/badge";
 
 interface Props {
-  zone: Zone;
-  setZone: Dispatch<SetStateAction<Zone>>;
+  category: Category;
+  setCategory: Dispatch<SetStateAction<Category>>;
 }
 
-/** Creates a span */
-export default function ZoneNameWidget({
-  zone,
-  setZone,
+export default function LabelCategory({
+  category,
+  setCategory,
 }: Props) {
   const [syncState, setSyncState] = useState("none" as SyncState);
 
@@ -21,24 +20,20 @@ export default function ZoneNameWidget({
     synchronizeElement({
       streamer: streamer as Worker,
       setSyncState: setSyncState,
-      element: zone,
-      setElement: setZone,
-      type: "Zone",
+      element: category,
+      setElement: setCategory,
+      type: "Category",
     })
   }, []);
 
-  useEffect(() => {
-    //console.log(zone)
-  }, [zone]);
-
   return (
-    <Link
-      href={`/zones/${zone?.id}`}
+    <a
+      href={`/subcategories/${category?.id}`}
       className={
         syncState === "remove" ? "animate-delete" :
         syncState === "update" ? "animate-update" :
         ""
       }
-    >{zone?.name}</Link>
+    ><Badge>{category?.name}</Badge></a>
   )
 }
