@@ -3,7 +3,8 @@
 // Actions
 import { useEffect, useState } from "react";
 import { synchronizeList } from "@/app/lib/synchronizers/lists";
-import { synchronizePaginatedAislesWithExtra, syncPaginatedAislesByZoneWithExtra } from "@/app/lib/synchronizers/extra/aisles";
+import { syncPaginatedAislesWithExtra } from "@/app/lib/synchronizers/extra/aisles/list";
+import { syncPaginatedAislesByZoneWithExtra } from "@/app/lib/synchronizers/extra/aisles/listByZone";
 
 // Workers
 import streamer from "@/app/lib/workers";
@@ -19,7 +20,6 @@ import { InputFieldProps, SelectFieldProps } from "@/app/lib/types/form/fields";
 import { AisleFiltersParams } from "@/app/lib/types/query/data";
 import { PaginationParams } from "@/app/lib/types/pageParams";
 import { Zone } from "@/app/lib/types/data/zones";
-
 
 type Props = 
   | {
@@ -80,7 +80,7 @@ export default function ListAislesWithExtraClient(props: Props) {
 
     if (type === "complete") {
       console.log("fired in complete")
-      synchronizePaginatedAislesWithExtra({
+      syncPaginatedAislesWithExtra({
         // kind: "AislesWithExtraById"
         filters: filters,
         pagination: pagination,

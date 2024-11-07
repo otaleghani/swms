@@ -2,7 +2,7 @@
 
 // Actions
 import { useState, useEffect } from "react";
-import { syncAisleWithExtra } from "@/app/lib/synchronizers/extra/aisles/single";
+import { synchronizeAisleWithExtra } from "@/app/lib/synchronizers/extra/aisles";
 
 /** Components */
 import CardWrapper from "@/app/ui/wrappers/cards/CardWrapper";
@@ -55,7 +55,7 @@ export default function CardAisleWithExtra({
   const [syncState, setSyncState] = useState("none" as SyncState);
 
   useEffect(() => {
-    syncAisleWithExtra({
+    synchronizeAisleWithExtra({
       streamer: streamer as Worker,
       setSyncState: setSyncState,
       element: aisleWithExtra,

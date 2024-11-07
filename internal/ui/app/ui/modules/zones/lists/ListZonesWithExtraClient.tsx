@@ -3,7 +3,7 @@
 // Actions
 import { useEffect, useState } from "react";
 import { synchronizeList } from "@/app/lib/synchronizers/lists";
-import { synchronizePaginatedZonesWithExtra } from "@/app/lib/synchronizers/extra/zones";
+import { syncPaginatedZonesWithExtra } from "@/app/lib/synchronizers/extra/zones/list";
 
 // Workers
 import streamer from "@/app/lib/workers";
@@ -55,7 +55,7 @@ export default function ListZonesWithExtraClient({
       type: "Zone",
     });
 
-    synchronizePaginatedZonesWithExtra({
+    syncPaginatedZonesWithExtra({
       filters: filters,
       pagination: pagination,
       streamer: streamer as Worker,

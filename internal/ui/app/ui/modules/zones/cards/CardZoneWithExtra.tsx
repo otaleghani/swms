@@ -2,7 +2,7 @@
 
 // Actions
 import { useState, useEffect } from "react";
-import { synchronizeZoneWithExtra } from "@/app/lib/synchronizers/extra/zones";
+import { syncZoneWithExtra } from "@/app/lib/synchronizers/extra/zones/single";
 
 // Components
 import CardWrapper from "@/app/ui/wrappers/cards/CardWrapper";
@@ -46,7 +46,7 @@ export default function CardZoneWithExtra({
   const [syncState, setSyncState] = useState("none" as SyncState);
 
   useEffect(() => {
-    synchronizeZoneWithExtra({
+    syncZoneWithExtra({
       streamer: streamer as Worker,
       setSyncState: setSyncState,
       element: zoneWithExtra,
