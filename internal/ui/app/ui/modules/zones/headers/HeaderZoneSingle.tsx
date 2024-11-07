@@ -6,16 +6,14 @@ import { retrieve } from "@/app/lib/requests/generics/retrieve";
 // Components
 import { BreadcrumbsPattern } from "@/app/ui/patterns/BreadcrumbsPattern"
 import HeaderWrapper from "@/app/ui/wrappers/headers/HeaderWrapper"
-import DialogFormPattern from "@/app/ui/patterns/dialog/DialogFormPattern"
 import DialogZoneEdit from "../dialogs/DialogZoneEdit";
 
 // Types and interfaces
 import { Locale } from "@/lib/dictionaries";
-import { defaultZoneFormState, Zone, Zones } from "@/app/lib/types/data/zones";
+import { Zone, Zones } from "@/app/lib/types/data/zones";
 
 // Default values
-import { fieldsDefaultProps } from "@/app/lib/types/form/fields";
-import { defaultAislesBulkFormState } from "@/app/lib/types/data/aisles";
+import DialogAisleCreateBulk from "../../aisles/dialogs/DialogAisleCreateBulk";
 
 interface Props {
   locale: Locale;
@@ -43,40 +41,27 @@ export default async function HeaderZoneSingle({
   const HeaderWrapperRight = () => {
     return (
       <div className="flex gap-2 items-center">
-        <DialogZoneEdit zone={zone} locale={locale} />
+        <DialogZoneEdit 
+          zone={zone}
+          dict={dict.zone.dialogs.edit}
+          fields={{
+            name: {dict: dict.form.fields.name},
+            button: dict.form.buttons.submit,
+          }}
+        />
 
-        <DialogFormPattern<"AislesBulk"> 
-          showButton
-          self={{
-            triggerType: "button",
-            dict: dict.aisle.dialogs.addBulk
-          }}
-          formPattern={{
-            type: "AislesBulk",
-            self: {
-              fields: {
-                ...fieldsDefaultProps,
-                quantity: {dict: dict.form.fields.quantity},
-                zone: {
-                  dict: dict.form.fields.zones,
-                  list: zones.data as Zones,
-                  name: "Zone",
-                },
-                button: dict.form.buttons.add
-              },
+        <DialogAisleCreateBulk
+          dict={dict.aisle.dialogs.addBulk}
+          fields={{
+            quantity: {dict: dict.form.fields.quantity},
+            zone: {
+              dict: dict.form.fields.zones,
+              list: zones.data as Zones,
+              name: "Zone",
             },
-            form: {
-              formName: "AisleAddBulk",
-              formAction: createFormAction,
-              initialState: {
-                ...defaultAislesBulkFormState,
-                result: {
-                  quantity: 0,
-                  zone: zone.id as string,
-                }
-              }
-            }
+            button: dict.form.buttons.add
           }}
+          relatedZone={zone.id}
         />
       </div>
     );

@@ -2,8 +2,6 @@
 
 // Actions
 import { useState, useEffect } from "react";
-import { updateFormAction } from "@/app/lib/actions/update/updateFormAction";
-import { replaceFormAction } from "@/app/lib/actions/replace/replaceFormAction";
 import { synchronizeZoneWithExtra } from "@/app/lib/synchronizers/extra/zones";
 
 // Components
@@ -11,15 +9,9 @@ import CardWrapper from "@/app/ui/wrappers/cards/CardWrapper";
 import { CardTitle, CardDescription } from "@/app/ui/components/card";
 import { Button } from "@/app/ui/components/button";
 import Link from "next/link";
-import DialogFormPattern from "@/app/ui/patterns/dialog/DialogFormPattern";
 
 // Worker
 import streamer from "@/app/lib/workers";
-
-// Default values
-import { defaultZoneFormState } from "@/app/lib/types/data/zones";
-import { defaultReplaceFormState } from "@/app/lib/types/data/replacer";
-import { fieldsDefaultProps } from "@/app/lib/types/form/fields";
 
 // Types and interfaces
 import { ZoneWithExtra } from "@/app/lib/types/data/zones";
@@ -53,7 +45,6 @@ export default function CardZoneWithExtra({
 }: ZoneWithExtraCardProps) {
   const [zoneWithExtra, setZoneWithExtra] = useState(item);
   const [syncState, setSyncState] = useState("none" as SyncState);
-  const { locale } = useLocale();
 
   useEffect(() => {
     synchronizeZoneWithExtra({
@@ -74,7 +65,8 @@ export default function CardZoneWithExtra({
         />
         <DialogZoneEdit
           zone={zoneWithExtra.zone}
-          locale={locale}
+          fields={fields}
+          dict={dictDialogEdit}
         />
         <Button size="sm" asChild className="aspect-square p-0">
           <Link href={`/zones/${item.zone.id}`}>

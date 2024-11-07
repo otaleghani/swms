@@ -32,6 +32,13 @@ export const defaultShelfFormState: ShelfFormState = {
     zone: [],
     aisle: [],
     rack: [],
+  },
+  result: {
+    id: "",
+    name: "",
+    zone: "",
+    aisle: "",
+    rack: "",
   }
 }
 
@@ -44,6 +51,12 @@ export const defaultShelfsBulkFormState: ShelfsBulkFormState = {
     zone: [],
     aisle: [],
     rack: [],
+  },
+  result: {
+    quantity: 0,
+    zone: "",
+    aisle: "",
+    rack: "",
   }
 }
 
@@ -53,7 +66,7 @@ export type ShelfWithExtraRP = Promise<Response<ShelfWithExtra>>;
 export type ShelfsWithExtraRP = Promise<Response<ShelfsWithExtra>>;
 
 export type ShelfsBulkPostRequestBody = {
-  number: number;
+  quantity: number;
   zone: string;
   aisle: string;
   rack: string;

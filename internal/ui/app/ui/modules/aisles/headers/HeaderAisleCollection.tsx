@@ -14,6 +14,7 @@ import { Locale } from "@/lib/dictionaries";
 // Default values
 import { fieldsDefaultProps } from "@/app/lib/types/form/fields";
 import { defaultAislesBulkFormState } from "@/app/lib/types/data/aisles";
+import DialogAisleCreateBulk from "../dialogs/DialogAisleCreateBulk";
 
 interface Props {
   locale: Locale
@@ -39,33 +40,18 @@ export default async function HeaderAisleCollection({
   const HeaderWrapperRight = () => {
     return (
       <>
-      <DialogFormPattern<"AislesBulk"> 
-        showButton
-        self={{
-          triggerType: "button",
-          dict: dict.aisle.dialogs.addBulk
-        }}
-        formPattern={{
-          type: "AislesBulk",
-          self: {
-            fields: {
-              ...fieldsDefaultProps,
-              zone: {
-                name: "Zone",
-                list: zones.data ? zones.data : [],
-                dict: {...dict.form.fields.zones}
-              },
-              quantity: {dict: dict.form.fields.quantity},
-              button: dict.form.buttons.add
+        <DialogAisleCreateBulk 
+          fields={{
+            zone: {
+              name: "Zone",
+              list: zones.data ? zones.data : [],
+              dict: {...dict.form.fields.zones}
             },
-          },
-          form: {
-            formName: "AisleAddBulk",
-            formAction: createFormAction,
-            initialState: defaultAislesBulkFormState,
-          }
-        }}
-      />
+            quantity: {dict: dict.form.fields.quantity},
+            button: dict.form.buttons.add
+          }}
+          dict={dict.aisle.dialogs.addBulk}
+        />
       </>
     );
   };

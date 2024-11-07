@@ -30,6 +30,12 @@ export const defaultRackFormState: RackFormState = {
     name: [],
     zone: [],
     aisle: [],
+  },
+  result: {
+    id: "",
+    name: "",
+    zone: "",
+    aisle: "",
   }
 }
 
@@ -41,6 +47,11 @@ export const defaultRacksBulkFormState: RacksBulkFormState = {
     quantity: [],
     zone: [],
     aisle: [],
+  },
+  result: {
+    quantity: 0,
+    zone: "",
+    aisle: ""
   }
 }
 
@@ -50,7 +61,7 @@ export type RackWithExtraRP = Promise<Response<RackWithExtra>>;
 export type RacksWithExtraRP = Promise<Response<RacksWithExtra>>;
 
 export type RacksBulkPostRequestBody = {
-  number: number;
+  quantity: number;
   zone: string;
   aisle: string;
 }

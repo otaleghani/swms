@@ -5,7 +5,7 @@ import { replaceFormAction } from "@/app/lib/actions/replace/replaceFormAction";
 import DialogFormPattern from "@/app/ui/patterns/dialog/DialogFormPattern"
 
 // Types and interfaces
-import { Zone } from "@/app/lib/types/data/zones";
+import { Shelf } from "@/app/lib/types/data/shelfs";
 
 // Default values
 import { fieldsDefaultProps, SelectFieldProps } from "@/app/lib/types/form/fields";
@@ -14,16 +14,19 @@ import { DictDialog } from "@/app/lib/types/dictionary/misc";
 import { DictFormButton } from "@/app/lib/types/dictionary/form";
 
 interface Props {
-  zone: Zone;
+  shelf: Shelf;
   dict: DictDialog;
   fields: {
     zone: SelectFieldProps<"Zone">;
+    aisle: SelectFieldProps<"Aisle">;
+    rack: SelectFieldProps<"Rack">;
+    shelf: SelectFieldProps<"Shelf">;
     button: DictFormButton;
   }
 }
 
-export default function DialogZoneReplace({
-  zone,
+export default function DialogShelfReplace({
+  shelf,
   fields,
   dict
 }: Props) {
@@ -41,20 +44,23 @@ export default function DialogZoneReplace({
           self: {
             fields: {
               ...fieldsDefaultProps,
-              id: zone.id as string,
+              id: shelf.id as string,
+              shelf: fields.shelf,
+              aisle: fields.aisle,
+              rack: fields.rack,
               zone: fields.zone,
               button: fields.button
             },
           },
           form: {
-            formName: "replaceZone" + zone.id as string,
+            formName: "replaceShelf" + shelf.id as string,
             formAction: replaceFormAction,
             initialState: {
               ...defaultReplaceFormState,
               result: {
-                itemToDelete: zone.id ? zone.id : "",
+                itemToDelete: shelf.id ? shelf.id : "",
                 itemThatReplaces: "",
-                type: "Zone",
+                type: "Shelf",
               },
             },
           },

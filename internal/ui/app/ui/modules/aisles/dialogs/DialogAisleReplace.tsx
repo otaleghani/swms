@@ -5,7 +5,7 @@ import { replaceFormAction } from "@/app/lib/actions/replace/replaceFormAction";
 import DialogFormPattern from "@/app/ui/patterns/dialog/DialogFormPattern"
 
 // Types and interfaces
-import { Zone } from "@/app/lib/types/data/zones";
+import { Aisle } from "@/app/lib/types/data/aisles";
 
 // Default values
 import { fieldsDefaultProps, SelectFieldProps } from "@/app/lib/types/form/fields";
@@ -14,16 +14,17 @@ import { DictDialog } from "@/app/lib/types/dictionary/misc";
 import { DictFormButton } from "@/app/lib/types/dictionary/form";
 
 interface Props {
-  zone: Zone;
+  aisle: Aisle;
   dict: DictDialog;
   fields: {
     zone: SelectFieldProps<"Zone">;
+    aisle: SelectFieldProps<"Aisle">;
     button: DictFormButton;
   }
 }
 
-export default function DialogZoneReplace({
-  zone,
+export default function DialogAisleReplace({
+  aisle,
   fields,
   dict
 }: Props) {
@@ -41,20 +42,21 @@ export default function DialogZoneReplace({
           self: {
             fields: {
               ...fieldsDefaultProps,
-              id: zone.id as string,
+              id: aisle.id as string,
+              aisle: fields.aisle,
               zone: fields.zone,
               button: fields.button
             },
           },
           form: {
-            formName: "replaceZone" + zone.id as string,
+            formName: "replaceAisle" + aisle.id as string,
             formAction: replaceFormAction,
             initialState: {
               ...defaultReplaceFormState,
               result: {
-                itemToDelete: zone.id ? zone.id : "",
+                itemToDelete: aisle.id ? aisle.id : "",
                 itemThatReplaces: "",
-                type: "Zone",
+                type: "Aisle",
               },
             },
           },

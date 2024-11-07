@@ -1,18 +1,15 @@
 // Actions
-import { createFormAction } from "@/app/lib/actions/create/createFormAction";
 import { getDictionary } from "@/lib/dictionaries";
 
 // Components
 import { BreadcrumbsPattern } from "@/app/ui/patterns/BreadcrumbsPattern"
 import HeaderWrapper from "@/app/ui/wrappers/headers/HeaderWrapper"
-import DialogFormPattern from "@/app/ui/patterns/dialog/DialogFormPattern"
 
 // Types and interfaces
 import { Locale } from "@/lib/dictionaries";
 
 // Default values
-import { fieldsDefaultProps } from "@/app/lib/types/form/fields";
-import { defaultZonesBulkFormState } from "@/app/lib/types/data/zones";
+import DialogZoneCreateBulk from "../dialogs/DialogZoneCreateBulk";
 
 interface Props {
   locale: Locale
@@ -34,28 +31,13 @@ export default async function HeaderZoneCollection({
   const HeaderWrapperRight = () => {
     return (
       <>
-      <DialogFormPattern<"ZonesBulk"> 
-        showButton
-        self={{
-          triggerType: "button",
-          dict: dict.zone.dialogs.addBulk
-        }}
-        formPattern={{
-          type: "ZonesBulk",
-          self: {
-            fields: {
-              ...fieldsDefaultProps,
-              quantity: {dict: dict.form.fields.quantity},
-              button: dict.form.buttons.add
-            },
-          },
-          form: {
-            formName: "ZoneAddBulk",
-            formAction: createFormAction,
-            initialState: defaultZonesBulkFormState,
-          }
-        }}
-      />
+        <DialogZoneCreateBulk 
+          dict={dict.zone.dialogs.addBulk}
+          fields={{
+            quantity: {dict: dict.form.fields.quantity},
+            button: dict.form.buttons.add,
+          }}
+        />
       </>
     );
   };

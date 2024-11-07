@@ -5,54 +5,63 @@ import { updateFormAction } from "@/app/lib/actions/update/updateFormAction";
 import DialogFormPattern from "@/app/ui/patterns/dialog/DialogFormPattern"
 
 // Types and interfaces
-import { Zone } from "@/app/lib/types/data/zones";
+import { Shelf } from "@/app/lib/types/data/shelfs";
 import { DictDialog } from "@/app/lib/types/dictionary/misc";
 
 // Default values
-import { defaultZoneFormState } from "@/app/lib/types/data/zones";
+import { defaultShelfFormState } from "@/app/lib/types/data/shelfs";
 import { fieldsDefaultProps, InputFieldProps, SelectFieldProps } from "@/app/lib/types/form/fields";
 import { DictFormButton } from "@/app/lib/types/dictionary/form";
 
 interface Props {
-  zone: Zone;
+  shelf: Shelf;
   fields: {
     name: InputFieldProps;
     button: DictFormButton;
+    zone: SelectFieldProps<"Zone">;
+    aisle: SelectFieldProps<"Aisle">;
+    rack: SelectFieldProps<"Rack">;
   },
   dict: DictDialog;
 }
 
-export default function DialogZoneEdit({
-  zone,
+export default function DialogShelfEdit({
+  shelf,
   fields,
   dict
 }: Props) {
 
   return (
     <>
-      <DialogFormPattern<"Zone"> 
+      <DialogFormPattern<"Shelf"> 
         showButton
         self={{
           triggerType: "iconEdit",
           dict: dict,
         }}
         formPattern={{
-          type: "Zone",
+          type: "Shelf",
           self: {
             fields: {
               ...fieldsDefaultProps,
               name: fields.name,
+              zone: fields.zone,
+              aisle: fields.aisle,
+              rack: fields.rack,
               button: fields.button
             },
           },
           form: {
-            formName: "updateZone" + zone.id as string,
+            formName: "updateShelf" + shelf.id as string,
             formAction: updateFormAction,
             initialState: {
-              ...defaultZoneFormState,
+              ...defaultShelfFormState,
               result: {
-                id: zone.id as string,
-                name: zone.name as string,
+                id: shelf.id as string,
+                zone: shelf.zone as string,
+                aisle: shelf.aisle as string,
+                rack: shelf.rack as string,
+                name: shelf.name as string,
               }
             }
           }

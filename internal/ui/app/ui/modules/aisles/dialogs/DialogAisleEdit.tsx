@@ -5,54 +5,57 @@ import { updateFormAction } from "@/app/lib/actions/update/updateFormAction";
 import DialogFormPattern from "@/app/ui/patterns/dialog/DialogFormPattern"
 
 // Types and interfaces
-import { Zone } from "@/app/lib/types/data/zones";
+import { Aisle } from "@/app/lib/types/data/aisles";
 import { DictDialog } from "@/app/lib/types/dictionary/misc";
 
 // Default values
-import { defaultZoneFormState } from "@/app/lib/types/data/zones";
+import { defaultAisleFormState } from "@/app/lib/types/data/aisles";
 import { fieldsDefaultProps, InputFieldProps, SelectFieldProps } from "@/app/lib/types/form/fields";
 import { DictFormButton } from "@/app/lib/types/dictionary/form";
 
 interface Props {
-  zone: Zone;
+  aisle: Aisle;
   fields: {
     name: InputFieldProps;
     button: DictFormButton;
+    zone: SelectFieldProps<"Zone">;
   },
   dict: DictDialog;
 }
 
-export default function DialogZoneEdit({
-  zone,
+export default function DialogAisleEdit({
+  aisle,
   fields,
   dict
 }: Props) {
 
   return (
     <>
-      <DialogFormPattern<"Zone"> 
+      <DialogFormPattern<"Aisle"> 
         showButton
         self={{
           triggerType: "iconEdit",
           dict: dict,
         }}
         formPattern={{
-          type: "Zone",
+          type: "Aisle",
           self: {
             fields: {
               ...fieldsDefaultProps,
               name: fields.name,
+              zone: fields.zone,
               button: fields.button
             },
           },
           form: {
-            formName: "updateZone" + zone.id as string,
+            formName: "updateAisle" + aisle.id as string,
             formAction: updateFormAction,
             initialState: {
-              ...defaultZoneFormState,
+              ...defaultAisleFormState,
               result: {
-                id: zone.id as string,
-                name: zone.name as string,
+                id: aisle.id as string,
+                zone: aisle.zone as string,
+                name: aisle.name as string,
               }
             }
           }
