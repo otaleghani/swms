@@ -25,6 +25,12 @@ export const defaultSubcategoryFormState: SubcategoryFormState = {
   }
 }
 
+export type SubcategoryWithExtra = {
+  subcategory: Subcategory;
+  itemsCount: number;
+}
+export type SubcategoriesWithExtra = SubcategoryWithExtra[];
+
 export const emptySubcategory: Subcategory = {
   id: "",
   name: "",

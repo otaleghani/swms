@@ -52,7 +52,9 @@ import {
 
 import { 
   Categories, 
-  Category 
+  CategoriesWithExtra, 
+  Category, 
+  CategoryWithExtra
 } from "./data/categories";
 
 import { 
@@ -75,7 +77,9 @@ import {
 
 import { 
   Subcategories, 
-  Subcategory 
+  SubcategoriesWithExtra, 
+  Subcategory, 
+  SubcategoryWithExtra
 } from "./data/subcategories";
 
 import { 
@@ -121,10 +125,14 @@ export type TypeMap = {
 
   // Tag
   Category: Category;
+  CategoryWithExtra: CategoryWithExtra;
   Categories: Categories;
+  CategoriesWithExtra: CategoriesWithExtra;
 
   Subcategory: Subcategory;
+  SubcategoryWithExtra: SubcategoryWithExtra
   Subcategories: Subcategories;
+  SubcategoriesWithExtra: SubcategoriesWithExtra;
 
   // Supplier
   Supplier: Supplier;
@@ -197,7 +205,9 @@ export type TypeMapFilterSingles = {
     "Shelf" |
     "ShelfWithExtra" |
     "Category" |
+    "CategoryWithExtra" |
     "Subcategory" |
+    "SubcategoryWithExtra" |
     "Supplier" |
     "SupplierWithExtra" |
     "SupplierCode" |

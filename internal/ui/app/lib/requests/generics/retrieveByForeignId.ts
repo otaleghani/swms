@@ -27,9 +27,12 @@ type ForeignTypeMap = {
     K extends "Racks" ? "Zone" | "Aisle" :
     K extends "RacksWithExtra" ? "Aisle" :
 
-    K extends "Shelfs" ? "Zone" | "Aisle" | "Rack" :
+    //K extends "Shelfs" ? "Zone" | "Aisle" | "Rack" :
 
-    K extends "SupplierCodes" ? "Supplier" :
+    K extends "SubcategoryWithExtra" ? "Category" :
+
+    // K extends "SupplierCodes" ? "Supplier" :
+    K extends "ItemWithSupplierCodes" ? "Supplier" :
     never;
 }
 
@@ -67,11 +70,17 @@ const options: MapOptions = {
   "Racks_Aisle":            { path: "aisles/{{id}}/racks", type: "Racks"  },
   "RacksWithExtra_Aisle":   { path: "aisles/{{id}}/racks/extra", type: "RacksWithExtra" },
 
-  "Shelfs_Rack":            { path: "aisles/{{id}}/racks", type: "Racks"  },
-  "Shelfs_Aisle":           { path: "aisles/{{id}}/racks", type: "Racks"  },
-  "Shelfs_Zone":            { path: "aisles/{{id}}/racks", type: "Racks"  },
+  //"Shelfs_Rack":            { path: "aisles/{{id}}/racks", type: "Racks"  },
+  //"Shelfs_Aisle":           { path: "aisles/{{id}}/racks", type: "Racks"  },
+  //"Shelfs_Zone":            { path: "aisles/{{id}}/racks", type: "Racks"  },
+  
+  "SubcategoryWithExtra_Category": { path: "category/{{id}}/subcategories/extra", type: "Subcategories"},
 
-  "SupplierCodes_Supplier": { path: "aisles/{{id}}/racks", type: "Racks"  },
+  //"SupplierCodes_Supplier": { path: "aisles/{{id}}/racks", type: "Racks"  },
+  "ItemWithSupplierCodes_Supplier": { 
+    path: "supplier/{{id}}/codes",
+    type: "SupplierCodes"
+  }
 }
 
 interface RetrieveData<

@@ -11,7 +11,8 @@ export type SupplierCode = {
 }
 export type SupplierCodes = SupplierCode[];
 
-export type SupplierCodeWithExtra = SupplierCode & {
+export type SupplierCodeWithExtra = {
+  supplierCode: SupplierCode;
   supplierName: string;
 }
 export type SupplierCodesWithExtra = SupplierCodeWithExtra[];

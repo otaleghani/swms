@@ -1,4 +1,4 @@
-import { ZoneWithExtra } from "@/app/lib/types/data/zones";
+import { SubcategoryWithExtra } from "@/app/lib/types/data/subcategories";
 import { Dispatch, SetStateAction } from "react";
 import { 
   isServerSentMessage, 
@@ -7,26 +7,26 @@ import {
   FetchResultMessage,
 } from "../../utils";
 import { ServerSentEventData } from "@/app/api/stream/route";
-import { ZoneFiltersParams } from "../../../types/query/data";
+import { SubcategoryFiltersParams } from "../../../types/query/data";
 import { PaginationParams } from "../../../types/pageParams";
 
-export type SyncPaginatedZonesWithExtra = {
+export type SyncPaginatedSubcategorysWithExtra = {
   pagination?: PaginationParams;
-  filters?: ZoneFiltersParams;
+  filters?: SubcategoryFiltersParams;
   streamer: Worker,
-  list: ZoneWithExtra[],
-  setList: Dispatch<SetStateAction<ZoneWithExtra[]>>,
+  list: SubcategoryWithExtra[],
+  setList: Dispatch<SetStateAction<SubcategoryWithExtra[]>>,
 }
 
-export function syncPaginatedZonesWithExtra({
+export function syncPaginatedSubcategorysWithExtra({
   pagination,
   filters,
   streamer,
   list,
   setList
-}: SyncPaginatedZonesWithExtra) {
+}: SyncPaginatedSubcategorysWithExtra) {
   const handleFetchResultMessage = (data: FetchResultMessage) => {
-    if (data.type !== "ZoneWithExtra") return;
+    if (data.type !== "SubcategoryWithExtra") return;
     switch (data.request) {
       case "error":
         console.error("Something went wrong with client-side fetching");
@@ -39,10 +39,10 @@ export function syncPaginatedZonesWithExtra({
   };
 
   const handleServerSentMessage = (data: ServerSentEventData) => {
-    if (!list || data.type !== "Zone") return;
+    if (!list || data.type !== "Subcategory") return;
     if (data.action !== "update") {
       streamer.postMessage({
-        type: "ZoneWithExtra", 
+        type: "SubcategoryWithExtra", 
         page: pagination?.page,
         perPage: pagination?.perPage,
         filters: JSON.stringify(filters),

@@ -21,6 +21,13 @@ export const defaultCategoryFormState: CategoryFormState = {
   }
 }
 
+export type CategoryWithExtra = {
+  category: Category;
+  subcategoryCount: number;
+  itemsCount: number;
+}
+export type CategoriesWithExtra = CategoryWithExtra[];
+
 export const emptyCategory: Category = {
   id: "",
   name: "",

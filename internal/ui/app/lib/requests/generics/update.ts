@@ -25,6 +25,8 @@ type UpdateMapOptions = {
     "AisleWithExtra" |
     "RackWithExtra" |
     "ShelfWithExtra" |
+    "CategoryWithExtra" |
+    "SubcategoryWithExtra" |
     "SupplierWithExtra" |
     "SupplierCodeWithExtra" |
     "ItemImagesPostBody" |
