@@ -18,6 +18,7 @@ export const defaultSubcategoryFormState: SubcategoryFormState = {
     category: [],
   },
   result: {
+    id: "",
     name: "",
     description: "",
     category: "",

@@ -9,6 +9,8 @@ import CardWrapper from "@/app/ui/wrappers/cards/CardWrapper";
 import { CardTitle, CardDescription } from "@/app/ui/components/card";
 import { Button } from "@/app/ui/components/button";
 import Link from "next/link";
+import DialogZoneReplace from "../dialogs/DialogZoneReplace";
+import DialogZoneEdit from "../dialogs/DialogZoneEdit";
 
 // Worker
 import streamer from "@/app/lib/workers";
@@ -20,9 +22,6 @@ import { InputFieldProps, SelectFieldProps, } from "@/app/lib/types/form/fields"
 import { DictDialog, DictLabelList } from "@/app/lib/types/dictionary/misc";
 import { DictFormButton } from "@/app/lib/types/dictionary/form";
 import { Eye } from "lucide-react";
-import DialogZoneReplace from "../dialogs/DialogZoneReplace";
-import { useLocale } from "@/app/lib/hooks/useLocale";
-import DialogZoneEdit from "../dialogs/DialogZoneEdit";
 
 interface ZoneWithExtraCardProps {
   item: ZoneWithExtra;

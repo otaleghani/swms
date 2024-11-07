@@ -2,24 +2,18 @@
 
 // Actions
 import { useState, useEffect } from "react";
-import { updateFormAction } from "@/app/lib/actions/update/updateFormAction";
 import { synchronizeAisleWithExtra } from "@/app/lib/synchronizers/extra/aisles";
-import { replaceFormAction } from "@/app/lib/actions/replace/replaceFormAction";
 
 /** Components */
 import CardWrapper from "@/app/ui/wrappers/cards/CardWrapper";
 import Link from "next/link";
-import DialogFormPattern from "@/app/ui/patterns/dialog/DialogFormPattern";
 import LabelZone from "../../labels/LabelZone";
 import { Eye } from "lucide-react";
+import DialogAisleReplace from "../dialogs/DialogAisleReplace";
+import DialogAisleEdit from "../dialogs/DialogAisleEdit";
 
 // Worker
 import streamer from "@/app/lib/workers";
-
-// Default values
-import { defaultAisleFormState } from "@/app/lib/types/data/aisles";
-import { fieldsDefaultProps } from "@/app/lib/types/form/fields";
-import { defaultReplaceFormState } from "@/app/lib/types/data/replacer";
 
 // Components
 import CardWrapperHeader from "@/app/ui/wrappers/cards/CardWrapperHeader";
@@ -30,7 +24,7 @@ import { AisleWithExtra } from "@/app/lib/types/data/aisles";
 import { SyncState } from "@/app/lib/synchronizers/utils";
 import { InputFieldProps, SelectFieldProps } from "@/app/lib/types/form/fields";
 import { DictDialog, DictLabelList } from "@/app/lib/types/dictionary/misc";
-import { DictFormButton, DictInputField } from "@/app/lib/types/dictionary/form";
+import { DictFormButton } from "@/app/lib/types/dictionary/form";
 import { Zone } from "@/app/lib/types/data/zones";
 
 interface AisleWithExtraCardProps {
@@ -79,68 +73,17 @@ export default function CardAisleWithExtra({
     return (
       <>
         <div className="flex gap-2">
-          <DialogFormPattern<"Replace"> 
-            showButton
-            self={{
-              triggerType: "iconDelete",
-              dict: dictDialogReplace,
-            }}
-            formPattern={{
-              type: "Replace",
-              self: {
-                fields: {
-                  ...fieldsDefaultProps,
-                  id: aisleWithExtra.aisle.id ? aisleWithExtra.aisle.id : "",
-                  zone: fields.zone,
-                  aisle: fields.aisle,
-                  button: fields.button,
-                },
-              },
-              form: {
-                formName: "Replace",
-                formAction: replaceFormAction,
-                initialState: {
-                  ...defaultReplaceFormState,
-                  result: {
-                    itemToDelete:aisleWithExtra.aisle.id ? aisleWithExtra.aisle.id : "",
-                    itemThatReplaces: "",
-                    type: "Aisle",
-                  }
-                }
-              }
-            }}
+          <DialogAisleReplace 
+            aisle={aisleWithExtra.aisle}
+            dict={dictDialogReplace}
+            fields={fields}
+          />
+          <DialogAisleEdit 
+            aisle={aisleWithExtra.aisle}
+            dict={dictDialogEdit}
+            fields={fields}
           />
 
-          <DialogFormPattern<"Aisle"> 
-            showButton
-            self={{
-              triggerType: "iconEdit",
-              dict: dictDialogEdit,
-            }}
-            formPattern={{
-              type: "Aisle",
-              self: {
-                fields: {
-                  ...fieldsDefaultProps,
-                  name: fields.name,
-                  zone: fields.zone,
-                  button: fields.button,
-                },
-              },
-              form: {
-                formName: "Aisle",
-                formAction: updateFormAction,
-                initialState: {
-                  ...defaultAisleFormState,
-                  result: {
-                    id: aisleWithExtra.aisle.id,
-                    zone: aisleWithExtra.aisle.zone,
-                    name: aisleWithExtra.aisle.name,
-                  }
-                }
-              }
-            }}
-          />
           <Button
             size="sm"
             asChild

@@ -12,6 +12,7 @@ import { InputFieldProps, SelectFieldProps } from "@/app/lib/types/form/fields";
 // Default values
 import { fieldsDefaultProps } from "@/app/lib/types/form/fields";
 import { defaultSubcategoryFormState } from "@/app/lib/types/data/subcategories";
+import { defaultCategoryFormState } from "@/app/lib/types/data/categories";
 
 interface Props {
   dict: DictDialog;
@@ -20,12 +21,14 @@ interface Props {
     description: InputFieldProps;
     category: SelectFieldProps<"Category">;
     button: DictFormButton;
-  }
+  },
+  relatedCategory?: string;
 }
 
 export default function DialogSubcategoryCreate({
   fields,
-  dict
+  dict,
+  relatedCategory
 }: Props) {
 
   return (
@@ -50,7 +53,15 @@ export default function DialogSubcategoryCreate({
           form: {
             formName: "Subcategory",
             formAction: createFormAction,
-            initialState: defaultSubcategoryFormState,
+            initialState: {
+              ...defaultSubcategoryFormState,
+              result: {
+                category: relatedCategory ? relatedCategory : "",
+                name: "",
+                description: "",
+                id: "",
+              }
+            }
           }
         }}
       />

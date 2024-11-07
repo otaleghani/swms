@@ -14,7 +14,7 @@ import { DictDialog } from "@/app/lib/types/dictionary/misc";
 import { DictFormButton } from "@/app/lib/types/dictionary/form";
 
 interface Props {
-  category: Subcategory;
+  subcategory: Subcategory;
   dict: DictDialog;
   fields: {
     category: SelectFieldProps<"Category">;
@@ -24,7 +24,7 @@ interface Props {
 }
 
 export default function DialogSubcategoryReplace({
-  category,
+  subcategory,
   fields,
   dict
 }: Props) {
@@ -42,19 +42,19 @@ export default function DialogSubcategoryReplace({
           self: {
             fields: {
               ...fieldsDefaultProps,
-              id: category.id as string,
+              id: subcategory.id as string,
               category: fields.category,
               subcategory: fields.subcategory,
               button: fields.button
             },
           },
           form: {
-            formName: "replaceSubcategory" + category.id as string,
+            formName: "replaceSubcategory" + subcategory.id as string,
             formAction: replaceFormAction,
             initialState: {
               ...defaultReplaceFormState,
               result: {
-                itemToDelete: category.id ? category.id : "",
+                itemToDelete: subcategory.id ? subcategory.id : "",
                 itemThatReplaces: "",
                 type: "Subcategory",
               },
