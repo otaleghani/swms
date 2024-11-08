@@ -1,3 +1,9 @@
+"use client"
+
+import { useState, useEffect } from "react";
+import { synchronizeList } from "@/app/lib/synchronizers/lists";
+import streamer from "@/app/lib/workers";
+
 // Actions
 import { updateFormAction } from "@/app/lib/actions/update/updateFormAction";
 
@@ -28,6 +34,16 @@ export default function DialogAisleEdit({
   fields,
   dict
 }: Props) {
+  const [currentList, setCurrentList] = useState(fields.zone.list);
+
+  useEffect(() => {
+    synchronizeList<"Zone">({
+      streamer: streamer as Worker,
+      list: currentList,
+      setList: setCurrentList,
+      type: "Zone",
+    });
+  }, [])
 
   return (
     <>
@@ -43,7 +59,10 @@ export default function DialogAisleEdit({
             fields: {
               ...fieldsDefaultProps,
               name: fields.name,
-              zone: fields.zone,
+              zone: {
+                ...fields.zone,
+                list: currentList,
+              },
               button: fields.button
             },
           },

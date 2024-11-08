@@ -1,3 +1,9 @@
+"use client"
+
+import { useState, useEffect } from "react";
+import { synchronizeList } from "@/app/lib/synchronizers/lists";
+import streamer from "@/app/lib/workers";
+
 // Actions
 import { updateFormAction } from "@/app/lib/actions/update/updateFormAction";
 
@@ -29,6 +35,16 @@ export default function DialogSubcategoryEdit({
   fields,
   dict
 }: Props) {
+  const [currentList, setCurrentList] = useState(fields.category.list);
+
+  useEffect(() => {
+    synchronizeList<"Category">({
+      streamer: streamer as Worker,
+      list: currentList,
+      setList: setCurrentList,
+      type: "Category",
+    });
+  }, [])
 
   return (
     <>
@@ -45,7 +61,10 @@ export default function DialogSubcategoryEdit({
               ...fieldsDefaultProps,
               name: fields.name,
               description: fields.description,
-              category: fields.category,
+              category: {
+                ...fields.category,
+                list: currentList,
+              },
               button: fields.button
             },
           },

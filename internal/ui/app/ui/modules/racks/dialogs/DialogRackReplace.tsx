@@ -1,3 +1,9 @@
+"use client"
+
+import { useState, useEffect } from "react";
+import { synchronizeList } from "@/app/lib/synchronizers/lists";
+import streamer from "@/app/lib/workers";
+
 // Actions
 import { replaceFormAction } from "@/app/lib/actions/replace/replaceFormAction";
 
@@ -29,6 +35,30 @@ export default function DialogRackReplace({
   fields,
   dict
 }: Props) {
+  const [currentZones, setCurrentZones] = useState(fields.zone.list);
+  const [currentAisles, setCurrentAisles] = useState(fields.aisle.list);
+  const [currentRacks, setCurrentRacks] = useState(fields.rack.list);
+
+  useEffect(() => {
+    synchronizeList<"Zone">({
+      streamer: streamer as Worker,
+      list: currentZones,
+      setList: setCurrentZones,
+      type: "Zone",
+    });
+    synchronizeList<"Aisle">({
+      streamer: streamer as Worker,
+      list: currentAisles,
+      setList: setCurrentAisles,
+      type: "Aisle",
+    });
+    synchronizeList<"Rack">({
+      streamer: streamer as Worker,
+      list: currentRacks,
+      setList: setCurrentRacks,
+      type: "Rack",
+    });
+  }, []);
 
   return (
     <>
@@ -44,11 +74,10 @@ export default function DialogRackReplace({
             fields: {
               ...fieldsDefaultProps,
               id: rack.id as string,
-              rack: fields.rack,
-              aisle: fields.aisle,
-              zone: fields.zone,
-              button: fields.button
-            },
+              zone: { ...fields.zone, list: currentZones },
+              aisle: { ...fields.aisle, list: currentAisles },
+              rack: { ...fields.rack, list: currentRacks },
+              button: fields.button },
           },
           form: {
             formName: "replaceRack" + rack.id as string,

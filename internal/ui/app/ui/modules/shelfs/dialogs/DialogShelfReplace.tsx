@@ -1,3 +1,9 @@
+"use client"
+
+import { useState, useEffect } from "react";
+import { synchronizeList } from "@/app/lib/synchronizers/lists";
+import streamer from "@/app/lib/workers";
+
 // Actions
 import { replaceFormAction } from "@/app/lib/actions/replace/replaceFormAction";
 
@@ -30,6 +36,37 @@ export default function DialogShelfReplace({
   fields,
   dict
 }: Props) {
+  const [currentZones, setCurrentZones] = useState(fields.zone.list);
+  const [currentAisles, setCurrentAisles] = useState(fields.aisle.list);
+  const [currentRacks, setCurrentRacks] = useState(fields.rack.list);
+  const [currentShelfs, setCurrentShelfs] = useState(fields.shelf.list);
+
+  useEffect(() => {
+    synchronizeList<"Zone">({
+      streamer: streamer as Worker,
+      list: currentZones,
+      setList: setCurrentZones,
+      type: "Zone",
+    });
+    synchronizeList<"Aisle">({
+      streamer: streamer as Worker,
+      list: currentAisles,
+      setList: setCurrentAisles,
+      type: "Aisle",
+    });
+    synchronizeList<"Rack">({
+      streamer: streamer as Worker,
+      list: currentRacks,
+      setList: setCurrentRacks,
+      type: "Rack",
+    });
+    synchronizeList<"Shelf">({
+      streamer: streamer as Worker,
+      list: currentShelfs,
+      setList: setCurrentShelfs,
+      type: "Shelf",
+    });
+  }, []);
 
   return (
     <>
@@ -45,10 +82,10 @@ export default function DialogShelfReplace({
             fields: {
               ...fieldsDefaultProps,
               id: shelf.id as string,
-              shelf: fields.shelf,
-              aisle: fields.aisle,
-              rack: fields.rack,
-              zone: fields.zone,
+              zone: { ...fields.zone, list: currentZones },
+              aisle: { ...fields.aisle, list: currentAisles },
+              rack: { ...fields.rack, list: currentRacks },
+              shelf: { ...fields.shelf, list: currentShelfs },
               button: fields.button
             },
           },

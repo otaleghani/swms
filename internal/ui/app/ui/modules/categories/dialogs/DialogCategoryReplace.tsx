@@ -1,3 +1,9 @@
+"use client"
+
+import { useState, useEffect } from "react";
+import { synchronizeList } from "@/app/lib/synchronizers/lists";
+import streamer from "@/app/lib/workers";
+
 // Actions
 import { replaceFormAction } from "@/app/lib/actions/replace/replaceFormAction";
 
@@ -27,6 +33,16 @@ export default function DialogCategoryReplace({
   fields,
   dict
 }: Props) {
+  const [currentList, setCurrentList] = useState(fields.category.list);
+
+  useEffect(() => {
+    synchronizeList<"Zone">({
+      streamer: streamer as Worker,
+      list: currentList,
+      setList: setCurrentList,
+      type: "Zone",
+    });
+  }, []);
 
   return (
     <>
@@ -42,7 +58,10 @@ export default function DialogCategoryReplace({
             fields: {
               ...fieldsDefaultProps,
               id: category.id as string,
-              category: fields.category,
+              category: {
+                ...fields.category,
+                list: currentList,
+              },
               button: fields.button
             },
           },

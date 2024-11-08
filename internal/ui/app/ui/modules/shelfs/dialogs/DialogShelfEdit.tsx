@@ -1,3 +1,9 @@
+"use client"
+
+import { useState, useEffect } from "react";
+import { synchronizeList } from "@/app/lib/synchronizers/lists";
+import streamer from "@/app/lib/workers";
+
 // Actions
 import { updateFormAction } from "@/app/lib/actions/update/updateFormAction";
 
@@ -30,6 +36,30 @@ export default function DialogShelfEdit({
   fields,
   dict
 }: Props) {
+  const [currentZones, setCurrentZones] = useState(fields.zone.list);
+  const [currentAisles, setCurrentAisles] = useState(fields.aisle.list);
+  const [currentRacks, setCurrentRacks] = useState(fields.rack.list);
+
+  useEffect(() => {
+    synchronizeList<"Zone">({
+      streamer: streamer as Worker,
+      list: currentZones,
+      setList: setCurrentZones,
+      type: "Zone",
+    });
+    synchronizeList<"Aisle">({
+      streamer: streamer as Worker,
+      list: currentAisles,
+      setList: setCurrentAisles,
+      type: "Aisle",
+    });
+    synchronizeList<"Rack">({
+      streamer: streamer as Worker,
+      list: currentRacks,
+      setList: setCurrentRacks,
+      type: "Rack",
+    });
+  }, []);
 
   return (
     <>
@@ -45,9 +75,9 @@ export default function DialogShelfEdit({
             fields: {
               ...fieldsDefaultProps,
               name: fields.name,
-              zone: fields.zone,
-              aisle: fields.aisle,
-              rack: fields.rack,
+              zone: { ...fields.zone, list: currentZones },
+              aisle: { ...fields.aisle, list: currentAisles },
+              rack: { ...fields.rack, list: currentRacks },
               button: fields.button
             },
           },

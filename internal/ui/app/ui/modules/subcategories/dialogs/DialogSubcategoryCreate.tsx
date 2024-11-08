@@ -1,5 +1,8 @@
 "use client"
+
 import { useState, useEffect } from "react";
+import { synchronizeList } from "@/app/lib/synchronizers/lists";
+import streamer from "@/app/lib/workers";
 
 // Actions
 import { createFormAction } from "@/app/lib/actions/create/createFormAction";
@@ -15,8 +18,6 @@ import { InputFieldProps, SelectFieldProps } from "@/app/lib/types/form/fields";
 // Default values
 import { fieldsDefaultProps } from "@/app/lib/types/form/fields";
 import { defaultSubcategoryFormState } from "@/app/lib/types/data/subcategories";
-import { synchronizeList } from "@/app/lib/synchronizers/lists";
-import streamer from "@/app/lib/workers";
 
 interface Props {
   dict: DictDialog;
@@ -34,13 +35,13 @@ export default function DialogSubcategoryCreate({
   dict,
   relatedCategory
 }: Props) {
-  const [currentCategories, setCurrentCategories] = useState(fields.category.list);
+  const [currentList, setCurrentList] = useState(fields.category.list);
 
   useEffect(() => {
     synchronizeList<"Category">({
       streamer: streamer as Worker,
-      list: currentCategories,
-      setList: setCurrentCategories,
+      list: currentList,
+      setList: setCurrentList,
       type: "Category",
     });
   }, [])
@@ -62,7 +63,7 @@ export default function DialogSubcategoryCreate({
               description: fields.description,
               category: {
                 ...fields.category,
-                list: currentCategories,
+                list: currentList,
               },
               button: fields.button,
             },

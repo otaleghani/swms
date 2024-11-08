@@ -1,3 +1,9 @@
+"use client"
+
+import { useState, useEffect } from "react";
+import { synchronizeList } from "@/app/lib/synchronizers/lists";
+import streamer from "@/app/lib/workers";
+
 // Actions
 import { replaceFormAction } from "@/app/lib/actions/replace/replaceFormAction";
 
@@ -28,6 +34,23 @@ export default function DialogSubcategoryReplace({
   fields,
   dict
 }: Props) {
+  const [currentCategory, setCurrentCategory] = useState(fields.category.list);
+  const [currentSubcategory, setCurrentSubcategory] = useState(fields.subcategory.list);
+
+  useEffect(() => {
+    synchronizeList<"Category">({
+      streamer: streamer as Worker,
+      list: currentCategory,
+      setList: setCurrentCategory,
+      type: "Category",
+    });
+    synchronizeList<"Subcategory">({
+      streamer: streamer as Worker,
+      list: currentSubcategory,
+      setList: setCurrentSubcategory,
+      type: "Subcategory",
+    });
+  }, []);
 
   return (
     <>
@@ -43,8 +66,14 @@ export default function DialogSubcategoryReplace({
             fields: {
               ...fieldsDefaultProps,
               id: subcategory.id as string,
-              category: fields.category,
-              subcategory: fields.subcategory,
+              category: {
+                ...fields.category,
+                list: currentCategory,
+              },
+              subcategory: {
+                ...fields.subcategory,
+                list: currentSubcategory,
+              },
               button: fields.button
             },
           },

@@ -1,3 +1,9 @@
+"use client"
+
+import { useState, useEffect } from "react";
+import { synchronizeList } from "@/app/lib/synchronizers/lists";
+import streamer from "@/app/lib/workers";
+
 // Actions
 import { createFormAction } from "@/app/lib/actions/create/createFormAction";
 
@@ -31,6 +37,23 @@ export default function DialogRackCreateBulk({
   relatedZone,
   relatedAisle,
 }: Props) {
+  const [currentZones, setCurrentZones] = useState(fields.zone.list);
+  const [currentAisles, setCurrentAisles] = useState(fields.aisle.list);
+
+  useEffect(() => {
+    synchronizeList<"Zone">({
+      streamer: streamer as Worker,
+      list: currentZones,
+      setList: setCurrentZones,
+      type: "Zone",
+    });
+    synchronizeList<"Aisle">({
+      streamer: streamer as Worker,
+      list: currentAisles,
+      setList: setCurrentAisles,
+      type: "Aisle",
+    });
+  }, []);
 
   return (
     <>
@@ -45,8 +68,14 @@ export default function DialogRackCreateBulk({
           self: {
             fields: {
               ...fieldsDefaultProps,
-              zone: fields.zone,
-              aisle: fields.aisle,
+              zone: {
+                ...fields.zone,
+                list: currentZones,
+              },
+              aisle: {
+                ...fields.aisle,
+                list: currentAisles,
+              },
               quantity: fields.quantity,
               button: fields.button,
             },
