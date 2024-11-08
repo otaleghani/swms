@@ -1,7 +1,5 @@
 "use server";
 
-//import { redirect } from "next/navigation";
-//import { revalidateTag } from "next/cache";
 import { FormMap, FormState } from "../../types/form/form";
 import { validateState } from "../validateState";
 import { validateUpdateRequests } from "./validateUpdateRequests";
@@ -38,6 +36,7 @@ export async function updateFormAction<K extends keyof FormMap>(
   if (stateValidation.error) { 
     return stateValidation 
   };
+  console.log(stateValidation)
 
   const requestValidation = await validateUpdateRequests<K>(
     state,

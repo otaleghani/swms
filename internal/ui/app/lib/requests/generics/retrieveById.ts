@@ -31,7 +31,7 @@ const options: RetrieveByIdMapOptions = {
   "ShelfWithExtra": { path: "shelfs/{{id}}/extra", type: "ShelfWithExtra" },
   "Category":       { path: "categories/{{id}}",    type: "Category" },
   "CategoryWithExtra":       { path: "categories/{{id}}/extra",    type: "Category" },
-  "Subcategory":    { path: "subcategory/{{id}}", type: "Subcategory" },
+  "Subcategory":    { path: "subcategories/{{id}}", type: "Subcategory" },
   "SubcategoryWithExtra":    { path: "subcategory/{{id}}/extra", type: "Subcategory" },
   "Supplier": { 
     path: "suppliers/{{id}}",       

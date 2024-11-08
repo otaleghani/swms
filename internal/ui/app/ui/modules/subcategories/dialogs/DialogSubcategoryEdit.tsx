@@ -55,10 +55,10 @@ export default function DialogSubcategoryEdit({
             initialState: {
               ...defaultSubcategoryFormState,
               result: {
-                id: subcategory.id as string,
-                name: subcategory.name as string,
-                category: subcategory.category as string,
-                description: subcategory.description as string,
+                id: subcategory.id,
+                name: subcategory.name,
+                category: subcategory.category,
+                description: subcategory.description,
               }
             }
           }

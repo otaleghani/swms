@@ -9,12 +9,15 @@ export const dictionarySubcategories: DictSubcategory = {
       subcategory: "Subcategories",
     }
   },
+  card: {
+    labels: {items: "Items"},
+  },
   dialogs: {
     add: {
-      title: "Edit subcategory",
-      description: "Edit this subcategory with new data",
+      title: "Add subcategory",
+      description: "Add a new subcategory with this form",
       trigger: {
-        label: "Edit subcategory",
+        label: "Add subcategory",
       },
       clear: "Clear",
     },

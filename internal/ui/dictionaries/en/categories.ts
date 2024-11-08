@@ -8,12 +8,18 @@ export const dictionaryCategories: DictCategory = {
       category: "Categories",
     }
   },
+  card: {
+    labels: {
+      subcategories: "Subcategories",
+      items: "Items",
+    }
+  },
   dialogs: {
     add: {
-      title: "Edit category",
-      description: "Edit this category with new data",
+      title: "Add a new category",
+      description: "Use this for for to add a new category.",
       trigger: {
-        label: "Edit category",
+        label: "Add category",
       },
       clear: "Clear",
     },

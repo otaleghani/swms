@@ -71,7 +71,7 @@ const optionsElement = {
     "Category": "catories/{{id}}",
     "Subcategory": "subcategory/{{id}}",
     "CategoryWithExtra": "categories/{{id}}/extra",
-    "SubcategoryWithExtra": "subcategory/{{id}}/extra",
+    "SubcategoryWithExtra": "subcategories/{{id}}/extra",
     "Supplier": "suppliers/{{id}}",
     "SupplierCode": "supplier-codes/{{id}}",
     "Item": "items/{{id}}",
@@ -126,8 +126,8 @@ const optionsList = {
     "ShelfWithExtra": "shelfs/extra",
     "Category": "categories/",
     "CategoryWithExtra": "categories/extra",
-    "Subcategory": "subcategory/",
-    "SubcategoryWithExtra": "subcategory/extra",
+    "Subcategory": "subcategories/",
+    "SubcategoryWithExtra": "subcategories/extra",
     "Supplier": "suppliers/",
     "SupplierCode": "supplier-codes/",
     "Item": "items/",
@@ -199,7 +199,7 @@ const optionsListByForeign = {
     "Shelfs_Aisle": { path: "aisles/{{id}}/racks", type: "Racks" },
     "Shelfs_Zone": { path: "aisles/{{id}}/racks", type: "Racks" },
     "SupplierCodes_Supplier": { path: "aisles/{{id}}/racks", type: "Racks" },
-    "SubcategoryWithExtra_Category": { path: "category/{{id}}/subcategories/extra", type: "Subcategories" },
+    "SubcategoryWithExtra_Category": { path: "categories/{{id}}/subcategories/extra", type: "Subcategories" },
 };
 const clientListByForeignRetrive = async ({ page, perPage, filters, paginationOff, type, foreignId, jwt, request, }) => {
     const apiPath = BACKEND_ENDPOINT + "/api/v1/";

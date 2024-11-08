@@ -42,6 +42,7 @@ export function syncSupplierCodesWithExtra({
 
   const handleRelatedItemChange = (data: ServerSentEventData) => {
     if (data.type !== "Item" || data.id !== element.id) return;
+    if (data.action === "replace" || data.action === "remove") return;
     streamer.postMessage({
       type: "ItemWithSupplierCodes",
       id: element.id,

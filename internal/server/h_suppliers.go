@@ -166,7 +166,7 @@ func deleteSupplier(db *database.Database) http.HandlerFunc {
 	}
 }
 
-func getSuppliersWithData(db *database.Database) http.HandlerFunc {
+func getSuppliersWithExtra(db *database.Database) http.HandlerFunc {
   return func(w http.ResponseWriter, r *http.Request) {
     token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
     if err := checkAccessToken(token, db); err != nil {
@@ -288,7 +288,7 @@ func deleteSupplierSub(db *database.Database) http.HandlerFunc {
 	}
 }
 
-func getSupplierByIdWithData(db *database.Database) http.HandlerFunc {
+func getSupplierByIdWithExtra(db *database.Database) http.HandlerFunc {
   return func(w http.ResponseWriter, r *http.Request) {
     token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
     if err := checkAccessToken(token, db); err != nil {

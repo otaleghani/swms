@@ -97,6 +97,51 @@ func getRackById(db *database.Database) http.HandlerFunc {
 	}
 }
 
+func getRackWithExtraById(db *database.Database) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
+		if err := checkAccessToken(token, db); err != nil {
+			ErrorResponse{Message: err.Error()}.r401(w, r)
+			return
+		}
+		path := r.PathValue("id")
+		rows, _ := db.SelectRacks("Id = ?", path)
+		if len(rows) == 0 {
+			ErrorResponse{Message: "Not found"}.r404(w, r)
+			return
+		}
+
+    var data []struct {
+      Rack database.Rack `json:"rack"`
+      Shelfs_count int `json:"shelfsCount"`
+      Items_count int `json:"itemsCount"`
+    }
+    for i := 0; i < len(rows); i++ {
+      shelfs, err := db.SelectShelfsByRack(rows[i].Id)
+		  if err != nil {
+		  	ErrorResponse{Message: err.Error()}.r500(w, r)
+		  	return
+		  }
+      items, err := db.SelectItems("Rack_id = ?", rows[i].Id)
+		  if err != nil {
+		  	ErrorResponse{Message: err.Error()}.r500(w, r)
+		  	return
+		  }
+      data = append(data, struct{
+          Rack database.Rack `json:"rack"`
+          Shelfs_count int `json:"shelfsCount"`
+          Items_count int `json:"itemsCount"`
+        }{
+          Rack: rows[i],
+          Shelfs_count: len(shelfs),
+          Items_count: len(items),
+        },
+      )
+    }
+		SuccessResponse{Data: rows[0]}.r200(w, r)
+	}
+}
+
 func postRacks(db *database.Database) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
@@ -215,7 +260,7 @@ func postBulkRacks(db *database.Database) http.HandlerFunc {
   }
 }
 
-func getRacksByAisleWithData(db *database.Database) http.HandlerFunc {
+func getRacksByAisleWithExtra(db *database.Database) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
     token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
     if err := checkAccessToken(token, db); err != nil {
@@ -311,7 +356,7 @@ func getRacksByAisleWithData(db *database.Database) http.HandlerFunc {
 	}
 }
 
-func getRacksWithData(db *database.Database) http.HandlerFunc {
+func getRacksWithExtra(db *database.Database) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
     token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
     if err := checkAccessToken(token, db); err != nil {

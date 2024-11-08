@@ -318,7 +318,7 @@ func postBulkAisles(db *database.Database) http.HandlerFunc {
   }
 }
 
-func getAislesWithData(db *database.Database) http.HandlerFunc {
+func getAislesWithExtra(db *database.Database) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
     token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
     if err := checkAccessToken(token, db); err != nil {
@@ -408,7 +408,7 @@ func getAislesWithData(db *database.Database) http.HandlerFunc {
   }
 }
 
-func getAislesByZoneWithData(db *database.Database) http.HandlerFunc {
+func getAislesByZoneWithExtra(db *database.Database) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
     token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
     if err := checkAccessToken(token, db); err != nil {

@@ -24,6 +24,8 @@ type CreateMapOptions = {
     "AisleWithExtra" |
     "RackWithExtra" |
     "ShelfWithExtra" |
+    "CategoryWithExtra" |
+    "SubcategoryWithExtra" |
     "SupplierWithExtra" |
     "SupplierCodeWithExtra" |
     "ItemImage" |
@@ -36,8 +38,8 @@ const options: CreateMapOptions = {
   "Aisle":          { path: "aisles/",          type: "Aisles" },
   "Rack":           { path: "racks/",           type: "Racks" },
   "Shelf":          { path: "shelfs/",          type: "Shelfs" },
-  "Category":       { path: "catories/",        type: "Categories" },
-  "Subcategory":    { path: "subcategory/",     type: "Subcategories" },
+  "Category":       { path: "categories/",        type: "Categories" },
+  "Subcategory":    { path: "subcategories/",     type: "Subcategories" },
   "Supplier":       { path: "suppliers/",       type: "Suppliers" },
   "SupplierCode":   { path: "supplier-codes/",  type: "SupplierCodes" },
   "Item":           { path: "items/",           type: "Items" },
@@ -70,7 +72,7 @@ export async function create<T extends keyof CreateMapOptions>(
     id: response.data?.uuid ? response.data.uuid : "",
     type: request,
     action: "create",
-    before: null,
+    before: "",
     after: payload,
   };
   stringEmitter.emit('message', streamedChange);

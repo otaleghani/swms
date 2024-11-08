@@ -87,7 +87,6 @@ export default function FormPattern<K extends keyof FormPropsMap>({
           />
         )}
 
-
         {type === "Replace" && values && (
           <FormFields.Replace
             fields={self.fields as ReplaceFormFieldsProps}
@@ -189,6 +188,7 @@ export default function FormPattern<K extends keyof FormPropsMap>({
             fields={self.fields as SubcategoryFormFieldsProps}
             errorMessages={state.errorMessages as {
               [T in keyof FormFieldsPropsMap["Subcategory"]]: string[]}}
+            result={state.result}
           />
         )}
 
@@ -197,6 +197,7 @@ export default function FormPattern<K extends keyof FormPropsMap>({
             fields={self.fields as ClientFormFieldsProps}
             errorMessages={state.errorMessages as {
               [T in keyof FormFieldsPropsMap["Client"]]: string[]}}
+            result={state.result}
           />
         )}
         { type === "Product" && (
@@ -204,6 +205,7 @@ export default function FormPattern<K extends keyof FormPropsMap>({
             fields={self.fields as ProductFormFieldsProps}
             errorMessages={state.errorMessages as {
               [T in keyof FormFieldsPropsMap["Product"]]: string[]}}
+            result={state.result}
           />
         )}
         { type === "ProductImage" && (
@@ -211,6 +213,7 @@ export default function FormPattern<K extends keyof FormPropsMap>({
             fields={self.fields as ProductImageFormFieldsProps}
             errorMessages={state.errorMessages as {
               [T in keyof FormFieldsPropsMap["ProductImage"]]: string[]}}
+            result={state.result}
           />
         )}
 
@@ -219,6 +222,7 @@ export default function FormPattern<K extends keyof FormPropsMap>({
             fields={self.fields as TicketFormFieldsProps}
             errorMessages={state.errorMessages as {
               [T in keyof FormFieldsPropsMap["Ticket"]]: string[]}}
+            result={state.result}
             locale={locale}
           />
         )}
@@ -227,6 +231,7 @@ export default function FormPattern<K extends keyof FormPropsMap>({
             fields={self.fields as TicketStateFormFieldsProps}
             errorMessages={state.errorMessages as {
               [T in keyof FormFieldsPropsMap["TicketState"]]: string[]}}
+            result={state.result}
           />
         )}
         { type === "TicketType" && (
@@ -234,6 +239,7 @@ export default function FormPattern<K extends keyof FormPropsMap>({
             fields={self.fields as TicketTypeFormFieldsProps}
             errorMessages={state.errorMessages as {
               [T in keyof FormFieldsPropsMap["TicketType"]]: string[]}}
+            result={state.result}
           />
         )}
 
@@ -242,6 +248,7 @@ export default function FormPattern<K extends keyof FormPropsMap>({
             fields={self.fields as SupplierFormFieldsProps}
             errorMessages={state.errorMessages as {
               [T in keyof FormFieldsPropsMap["Supplier"]]: string[]}}
+            result={state.result}
           />
         )}
         { type === "SupplierCode" && (
@@ -249,6 +256,7 @@ export default function FormPattern<K extends keyof FormPropsMap>({
             fields={self.fields as SupplierCodeFormFieldsProps}
             errorMessages={state.errorMessages as {
               [T in keyof FormFieldsPropsMap["SupplierCode"]]: string[]}}
+            result={state.result}
           />
         )}
 
@@ -257,6 +265,7 @@ export default function FormPattern<K extends keyof FormPropsMap>({
             fields={self.fields as ItemCompleteFormFieldsProps}
             errorMessages={state.errorMessages as {
               [T in keyof FormFieldsPropsMap["ItemComplete"]]: string[]}}
+            result={state.result}
           />
         )}
         { type === "Variant" && (
@@ -264,6 +273,7 @@ export default function FormPattern<K extends keyof FormPropsMap>({
             fields={self.fields as VariantFormFieldsProps}
             errorMessages={state.errorMessages as {
               [T in keyof FormFieldsPropsMap["Variant"]]: string[]}}
+            result={state.result}
           />
         )}
         { type === "Operation" && (
@@ -271,6 +281,7 @@ export default function FormPattern<K extends keyof FormPropsMap>({
             fields={self.fields as OperationFormFieldsProps}
             errorMessages={state.errorMessages as {
               [T in keyof FormFieldsPropsMap["Operation"]]: string[]}}
+            result={state.result}
           />
         )}
         { type === "User" && (
@@ -278,6 +289,7 @@ export default function FormPattern<K extends keyof FormPropsMap>({
             fields={self.fields as UserFormFieldsProps}
             errorMessages={state.errorMessages as {
               [T in keyof FormFieldsPropsMap["User"]]: string[]}}
+            result={state.result}
           />
         )}
 

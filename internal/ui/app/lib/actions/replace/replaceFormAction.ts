@@ -36,7 +36,7 @@ export async function replaceFormAction(
 
   state.result.itemToDelete = itemToDelete as string;
   state.result.itemThatReplaces = itemThatReplaces as string;
-  
+
   const stateValidation = await validateState<"Replace">(
     state,
     "Replace",

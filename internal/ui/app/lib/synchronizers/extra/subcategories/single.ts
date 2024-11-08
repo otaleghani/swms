@@ -39,6 +39,7 @@ export function syncSubcategoryWithExtra({
 
   const handleRelatedSubcategoryChange = (data: ServerSentEventData) => {
     if (data.type !== "Subcategory" || data.id !== element.subcategory.id) return;
+    if (data.action === "replace" || data.action === "remove") return;
     streamer.postMessage({type: "SubcategoryWithExtra", id: element.subcategory.id, request: "update"});
   }
 

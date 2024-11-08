@@ -161,6 +161,8 @@ export async function validateState<K extends keyof FormMap>(
         state as FormState<"Category">,
         locale as string
       );
+      break;
+
     case "Subcategory":
       stateValidation = await validateSubcategory(
         state as FormState<"Subcategory">,

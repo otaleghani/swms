@@ -58,6 +58,7 @@ export default async function HeaderSubcategorySingle({
             button: dict.form.buttons.submit,
           }}
         />
+
         <DialogSubcategoryReplace 
           subcategory={subcategory}
           fields={{

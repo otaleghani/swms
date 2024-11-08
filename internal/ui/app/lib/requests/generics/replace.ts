@@ -38,7 +38,7 @@ const options: ReplaceMapOptions = {
   },
   "Subcategory": { 
     path: "subcategories/{{replaced}}/replace-with/{{replacer}}", 
-    type: "Subcategory" 
+    type: "Subcategories" 
   },
   "Zone": { 
     path: "zones/{{replaced}}/replace-with/{{replacer}}", 

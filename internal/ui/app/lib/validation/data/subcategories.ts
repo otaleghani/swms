@@ -62,7 +62,7 @@ export async function validateSubcategory(
     VALIDATION_SETTINGS.foreignKeys.maxLength,
   )).length != 0 && (state.error = true);
 
-  if (await checkExisting("Category", state.result.category)) {
+  if (!await checkExisting("Category", state.result.category)) {
     state.errorMessages.category.push(
       dict.form.fields.categories.validation.not_found);
     state.error = true;

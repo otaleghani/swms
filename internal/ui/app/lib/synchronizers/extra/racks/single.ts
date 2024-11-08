@@ -41,6 +41,7 @@ export function syncRackWithExtra({
 
   const handleRelatedRackChange = (data: ServerSentEventData) => {
     if (data.type !== "Rack" || data.id !== element.rack.id) return;
+    if (data.action === "replace" || data.action === "remove") return;
     setSyncState("update");
     element = {...element, rack: data.after};
     setElement(element);
@@ -48,7 +49,7 @@ export function syncRackWithExtra({
   };
 
   const handleRelevantForeignKeyChange = (data: ServerSentEventData) => {
-    if (data.type !== "Rack" && data.type !== "Item") return;
+    if (data.type !== "Shelf" && data.type !== "Item") return;
     if (data.after.rack !== element.rack.id && data.before.rack !== element.rack.id) return;
     if (data.before.rack === data.after.rack) return;
     streamer.postMessage({type: "RackWithExtra", id: element.rack.id, request: "update"});

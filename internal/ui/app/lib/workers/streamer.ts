@@ -93,7 +93,7 @@ const optionsElement: ClientRetrieveMapOptions = {
   "Category": "catories/{{id}}",
   "Subcategory": "subcategory/{{id}}",
   "CategoryWithExtra": "categories/{{id}}/extra",
-  "SubcategoryWithExtra": "subcategory/{{id}}/extra",
+  "SubcategoryWithExtra": "subcategories/{{id}}/extra",
   "Supplier": "suppliers/{{id}}",
   "SupplierCode": "supplier-codes/{{id}}",
   "Item": "items/{{id}}",
@@ -166,8 +166,8 @@ const optionsList: ClientRetrieveMapOptions = {
   "ShelfWithExtra": "shelfs/extra",
   "Category": "categories/",
   "CategoryWithExtra": "categories/extra",
-  "Subcategory": "subcategory/",
-  "SubcategoryWithExtra": "subcategory/extra",
+  "Subcategory": "subcategories/",
+  "SubcategoryWithExtra": "subcategories/extra",
   "Supplier": "suppliers/",
   "SupplierCode": "supplier-codes/",
   "Item": "items/",
@@ -257,7 +257,7 @@ const optionsListByForeign = {
   "Shelfs_Zone":            { path: "aisles/{{id}}/racks", type: "Racks"  },
 
   "SupplierCodes_Supplier": { path: "aisles/{{id}}/racks", type: "Racks"  },
-  "SubcategoryWithExtra_Category": { path: "category/{{id}}/subcategories/extra", type: "Subcategories"},
+  "SubcategoryWithExtra_Category": { path: "categories/{{id}}/subcategories/extra", type: "Subcategories"},
 }
 
 type ListByForeignAcceptedType = "AislesWithExtra_Zone" | "RacksWithExtra_Aisle" | "SupplierCodes_Supplier" | "SubcategoryWithExtra_Category"

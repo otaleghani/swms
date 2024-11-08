@@ -41,6 +41,7 @@ export function syncShelfWithExtra({
 
   const handleRelatedShelfChange = (data: ServerSentEventData) => {
     if (data.type !== "Shelf" || data.id !== element.shelf.id) return;
+    if (data.action === "replace" || data.action === "remove") return;
     setSyncState("update");
     element = {...element, shelf: data.after};
     setElement(element);

@@ -39,6 +39,7 @@ export function syncCategoryWithExtra({
 
   const handleRelatedCategoryChange = (data: ServerSentEventData) => {
     if (data.type !== "Category" || data.id !== element.category.id) return;
+    if (data.action === "replace" || data.action === "remove") return;
     streamer.postMessage({type: "CategoryWithExtra", id: element.category.id, request: "update"});
   }
 

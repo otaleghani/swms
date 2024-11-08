@@ -67,10 +67,10 @@ export default function PositionSelectField({
       emptyShelf
   );
 
-  const [listZones, setListZones] = useState(fields.zone?.select.list);
-  const [listAisles, setListAisles] = useState(fields.aisle?.select.list);
-  const [listRacks, setListRacks] = useState(fields.rack?.select.list);
-  const [listShelfs, setListShelfs] = useState(fields.shelf?.select.list);
+  let listZones = fields.zone?.select.list;
+  let listAisles = fields.aisle?.select.list;
+  let listRacks = fields.rack?.select.list;
+  let listShelfs = fields.shelf?.select.list;
 
   const [filteredAisles, setFilteredAisles] = useState(fields.aisle?.select.list);
   const [filteredRacks, setFilteredRacks] = useState(fields.rack?.select.list);

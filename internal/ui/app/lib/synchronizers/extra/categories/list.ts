@@ -10,7 +10,7 @@ import { ServerSentEventData } from "@/app/api/stream/route";
 import { CategoryFiltersParams } from "../../../types/query/data";
 import { PaginationParams } from "../../../types/pageParams";
 
-export type SyncPaginatedCategorysWithExtra = {
+export type SyncPaginatedCategoriesWithExtra = {
   pagination?: PaginationParams;
   filters?: CategoryFiltersParams;
   streamer: Worker,
@@ -18,13 +18,13 @@ export type SyncPaginatedCategorysWithExtra = {
   setList: Dispatch<SetStateAction<CategoryWithExtra[]>>,
 }
 
-export function syncPaginatedCategorysWithExtra({
+export function syncPaginatedCategoriesWithExtra({
   pagination,
   filters,
   streamer,
   list,
   setList
-}: SyncPaginatedCategorysWithExtra) {
+}: SyncPaginatedCategoriesWithExtra) {
   const handleFetchResultMessage = (data: FetchResultMessage) => {
     if (data.type !== "CategoryWithExtra") return;
     switch (data.request) {

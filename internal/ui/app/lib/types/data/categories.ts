@@ -18,12 +18,13 @@ export const defaultCategoryFormState: CategoryFormState = {
   result: {
     id: "",
     name: "",
+    description: "",
   }
 }
 
 export type CategoryWithExtra = {
   category: Category;
-  subcategoryCount: number;
+  subcategoriesCount: number;
   itemsCount: number;
 }
 export type CategoriesWithExtra = CategoryWithExtra[];

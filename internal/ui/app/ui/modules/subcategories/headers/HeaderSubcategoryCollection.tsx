@@ -29,7 +29,7 @@ export default async function HeaderSubcategoryCollection({
     return (
       <BreadcrumbsPattern 
         itemsList={[]}
-        currentItem={dict.category.header.title}
+        currentItem={dict.subcategory.header.title}
       />
   )}
   
@@ -37,7 +37,7 @@ export default async function HeaderSubcategoryCollection({
     return (
       <>
         <DialogSubcategoryCreate
-          dict={dict.category.dialogs.add}
+          dict={dict.subcategory.dialogs.add}
           fields={{
             name: {dict: dict.form.fields.name},
             description: {dict: dict.form.fields.description},

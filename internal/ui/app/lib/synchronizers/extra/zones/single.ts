@@ -39,6 +39,7 @@ export function syncZoneWithExtra({
 
   const handleRelatedZoneChange = (data: ServerSentEventData) => {
     if (data.type !== "Zone" || data.id !== element.zone.id) return;
+    if (data.action === "replace" || data.action === "remove") return;
     streamer.postMessage({type: "ZoneWithExtra", id: element.zone.id, request: "update"});
   }
 

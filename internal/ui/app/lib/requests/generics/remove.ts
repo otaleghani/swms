@@ -23,6 +23,8 @@ type RemoveMapOptions = {
     "AisleWithExtra" |
     "RackWithExtra" |
     "ShelfWithExtra" |
+    "CategoryWithExtra" |
+    "SubcategoryWithExtra" |
     "SupplierWithExtra" |
     "SupplierCodeWithExtra" |
     "ProductImagesPostBody" |
@@ -35,7 +37,7 @@ const options: RemoveMapOptions = {
   "Aisle":          { path: "aisles/{{id}}",          type: "Aisles" },
   "Rack":           { path: "racks/{{id}}",           type: "Racks" },
   "Shelf":          { path: "shelfs/{{id}}",          type: "Shelfs" },
-  "Category":       { path: "catories/{{id}}",        type: "Categories" },
+  "Category":       { path: "categories/{{id}}",        type: "Categories" },
   "Subcategory":    { path: "subcategory/{{id}}",     type: "Subcategories" },
   "Supplier":       { path: "suppliers/{{id}}",       type: "Suppliers" },
   "SupplierCode":   { path: "supplier-codes/{{id}}",  type: "SupplierCodes" },

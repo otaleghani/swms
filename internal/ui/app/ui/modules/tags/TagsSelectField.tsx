@@ -12,6 +12,8 @@ import { SelectFieldProps } from "@/app/lib/types/form/fields";
 
 import { filterList } from "../../patterns/form/select/action";
 import { Subcategory } from "@/app/lib/types/data/subcategories";
+import { synchronizeList } from "@/app/lib/synchronizers/lists";
+import streamer from "@/app/lib/workers";
 
 export interface TagsSelectFieldsProps {
   fields: {
@@ -44,8 +46,14 @@ export default function TagsSelectFields({
     emptySubcategory
   );
 
-  const [listCategory, setListCategory] = useState(fields.category?.select.list);
-  const [listSubcategory, setListSubcategory] = useState(fields.subcategory?.select.list);
+  // Changed from useEffect to normal variable, because we want this
+  // to be updated everytime a new change is synched
+  let listCategory = (
+    fields.category?.select.list ? fields.category.select.list : []
+  );
+  let listSubcategory = (
+    fields.subcategory?.select.list ? fields.subcategory.select.list : []
+  );
 
   const [filteredSubcategory, setFilteredSubcategory] = useState(fields.subcategory?.select.list);
 
@@ -73,7 +81,7 @@ export default function TagsSelectFields({
             />
             {fields.category.type && (
               <input 
-                type="hidden" 
+                type="hidden"
                 name={fields.category.type} 
                 value={selectedCategory.id} 
               />
@@ -94,7 +102,7 @@ export default function TagsSelectFields({
               <input 
                 type="hidden" 
                 name={fields.subcategory.type} 
-                value={selectedCategory.id} 
+                value={selectedSubcategory.id} 
               />
             )} 
           </div>

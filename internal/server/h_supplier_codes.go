@@ -169,7 +169,7 @@ func deleteSupplierCode(db *database.Database) http.HandlerFunc {
 	}
 }
 
-func getSupplierCodesWithData(db *database.Database) http.HandlerFunc {
+func getSupplierCodesWithExtra(db *database.Database) http.HandlerFunc {
   return func(w http.ResponseWriter, r *http.Request) {
     token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
     if err := checkAccessToken(token, db); err != nil {

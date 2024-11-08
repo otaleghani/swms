@@ -18,7 +18,7 @@ export type SyncPaginatedSubcategorysWithExtra = {
   setList: Dispatch<SetStateAction<SubcategoryWithExtra[]>>,
 }
 
-export function syncPaginatedSubcategorysWithExtra({
+export function syncPaginatedSubcategoriesWithExtra({
   pagination,
   filters,
   streamer,

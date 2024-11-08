@@ -3,11 +3,9 @@ import {
   isServerSentMessage, 
   isFetchResultMessage, 
   WorkerMessage,
-  isRefreshMessage,
-  ToastType,
   FetchResultMessage,
 } from "./utils";
-import { TypeMapFilterSingles, TypeMap } from "./../types/requests";
+import { TypeMapFilterSingles } from "./../types/requests";
 import { SelectableItem } from "./../types/form/fields";
 
 type ValidTypes = keyof Omit<TypeMapFilterSingles, 
@@ -56,6 +54,7 @@ export function synchronizeList<T extends SelectableItem>({
         setList(list);
         break;
       case "create":
+        data.after.id = data.id;
         list = [...list, data.after];
         setList(list);
         break;

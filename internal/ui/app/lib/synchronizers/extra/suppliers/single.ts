@@ -39,6 +39,7 @@ export function syncSupplierWithExtra({
 
   const handleRelatedSupplierChange = (data: ServerSentEventData) => {
     if (data.type !== "Supplier" || data.id !== element.supplier.id) return;
+    if (data.action === "replace" || data.action === "remove") return;
     streamer.postMessage({type: "SupplierWithExtra", id: element.supplier.id, request: "update"});
   }
 

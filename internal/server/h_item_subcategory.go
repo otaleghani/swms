@@ -68,6 +68,165 @@ func getSubcategories(db *database.Database) http.HandlerFunc {
 	}
 }
 
+func getSubcategoriesWithExtra(db *database.Database) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+    token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
+    if err := checkAccessToken(token, db); err != nil {
+      ErrorResponse{Message: err.Error()}.r401(w, r)
+      return
+    }
+		rows, err := db.SelectSubcategories("")
+		if err != nil {
+			ErrorResponse{Message: err.Error()}.r500(w, r)
+			return
+		}
+
+    // Filter
+    queryFilters := r.URL.Query().Get("filters")
+    filteredRows := rows
+    if queryFilters != "" {
+		  var filters SubcategoriesFilter
+		  err = json.Unmarshal([]byte(queryFilters), &filters)
+		  if err == nil {
+        if filters.Category != "" {
+          filteredRows, err = FilterBySearch(
+            filteredRows, "Category", filters.Category)
+        }
+        if filters.Search != "" {
+          filteredRows, err = FilterBySearch(
+            filteredRows, "Name", filters.Search)
+        }
+		  }
+    }
+
+    // Construct data
+    var data []struct {
+      Subcategory database.Subcategory `json:"subcategory"`
+      Items_count int `json:"itemsCount"`
+    }
+    for i := 0; i < len(filteredRows); i++ {
+      items, err := db.SelectItems("Subcategory_id = ?", filteredRows[i].Id)
+		  if err != nil {
+		  	ErrorResponse{Message: err.Error()}.r500(w, r)
+		  	return
+		  }
+      data = append(data, struct{
+          Subcategory database.Subcategory `json:"subcategory"`
+          Items_count int `json:"itemsCount"`
+        }{
+          Subcategory: filteredRows[i],
+          Items_count: len(items),
+        },
+      )
+    }
+
+    // Pagination
+    queryPagination := r.URL.Query().Get("paginationOff")
+    if queryPagination == "true" {
+		  SuccessResponse{Data: data}.r200(w, r)
+      return
+    }
+
+    queryPage := r.URL.Query().Get("page")
+    queryPerPage := r.URL.Query().Get("perPage")
+
+    resultedItems, page, perPage, totalItems, totalPages, err := paginateItems(queryPage, queryPerPage, data)
+
+		if err != nil {
+			ErrorResponse{Message: err.Error()}.r500(w, r)
+			return
+		}
+		SuccessResponse{
+      Data: resultedItems,
+      Page: page,
+      PerPage: perPage,
+      TotalItems: totalItems,
+      TotalPages: totalPages,
+    }.r200(w, r)
+  }
+}
+
+func getSubcategoriesWithExtraByCategory(db *database.Database) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+    token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
+    if err := checkAccessToken(token, db); err != nil {
+      ErrorResponse{Message: err.Error()}.r401(w, r)
+      return
+    }
+
+		path := r.PathValue("id")
+
+		rows, err := db.SelectSubcategories("Category_id = ?", path)
+		if err != nil {
+			ErrorResponse{Message: err.Error()}.r500(w, r)
+			return
+		}
+
+    // Filter
+    queryFilters := r.URL.Query().Get("filters")
+    filteredRows := rows
+    if queryFilters != "" {
+		  var filters SubcategoriesFilter
+		  err = json.Unmarshal([]byte(queryFilters), &filters)
+		  if err == nil {
+        if filters.Category != "" {
+          filteredRows, err = FilterBySearch(
+            filteredRows, "Category", filters.Category)
+        }
+        if filters.Search != "" {
+          filteredRows, err = FilterBySearch(
+            filteredRows, "Name", filters.Search)
+        }
+		  }
+    }
+
+    // Construct data
+    var data []struct {
+      Subcategory database.Subcategory `json:"subcategory"`
+      Items_count int `json:"itemsCount"`
+    }
+    for i := 0; i < len(filteredRows); i++ {
+      items, err := db.SelectItems("Subcategory_id = ?", filteredRows[i].Id)
+		  if err != nil {
+		  	ErrorResponse{Message: err.Error()}.r500(w, r)
+		  	return
+		  }
+      data = append(data, struct{
+          Subcategory database.Subcategory `json:"subcategory"`
+          Items_count int `json:"itemsCount"`
+        }{
+          Subcategory: filteredRows[i],
+          Items_count: len(items),
+        },
+      )
+    }
+
+    // Pagination
+    queryPagination := r.URL.Query().Get("paginationOff")
+    if queryPagination == "true" {
+		  SuccessResponse{Data: data}.r200(w, r)
+      return
+    }
+
+    queryPage := r.URL.Query().Get("page")
+    queryPerPage := r.URL.Query().Get("perPage")
+
+    resultedItems, page, perPage, totalItems, totalPages, err := paginateItems(queryPage, queryPerPage, data)
+
+		if err != nil {
+			ErrorResponse{Message: err.Error()}.r500(w, r)
+			return
+		}
+		SuccessResponse{
+      Data: resultedItems,
+      Page: page,
+      PerPage: perPage,
+      TotalItems: totalItems,
+      TotalPages: totalPages,
+    }.r200(w, r)
+  }
+}
+
 func getSubcategoryById(db *database.Database) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
@@ -82,6 +241,45 @@ func getSubcategoryById(db *database.Database) http.HandlerFunc {
 			return
 		}
 		SuccessResponse{Data: rows[0]}.r200(w, r)
+	}
+}
+
+func getSubcategoryWithExtraById(db *database.Database) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
+		if err := checkAccessToken(token, db); err != nil {
+			ErrorResponse{Message: err.Error()}.r401(w, r)
+			return
+		}
+		path := r.PathValue("id")
+		rows, _ := db.SelectSubcategories("Id = ?", path)
+		if len(rows) == 0 {
+			ErrorResponse{Message: "Not found"}.r404(w, r)
+			return
+		}
+    filteredRows := rows
+
+    var data []struct {
+      Subcategory database.Subcategory `json:"subcategory"`
+      Items_count int `json:"itemsCount"`
+    }
+    for i := 0; i < len(filteredRows); i++ {
+      items, err := db.SelectItems("Subcategory_id = ?", filteredRows[i].Id)
+		  if err != nil {
+		  	ErrorResponse{Message: err.Error()}.r500(w, r)
+		  	return
+		  }
+      data = append(data, struct{
+          Subcategory database.Subcategory `json:"subcategory"`
+          Items_count int `json:"itemsCount"`
+        }{
+          Subcategory: filteredRows[i],
+          Items_count: len(items),
+        },
+      )
+    }
+
+		SuccessResponse{Data: data[0]}.r200(w, r)
 	}
 }
 

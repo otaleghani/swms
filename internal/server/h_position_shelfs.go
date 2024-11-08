@@ -99,6 +99,43 @@ func getShelfById(db *database.Database) http.HandlerFunc {
 	}
 }
 
+func getShelfWithExtraById(db *database.Database) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
+		if err := checkAccessToken(token, db); err != nil {
+			ErrorResponse{Message: err.Error()}.r401(w, r)
+			return
+		}
+		path := r.PathValue("id")
+		rows, _ := db.SelectShelfs("Id = ?", path)
+		if len(rows) == 0 {
+			ErrorResponse{Message: "Not found"}.r404(w, r)
+			return
+		}
+
+    var data []struct {
+      Shelf database.Shelf `json:"shelf"`
+      Items_count int `json:"itemsCount"`
+    }
+    for i := 0; i < len(rows); i++ {
+      items, err := db.SelectItems("Shelf_id = ?", rows[i].Id)
+		  if err != nil {
+		  	ErrorResponse{Message: err.Error()}.r500(w, r)
+		  	return
+		  }
+      data = append(data, struct{
+          Shelf database.Shelf `json:"shelf"`
+          Items_count int `json:"itemsCount"`
+        }{
+          Shelf: rows[i],
+          Items_count: len(items),
+        },
+      )
+    }
+		SuccessResponse{Data: rows[0]}.r200(w, r)
+	}
+}
+
 func postShelfs(db *database.Database) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
@@ -180,7 +217,7 @@ func deleteShelf(db *database.Database) http.HandlerFunc {
 	}
 }
 
-func getShelfsByRackWithData(db *database.Database) http.HandlerFunc {
+func getShelfsByRackWithExtra(db *database.Database) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
     token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
     if err := checkAccessToken(token, db); err != nil {
@@ -306,7 +343,7 @@ func postBulkShelfs(db *database.Database) http.HandlerFunc {
   }
 }
 
-func getShelfsWithData(db *database.Database) http.HandlerFunc {
+func getShelfsWithExtra(db *database.Database) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
     token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
     if err := checkAccessToken(token, db); err != nil {

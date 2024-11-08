@@ -71,6 +71,10 @@ export default function PositionSelectFieldWithAdd({
       emptyShelf
   );
 
+  // ATTENTION: 
+  // In the newer version we are using a normal variable instead of useState,
+  // so that we could work with the syncher. Here we have to find a way to
+  // do the same with the "with add" variants.
   const [listZone, setListZone] = useState(fields.zone?.select.list);
   const [listAisles, setListAisles] = useState(fields.aisle?.select.list);
   const [listRacks, setListRacks] = useState(fields.rack?.select.list);

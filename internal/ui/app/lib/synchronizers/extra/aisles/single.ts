@@ -43,6 +43,7 @@ export function syncAisleWithExtra({
     // This one change would hopefully call the useEffect in the Card 
     // so that if a zone (foreign key) was changed the data get's updated.
     if (data.type !== "Aisle" || data.id !== element.aisle.id) return;
+    if (data.action === "replace" || data.action === "remove") return;
     setSyncState("update");
     element = {...element, aisle: data.after};
     setElement(element);

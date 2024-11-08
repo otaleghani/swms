@@ -87,7 +87,7 @@ if len(rows) == 0 {
 	}
 }
 
-func getZoneByIdWithData(db *database.Database) http.HandlerFunc {
+func getZoneByIdWithExtra(db *database.Database) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
     token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
     if err := checkAccessToken(token, db); err != nil {
@@ -246,7 +246,7 @@ func postBulkZones(db *database.Database) http.HandlerFunc {
   }
 }
 
-func getZonesWithData(db *database.Database) http.HandlerFunc {
+func getZonesWithExtra(db *database.Database) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
     token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
     if err := checkAccessToken(token, db); err != nil {
