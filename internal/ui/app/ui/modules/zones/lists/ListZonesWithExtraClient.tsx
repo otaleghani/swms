@@ -43,18 +43,10 @@ export default function ListZonesWithExtraClient({
   dictCard,
   fields,
 }: Props) {
-  const [currentZones, setCurrentZones] = useState(fields.zone.list);
   const [currentZonesWithExtra, setCurrentZonesWithExtra] =
     useState(zonesWithExtra);
 
   useEffect(() => {
-    synchronizeList<"Zone">({
-      streamer: streamer as Worker,
-      list: currentZones,
-      setList: setCurrentZones,
-      type: "Zone",
-    });
-
     syncPaginatedZonesWithExtra({
       filters: filters,
       pagination: pagination,
@@ -74,13 +66,7 @@ export default function ListZonesWithExtraClient({
             dictDialogEdit={dictDialogEdit}
             dictDialogReplace={dictDialogReplace}
             dictCard={dictCard}
-            fields={{
-              ...fields,
-              zone: {
-                ...fields.zone,
-                list: currentZones,
-              },
-            }}
+            fields={fields}
           />
         ))}
     </>

@@ -2,7 +2,6 @@
 
 // Actions
 import { useEffect, useState } from "react";
-import { synchronizeList } from "@/app/lib/synchronizers/lists";
 import { syncPaginatedAislesWithExtra } from "@/app/lib/synchronizers/extra/aisles/list";
 import { syncPaginatedAislesByZoneWithExtra } from "@/app/lib/synchronizers/extra/aisles/listByZone";
 
@@ -65,19 +64,6 @@ export default function ListAislesWithExtraClient(props: Props) {
     useState(aislesWithExtra);
 
   useEffect(() => {
-    synchronizeList<"Zone">({
-      streamer: streamer as Worker,
-      list: currentZones,
-      setList: setCurrentZones,
-      type:"Zone",
-    });
-    synchronizeList<"Aisle">({
-      streamer: streamer as Worker,
-      list: currentAisles,
-      setList: setCurrentAisles,
-      type:"Aisle",
-    });
-
     if (type === "complete") {
       console.log("fired in complete")
       syncPaginatedAislesWithExtra({
@@ -88,7 +74,7 @@ export default function ListAislesWithExtraClient(props: Props) {
         list: currentAislesWithExtra,
         setList: setCurrentAislesWithExtra,
       });
-    }
+    };
 
     if (type === "zone") {
       const { zone } = props;
@@ -100,7 +86,7 @@ export default function ListAislesWithExtraClient(props: Props) {
         list: currentAislesWithExtra,
         setList: setCurrentAislesWithExtra,
       });
-    }
+    };
   }, [])
 
   return (
@@ -113,17 +99,7 @@ export default function ListAislesWithExtraClient(props: Props) {
             dictDialogEdit={dictDialogEdit}
             dictDialogReplace={dictDialogReplace}
             dictCard={dictCard}
-            fields={{
-              ...fields,
-              zone: {
-                ...fields.zone,
-                list: currentZones,
-              },
-              aisle: {
-                ...fields.aisle,
-                list: currentAisles,
-              }
-            }}
+            fields={fields}
           />
         ))}
     </>

@@ -2,7 +2,6 @@
 
 // Actions
 import { useEffect, useState } from "react";
-import { synchronizeList } from "@/app/lib/synchronizers/lists";
 import { syncPaginatedCategoriesWithExtra } from "@/app/lib/synchronizers/extra/categories/list";
 
 // Workers
@@ -44,18 +43,10 @@ export default function ListCategoriesWithExtraClient({
   dictCard,
   fields,
 }: Props) {
-  const [currentCategories, setCurrentCategories] = useState(fields.category.list);
   const [currentCategoriesWithExtra, setCurrentCategoriesWithExtra] =
     useState(categoriesWithExtra);
 
   useEffect(() => {
-    synchronizeList<"Category">({
-      streamer: streamer as Worker,
-      list: currentCategories,
-      setList: setCurrentCategories,
-      type: "Category",
-    });
-
     syncPaginatedCategoriesWithExtra({
       filters: filters,
       pagination: pagination,
@@ -75,13 +66,7 @@ export default function ListCategoriesWithExtraClient({
             dictDialogEdit={dictDialogEdit}
             dictDialogReplace={dictDialogReplace}
             dictCard={dictCard}
-            fields={{
-              ...fields,
-              category: {
-                ...fields.category,
-                list: currentCategories,
-              },
-            }}
+            fields={fields}
           />
         ))}
     </>
