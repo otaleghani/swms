@@ -303,8 +303,8 @@ func getRacksByAisleWithExtra(db *database.Database) http.HandlerFunc {
     // Data construction
     var data []struct {
       Rack database.Rack `json:"rack"`
-      Shelfs_count int `json:"shelfs_count"`
-      Items_count int `json:"items_count"`
+      Shelfs_count int `json:"shelfsCound"`
+      Items_count int `json:"itemsCount"`
     }
     for i := 0; i < len(filteredRows); i++ {
       shelfs, err := db.SelectShelfsByRack(filteredRows[i].Id)
@@ -319,8 +319,8 @@ func getRacksByAisleWithExtra(db *database.Database) http.HandlerFunc {
 		  }
       data = append(data, struct{
           Rack database.Rack `json:"rack"`
-          Shelfs_count int `json:"shelfs_count"`
-          Items_count int `json:"items_count"`
+          Shelfs_count int `json:"shelfsCound"`
+          Items_count int `json:"itemsCount"`
         }{
           Rack: filteredRows[i],
           Shelfs_count: len(shelfs),
@@ -332,7 +332,7 @@ func getRacksByAisleWithExtra(db *database.Database) http.HandlerFunc {
     // Pagination
     queryPagination := r.URL.Query().Get("paginationOff")
     if queryPagination == "true" {
-		  SuccessResponse{Data: filteredRows}.r200(w, r)
+		  SuccessResponse{Data: data}.r200(w, r)
       return
     }
 
@@ -340,7 +340,7 @@ func getRacksByAisleWithExtra(db *database.Database) http.HandlerFunc {
     queryPerPage := r.URL.Query().Get("perPage")
 
     resultedItems, page, perPage, totalItems, totalPages, err := 
-      paginateItems(queryPage, queryPerPage, filteredRows)
+      paginateItems(queryPage, queryPerPage, data)
 
 		if err != nil {
 			ErrorResponse{Message: err.Error()}.r500(w, r)
@@ -398,8 +398,8 @@ func getRacksWithExtra(db *database.Database) http.HandlerFunc {
     // Data construction
     var data []struct {
       Rack database.Rack `json:"rack"`
-      Shelfs_count int `json:"shelfs_count"`
-      Items_count int `json:"items_count"`
+      Shelfs_count int `json:"shelfsCound"`
+      Items_count int `json:"itemsCount"`
     }
     for i := 0; i < len(filteredRows); i++ {
       shelfs, err := db.SelectShelfsByRack(filteredRows[i].Id)
@@ -414,8 +414,8 @@ func getRacksWithExtra(db *database.Database) http.HandlerFunc {
 		  }
       data = append(data, struct{
           Rack database.Rack `json:"rack"`
-          Shelfs_count int `json:"shelfs_count"`
-          Items_count int `json:"items_count"`
+          Shelfs_count int `json:"shelfsCound"`
+          Items_count int `json:"itemsCount"`
         }{
           Rack: filteredRows[i],
           Shelfs_count: len(shelfs),

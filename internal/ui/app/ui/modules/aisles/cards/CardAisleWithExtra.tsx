@@ -49,9 +49,9 @@ export default function CardAisleWithExtra({
 }: AisleWithExtraCardProps) {
   const [aisleWithExtra, setAisleWithExtra] = useState(item);
 
-  const initialItem = fields.zone.list.find((zone) => zone.id === aisleWithExtra.aisle.zone) as Zone;
-
-  const [zone, setZone] = useState(initialItem);
+  const [zone, setZone] = useState(fields.zone.list.find(
+    (zone) => zone.id === aisleWithExtra.aisle.zone
+  ) as Zone);
   const [syncState, setSyncState] = useState("none" as SyncState);
 
   useEffect(() => {
@@ -64,7 +64,6 @@ export default function CardAisleWithExtra({
   }, []);
 
   useEffect(() => {
-    console.log("fired")
     setZone(fields.zone.list.find(
       (zone) => zone.id === aisleWithExtra.aisle.zone
     ) as Zone);
@@ -116,12 +115,10 @@ export default function CardAisleWithExtra({
             zone={zone}
             setZone={setZone}
           />
-          {aisleWithExtra.aisle.zone}
         </div>
       </div>
     )
   }
-
 
   return (
     <div>

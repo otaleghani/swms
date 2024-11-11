@@ -58,7 +58,7 @@ export default async function HeaderAisleSingle({
         />
 
         <DialogRackCreateBulk 
-          dict={dict.aisle.dialogs.addBulk}
+          dict={dict.rack.dialogs.addBulk}
           fields={{
             quantity: {dict: dict.form.fields.quantity},
             zone: {

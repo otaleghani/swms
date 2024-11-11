@@ -1,4 +1,5 @@
 // Actions
+import { notFound } from "next/navigation";
 import { decodeSearchParams } from "@/app/lib/searchParams";
 import { retrieveById } from "@/app/lib/requests/generics/retrieveById";
 import { createFormAction } from "@/app/lib/actions/create/createFormAction";
@@ -6,27 +7,33 @@ import { updateFormAction } from "@/app/lib/actions/update/updateFormAction";
 import { replaceFormAction } from "@/app/lib/actions/replace/replaceFormAction";
 
 // Components
-import HeaderZoneSingle from "@/app/ui/modules/zones/headers/HeaderZoneSingle";
+import HeaderAisleSingle from "@/app/ui/modules/aisles/headers/HeaderAisleSingle";
+import ListRacksWithExtra from "@/app/ui/modules/racks/lists/ListRacksWithExtra"
+import HeroAisleSingle from "@/app/ui/modules/aisles/HeroAisleSingle";
 
 // Types and interfaces
 import { DefaultPageProps } from "@/app/lib/types/pageParams";
-import { Zone, ZoneWithExtra } from "@/app/lib/types/data/zones";
+import { Aisle, AisleWithExtra } from "@/app/lib/types/data/aisles";
 import { getDictionary, Locale } from "@/lib/dictionaries";
-import ListAislesWithExtra from "@/app/ui/modules/aisles/lists/ListAislesWithExtra";
-import HeroZoneSingle from "@/app/ui/modules/zones/HeroZoneSingle";
-import { notFound } from "next/navigation";
+import { retrieve } from "@/app/lib/requests/generics/retrieve";
+import { Zones } from "@/app/lib/types/data/zones";
 
-export default async function ZonesIdPage({
+export default async function AisleIdPage({
   params,
   searchParams
 }: DefaultPageProps) {
-  const zone = await retrieveById("Zone", params.id ? params.id : "")
-  const zoneWithExtra = await retrieveById("ZoneWithExtra", params.id ? params.id : "")
+
+  const aisle = await retrieveById("Aisle", params.id ? params.id : "")
+  const aisleWithExtra = await retrieveById("AisleWithExtra", params.id ? params.id : "")
+  const zones = await retrieve({
+    request: "Zones", 
+    paginationOff: "true",
+  })
 
   const currentSearchParams = decodeSearchParams(searchParams.q)
   const dict = await getDictionary(params.lang as Locale)
 
-  if (zoneWithExtra.code !== 200) {
+  if (aisleWithExtra.code !== 200) {
     notFound();
   }
 
@@ -36,23 +43,24 @@ export default async function ZonesIdPage({
 
   return (
     <>
-      <HeaderZoneSingle 
-        zone={zone.data as Zone}
+      <HeaderAisleSingle 
+        aisle={aisle.data as Aisle}
         locale={params.lang as Locale}
       />
       <div className="grid xl:grid-cols-2">
         <div className="flex flex-col border-r xl:h-[calc(100vh_-_57px)]">
-          <HeroZoneSingle 
-            item={zoneWithExtra.data as ZoneWithExtra}
-            dictCard={dict.zone.card}
+          <HeroAisleSingle 
+            item={aisleWithExtra.data as AisleWithExtra}
+            dictCard={dict.aisle.card}
             dictToast={dict.toasts.fetching}
+            zonesList={zones.data as Zones}
           />
-          <ListAislesWithExtra 
+          <ListRacksWithExtra 
             hideFilters={{ zones: true }}
             locale={params.lang as Locale}
             searchParams={currentSearchParams.aisles}
-            type="zone"
-            zone={zone.data as Zone}
+            type="aisle"
+            aisle={aisle.data as Aisle}
             forceLayout="list"
           />
         </div>

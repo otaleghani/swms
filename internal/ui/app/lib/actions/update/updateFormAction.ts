@@ -36,7 +36,6 @@ export async function updateFormAction<K extends keyof FormMap>(
   if (stateValidation.error) { 
     return stateValidation 
   };
-  console.log(stateValidation)
 
   const requestValidation = await validateUpdateRequests<K>(
     state,

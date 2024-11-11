@@ -28,9 +28,10 @@ export default async function AislesPage({
       <HeaderAisleCollection locale={params.lang as Locale} />
       <ListAislesWithExtra
         hideFilters={{}}
-        locale={params.lang as Locale}
         searchParams={currentSearchParams.aisles}
+        locale={params.lang as Locale}
         type="complete"
+        forceLayout="dynamic"
       />
     </>
   );

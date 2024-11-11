@@ -28,7 +28,7 @@ export function syncPaginatedRacksByAisleWithExtra({
   setList
 }: SyncPaginatedRacksByZoneWithExtra) {
   const handleFetchResultMessage = (data: FetchResultMessage) => {
-    if (data.type !== "RacksWithExtra_Zone") return;
+    if (data.type !== "RacksWithExtra_Aisle") return;
     switch (data.request) {
       case "error":
         console.error("Something went wrong with client-side fetching");

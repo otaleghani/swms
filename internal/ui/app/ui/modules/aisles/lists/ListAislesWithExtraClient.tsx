@@ -83,7 +83,6 @@ export default function ListAislesWithExtraClient(props: Props) {
 
     if (type === "complete") {
       syncPaginatedAislesWithExtra({
-        // kind: "AislesWithExtraById"
         filters: filters,
         pagination: pagination,
         streamer: streamer as Worker,

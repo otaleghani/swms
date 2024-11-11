@@ -53,7 +53,7 @@ export const RacksBulkFormFields = ({
     <InputPattern 
       field="quantityWithButtons"
       dict={fields.quantity.dict}
-      defaultValue={String(result?.number)}
+      defaultValue={String(result?.quantity)}
       className=""
       label={true}
       errorMessages={errorMessages.quantity}
@@ -61,10 +61,12 @@ export const RacksBulkFormFields = ({
     <PositionSelectField 
       fields={{ 
         zone: {
+          defaultValue: fields.zone.list.find(e => (e.id == result?.zone)),
           select: fields.zone,
           errorMessages: errorMessages.zone,
         },
         aisle: {
+          defaultValue: fields.aisle.list.find(e => (e.id == result?.aisle)),
           select: fields.aisle,
           errorMessages: errorMessages.aisle,
         },

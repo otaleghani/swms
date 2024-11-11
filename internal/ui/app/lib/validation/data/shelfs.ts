@@ -55,7 +55,7 @@ export async function validateShelf(
     VALIDATION_SETTINGS.foreignKeys.maxLength,
   )).length != 0 && (state.error = true);
 
-  if (await checkExisting("Zone", state.result.zone)) {
+  if (!await checkExisting("Zone", state.result.zone)) {
     state.errorMessages.zone.push(
       dict.form.fields.zones.validation.not_found);
     state.error = true;
@@ -68,7 +68,7 @@ export async function validateShelf(
     VALIDATION_SETTINGS.foreignKeys.maxLength,
   )).length != 0 && (state.error = true);
 
-  if (await checkExisting("Aisle", state.result.aisle)) {
+  if (!await checkExisting("Aisle", state.result.aisle)) {
     state.errorMessages.aisle.push(
       dict.form.fields.aisles.validation.not_found);
     state.error = true;
@@ -81,7 +81,7 @@ export async function validateShelf(
     VALIDATION_SETTINGS.foreignKeys.maxLength,
   )).length != 0 && (state.error = true);
 
-  if (await checkExisting("Rack", state.result.rack)) {
+  if (!await checkExisting("Rack", state.result.rack)) {
     state.errorMessages.rack.push(
       dict.form.fields.racks.validation.not_found);
     state.error = true;
@@ -104,23 +104,23 @@ export async function validateShelfsBulk(
   }
 
   (state.errorMessages.quantity = validateNumber(
-    String(state.result.number), 
+    String(state.result.quantity), 
     dict.form.fields.quantity.validation, 
     VALIDATION_SETTINGS.bigUnsignedNumber.minLength,
     VALIDATION_SETTINGS.bigUnsignedNumber.maxLength,
   )).length != 0 && (state.error = true);
 
-  if (await checkExisting("Zone", state.result.zone)) {
+  if (!await checkExisting("Zone", state.result.zone)) {
     state.errorMessages.zone.push(
       dict.form.fields.zones.validation.not_found);
     state.error = true;
   }
-  if (await checkExisting("Aisle", state.result.aisle)) {
+  if (!await checkExisting("Aisle", state.result.aisle)) {
     state.errorMessages.aisle.push(
       dict.form.fields.aisles.validation.not_found);
     state.error = true;
   }
-  if (await checkExisting("Rack", state.result.rack)) {
+  if (!await checkExisting("Rack", state.result.rack)) {
     state.errorMessages.rack.push(
       dict.form.fields.racks.validation.not_found);
     state.error = true;

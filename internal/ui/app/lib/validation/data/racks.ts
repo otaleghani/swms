@@ -50,7 +50,7 @@ export async function validateRack(
     VALIDATION_SETTINGS.foreignKeys.maxLength,
   )).length != 0 && (state.error = true);
 
-  if (await checkExisting("Zone", state.result.zone)) {
+  if (!await checkExisting("Zone", state.result.zone)) {
     state.errorMessages.zone.push(
       dict.form.fields.zones.validation.not_found);
     state.error = true;
@@ -63,7 +63,7 @@ export async function validateRack(
     VALIDATION_SETTINGS.foreignKeys.maxLength,
   )).length != 0 && (state.error = true);
 
-  if (await checkExisting("Aisle", state.result.aisle)) {
+  if (!await checkExisting("Aisle", state.result.aisle)) {
     state.errorMessages.aisle.push(
       dict.form.fields.aisles.validation.not_found);
     state.error = true;
@@ -86,18 +86,18 @@ export async function validateRacksBulk(
   }
 
   (state.errorMessages.quantity = validateNumber(
-    String(state.result.number), 
+    String(state.result.quantity), 
     dict.form.fields.quantity.validation, 
     VALIDATION_SETTINGS.bigUnsignedNumber.minLength,
     VALIDATION_SETTINGS.bigUnsignedNumber.maxLength,
   )).length != 0 && (state.error = true);
 
-  if (await checkExisting("Zone", state.result.zone)) {
+  if (!await checkExisting("Zone", state.result.zone)) {
     state.errorMessages.zone.push(
       dict.form.fields.zones.validation.not_found);
     state.error = true;
   }
-  if (await checkExisting("Aisle", state.result.aisle)) {
+  if (!await checkExisting("Aisle", state.result.aisle)) {
     state.errorMessages.aisle.push(
       dict.form.fields.aisles.validation.not_found);
     state.error = true;

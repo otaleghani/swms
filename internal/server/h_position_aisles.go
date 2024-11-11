@@ -30,7 +30,8 @@ func getAisles(db *database.Database) http.HandlerFunc {
 
     // Filters
     queryFilters := r.URL.Query().Get("filters")
-    filteredRows := rows
+    filteredRows := deleteNilValue(rows)
+
 		var filters AislesFilters
     if queryFilters != "" {
 		  err = json.Unmarshal([]byte(queryFilters), &filters)
@@ -333,7 +334,7 @@ func getAislesWithExtra(db *database.Database) http.HandlerFunc {
 
     // Filter
     queryFilters := r.URL.Query().Get("filters")
-    filteredRows := aisles
+    filteredRows := deleteNilValue(aisles)
 
     if queryFilters != "" {
 		  var filters AislesFilters
