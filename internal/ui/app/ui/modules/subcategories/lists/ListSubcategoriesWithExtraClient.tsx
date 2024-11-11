@@ -3,6 +3,7 @@
 // Actions
 import { useEffect, useState } from "react";
 import { syncPaginatedSubcategoriesWithExtra } from "@/app/lib/synchronizers/extra/subcategories/list";
+import { synchronizeList } from "@/app/lib/synchronizers/lists";
 
 // Workers
 import streamer from "@/app/lib/workers";
@@ -44,10 +45,25 @@ export default function ListSubcategoriesWithExtraClient({
   dictCard,
   fields,
 }: Props) {
+  const [categories, setCategories] = useState(fields.category.list);
+  const [subcategories, setSubcategories] = useState(fields.subcategory.list);
   const [currentSubcategoriesWithExtra, setCurrentSubcategoriesWithExtra] =
     useState(subcategoriesWithExtra);
 
   useEffect(() => {
+    synchronizeList({
+      list: categories,
+      setList: setCategories,
+      streamer: streamer as Worker,
+      type: "Category"
+    });
+    synchronizeList({
+      list: subcategories,
+      setList: setSubcategories,
+      streamer: streamer as Worker,
+      type: "Subcategory"
+    });
+
     syncPaginatedSubcategoriesWithExtra({
       filters: filters,
       pagination: pagination,
@@ -67,7 +83,17 @@ export default function ListSubcategoriesWithExtraClient({
             dictDialogEdit={dictDialogEdit}
             dictDialogReplace={dictDialogReplace}
             dictCard={dictCard}
-            fields={fields}
+            fields={{
+              ...fields,
+              category: {
+                ...fields.category,
+                list: categories,
+              },
+              subcategory: {
+                ...fields.subcategory,
+                list: subcategories,
+              }
+            }}
           />
         ))}
     </>

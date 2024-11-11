@@ -2,69 +2,70 @@
 
 // Actions
 import { useEffect, useState } from "react";
-import { syncPaginatedAislesWithExtra } from "@/app/lib/synchronizers/extra/aisles/list";
-import { syncPaginatedAislesByZoneWithExtra } from "@/app/lib/synchronizers/extra/aisles/listByZone";
+import { syncPaginatedRacksWithExtra } from "@/app/lib/synchronizers/extra/racks/list";
+import { syncPaginatedRacksByAisleWithExtra } from "@/app/lib/synchronizers/extra/racks/listByAisle";
 import { synchronizeList } from "@/app/lib/synchronizers/lists";
 
 // Workers
 import streamer from "@/app/lib/workers";
 
 // Components
-import CardAisleWithExtra from "../cards/CardAisleWithExtra";
+import CardRackWithExtra from "../cards/CardRackWithExtra";
 
 // Types and interfaces
-import { AisleWithExtra } from "@/app/lib/types/data/aisles"
+import { RackWithExtra } from "@/app/lib/types/data/racks"
 import { DictDialog, DictLabelList } from "@/app/lib/types/dictionary/misc";
 import { DictFormButton } from "@/app/lib/types/dictionary/form";
 import { InputFieldProps, SelectFieldProps } from "@/app/lib/types/form/fields";
-import { AisleFiltersParams } from "@/app/lib/types/query/data";
+import { RackFiltersParams } from "@/app/lib/types/query/data";
 import { PaginationParams } from "@/app/lib/types/pageParams";
-import { Zone } from "@/app/lib/types/data/zones";
+import { Aisle } from "@/app/lib/types/data/aisles";
 
 type Props = 
   | {
     type: "complete";
-    filters?: AisleFiltersParams;
+    filters?: RackFiltersParams;
     pagination?: PaginationParams;
-    aislesWithExtra: AisleWithExtra[];
+    racksWithExtra: RackWithExtra[];
     dictDialogEdit: DictDialog;
     dictDialogReplace: DictDialog;
-    dictCard: DictLabelList<"racks" | "items" | "zone">;
-    dictNotFound: string;
+    dictCard: DictLabelList<"shelfs" | "items" | "zone" | "aisle">;
     fields: {
       name: InputFieldProps;
       button: DictFormButton;
       zone: SelectFieldProps<"Zone">;
       aisle: SelectFieldProps<"Aisle">;
+      rack: SelectFieldProps<"Rack">;
     };
   } | {
-    type: "zone";
-    zone: Zone;
-    filters?: AisleFiltersParams;
+    type: "aisle";
+    aisle: Aisle;
+    filters?: RackFiltersParams;
     pagination?: PaginationParams;
-    aislesWithExtra: AisleWithExtra[];
+    racksWithExtra: RackWithExtra[];
     dictDialogEdit: DictDialog;
     dictDialogReplace: DictDialog;
-    dictCard: DictLabelList<"racks" | "items" | "zone">;
-    dictNotFound: string;
+    dictCard: DictLabelList<"shelfs" | "items" | "zone" | "aisle">;
     fields: {
       name: InputFieldProps;
       button: DictFormButton;
       zone: SelectFieldProps<"Zone">;
       aisle: SelectFieldProps<"Aisle">;
+      rack: SelectFieldProps<"Rack">;
     };
   }
 
 // Needs to know what kind of list it is
 // and needs to communicate it to the syncher
-export default function ListAislesWithExtraClient(props: Props) {
-  const { type, pagination, filters, aislesWithExtra, dictDialogEdit, dictDialogReplace,
-  dictCard, dictNotFound, fields} = props;
+export default function ListRacksWithExtraClient(props: Props) {
+  const { type, pagination, filters, racksWithExtra, dictDialogEdit, dictDialogReplace,
+  dictCard, fields} = props;
 
   const [currentZones, setCurrentZones] = useState(fields.zone.list);
   const [currentAisles, setCurrentAisles] = useState(fields.aisle.list);
-  const [currentAislesWithExtra, setCurrentAislesWithExtra] = 
-    useState(aislesWithExtra);
+  const [currentRacks, setCurrentRacks] = useState(fields.rack.list);
+  const [currentRacksWithExtra, setCurrentRacksWithExtra] = 
+    useState(racksWithExtra);
 
   useEffect(() => {
     synchronizeList<"Zone">({
@@ -73,44 +74,48 @@ export default function ListAislesWithExtraClient(props: Props) {
       setList: setCurrentZones,
       type: "Zone",
     });
-
     synchronizeList<"Aisle">({
       streamer: streamer as Worker,
       list: currentAisles,
       setList: setCurrentAisles,
       type: "Aisle",
     });
+    synchronizeList<"Rack">({
+      streamer: streamer as Worker,
+      list: currentRacks,
+      setList: setCurrentRacks,
+      type: "Rack",
+    });
 
     if (type === "complete") {
-      syncPaginatedAislesWithExtra({
-        // kind: "AislesWithExtraById"
+      syncPaginatedRacksWithExtra({
         filters: filters,
         pagination: pagination,
         streamer: streamer as Worker,
-        list: currentAislesWithExtra,
-        setList: setCurrentAislesWithExtra,
+        list: currentRacksWithExtra,
+        setList: setCurrentRacksWithExtra,
       });
     };
 
-    if (type === "zone") {
-      const { zone } = props;
-      syncPaginatedAislesByZoneWithExtra({
-        zone: zone.id as string,
+    if (type === "aisle") {
+      const { aisle } = props;
+      syncPaginatedRacksByAisleWithExtra({
+        aisle: aisle.id as string,
         filters: filters,
         pagination: pagination,
         streamer: streamer as Worker,
-        list: currentAislesWithExtra,
-        setList: setCurrentAislesWithExtra,
+        list: currentRacksWithExtra,
+        setList: setCurrentRacksWithExtra,
       });
     };
   }, [])
 
   return (
     <>
-      {currentAislesWithExtra && currentAislesWithExtra.map(
-        (item: AisleWithExtra) => (
-          <CardAisleWithExtra
-            key={item.aisle.id}
+      {currentRacksWithExtra && currentRacksWithExtra.map(
+        (item: RackWithExtra) => (
+          <CardRackWithExtra
+            key={item.rack.id}
             item={item}
             dictDialogEdit={dictDialogEdit}
             dictDialogReplace={dictDialogReplace}
@@ -125,10 +130,13 @@ export default function ListAislesWithExtraClient(props: Props) {
                 ...fields.aisle,
                 list: currentAisles,
               },
+              rack: {
+                ...fields.rack,
+                list: currentRacks,
+              },
             }}
           />
         ))}
-      {!currentAislesWithExtra && <>{dictNotFound}</>}
     </>
   )
 }

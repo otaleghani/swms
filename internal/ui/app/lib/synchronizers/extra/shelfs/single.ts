@@ -37,6 +37,7 @@ export function syncShelfWithExtra({
   const handleServerSentMessage = (data: ServerSentEventData) => {
     handleRelatedShelfChange(data)
     handleRelevantForeignKeyChange(data)
+    handleForeignKeyChange(data)
   }
 
   const handleRelatedShelfChange = (data: ServerSentEventData) => {
@@ -55,6 +56,35 @@ export function syncShelfWithExtra({
     streamer.postMessage({type: "ShelfWithExtra", id: element.shelf.id, request: "update"});
   }
 
+  const handleForeignKeyChange = (data: ServerSentEventData) => {
+    if (data.before.id === data.after.id) return;
+
+    if (data.type === "Zone" && 
+        data.after.id === element.shelf.zone) {
+      setSyncState("update");
+      element = {...element, shelf: {
+        ...element.shelf, zone: data.after.id
+      }}
+      delaySyncStateToNone(setSyncState);
+    }
+    if (data.type === "Aisle" && 
+        data.after.id === element.shelf.aisle) {
+      setSyncState("update");
+      element = {...element, shelf: {
+        ...element.shelf, aisle: data.after.id
+      }}
+      delaySyncStateToNone(setSyncState);
+    }
+    if (data.type === "Rack" && 
+        data.after.id === element.shelf.rack) {
+      setSyncState("update");
+      element = {...element, shelf: {
+        ...element.shelf, rack: data.after.id
+      }}
+      delaySyncStateToNone(setSyncState);
+    }
+  }
+  
   const handler = (message: MessageEvent<WorkerMessage>) => {
     if (isFetchResultMessage(message.data)) { handleFetchResultMessage(message.data) };
     if (isServerSentMessage(message.data)) { handleServerSentMessage(message.data) };

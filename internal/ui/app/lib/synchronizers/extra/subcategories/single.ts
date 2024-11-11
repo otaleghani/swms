@@ -35,6 +35,7 @@ export function syncSubcategoryWithExtra({
   const handleServerSentMessage = (data: ServerSentEventData) => {
     handleRelatedSubcategoryChange(data)
     handleRelevantForeignKeyChange(data)
+    handleForeignKeyChange(data)
   }
 
   const handleRelatedSubcategoryChange = (data: ServerSentEventData) => {
@@ -44,10 +45,23 @@ export function syncSubcategoryWithExtra({
   }
 
   const handleRelevantForeignKeyChange = (data: ServerSentEventData) => {
-    if (data.type !== "Item") return;
+    if (data.type !== "Item" && data.type !== "category") return;
     if (data.after.subcategory !== element.subcategory.id && data.before.subcategory !== element.subcategory.id) return;
     if (data.before.subcategory === data.after.subcategory) return;
     streamer.postMessage({type: "SubcategoryWithExtra", id: element.subcategory.id, request: "update"});
+  }
+
+  const handleForeignKeyChange = (data: ServerSentEventData) => {
+    if (data.before.id === data.after.id) return;
+
+    if (data.type === "Category" && 
+        data.after.id === element.subcategory.category) {
+      setSyncState("update");
+      element = {...element, subcategory: {
+        ...element.subcategory, category: data.after.id
+      }}
+      delaySyncStateToNone(setSyncState);
+    }
   }
 
   const handler = (message: MessageEvent<WorkerMessage>) => {

@@ -64,6 +64,7 @@ export default function CardAisleWithExtra({
   }, []);
 
   useEffect(() => {
+    console.log("fired")
     setZone(fields.zone.list.find(
       (zone) => zone.id === aisleWithExtra.aisle.zone
     ) as Zone);
@@ -115,6 +116,7 @@ export default function CardAisleWithExtra({
             zone={zone}
             setZone={setZone}
           />
+          {aisleWithExtra.aisle.zone}
         </div>
       </div>
     )

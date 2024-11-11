@@ -40,17 +40,15 @@ export function syncPaginatedAislesByZoneWithExtra({
     };
   };
   const handleServerSentMessage = (data: ServerSentEventData) => {
-    if (!list || data.type !== "Aisle") return;
-    if (data.action !== "update") {
-      streamer.postMessage({
-        type: "AislesWithExtra_Zone", 
-        foreignId: zone,
-        page: pagination?.page,
-        perPage: pagination?.perPage,
-        filters: JSON.stringify(filters),
-        request: "refresh",
-      });
-    };
+    if (data.type !== "Aisle") return;
+    streamer.postMessage({
+      type: "AislesWithExtra_Zone", 
+      foreignId: zone,
+      page: pagination?.page,
+      perPage: pagination?.perPage,
+      filters: JSON.stringify(filters),
+      request: "refresh",
+    });
   };
 
   const handler = (message: MessageEvent<WorkerMessage>) => {

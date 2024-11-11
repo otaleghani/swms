@@ -21,6 +21,8 @@ import { InputFieldProps, SelectFieldProps, } from "@/app/lib/types/form/fields"
 import { DictDialog, DictLabelList } from "@/app/lib/types/dictionary/misc";
 import { DictFormButton } from "@/app/lib/types/dictionary/form";
 import { Eye } from "lucide-react";
+import LabelCategory from "../../labels/LabelCategory";
+import { Category } from "@/app/lib/types/data/categories";
 
 interface SubcagegoryWithExtraCardProps {
   item: SubcategoryWithExtra;
@@ -43,6 +45,11 @@ export default function CardSubcategoryWithExtra({
   dictDialogReplace,
   fields,
 }: SubcagegoryWithExtraCardProps) {
+  const [category, setCategory] = useState(
+    fields.category.list.find(
+      (category) => category.id === item.subcategory.category
+    ) as Category
+  );
   const [subcategoryWithExtra, setSubcategoryWithExtra] = useState(item);
   const [syncState, setSyncState] = useState("none" as SyncState);
 
@@ -53,7 +60,20 @@ export default function CardSubcategoryWithExtra({
       element: subcategoryWithExtra,
       setElement: setSubcategoryWithExtra,
     });
+    setCategory(
+      fields.category.list.find(
+        (category) => category.id === item.subcategory.category
+      ) as Category
+    )
   }, []);
+
+  useEffect(() => {
+    setCategory(
+      fields.category.list.find(
+        (category) => category.id === item.subcategory.category
+      ) as Category
+    )
+  }, [subcategoryWithExtra]);
 
   const CardFooter = () => {
     return (
@@ -84,6 +104,15 @@ export default function CardSubcategoryWithExtra({
           <div className="text-gray-500 text-sm xl:text-right">{dictCard.labels.items}</div>
           <div className="font-semibold text-xl xl:text-right">{subcategoryWithExtra.itemsCount}</div>
         </div>
+        <div className="py-2">
+          <div className="text-gray-500 text-sm xl:text-right">Category</div>
+          <div className="font-semibold text-xl xl:text-right">
+            <LabelCategory 
+              category={category}
+              setCategory={setCategory}
+            />
+          </div>
+        </div>
       </div>
     );
  };
@@ -96,7 +125,7 @@ export default function CardSubcategoryWithExtra({
             {subcategoryWithExtra.subcategory.name}
           </span>
         </CardTitle>
-        <CardDescription>{subcategoryWithExtra.subcategory.description}</CardDescription>
+        <CardDescription>{subcategoryWithExtra.subcategory.category}</CardDescription>
       </div>
     );
   };

@@ -79,7 +79,7 @@ func getZoneById(db *database.Database) http.HandlerFunc {
 		}
 		path := r.PathValue("id")
 		rows, _ := db.SelectZones("Id = ?", path)
-if len(rows) == 0 {
+    if len(rows) == 0 {
 			ErrorResponse{Message: "Not found"}.r404(w, r)
 			return
 		}
@@ -96,6 +96,10 @@ func getZoneByIdWithExtra(db *database.Database) http.HandlerFunc {
     }
 		path := r.PathValue("id")
 		zone, err := db.SelectZones("Id = ?", path)
+    if len(zone) == 0 {
+			ErrorResponse{Message: "Not found"}.r404(w, r)
+			return
+		}
 		if err != nil {
 			ErrorResponse{Message: err.Error()}.r500(w, r)
 			return

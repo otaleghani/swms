@@ -35,9 +35,10 @@ export function syncAisleWithExtra({
   }
 
   const handleServerSentMessage = (data: ServerSentEventData) => {
-    handleRelatedAisleChange(data)
-    handleRelevantForeignKeyChange(data)
-  }
+    handleRelatedAisleChange(data);
+    handleRelevantForeignKeyChange(data);
+    handleForeignKeyChange(data);
+  };
 
   const handleRelatedAisleChange = (data: ServerSentEventData) => {
     // This one change would hopefully call the useEffect in the Card 
@@ -55,6 +56,17 @@ export function syncAisleWithExtra({
     if (data.after.aisle !== element.aisle.id && data.before.aisle !== element.aisle.id) return;
     if (data.before.aisle === data.after.aisle) return;
     streamer.postMessage({type: "AisleWithExtra", id: element.aisle.id, request: "update"});
+  }
+
+  const handleForeignKeyChange = (data: ServerSentEventData) => {
+    if (data.type !== "Zone") return;
+    if (data.before.id === data.after.id) return;
+    if (data.before.id !== element.aisle.id) return;
+    setSyncState("update");
+    element = {...element, aisle: {
+      ...element.aisle, zone: data.after.id
+    }}
+    delaySyncStateToNone(setSyncState);
   }
 
   const handler = (message: MessageEvent<WorkerMessage>) => {

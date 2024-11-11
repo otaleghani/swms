@@ -89,7 +89,7 @@ export async function replace<T extends keyof ReplaceMapOptions>(
     type: request,
     action: "replace",
     before: before.data,
-    after: "",
+    after: after.data
   };
   stringEmitter.emit("message", replaceChange);
 

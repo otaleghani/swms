@@ -28,7 +28,7 @@ export default function LabelCategory({
 
   return (
     <a
-      href={`/subcategories/${category?.id}`}
+      href={`/categories/${category?.id}`}
       className={
         syncState === "remove" ? "animate-delete" :
         syncState === "update" ? "animate-update" :

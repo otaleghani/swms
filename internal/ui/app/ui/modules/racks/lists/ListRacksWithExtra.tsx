@@ -8,23 +8,25 @@ import retrieveByForeignId from "@/app/lib/requests/generics/retrieveByForeignId
 
 // Local components
 import { ScrollArea } from "@/app/ui/components/scroll-area";
-import FilterAisles from "@/app/ui/patterns/filter/data/FilterAisles";
+import FilterRacks from "@/app/ui/patterns/filter/data/FilterRacks";
 import PaginationPattern from "@/app/ui/patterns/pagination/PaginationPattern";
-import ListAislesWithExtraClient from "./ListAislesWithExtraClient";
+import ListRacksWithExtraClient from "./ListRacksWithExtraClient";
 
 // Types and interfaces
 import { Locale } from "@/lib/dictionaries";
-import { Zone, Zones } from "@/app/lib/types/data/zones";
-import { Aisles, AislesWithExtra } from "@/app/lib/types/data/aisles";
+import { Zones } from "@/app/lib/types/data/zones";
+import { Aisle, Aisles, AislesWithExtra } from "@/app/lib/types/data/aisles";
+import { Racks, RacksWithExtra } from "@/app/lib/types/data/racks";
 import { SearchParams } from "@/app/lib/types/pageParams";
 
 type Props =
   | {
       hideFilters: {
+        aisles?: boolean;
         zones?: boolean;
         search?: boolean;
       };
-      searchParams?: SearchParams["aisles"];
+      searchParams?: SearchParams["racks"];
       locale: Locale;
       type: "complete";
       forceLayout: "list" | "dynamic";
@@ -33,35 +35,36 @@ type Props =
       hideFilters: {
         zones?: boolean;
         search?: boolean;
+        aisles?: boolean;
       };
-      searchParams?: SearchParams["aisles"];
+      searchParams?: SearchParams["racks"];
       locale: Locale;
-      type: "zone";
-      zone: Zone;
+      type: "aisle";
+      aisle: Aisle;
       forceLayout: "list" | "dynamic";
   };
 
-export default async function ListAislesWithExtra(props: Props) {
+export default async function ListRacksWithExtra(props: Props) {
   const { searchParams, locale, type, hideFilters, forceLayout } = props;
-  let currentZone;
+  let currentAisle;
 
   // Here decides if what data we need to handle
   let pList;
-  if (type === "zone") {
-    const { zone } = props;
-    currentZone = zone;
+  if (type === "aisle") {
+    const { aisle } = props;
+    currentAisle = aisle;
 
     pList = retrieveByForeignId({
-      request: "AislesWithExtra",
-      foreign: "Zone",
-      id: zone.id as string,
+      request: "RacksWithExtra",
+      foreign: "Aisle",
+      id: aisle.id as string,
       page: searchParams?.pagination?.page,
       perPage: searchParams?.pagination?.perPage,
       filters: JSON.stringify(searchParams?.filters),
     });
   } else {
     pList = retrieve({
-      request: "AislesWithExtra",
+      request: "RacksWithExtra",
       page: searchParams?.pagination?.page,
       perPage: searchParams?.pagination?.perPage,
       filters: JSON.stringify(searchParams?.filters),
@@ -70,8 +73,9 @@ export default async function ListAislesWithExtra(props: Props) {
   const pDict = getDictionary(locale);
   const pZones = retrieve({ request: "Zones", paginationOff: "true" });
   const pAisles = retrieve({ request: "Aisles", paginationOff: "true" });
+  const pRacks = retrieve({ request: "Racks", paginationOff: "true" });
 
-  const [list, dict, zones, aisles] = await Promise.all([pList, pDict, pZones, pAisles])
+  const [list, dict, zones, aisles, racks] = await Promise.all([pList, pDict, pZones, pAisles, pRacks])
 
   return (
     <>
@@ -84,15 +88,14 @@ export default async function ListAislesWithExtra(props: Props) {
             : "xl:grid-cols-3"
         }`}>
           {type === "complete" && (
-            <ListAislesWithExtraClient 
+            <ListRacksWithExtraClient 
               type={type}
               pagination={searchParams?.pagination}
               filters={searchParams?.filters}
-              aislesWithExtra={list.data as AislesWithExtra}
+              racksWithExtra={list.data as RacksWithExtra}
               dictDialogEdit={dict.aisle.dialogs.edit}
               dictDialogReplace={dict.aisle.dialogs.replace}
-              dictCard={dict.aisle.card}
-              dictNotFound={dict.misc.notFound}
+              dictCard={dict.rack.card}
               fields={{
                 name: { dict: dict.form.fields.name },
                 button: dict.form.buttons.submit,
@@ -105,21 +108,25 @@ export default async function ListAislesWithExtra(props: Props) {
                   dict: dict.form.fields.aisles,
                   list: aisles.data as Aisles,
                   name: "Aisle",
+                },
+                rack: { 
+                  dict: dict.form.fields.racks,
+                  list: racks.data as Racks,
+                  name: "Rack",
                 },
               }}
             />
           )}
-          {type === "zone" && (
-            <ListAislesWithExtraClient 
+          {type === "aisle" && (
+            <ListRacksWithExtraClient 
               type={type}
-              zone={currentZone as Zone}
+              aisle={currentAisle as Aisle}
               pagination={searchParams?.pagination}
               filters={searchParams?.filters}
-              aislesWithExtra={list.data as AislesWithExtra}
-              dictDialogEdit={dict.aisle.dialogs.edit}
-              dictDialogReplace={dict.aisle.dialogs.replace}
-              dictCard={dict.aisle.card}
-              dictNotFound={dict.misc.notFound}
+              racksWithExtra={list.data as RacksWithExtra}
+              dictDialogEdit={dict.rack.dialogs.edit}
+              dictDialogReplace={dict.rack.dialogs.replace}
+              dictCard={dict.rack.card}
               fields={{
                 name: { dict: dict.form.fields.name },
                 button: dict.form.buttons.submit,
@@ -132,6 +139,11 @@ export default async function ListAislesWithExtra(props: Props) {
                   dict: dict.form.fields.aisles,
                   list: aisles.data as Aisles,
                   name: "Aisle",
+                },
+                rack: { 
+                  dict: dict.form.fields.aisles,
+                  list: racks.data as Racks,
+                  name: "Rack",
                 },
               }}
             />
@@ -140,12 +152,16 @@ export default async function ListAislesWithExtra(props: Props) {
         </div>
       </ScrollArea>
       <div className="flex items-center justify-end border-t xl:h-[57px]">
-        <FilterAisles
+        <FilterRacks
           dict={dict.filters}
           fields={{
             zones: {
               list: zones.data as Zones,
               dict: dict.form.fields.zones
+            },
+            aisles: {
+              list: aisles.data as Aisles,
+              dict: dict.form.fields.aisles
             },
             search: {
               dict: dict.form.fields.search

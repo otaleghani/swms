@@ -6,6 +6,7 @@ export interface DictToasts {
 export interface DictFetchingToasts {
   success: DictToast;
   error: DictToast;
+  empty: DictToast;
 }
 
 export interface DictToast {

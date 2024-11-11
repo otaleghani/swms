@@ -44,7 +44,7 @@ export default async function RootLayout({ params, children }: LayoutProps) {
             disableTransitionOnChange
           >
             <DefaultSidebar dict={dict.sidebar} />
-            <main className="w-full">
+            <main className="w-full h-full">
                 <div className="w-full">
                   {children}
                </div> 

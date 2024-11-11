@@ -8,13 +8,19 @@ import { DictSupplierCode } from "./data/supplierCode";
 import { DictZone } from "./data/zone"
 import { DictForms } from "./form";
 import { DictToasts } from "./toasts";
-import { DictFilters } from "./misc";
+import { DictFilters, DictPageNotFound } from "./misc";
 import { DictPages } from "./pages";
 import { DictSidebar } from "./sidebar";
 
 /** Every one-off term that do not fit in any cat */
 export interface DictMisc {
+  /** notFound is used for lists. Do not confuse with
+    * pageNotFound that as the name suggests, act as
+    * a dict for 404s 
+    * */
   notFound: string;
+
+  pageNotFound: DictPageNotFound;
 }
 
 export type Dictionary = {

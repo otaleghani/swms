@@ -20,7 +20,7 @@ export type SyncState = "none" | "update" | "remove" | "hidden" | "new";
 * error:    a background process tryed the fetch but failed
 * success:  Asks the user to refresh to view new data
 **/
-export type ToastType = "none" | "error" | "success";
+export type ToastType = "none" | "error" | "success" | "empty";
  
 export type FetchResultMessage = {
   type: string;

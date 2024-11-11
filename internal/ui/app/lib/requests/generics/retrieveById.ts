@@ -67,5 +67,6 @@ export async function retrieveById<T extends keyof RetrieveByIdMapOptions>(
     method: "GET",
     tag: revalidateTags[option.type],
   })
+
   return response
 }

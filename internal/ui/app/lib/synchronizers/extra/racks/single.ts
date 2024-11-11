@@ -35,8 +35,9 @@ export function syncRackWithExtra({
   }
 
   const handleServerSentMessage = (data: ServerSentEventData) => {
-    handleRelatedRackChange(data)
-    handleRelevantForeignKeyChange(data)
+    handleRelatedRackChange(data);
+    handleRelevantForeignKeyChange(data);
+    handleForeignKeyChange(data);
   }
 
   const handleRelatedRackChange = (data: ServerSentEventData) => {
@@ -53,6 +54,27 @@ export function syncRackWithExtra({
     if (data.after.rack !== element.rack.id && data.before.rack !== element.rack.id) return;
     if (data.before.rack === data.after.rack) return;
     streamer.postMessage({type: "RackWithExtra", id: element.rack.id, request: "update"});
+  }
+
+  const handleForeignKeyChange = (data: ServerSentEventData) => {
+    if (data.before.id === data.after.id) return;
+
+    if (data.type === "Zone" && 
+        data.after.id === element.rack.zone) {
+      setSyncState("update");
+      element = {...element, rack: {
+        ...element.rack, zone: data.after.id
+      }}
+      delaySyncStateToNone(setSyncState);
+    }
+    if (data.type === "Aisle" && 
+        data.after.id === element.rack.aisle) {
+      setSyncState("update");
+      element = {...element, rack: {
+        ...element.rack, aisle: data.after.id
+      }}
+      delaySyncStateToNone(setSyncState);
+    }
   }
 
   const handler = (message: MessageEvent<WorkerMessage>) => {

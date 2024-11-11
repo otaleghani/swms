@@ -27,7 +27,12 @@ export const dictionary: Dictionary = {
   toasts: dictionaryToasts,
   filters: dictionaryFilters,
   misc: {
-    notFound: "Nothing was found."
+    notFound: "Nothing was found.",
+    pageNotFound: {
+      title: "Error 404, not found",
+      description: "The resource that you asked was not found in the db.",
+      buttonLabel: "Go back to the dashboard",
+    }
   },
 
   pages: dictionaryPages,

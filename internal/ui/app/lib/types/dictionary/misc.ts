@@ -41,3 +41,9 @@ export type DictPageHeader<List extends string> = {
   title: string;
   breadcrumbs: DictBreadcrumbs<List>;
 }
+
+export type DictPageNotFound = {
+  title: string;
+  description: string;
+  buttonLabel: string;
+}

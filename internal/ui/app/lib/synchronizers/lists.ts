@@ -132,25 +132,3 @@ export function synchronizePaginatedList<T extends SelectableItem>({
   }
   streamer.addEventListener("message", handler);
 }
-
-// TO ARCHIVE
-// Function that would be used whenever a breaking change happens,
-// such as a delete of items whenever the page has pagination full
-//export function synchronizeBreakingChange<T extends SelectableItem>(
-//  streamer: Worker,
-//  setShowToast: React.Dispatch<React.SetStateAction<ToastType>>,
-//  type: T
-//) {
-//  const handler = (message: MessageEvent<WorkerMessage>) => {
-//    if (isRefreshMessage(message.data)) {
-//      if (message.data.type == type) {
-//        if (message.data.refresh){
-//          setShowToast("success");
-//        } else {
-//          setShowToast("error");
-//        }
-//      }
-//    }
-//  }
-//  streamer.addEventListener("message", handler);
-//}
