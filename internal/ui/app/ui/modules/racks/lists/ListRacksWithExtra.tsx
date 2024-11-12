@@ -96,6 +96,7 @@ export default async function ListRacksWithExtra(props: Props) {
               dictDialogEdit={dict.aisle.dialogs.edit}
               dictDialogReplace={dict.aisle.dialogs.replace}
               dictCard={dict.rack.card}
+              dictNotFound={dict.misc.notFound}
               fields={{
                 name: { dict: dict.form.fields.name },
                 button: dict.form.buttons.submit,
@@ -127,6 +128,7 @@ export default async function ListRacksWithExtra(props: Props) {
               dictDialogEdit={dict.rack.dialogs.edit}
               dictDialogReplace={dict.rack.dialogs.replace}
               dictCard={dict.rack.card}
+              dictNotFound={dict.misc.notFound}
               fields={{
                 name: { dict: dict.form.fields.name },
                 button: dict.form.buttons.submit,
@@ -148,7 +150,6 @@ export default async function ListRacksWithExtra(props: Props) {
               }}
             />
           )}
-          {list.data === null && <>{dict.misc.notFound}</>}
         </div>
       </ScrollArea>
       <div className="flex items-center justify-end border-t xl:h-[57px]">

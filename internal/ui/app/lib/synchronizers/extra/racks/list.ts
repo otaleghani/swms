@@ -37,6 +37,7 @@ export function syncPaginatedRacksWithExtra({
         break;
     };
   };
+
   const handleServerSentMessage = (data: ServerSentEventData) => {
     if (!list || data.type !== "Rack") return;
     if (data.action !== "update") {

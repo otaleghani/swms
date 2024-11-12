@@ -295,6 +295,29 @@ func putCategory(db *database.Database) http.HandlerFunc {
 			ErrorResponse{Message: err.Error()}.r500(w, r)
 			return
 		}
+
+    var item database.Item = database.Item{
+      Category_id: data.Id,
+    }
+    err = db.Update(item, "Category_id = ?", data.Id)
+		if err != nil {
+			ErrorResponse{
+        Message: "Category cascade update for items failed: " + err.Error(),
+      }.r500(w, r)
+			return
+    }
+
+    var subcategory database.Subcategory = database.Subcategory{
+      Category_id: data.Id,
+    }
+    err = db.Update(subcategory, "Category_id = ?", data.Id)
+		if err != nil {
+			ErrorResponse{
+        Message: "Category cascade update for subcateories failed: " + err.Error(),
+      }.r500(w, r)
+			return
+    }
+
 		SuccessResponse{Message: "Row updated"}.r200(w, r)
 	}
 }

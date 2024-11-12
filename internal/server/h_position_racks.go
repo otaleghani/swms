@@ -193,6 +193,34 @@ func putRack(db *database.Database) http.HandlerFunc {
 			ErrorResponse{Message: err.Error()}.r500(w, r)
 			return
 		}
+
+    var shelf database.Shelf = database.Shelf{
+      Zone_id: data.Zone_id,
+      Aisle_id: data.Aisle_id,
+      Rack_id: data.Id,
+    }
+    err = db.Update(shelf, "Rack_id = ?", data.Id)
+		if err != nil {
+			ErrorResponse{
+        Message: "Rack cascade update for shelfs failed: " + err.Error(),
+      }.r500(w, r)
+			return
+    }
+
+    var item database.Item = database.Item{
+      Zone_id: data.Zone_id,
+      Aisle_id: data.Aisle_id,
+      Rack_id: data.Id,
+    }
+    err = db.Update(item, "Rack_id = ?", data.Id)
+		if err != nil {
+			ErrorResponse{
+        Message: "Rack cascade update for shelfs failed: " + err.Error(),
+      }.r500(w, r)
+			return
+    }
+
+
 		SuccessResponse{Message: "Row updated"}.r200(w, r)
 	}
 }

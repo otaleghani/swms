@@ -57,22 +57,24 @@ export function syncRackWithExtra({
   }
 
   const handleForeignKeyChange = (data: ServerSentEventData) => {
-    if (data.before.id === data.after.id) return;
-
     if (data.type === "Zone" && 
         data.after.id === element.rack.zone) {
       setSyncState("update");
       element = {...element, rack: {
         ...element.rack, zone: data.after.id
       }}
+      setElement(element);
       delaySyncStateToNone(setSyncState);
     }
     if (data.type === "Aisle" && 
         data.after.id === element.rack.aisle) {
       setSyncState("update");
       element = {...element, rack: {
-        ...element.rack, aisle: data.after.id
+        ...element.rack, 
+        aisle: data.after.id,
+        zone: data.after.zone,
       }}
+      setElement(element);
       delaySyncStateToNone(setSyncState);
     }
   }

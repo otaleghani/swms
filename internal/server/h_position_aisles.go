@@ -188,6 +188,45 @@ func putAisle(db *database.Database) http.HandlerFunc {
 			ErrorResponse{Message: err.Error()}.r500(w, r)
 			return
 		}
+
+    // Here we need to update the foreign keys of every other item
+    // that has them. 
+    var rack database.Rack = database.Rack{
+      Zone_id: data.Zone_id,
+      Aisle_id: data.Id,
+    }
+    err = db.Update(rack, "Aisle_id = ?", data.Id)
+		if err != nil {
+      ErrorResponse{
+        Message: "Aisle cascade update for racks failed: " + err.Error(),
+      }.r500(w, r)
+			return
+    }
+
+    var shelf database.Shelf = database.Shelf{
+      Zone_id: data.Zone_id,
+      Aisle_id: data.Id,
+    }
+    err = db.Update(shelf, "Aisle_id = ?", data.Id)
+		if err != nil {
+      ErrorResponse{
+        Message: "Aisle cascade update for shelfs failed: " + err.Error(),
+      }.r500(w, r)
+			return
+    }
+
+    var item database.Item = database.Item{
+      Zone_id: data.Zone_id,
+      Aisle_id: data.Id,
+    }
+    err = db.Update(item, "Aisle_id = ?", data.Id)
+		if err != nil {
+      ErrorResponse{
+        Message: "Aisle cascade update for items failed: " + err.Error(),
+      }.r500(w, r)
+			return
+    }
+
 		SuccessResponse{Message: "Row updated"}.r200(w, r)
 	}
 }

@@ -389,6 +389,19 @@ func putSubcategory(db *database.Database) http.HandlerFunc {
 			ErrorResponse{Message: err.Error()}.r500(w, r)
 			return
 		}
+
+    var item database.Item = database.Item{
+      Category_id: data.Category_id,
+      Subcategory_id: data.Id,
+    }
+    err = db.Update(item, "Subcategory_id = ?", data.Id)
+		if err != nil {
+			ErrorResponse{
+        Message: "Subcategory cascade update for items failed: " + err.Error(),
+      }.r500(w, r)
+			return
+    }
+
 		SuccessResponse{Message: "Row updated"}.r200(w, r)
 	}
 }

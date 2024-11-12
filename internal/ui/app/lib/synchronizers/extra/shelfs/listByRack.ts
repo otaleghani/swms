@@ -28,7 +28,7 @@ export function syncPaginatedShelfsByRackWithExtra({
   setList
 }: SyncPaginatedShelfsByZoneWithExtra) {
   const handleFetchResultMessage = (data: FetchResultMessage) => {
-    if (data.type !== "ShelfsWithExtra_Zone") return;
+    if (data.type !== "ShelfsWithExtra_Rack") return;
     switch (data.request) {
       case "error":
         console.error("Something went wrong with client-side fetching");
@@ -40,17 +40,15 @@ export function syncPaginatedShelfsByRackWithExtra({
     };
   };
   const handleServerSentMessage = (data: ServerSentEventData) => {
-    if (!list || data.type !== "Shelf") return;
-    if (data.action !== "update") {
-      streamer.postMessage({
-        type: "ShelfsWithExtra_Rack", 
-        foreignId: rack,
-        page: pagination?.page,
-        perPage: pagination?.perPage,
-        filters: JSON.stringify(filters),
-        request: "refresh",
-      });
-    };
+    if (data.type !== "Shelf") return;
+    streamer.postMessage({
+      type: "ShelfsWithExtra_Rack", 
+      foreignId: rack,
+      page: pagination?.page,
+      perPage: pagination?.perPage,
+      filters: JSON.stringify(filters),
+      request: "refresh",
+    });
   };
 
   const handler = (message: MessageEvent<WorkerMessage>) => {

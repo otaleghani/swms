@@ -27,6 +27,7 @@ export function syncPaginatedRacksByAisleWithExtra({
   list,
   setList
 }: SyncPaginatedRacksByZoneWithExtra) {
+
   const handleFetchResultMessage = (data: FetchResultMessage) => {
     if (data.type !== "RacksWithExtra_Aisle") return;
     switch (data.request) {
@@ -39,18 +40,17 @@ export function syncPaginatedRacksByAisleWithExtra({
         break;
     };
   };
+
   const handleServerSentMessage = (data: ServerSentEventData) => {
-    if (!list || data.type !== "Rack") return;
-    if (data.action !== "update") {
-      streamer.postMessage({
-        type: "RacksWithExtra_Aisle", 
-        foreignId: aisle,
-        page: pagination?.page,
-        perPage: pagination?.perPage,
-        filters: JSON.stringify(filters),
-        request: "refresh",
-      });
-    };
+    if (data.type !== "Rack") return;
+    streamer.postMessage({
+      type: "RacksWithExtra_Aisle", 
+      foreignId: aisle,
+      page: pagination?.page,
+      perPage: pagination?.perPage,
+      filters: JSON.stringify(filters),
+      request: "refresh",
+    });
   };
 
   const handler = (message: MessageEvent<WorkerMessage>) => {

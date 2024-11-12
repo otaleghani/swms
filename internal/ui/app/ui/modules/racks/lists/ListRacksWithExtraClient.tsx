@@ -30,6 +30,7 @@ type Props =
     dictDialogEdit: DictDialog;
     dictDialogReplace: DictDialog;
     dictCard: DictLabelList<"shelfs" | "items" | "zone" | "aisle">;
+    dictNotFound: string;
     fields: {
       name: InputFieldProps;
       button: DictFormButton;
@@ -46,6 +47,7 @@ type Props =
     dictDialogEdit: DictDialog;
     dictDialogReplace: DictDialog;
     dictCard: DictLabelList<"shelfs" | "items" | "zone" | "aisle">;
+    dictNotFound: string;
     fields: {
       name: InputFieldProps;
       button: DictFormButton;
@@ -59,7 +61,7 @@ type Props =
 // and needs to communicate it to the syncher
 export default function ListRacksWithExtraClient(props: Props) {
   const { type, pagination, filters, racksWithExtra, dictDialogEdit, dictDialogReplace,
-  dictCard, fields} = props;
+  dictCard, dictNotFound, fields} = props;
 
   const [currentZones, setCurrentZones] = useState(fields.zone.list);
   const [currentAisles, setCurrentAisles] = useState(fields.aisle.list);
@@ -137,6 +139,7 @@ export default function ListRacksWithExtraClient(props: Props) {
             }}
           />
         ))}
+      {!currentRacksWithExtra && <>{dictNotFound}</>}
     </>
   )
 }

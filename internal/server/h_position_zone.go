@@ -180,10 +180,43 @@ func putZone(db *database.Database) http.HandlerFunc {
 			return
 		}
 		err = db.Update(data, "Id = ?", id)
+
+    var aisle database.Aisle = database.Aisle{Zone_id: data.Id}
+    err = db.Update(aisle, "Zone_id = ?", data.Id)
 		if err != nil {
-			ErrorResponse{Message: err.Error()}.r500(w, r)
+			ErrorResponse{
+        Message: "Zone cascade update for aisles failed: " + err.Error(),
+      }.r500(w, r)
+			return
+    }
+
+    var rack database.Rack = database.Rack{Zone_id: data.Id}
+    err = db.Update(rack, "Zone_id = ?", data.Id)
+		if err != nil {
+			ErrorResponse{
+        Message: "Zone cascade update for racks failed: " + err.Error(),
+      }.r500(w, r)
+			return
+    }
+
+    var shelf database.Shelf = database.Shelf{Zone_id: data.Id}
+    err = db.Update(shelf, "Zone_id = ?", data.Id)
+		if err != nil {
+			ErrorResponse{
+        Message: "Zone cascade update for shelfs failed: " + err.Error(),
+      }.r500(w, r)
+			return
+    }
+
+    var item database.Item = database.Item{Zone_id: data.Id}
+    err = db.Update(item, "Zone_id = ?", data.Id)
+		if err != nil {
+			ErrorResponse{
+        Message: "Zone cascade update for item failed: " + err.Error(),
+      }.r500(w, r)
 			return
 		}
+
 		SuccessResponse{Message: "Row updated"}.r200(w, r)
 	}
 }
@@ -437,25 +470,36 @@ func deleteZoneSub(db *database.Database) http.HandlerFunc {
     var aisle database.Aisle = database.Aisle{Zone_id: itemThatReplaces[0].Id}
     err = db.Update(aisle, "Zone_id = ?", itemToDelete[0].Id)
 		if err != nil {
-			ErrorResponse{Message: err.Error()}.r500(w, r)
+			ErrorResponse{
+        Message: "Zone cascade update for aisles failed: " + err.Error(),
+      }.r500(w, r)
 			return
     }
+
     var rack database.Rack = database.Rack{Zone_id: itemThatReplaces[0].Id}
     err = db.Update(rack, "Zone_id = ?", itemToDelete[0].Id)
 		if err != nil {
-			ErrorResponse{Message: err.Error()}.r500(w, r)
+			ErrorResponse{
+        Message: "Zone cascade update for racks failed: " + err.Error(),
+      }.r500(w, r)
 			return
-		}
+    }
+
     var shelf database.Shelf = database.Shelf{Zone_id: itemThatReplaces[0].Id}
     err = db.Update(shelf, "Zone_id = ?", itemToDelete[0].Id)
 		if err != nil {
-			ErrorResponse{Message: err.Error()}.r500(w, r)
+			ErrorResponse{
+        Message: "Zone cascade update for shelfs failed: " + err.Error(),
+      }.r500(w, r)
 			return
-		}
+    }
+
     var item database.Item = database.Item{Zone_id: itemThatReplaces[0].Id}
     err = db.Update(item, "Zone_id = ?", itemToDelete[0].Id)
 		if err != nil {
-			ErrorResponse{Message: err.Error()}.r500(w, r)
+			ErrorResponse{
+        Message: "Zone cascade update for item failed: " + err.Error(),
+      }.r500(w, r)
 			return
 		}
 

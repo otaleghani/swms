@@ -54,7 +54,6 @@ export function syncAisleWithExtra({
   const handleRelevantForeignKeyChange = (data: ServerSentEventData) => {
     if (data.type !== "Rack" && data.type !== "Item") return;
     if (data.after.aisle !== element.aisle.id && data.before.aisle !== element.aisle.id) return;
-    if (data.before.aisle === data.after.aisle) return;
     streamer.postMessage({type: "AisleWithExtra", id: element.aisle.id, request: "update"});
   }
 

@@ -56,6 +56,12 @@ export default function HeroAisleSingle({
     });
   }, []);
 
+  useEffect(() => {
+    setZone(zones.find(
+      (zone) => zone.id === aisleWithExtra.aisle.zone
+    ) as Zone);
+  }, [aisleWithExtra])
+
   return (
     <header className="p-4 border-b">
       <h1 className="font-semibold text-2xl xl:text-2xl tracking-tight">
