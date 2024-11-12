@@ -30,6 +30,7 @@ export async function removeFormAction(
   let locale = formData.get("locale");
   let type = formData.get("type");
   let id = formData.get("id");
+  state.error = false;
 
   // resets the state and creates the result
   //state.error = false;

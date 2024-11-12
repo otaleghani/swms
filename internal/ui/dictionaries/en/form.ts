@@ -207,6 +207,8 @@ export const dictionaryForm: DictForms = {
       },
       validation: {
         not_found: "The selected zone was not found.",
+        empty: "This zone cannot be empty",
+        valid: "The format of this zone was not valid, refresh the page and try again.",
       }
     },
 
@@ -221,6 +223,8 @@ export const dictionaryForm: DictForms = {
       },
       validation: {
         not_found: "The selected aisle was not found.",
+        empty: "This aisle cannot be empty",
+        valid: "The format of this aisle was not valid, refresh the page and try again.",
       }
     },
 
@@ -235,6 +239,8 @@ export const dictionaryForm: DictForms = {
       },
       validation: {
         not_found: "The selected rack was not found.",
+        empty: "This rack cannot be empty",
+        valid: "The format of this rack was not valid, refresh the page and try again.",
       }
     },
 
@@ -249,6 +255,8 @@ export const dictionaryForm: DictForms = {
       },
       validation: {
         not_found: "The selected shelf was not found.",
+        empty: "This shelf cannot be empty",
+        valid: "The format of this shelf was not valid, refresh the page and try again.",
       }
     },
 
@@ -263,6 +271,8 @@ export const dictionaryForm: DictForms = {
       },
       validation: {
         not_found: "The selected supplier was not found.",
+        empty: "This supplier cannot be empty",
+        valid: "The format of this supplier was not valid, refresh the page and try again.",
       }
     },
 
@@ -277,6 +287,8 @@ export const dictionaryForm: DictForms = {
       },
       validation: {
         not_found: "The selected item was not found.",
+        empty: "This item cannot be empty",
+        valid: "The format of this item was not valid, refresh the page and try again.",
       }
     },
 
@@ -291,6 +303,8 @@ export const dictionaryForm: DictForms = {
       },
       validation: {
         not_found: "The selected variant was not found.",
+        empty: "This variant cannot be empty",
+        valid: "The format of this variant was not valid, refresh the page and try again.",
       }
     },
 
@@ -305,6 +319,8 @@ export const dictionaryForm: DictForms = {
       },
       validation: {
         not_found: "The selected ticket was not found.",
+        empty: "This ticket cannot be empty",
+        valid: "The format of this ticket was not valid, refresh the page and try again.",
       }
     },
 
@@ -319,6 +335,8 @@ export const dictionaryForm: DictForms = {
       },
       validation: {
         not_found: "The selected ticket type was not found.",
+        empty: "This ticket type cannot be empty",
+        valid: "The format of this type was not valid, refresh the page and try again.",
       }
     },
 
@@ -333,6 +351,8 @@ export const dictionaryForm: DictForms = {
       },
       validation: {
         not_found: "The selected ticket state was not found.",
+        empty: "This state type cannot be empty",
+        valid: "The format of this state was not valid, refresh the page and try again.",
       }
     },
 
@@ -347,6 +367,8 @@ export const dictionaryForm: DictForms = {
       },
       validation: {
         not_found: "The selected product was not found.",
+        empty: "This product cannot be empty",
+        valid: "The format of this product was not valid, refresh the page and try again.",
       }
     },
 
@@ -361,6 +383,8 @@ export const dictionaryForm: DictForms = {
       },
       validation: {
         not_found: "The selected client was not found.",
+        empty: "This client cannot be empty",
+        valid: "The format of this client was not valid, refresh the page and try again.",
       }
     },
 
@@ -375,6 +399,8 @@ export const dictionaryForm: DictForms = {
       },
       validation: {
         not_found: "The selected category was not found.",
+        empty: "This category cannot be empty",
+        valid: "The format of this category was not valid, refresh the page and try again.",
       }
     },
 
@@ -389,6 +415,8 @@ export const dictionaryForm: DictForms = {
       },
       validation: {
         not_found: "The selected subcategory was not found.",
+        empty: "This subcategory cannot be empty",
+        valid: "The format of this subcategory was not valid, refresh the page and try again.",
       }
     },
 
@@ -403,6 +431,8 @@ export const dictionaryForm: DictForms = {
       },
       validation: {
         not_found: "The selected user was not found.",
+        empty: "This user cannot be empty",
+        valid: "The format of this user was not valid, refresh the page and try again.",
       }
     },
 

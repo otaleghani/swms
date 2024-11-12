@@ -53,6 +53,7 @@ export async function checkExisting<
   uuid: string,
 ) {
   const response = await retrieveById(type, uuid);
+
   if (response.code === 200) {
     return true;
   } else {

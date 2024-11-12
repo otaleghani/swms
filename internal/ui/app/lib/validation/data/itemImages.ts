@@ -25,6 +25,7 @@ export async function validateItemImage(
     return state;
   }
   
+  // TO DO => why did I do it like this?
   (state.errorMessages.images = validateString(
     state.result.item, 
     dict.form.fields.items.validation, 

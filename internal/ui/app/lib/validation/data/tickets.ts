@@ -4,7 +4,7 @@
 import { VALIDATION_SETTINGS } from "../validation.config";
 
 /** Actions */
-import validateString from "../strings";
+import validateString, { validateForeignString } from "../strings";
 import { getDictionary, Locale } from "@/lib/dictionaries";
 import { validateExisting, checkExisting } from "../database";
 import validateDate from "../dates";
@@ -70,12 +70,11 @@ export async function validateTicket(
     )).length != 0 && (state.error = true);
   }
 
-  (state.errorMessages.client = validateString(
-    state.result.client as string, 
-    dict.form.fields.clients.validation, 
-    VALIDATION_SETTINGS.foreignKeys.minLength,
-    VALIDATION_SETTINGS.foreignKeys.maxLength,
-  )).length != 0 && (state.error = true);
+  (state.errorMessages.client = validateForeignString({
+    field: state.result.client,
+    dict: dict.form.fields.clients.validation, 
+    required: true,
+  })).length != 0 && (state.error = true);
 
   if (await checkExisting("Client", state.result.client)) {
     state.errorMessages.client.push(
@@ -83,12 +82,11 @@ export async function validateTicket(
     state.error = true;
   }
 
-  (state.errorMessages.product = validateString(
-    state.result.product as string, 
-    dict.form.fields.products.validation, 
-    VALIDATION_SETTINGS.foreignKeys.minLength,
-    VALIDATION_SETTINGS.foreignKeys.maxLength,
-  )).length != 0 && (state.error = true);
+  (state.errorMessages.product = validateForeignString({
+    field: state.result.product,
+    dict: dict.form.fields.products.validation, 
+    required: true,
+  })).length != 0 && (state.error = true);
 
   if (await checkExisting("Product", state.result.product)) {
     state.errorMessages.product.push(
@@ -96,12 +94,11 @@ export async function validateTicket(
     state.error = true;
   }
 
-  (state.errorMessages.ticketType = validateString(
-    state.result.type as string, 
-    dict.form.fields.ticketTypes.validation, 
-    VALIDATION_SETTINGS.foreignKeys.minLength,
-    VALIDATION_SETTINGS.foreignKeys.maxLength,
-  )).length != 0 && (state.error = true);
+  (state.errorMessages.ticketType = validateForeignString({
+    field: state.result.type,
+    dict: dict.form.fields.ticketTypes.validation, 
+    required: true,
+  })).length != 0 && (state.error = true);
 
   if (await checkExisting("TicketType", state.result.type)) {
     state.errorMessages.ticketType.push(
@@ -109,12 +106,11 @@ export async function validateTicket(
     state.error = true;
   }
 
-  (state.errorMessages.ticketState = validateString(
-    state.result.state as string, 
-    dict.form.fields.ticketStates.validation, 
-    VALIDATION_SETTINGS.foreignKeys.minLength,
-    VALIDATION_SETTINGS.foreignKeys.maxLength,
-  )).length != 0 && (state.error = true);
+  (state.errorMessages.ticketState = validateForeignString({
+    field: state.result.state,
+    dict: dict.form.fields.ticketStates.validation, 
+    required: true,
+  })).length != 0 && (state.error = true);
 
   if (await checkExisting("TicketState", state.result.state)) {
     state.errorMessages.ticketState.push(

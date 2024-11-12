@@ -27,6 +27,7 @@ export async function createFormAction<K extends keyof FormMap>(
     }
   });
   state.result = result;
+  state.error = false;
 
   const stateValidation = await validateState<K>(
     state, 

@@ -4,7 +4,7 @@
 import { VALIDATION_SETTINGS } from "../validation.config";
 
 /** Actions */
-import validateString from "../strings";
+import validateString, { validateForeignString } from "../strings";
 import validateImages from "../images";
 import { getDictionary, Locale } from "@/lib/dictionaries";
 import { validateExisting, checkExisting } from "../database";
@@ -57,14 +57,13 @@ export async function validateProduct(
   }
 
   if (state.result.client) {
-    (state.errorMessages.clientWithAdd = validateString(
-      state.result.client as string, 
-      dict.form.fields.clients.validation, 
-      VALIDATION_SETTINGS.foreignKeys.minLength,
-      VALIDATION_SETTINGS.foreignKeys.maxLength,
-    )).length != 0 && (state.error = true);
+    (state.errorMessages.clientWithAdd = validateForeignString({
+      field: state.result.client,
+      dict: dict.form.fields.clients.validation, 
+      required: true,
+    })).length != 0 && (state.error = true);
 
-    if (await checkExisting("Client", state.result.client)) {
+    if (!await checkExisting("Client", state.result.client)) {
       state.errorMessages.clientWithAdd.push(
         dict.form.fields.clients.validation.not_found)
       state.error = true;
@@ -119,12 +118,11 @@ export async function validateProductWithImages(
   }
 
   if (state.result.client) {
-    (state.errorMessages.clientWithAdd = validateString(
-      state.result.client as string, 
-      dict.form.fields.clients.validation, 
-      VALIDATION_SETTINGS.foreignKeys.minLength,
-      VALIDATION_SETTINGS.foreignKeys.maxLength,
-    )).length != 0 && (state.error = true);
+    (state.errorMessages.clientWithAdd = validateForeignString({
+      field: state.result.client,
+      dict: dict.form.fields.clients.validation, 
+      required: true,
+    })).length != 0 && (state.error = true);
 
     if (await checkExisting("Client", state.result.client)) {
       state.errorMessages.clientWithAdd.push(

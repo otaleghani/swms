@@ -32,7 +32,7 @@ func getShelfs(db *database.Database) http.HandlerFunc {
 
     // Filter
     queryFilters := r.URL.Query().Get("filters")
-    filteredRows := rows
+    filteredRows := deleteNilValue(rows)
 		var filters ShelfsFilters
     if queryFilters != "" {
 		  err = json.Unmarshal([]byte(queryFilters), &filters)
@@ -233,7 +233,7 @@ func getShelfsByRackWithExtra(db *database.Database) http.HandlerFunc {
 
     // Filter
     queryFilters := r.URL.Query().Get("filters")
-    filteredRows := shelfs
+    filteredRows := deleteNilValue(shelfs)
 		var filters ShelfsFilters
     if queryFilters != "" {
 		  err = json.Unmarshal([]byte(queryFilters), &filters)
@@ -288,7 +288,7 @@ func getShelfsByRackWithExtra(db *database.Database) http.HandlerFunc {
     queryPage := r.URL.Query().Get("page")
     queryPerPage := r.URL.Query().Get("perPage")
     resultedItems, page, perPage, totalItems, totalPages, err := 
-      paginateItems(queryPage, queryPerPage, filteredRows)
+      paginateItems(queryPage, queryPerPage, data)
 		if err != nil {
 			ErrorResponse{Message: err.Error()}.r500(w, r)
 			return
@@ -357,7 +357,7 @@ func getShelfsWithExtra(db *database.Database) http.HandlerFunc {
 		}
     // Filter
     queryFilters := r.URL.Query().Get("filters")
-    filteredRows := shelfs
+    filteredRows := deleteNilValue(shelfs)
 		var filters ShelfsFilters
     if queryFilters != "" {
 		  err = json.Unmarshal([]byte(queryFilters), &filters)
@@ -412,7 +412,7 @@ func getShelfsWithExtra(db *database.Database) http.HandlerFunc {
     queryPage := r.URL.Query().Get("page")
     queryPerPage := r.URL.Query().Get("perPage")
     resultedItems, page, perPage, totalItems, totalPages, err := 
-      paginateItems(queryPage, queryPerPage, filteredRows)
+      paginateItems(queryPage, queryPerPage, data)
 		if err != nil {
 			ErrorResponse{Message: err.Error()}.r500(w, r)
 			return

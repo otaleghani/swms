@@ -27,6 +27,7 @@ export async function replaceFormAction(
   //let type = formData.get("type");
   let itemToDelete = formData.get("itemToDelete");
   let itemThatReplaces = formData.get("itemThatReplaces");
+  state.error = false;
 
   // resets the state and creates the result
   if (!state.result) {

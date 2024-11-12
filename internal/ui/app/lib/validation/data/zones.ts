@@ -7,7 +7,7 @@ import { VALIDATION_SETTINGS } from "../validation.config";
 import validateString from "../strings";
 import validateNumber from "../number";
 import { getDictionary, Locale } from "@/lib/dictionaries";
-import { validateExisting } from "../database";
+import { checkExisting, validateExisting } from "../database";
 
 /** Types and interfaces */
 import { Zone, ZonesBulkPostRequestBody } from "../../types/data/zones";
@@ -30,13 +30,19 @@ export async function validateZone(
   }
 
   // In the case of a put request you will also have the id to check
-  if (state.result.id) {
-    state = await validateExisting(
-      "Zone", 
-      state, 
-      state.result.id, 
-      locale
-    );
+  //if (state.result.id) {
+  //  state = await validateExisting(
+  //    "Zone", 
+  //    state, 
+  //    state.result.id, 
+  //    locale
+  //  );
+  //}
+  if (state.result.id && 
+      !await checkExisting("Aisle", state.result.id)) {
+    state.error = true;
+    state.message = dict.form.messages.errors.client;
+    return state;
   }
 
   if (!state.result) {

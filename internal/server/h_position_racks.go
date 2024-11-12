@@ -31,7 +31,7 @@ func getRacks(db *database.Database) http.HandlerFunc {
 
     // Filter
     queryFilters := r.URL.Query().Get("filters")
-    filteredRows := rows
+    filteredRows := deleteNilValue(rows)
 		var filters RacksFilters
     if queryFilters != "" {
 		  err = json.Unmarshal([]byte(queryFilters), &filters)
@@ -304,7 +304,7 @@ func getRacksByAisleWithExtra(db *database.Database) http.HandlerFunc {
 
     // Filters
     queryFilters := r.URL.Query().Get("filters")
-    filteredRows := racks
+    filteredRows := deleteNilValue(racks)
 
 		var filters RacksFilters
     if queryFilters != "" {
@@ -331,7 +331,7 @@ func getRacksByAisleWithExtra(db *database.Database) http.HandlerFunc {
     // Data construction
     var data []struct {
       Rack database.Rack `json:"rack"`
-      Shelfs_count int `json:"shelfsCound"`
+      Shelfs_count int `json:"shelfsCount"`
       Items_count int `json:"itemsCount"`
     }
     for i := 0; i < len(filteredRows); i++ {
@@ -347,7 +347,7 @@ func getRacksByAisleWithExtra(db *database.Database) http.HandlerFunc {
 		  }
       data = append(data, struct{
           Rack database.Rack `json:"rack"`
-          Shelfs_count int `json:"shelfsCound"`
+          Shelfs_count int `json:"shelfsCount"`
           Items_count int `json:"itemsCount"`
         }{
           Rack: filteredRows[i],
@@ -399,7 +399,7 @@ func getRacksWithExtra(db *database.Database) http.HandlerFunc {
 
     // Filters
     queryFilters := r.URL.Query().Get("filters")
-    filteredRows := racks
+    filteredRows := deleteNilValue(racks)
 
 		var filters RacksFilters
     if queryFilters != "" {
@@ -461,7 +461,7 @@ func getRacksWithExtra(db *database.Database) http.HandlerFunc {
     queryPage := r.URL.Query().Get("page")
     queryPerPage := r.URL.Query().Get("perPage")
     resultedItems, page, perPage, totalItems, totalPages, err := 
-      paginateItems(queryPage, queryPerPage, filteredRows)
+      paginateItems(queryPage, queryPerPage, data)
 		if err != nil {
 			ErrorResponse{Message: err.Error()}.r500(w, r)
 			return

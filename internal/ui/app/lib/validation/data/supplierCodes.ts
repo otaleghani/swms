@@ -4,7 +4,7 @@
 import { VALIDATION_SETTINGS } from "../validation.config";
 
 /** Actions */
-import validateString from "../strings";
+import validateString, { validateForeignString } from "../strings";
 import { getDictionary, Locale } from "@/lib/dictionaries";
 import { validateExisting, checkExisting } from "../database";
 
@@ -46,40 +46,38 @@ export async function validateSupplierCode(
     VALIDATION_SETTINGS.mediumString.maxLength,
   )).length != 0 && (state.error = true);
 
-  (state.errorMessages.supplier = validateString(
-    state.result.supplier as string, 
-    dict.form.fields.suppliers.validation, 
-    VALIDATION_SETTINGS.foreignKeys.minLength,
-    VALIDATION_SETTINGS.foreignKeys.maxLength,
-  )).length != 0 && (state.error = true);
 
-  if (await checkExisting("Supplier", state.result.supplier)) {
+  (state.errorMessages.supplier = validateForeignString({
+    field: state.result.supplier,
+    dict: dict.form.fields.suppliers.validation, 
+    required: true,
+  })).length != 0 && (state.error = true);
+
+  if (!await checkExisting("Supplier", state.result.supplier)) {
     state.errorMessages.supplier.push(
       dict.form.fields.suppliers.validation.not_found);
     state.error = true;
   }
 
-  (state.errorMessages.item = validateString(
-    state.result.item as string, 
-    dict.form.fields.items.validation, 
-    VALIDATION_SETTINGS.foreignKeys.minLength,
-    VALIDATION_SETTINGS.foreignKeys.maxLength,
-  )).length != 0 && (state.error = true);
+  (state.errorMessages.item = validateForeignString({
+    field: state.result.item,
+    dict: dict.form.fields.items.validation, 
+    required: true,
+  })).length != 0 && (state.error = true);
 
-  if (await checkExisting("Item", state.result.item)) {
+  if (!await checkExisting("Item", state.result.item)) {
     state.errorMessages.item.push(
       dict.form.fields.items.validation.not_found);
     state.error = true;
   }
 
-  (state.errorMessages.variant = validateString(
-    state.result.variant as string, 
-    dict.form.fields.variants.validation, 
-    VALIDATION_SETTINGS.foreignKeys.minLength,
-    VALIDATION_SETTINGS.foreignKeys.maxLength,
-  )).length != 0 && (state.error = true);
+  (state.errorMessages.variant = validateForeignString({
+    field: state.result.variant,
+    dict: dict.form.fields.variants.validation, 
+    required: true,
+  })).length != 0 && (state.error = true);
 
-  if (await checkExisting("Variant", state.result.variant)) {
+  if (!await checkExisting("Variant", state.result.variant)) {
     state.errorMessages.variant.push(
       dict.form.fields.variants.validation.not_found);
     state.error = true;

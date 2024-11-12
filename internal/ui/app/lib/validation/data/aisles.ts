@@ -4,7 +4,7 @@
 import { VALIDATION_SETTINGS } from "../validation.config";
 
 /** Actions */
-import validateString from "../strings";
+import validateString, { validateForeignString } from "../strings";
 import validateNumber from "../number";
 import { getDictionary, Locale } from "@/lib/dictionaries";
 import { validateExisting, checkExisting } from "../database";
@@ -25,13 +25,11 @@ export async function validateAisle(
     return state;
   }
 
-  if (state.result.id) {
-    state = await validateExisting(
-      "Aisle", 
-      state, 
-      state.result.id, 
-      locale
-    );
+  if (state.result.id && 
+      !await checkExisting("Aisle", state.result.id)) {
+    state.error = true;
+    state.message = dict.form.messages.errors.client;
+    return state;
   }
 
   if (!state.result) {
@@ -47,12 +45,11 @@ export async function validateAisle(
     VALIDATION_SETTINGS.shortString.maxLength,
   )).length != 0 && (state.error = true);
 
-  (state.errorMessages.zone = validateString(
-    state.result.zone, 
-    dict.form.fields.zones.validation, 
-    VALIDATION_SETTINGS.foreignKeys.minLength,
-    VALIDATION_SETTINGS.foreignKeys.maxLength,
-  )).length != 0 && (state.error = true);
+  (state.errorMessages.zone = validateForeignString({
+    field: state.result.zone,
+    dict: dict.form.fields.zones.validation, 
+    required: true,
+  })).length != 0 && (state.error = true);
 
   if (!await checkExisting("Zone", state.result.zone)) {
     state.errorMessages.zone.push(
@@ -82,6 +79,12 @@ export async function validateAislesBulk(
     VALIDATION_SETTINGS.bigUnsignedNumber.minLength,
     VALIDATION_SETTINGS.bigUnsignedNumber.maxLength,
   )).length != 0 && (state.error = true);
+
+  (state.errorMessages.zone = validateForeignString({
+    field: state.result.zone,
+    dict: dict.form.fields.zones.validation, 
+    required: true,
+  })).length != 0 && (state.error = true);
 
   if (!await checkExisting("Zone", state.result.zone)) {
     state.errorMessages.zone.push(

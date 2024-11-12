@@ -273,7 +273,7 @@ func getAislesByZone(db *database.Database) http.HandlerFunc {
 
     // Filters
     queryFilters := r.URL.Query().Get("filters")
-    filteredRows := list
+    filteredRows := deleteNilValue(list)
 
     if queryFilters != "" {
 		  var filters AislesFilters
@@ -464,7 +464,7 @@ func getAislesByZoneWithExtra(db *database.Database) http.HandlerFunc {
 
     // Filter
     queryFilters := r.URL.Query().Get("filters")
-    filteredRows := aisles
+    filteredRows := deleteNilValue(aisles)
 
     if queryFilters != "" {
 		  var filters AislesFilters

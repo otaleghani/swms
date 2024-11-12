@@ -4,7 +4,7 @@
 import { VALIDATION_SETTINGS } from "../validation.config";
 
 /** Actions */
-import validateString from "../strings";
+import validateString, { validateForeignString } from "../strings";
 import validateNumber from "../number";
 import validateImages from "../images";
 import { getDictionary, Locale } from "@/lib/dictionaries";
@@ -59,12 +59,11 @@ export async function validateItem(
   }
 
   if (state.result.zone) {
-    (state.errorMessages.zoneWithAdd = validateString(
-      state.result.zone as string, 
-      dict.form.fields.zones.validation, 
-      VALIDATION_SETTINGS.foreignKeys.minLength,
-      VALIDATION_SETTINGS.foreignKeys.maxLength,
-    )).length != 0 && (state.error = true);
+    (state.errorMessages.zoneWithAdd = validateForeignString({
+      field: state.result.zone,
+      dict: dict.form.fields.zones.validation, 
+      required: true,
+    })).length != 0 && (state.error = true);
 
     if (await checkExisting("Zone", state.result.zone)) {
       state.errorMessages.zoneWithAdd.push(
@@ -74,12 +73,11 @@ export async function validateItem(
   }
 
   if (state.result.aisle) {
-    (state.errorMessages.aisleWithAdd = validateString(
-      state.result.aisle as string, 
-      dict.form.fields.aisles.validation, 
-      VALIDATION_SETTINGS.foreignKeys.minLength,
-      VALIDATION_SETTINGS.foreignKeys.maxLength,
-    )).length != 0 && (state.error = true);
+    (state.errorMessages.aisleWithAdd = validateForeignString({
+      field: state.result.aisle,
+      dict: dict.form.fields.aisles.validation, 
+      required: true,
+    })).length != 0 && (state.error = true);
 
     if (await checkExisting("Aisle", state.result.aisle)) {
       state.errorMessages.aisleWithAdd.push(
@@ -89,12 +87,11 @@ export async function validateItem(
   }
 
   if (state.result.rack) {
-    (state.errorMessages.rackWithAdd = validateString(
-      state.result.rack as string, 
-      dict.form.fields.racks.validation, 
-      VALIDATION_SETTINGS.foreignKeys.minLength,
-      VALIDATION_SETTINGS.foreignKeys.maxLength,
-    )).length != 0 && (state.error = true);
+    (state.errorMessages.rackWithAdd = validateForeignString({
+      field: state.result.rack,
+      dict: dict.form.fields.racks.validation, 
+      required: true,
+    })).length != 0 && (state.error = true);
 
     if (await checkExisting("Rack", state.result.rack)) {
       state.errorMessages.rackWithAdd.push(
@@ -104,12 +101,11 @@ export async function validateItem(
   }
 
   if (state.result.shelf) {
-    (state.errorMessages.shelfWithAdd = validateString(
-      state.result.shelf as string, 
-      dict.form.fields.shelfs.validation, 
-      VALIDATION_SETTINGS.foreignKeys.minLength,
-      VALIDATION_SETTINGS.foreignKeys.maxLength,
-    )).length != 0 && (state.error = true);
+    (state.errorMessages.shelfWithAdd = validateForeignString({
+      field: state.result.shelf,
+      dict: dict.form.fields.shelfs.validation, 
+      required: true,
+    })).length != 0 && (state.error = true);
 
     if (await checkExisting("Shelf", state.result.shelf)) {
       state.errorMessages.shelfWithAdd.push(
@@ -119,12 +115,11 @@ export async function validateItem(
   }
 
   if (state.result.category) {
-    (state.errorMessages.categoryWithAdd = validateString(
-      state.result.category as string, 
-      dict.form.fields.categories.validation, 
-      VALIDATION_SETTINGS.foreignKeys.minLength,
-      VALIDATION_SETTINGS.foreignKeys.maxLength,
-    )).length != 0 && (state.error = true);
+    (state.errorMessages.categoryWithAdd = validateForeignString({
+      field: state.result.category,
+      dict: dict.form.fields.categories.validation, 
+      required: true,
+    })).length != 0 && (state.error = true);
 
     if (await checkExisting("Category", state.result.category)) {
       state.errorMessages.categoryWithAdd.push(
@@ -134,12 +129,11 @@ export async function validateItem(
   }
 
   if (state.result.subcategory) {
-    (state.errorMessages.subcategoryWithAdd = validateString(
-      state.result.subcategory as string, 
-      dict.form.fields.subcategories.validation, 
-      VALIDATION_SETTINGS.foreignKeys.minLength,
-      VALIDATION_SETTINGS.foreignKeys.maxLength,
-    )).length != 0 && (state.error = true);
+    (state.errorMessages.subcategoryWithAdd = validateForeignString({
+      field: state.result.subcategory,
+      dict: dict.form.fields.subcategories.validation, 
+      required: true,
+    })).length != 0 && (state.error = true);
 
     if (await checkExisting("Subcategory", state.result.subcategory)) {
       state.errorMessages.subcategoryWithAdd.push(
@@ -196,12 +190,11 @@ export async function validateItemComplete(
   }
 
   if (state.result.zone) {
-    (state.errorMessages.zoneWithAdd = validateString(
-      state.result.zone as string, 
-      dict.form.fields.zones.validation, 
-      VALIDATION_SETTINGS.foreignKeys.minLength,
-      VALIDATION_SETTINGS.foreignKeys.maxLength,
-    )).length != 0 && (state.error = true);
+    (state.errorMessages.zoneWithAdd = validateForeignString({
+      field: state.result.zone,
+      dict: dict.form.fields.zones.validation, 
+      required: true,
+    })).length != 0 && (state.error = true);
 
     if (await checkExisting("Zone", state.result.zone)) {
       state.errorMessages.zoneWithAdd.push(
@@ -211,12 +204,11 @@ export async function validateItemComplete(
   }
 
   if (state.result.aisle) {
-    (state.errorMessages.aisleWithAdd = validateString(
-      state.result.aisle as string, 
-      dict.form.fields.aisles.validation, 
-      VALIDATION_SETTINGS.foreignKeys.minLength,
-      VALIDATION_SETTINGS.foreignKeys.maxLength,
-    )).length != 0 && (state.error = true);
+    (state.errorMessages.aisleWithAdd = validateForeignString({
+      field: state.result.aisle,
+      dict: dict.form.fields.aisles.validation, 
+      required: true,
+    })).length != 0 && (state.error = true);
 
     if (await checkExisting("Aisle", state.result.aisle)) {
       state.errorMessages.aisleWithAdd.push(
@@ -226,12 +218,11 @@ export async function validateItemComplete(
   }
 
   if (state.result.rack) {
-    (state.errorMessages.rackWithAdd = validateString(
-      state.result.rack as string, 
-      dict.form.fields.racks.validation, 
-      VALIDATION_SETTINGS.foreignKeys.minLength,
-      VALIDATION_SETTINGS.foreignKeys.maxLength,
-    )).length != 0 && (state.error = true);
+    (state.errorMessages.rackWithAdd = validateForeignString({
+      field: state.result.rack,
+      dict: dict.form.fields.racks.validation, 
+      required: true,
+    })).length != 0 && (state.error = true);
 
     if (await checkExisting("Rack", state.result.rack)) {
       state.errorMessages.rackWithAdd.push(
@@ -241,12 +232,11 @@ export async function validateItemComplete(
   }
 
   if (state.result.shelf) {
-    (state.errorMessages.shelfWithAdd = validateString(
-      state.result.shelf as string, 
-      dict.form.fields.shelfs.validation, 
-      VALIDATION_SETTINGS.foreignKeys.minLength,
-      VALIDATION_SETTINGS.foreignKeys.maxLength,
-    )).length != 0 && (state.error = true);
+    (state.errorMessages.shelfWithAdd = validateForeignString({
+      field: state.result.shelf,
+      dict: dict.form.fields.shelfs.validation, 
+      required: true,
+    })).length != 0 && (state.error = true);
 
     if (await checkExisting("Shelf", state.result.shelf)) {
       state.errorMessages.shelfWithAdd.push(
@@ -256,12 +246,11 @@ export async function validateItemComplete(
   }
 
   if (state.result.category) {
-    (state.errorMessages.categoryWithAdd = validateString(
-      state.result.category as string, 
-      dict.form.fields.categories.validation, 
-      VALIDATION_SETTINGS.foreignKeys.minLength,
-      VALIDATION_SETTINGS.foreignKeys.maxLength,
-    )).length != 0 && (state.error = true);
+    (state.errorMessages.categoryWithAdd = validateForeignString({
+      field: state.result.category,
+      dict: dict.form.fields.categories.validation, 
+      required: true,
+    })).length != 0 && (state.error = true);
 
     if (await checkExisting("Category", state.result.category)) {
       state.errorMessages.categoryWithAdd.push(
@@ -271,12 +260,11 @@ export async function validateItemComplete(
   }
 
   if (state.result.subcategory) {
-    (state.errorMessages.subcategoryWithAdd = validateString(
-      state.result.subcategory as string, 
-      dict.form.fields.subcategories.validation, 
-      VALIDATION_SETTINGS.foreignKeys.minLength,
-      VALIDATION_SETTINGS.foreignKeys.maxLength,
-    )).length != 0 && (state.error = true);
+    (state.errorMessages.subcategoryWithAdd = validateForeignString({
+      field: state.result.subcategory,
+      dict: dict.form.fields.subcategories.validation, 
+      required: true,
+    })).length != 0 && (state.error = true);
 
     if (await checkExisting("Subcategory", state.result.subcategory)) {
       state.errorMessages.subcategoryWithAdd.push(

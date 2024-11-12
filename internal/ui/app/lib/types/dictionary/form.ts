@@ -108,14 +108,23 @@ export interface DictCheckboxField {
   }
 }
 
+export interface DictSelectFieldValidation {
+  /** Format was good, but the item was not found in db */
+  not_found: string;
+
+  /** The item was empty but it was required */
+  empty: string;
+
+  /** UUID format was not valid, like not 16 chars long */
+  valid: string;
+}
+
 export interface DictSelectField {
   select: {
     label: string;
     combobox: DictSelectFieldCombobox;
   };
-  validation: {
-    not_found: string;
-  }
+  validation: DictSelectFieldValidation;
 }
 export interface DictSelectFieldCombobox {
     select: string;

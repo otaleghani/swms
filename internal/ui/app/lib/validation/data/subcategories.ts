@@ -4,7 +4,7 @@
 import { VALIDATION_SETTINGS } from "../validation.config";
 
 /** Actions */
-import validateString from "../strings";
+import validateString, { validateForeignString } from "../strings";
 import { getDictionary, Locale } from "@/lib/dictionaries";
 import { validateExisting, checkExisting } from "../database";
 
@@ -55,12 +55,11 @@ export async function validateSubcategory(
     )).length != 0 && (state.error = true);
   }
 
-  (state.errorMessages.category = validateString(
-    state.result.category as string, 
-    dict.form.fields.categories.validation, 
-    VALIDATION_SETTINGS.foreignKeys.minLength,
-    VALIDATION_SETTINGS.foreignKeys.maxLength,
-  )).length != 0 && (state.error = true);
+  (state.errorMessages.category = validateForeignString({
+    field: state.result.category,
+    dict: dict.form.fields.categories.validation, 
+    required: true,
+  })).length != 0 && (state.error = true);
 
   if (!await checkExisting("Category", state.result.category)) {
     state.errorMessages.category.push(

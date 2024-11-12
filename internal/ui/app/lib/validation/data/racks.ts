@@ -4,7 +4,7 @@
 import { VALIDATION_SETTINGS } from "../validation.config";
 
 /** Actions */
-import validateString from "../strings";
+import validateString, { validateForeignString } from "../strings";
 import validateNumber from "../number";
 import { getDictionary, Locale } from "@/lib/dictionaries";
 import { validateExisting, checkExisting } from "../database";
@@ -43,12 +43,12 @@ export async function validateRack(
     VALIDATION_SETTINGS.shortString.maxLength,
   )).length != 0 && (state.error = true);
 
-  (state.errorMessages.zone = validateString(
-    state.result.zone as string, 
-    dict.form.fields.zones.validation, 
-    VALIDATION_SETTINGS.foreignKeys.minLength,
-    VALIDATION_SETTINGS.foreignKeys.maxLength,
-  )).length != 0 && (state.error = true);
+
+  (state.errorMessages.zone = validateForeignString({
+    field: state.result.zone,
+    dict: dict.form.fields.zones.validation, 
+    required: true,
+  })).length != 0 && (state.error = true);
 
   if (!await checkExisting("Zone", state.result.zone)) {
     state.errorMessages.zone.push(
@@ -56,12 +56,11 @@ export async function validateRack(
     state.error = true;
   }
 
-  (state.errorMessages.aisle = validateString(
-    state.result.aisle as string, 
-    dict.form.fields.aisles.validation, 
-    VALIDATION_SETTINGS.foreignKeys.minLength,
-    VALIDATION_SETTINGS.foreignKeys.maxLength,
-  )).length != 0 && (state.error = true);
+  (state.errorMessages.aisle = validateForeignString({
+    field: state.result.aisle,
+    dict: dict.form.fields.aisles.validation, 
+    required: true,
+  })).length != 0 && (state.error = true);
 
   if (!await checkExisting("Aisle", state.result.aisle)) {
     state.errorMessages.aisle.push(
