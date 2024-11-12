@@ -27,6 +27,7 @@ type ForeignTypeMap = {
     K extends "Racks" ? "Zone" | "Aisle" :
     K extends "RacksWithExtra" ? "Aisle" :
 
+    K extends "ShelfsWithExtra" ? "Rack" :
     //K extends "Shelfs" ? "Zone" | "Aisle" | "Rack" :
 
     K extends "SubcategoryWithExtra" ? "Category" :
@@ -69,6 +70,7 @@ const options: MapOptions = {
   "Racks_Zone":             { path: "zones/{{id}}/racks", type: "Racks"  },
   "Racks_Aisle":            { path: "aisles/{{id}}/racks", type: "Racks"  },
   "RacksWithExtra_Aisle":   { path: "aisles/{{id}}/racks/extra", type: "RacksWithExtra" },
+  "ShelfsWithExtra_Rack": { path: "racks/{{id}}/shelfs/extra", type: "Shelfs"},
 
   //"Shelfs_Rack":            { path: "aisles/{{id}}/racks", type: "Racks"  },
   //"Shelfs_Aisle":           { path: "aisles/{{id}}/racks", type: "Racks"  },
@@ -136,5 +138,6 @@ export default async function retrieveByForeignId<
     method: "GET",
     tag: revalidateTags[option.type],
   });
+
   return response;
 }

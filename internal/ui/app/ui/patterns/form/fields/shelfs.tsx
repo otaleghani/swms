@@ -55,12 +55,20 @@ export const ShelfsBulkFormFields = ({
   fields,
   result,
   errorMessages
-}: FormFieldsPropsWithDictCompleteMap["ShelfsBulk"]) => { return (
+}: FormFieldsPropsWithDictCompleteMap["ShelfsBulk"]) => { 
+  let defaultZone = result?.zone ? 
+    fields.zone.list.find(i => i.id === result.zone) : undefined;
+  let defaultAisle = result?.aisle ? 
+    fields.aisle.list.find(i => i.id === result.aisle) : undefined;
+  let defaultRack = result?.rack ? 
+    fields.rack.list.find(i => i.id === result.rack) : undefined;
+
+  return (
   <>
     <InputPattern 
       field="quantityWithButtons"
       dict={fields.quantity.dict}
-      defaultValue={String(result?.number)}
+      defaultValue={String(result?.quantity)}
       className=""
       label={true}
       errorMessages={errorMessages.quantity}
@@ -68,14 +76,17 @@ export const ShelfsBulkFormFields = ({
     <PositionSelectField 
       fields={{ 
         zone: {
+          defaultValue: defaultZone,
           select: fields.zone,
           errorMessages: errorMessages.zone,
         },
         aisle: {
+          defaultValue: defaultAisle,
           select: fields.aisle,
           errorMessages: errorMessages.aisle,
         },
         rack: {
+          defaultValue: defaultRack,
           select: fields.rack,
           errorMessages: errorMessages.rack,
         },

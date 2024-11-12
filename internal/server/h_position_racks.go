@@ -6,8 +6,8 @@ import (
 	"strings"
 
 	"github.com/google/uuid"
+	"github.com/otaleghani/spg"
 	"github.com/otaleghani/swms/internal/database"
-  "github.com/otaleghani/spg"
 )
 
 type RacksFilters struct {
@@ -41,11 +41,11 @@ func getRacks(db *database.Database) http.HandlerFunc {
 		  }
       if filters.Zone != "" {
         filteredRows, err = FilterByField(
-          filteredRows, "Zone", filters.Zone)
+          filteredRows, "Zone_id", filters.Zone)
       }
       if filters.Aisle != "" {
         filteredRows, err = FilterByField(
-          filteredRows, "Aisle", filters.Aisle)
+          filteredRows, "Aisle_id", filters.Aisle)
       }
       if filters.Search != "" {
         filteredRows, err = FilterBySearch(
@@ -138,7 +138,7 @@ func getRackWithExtraById(db *database.Database) http.HandlerFunc {
         },
       )
     }
-		SuccessResponse{Data: rows[0]}.r200(w, r)
+		SuccessResponse{Data: data[0]}.r200(w, r)
 	}
 }
 
@@ -316,11 +316,11 @@ func getRacksByAisleWithExtra(db *database.Database) http.HandlerFunc {
 
       if filters.Zone != "" {
         filteredRows, err = FilterByField(
-          filteredRows, "Zone", filters.Zone)
+          filteredRows, "Zone_id", filters.Zone)
       }
       if filters.Aisle != "" {
         filteredRows, err = FilterByField(
-          filteredRows, "Aisle", filters.Aisle)
+          filteredRows, "Aisle_id", filters.Aisle)
       }
       if filters.Search != "" {
         filteredRows, err = FilterBySearch(
@@ -411,11 +411,11 @@ func getRacksWithExtra(db *database.Database) http.HandlerFunc {
 
       if filters.Zone != "" {
         filteredRows, err = FilterByField(
-          filteredRows, "Zone", filters.Zone)
+          filteredRows, "Zone_id", filters.Zone)
       }
       if filters.Aisle != "" {
         filteredRows, err = FilterByField(
-          filteredRows, "Aisle", filters.Aisle)
+          filteredRows, "Aisle_id", filters.Aisle)
       }
       if filters.Search != "" {
         filteredRows, err = FilterBySearch(
@@ -426,7 +426,7 @@ func getRacksWithExtra(db *database.Database) http.HandlerFunc {
     // Data construction
     var data []struct {
       Rack database.Rack `json:"rack"`
-      Shelfs_count int `json:"shelfsCound"`
+      Shelfs_count int `json:"shelfsCount"`
       Items_count int `json:"itemsCount"`
     }
     for i := 0; i < len(filteredRows); i++ {
@@ -442,7 +442,7 @@ func getRacksWithExtra(db *database.Database) http.HandlerFunc {
 		  }
       data = append(data, struct{
           Rack database.Rack `json:"rack"`
-          Shelfs_count int `json:"shelfsCound"`
+          Shelfs_count int `json:"shelfsCount"`
           Items_count int `json:"itemsCount"`
         }{
           Rack: filteredRows[i],
@@ -455,7 +455,7 @@ func getRacksWithExtra(db *database.Database) http.HandlerFunc {
     // Pagination
     queryPagination := r.URL.Query().Get("paginationOff")
     if queryPagination == "true" {
-		  SuccessResponse{Data: filteredRows}.r200(w, r)
+		  SuccessResponse{Data: data}.r200(w, r)
       return
     }
     queryPage := r.URL.Query().Get("page")

@@ -46,9 +46,15 @@ interface Props {
     };
   };
   dict: DictFilters;
+  hide: {
+    zones?: boolean;
+    aisles?: boolean;
+    racks?: boolean;
+    search?: boolean;
+  }
 };
 
-const SheetPatternBody = ({fields, dict}: Props) => {
+const SheetPatternBody = ({fields, dict, hide}: Props) => {
   const { params, setParams, link } = useFilterParams();
 
   const { zone, setZone } = 
@@ -67,16 +73,19 @@ const SheetPatternBody = ({fields, dict}: Props) => {
     <>
       <FilterSheetHeader dict={dict} />
       <div className="mb-4 grid gap-2">
-        <div>
-          <Label>{fields.zones.dict.select.label}</Label>
-          <ForeignKeyFilter<"Zone"> 
-            name="Zone"
-            list={fields.zones.list}
-            dict={fields.zones.dict}
-            element={zone}
-            setElement={setZone}
-          />
-        </div> 
+        {!hide.zones && (
+          <div>
+            <Label>{fields.zones.dict.select.label}</Label>
+            <ForeignKeyFilter<"Zone"> 
+              name="Zone"
+              list={fields.zones.list}
+              dict={fields.zones.dict}
+              element={zone}
+              setElement={setZone}
+            />
+          </div> 
+        )}
+        {!hide.aisles && (
         <div>
           <Label>{fields.aisles.dict.select.label}</Label>
           <ForeignKeyFilter<"Aisle"> 
@@ -87,6 +96,8 @@ const SheetPatternBody = ({fields, dict}: Props) => {
             setElement={setAisle}
           />
         </div> 
+        )}
+        {!hide.racks && (
         <div>
           <Label>{fields.racks.dict.select.label}</Label>
           <ForeignKeyFilter<"Rack"> 
@@ -97,6 +108,8 @@ const SheetPatternBody = ({fields, dict}: Props) => {
             setElement={setRack}
           />
         </div> 
+        )}
+        {!hide.search && (
         <div>
           <Label>{fields.search.dict.label}</Label>
           <Input 
@@ -106,6 +119,7 @@ const SheetPatternBody = ({fields, dict}: Props) => {
             value={searchTerm}
           />
         </div>
+        )}
       </div>
 
       <div className="flex gap-2">
@@ -128,6 +142,7 @@ const SheetPatternBody = ({fields, dict}: Props) => {
 export default function FilterShelfs({
   fields,
   dict,
+  hide,
 }: Props) {
   const { params, setParams, link } = useFilterParams();
 
@@ -135,7 +150,7 @@ export default function FilterShelfs({
     return (<FilterSheetTrigger dict={dict} params={params.shelfs} />)
   }
   const SheetBody = () => {
-    return (<SheetPatternBody fields={fields} dict={dict}/>)
+    return (<SheetPatternBody fields={fields} dict={dict} hide={hide}/>)
   }
   return (
     <>

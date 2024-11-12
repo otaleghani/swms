@@ -52,7 +52,6 @@ export function syncRackWithExtra({
   const handleRelevantForeignKeyChange = (data: ServerSentEventData) => {
     if (data.type !== "Shelf" && data.type !== "Item") return;
     if (data.after.rack !== element.rack.id && data.before.rack !== element.rack.id) return;
-    if (data.before.rack === data.after.rack) return;
     streamer.postMessage({type: "RackWithExtra", id: element.rack.id, request: "update"});
   }
 

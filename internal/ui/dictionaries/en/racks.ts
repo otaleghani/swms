@@ -3,7 +3,7 @@ import { DictRack } from "@/app/lib/types/dictionary/data/rack";
 
 export const dictionaryRacks: DictRack = {
   header: {
-    title: "Zones",
+    title: "Racks",
     breadcrumbs: {
       home: "Home",
       zone: "Zones",
@@ -15,7 +15,7 @@ export const dictionaryRacks: DictRack = {
     labels: {
       zone: "Zone",
       aisle: "Aisle",
-      shelfs: "Aisles",
+      shelfs: "Shelfs",
       items: "Items",
     },
   },

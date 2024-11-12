@@ -261,7 +261,7 @@ func getShelfsByRackWithExtra(db *database.Database) http.HandlerFunc {
 
     var data []struct {
       Shelf database.Shelf `json:"shelf"`
-      Items_count int `json:"items_count"`
+      Items_count int `json:"itemsCount"`
     }
     for i := 0; i < len(shelfs); i++ {
       items, err := db.SelectItems("Shelf_id = ?", filteredRows[i].Id)
@@ -271,7 +271,7 @@ func getShelfsByRackWithExtra(db *database.Database) http.HandlerFunc {
 		  }
       data = append(data, struct{
           Shelf database.Shelf `json:"shelf"`
-          Items_count int `json:"items_count"`
+          Items_count int `json:"itemsCount"`
         }{
           Shelf: filteredRows[i],
           Items_count: len(items),
@@ -385,7 +385,7 @@ func getShelfsWithExtra(db *database.Database) http.HandlerFunc {
 
     var data []struct {
       Shelf database.Shelf `json:"shelf"`
-      Items_count int `json:"items_count"`
+      Items_count int `json:"itemsCount"`
     }
     for i := 0; i < len(shelfs); i++ {
       items, err := db.SelectItems("Shelf_id = ?", filteredRows[i].Id)
@@ -395,7 +395,7 @@ func getShelfsWithExtra(db *database.Database) http.HandlerFunc {
 		  }
       data = append(data, struct{
           Shelf database.Shelf `json:"shelf"`
-          Items_count int `json:"items_count"`
+          Items_count int `json:"itemsCount"`
         }{
           Shelf: filteredRows[i],
           Items_count: len(items),

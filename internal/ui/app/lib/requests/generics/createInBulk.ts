@@ -86,7 +86,7 @@ export async function createInBulk<T extends keyof CreateInBulkMapOptions>(
   if (request == "Shelfs") {
     const streamedChange: ServerSentEventData = {
       id: "",
-      type: "Shelfs",
+      type: "Shelf",
       action: "createInBulk",
       before: "",
       after: payload,

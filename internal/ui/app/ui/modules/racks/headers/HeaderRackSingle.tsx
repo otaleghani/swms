@@ -13,6 +13,7 @@ import { Rack, Racks } from "@/app/lib/types/data/racks";
 import { Zones } from "@/app/lib/types/data/zones";
 import DialogRackCreateBulk from "../../racks/dialogs/DialogRackCreateBulk";
 import { Aisles } from "@/app/lib/types/data/aisles";
+import DialogShelfCreateBulk from "../../shelfs/dialogs/DialogShelfCreateBulk";
 
 interface Props {
   locale: Locale;
@@ -67,8 +68,8 @@ export default async function HeaderRackSingle({
           }}
         />
 
-        <DialogRackCreateBulk 
-          dict={dict.rack.dialogs.addBulk}
+        <DialogShelfCreateBulk
+          dict={dict.shelf.dialogs.addBulk}
           fields={{
             quantity: {dict: dict.form.fields.quantity},
             zone: {
@@ -81,10 +82,16 @@ export default async function HeaderRackSingle({
               list: aisles.data as Aisles,
               name: "Aisle",
             },
+            rack: {
+              dict: dict.form.fields.racks,
+              list: racks.data as Racks,
+              name: "Rack",
+            },
             button: dict.form.buttons.add
           }}
           relatedZone={rack.zone}
           relatedAisle={rack.aisle}
+          relatedRack={rack.id}
         />
       </div>
     );

@@ -252,9 +252,9 @@ const optionsListByForeign = {
   "Racks_Aisle":            { path: "aisles/{{id}}/racks", type: "Racks"  },
   "RacksWithExtra_Aisle":   { path: "aisles/{{id}}/racks/extra", type: "RacksWithExtra" },
 
-  "Shelfs_Rack":            { path: "aisles/{{id}}/racks", type: "Racks"  },
-  "Shelfs_Aisle":           { path: "aisles/{{id}}/racks", type: "Racks"  },
-  "Shelfs_Zone":            { path: "aisles/{{id}}/racks", type: "Racks"  },
+  "ShelfsWithExtra_Rack":   { path: "racks/{{id}}/shelfs/extra", type: "ShelfsWithExtra"  },
+  //"Shelfs_Aisle":           { path: "aisles/{{id}}/racks", type: "Racks"  },
+  //"Shelfs_Zone":            { path: "aisles/{{id}}/racks", type: "Racks"  },
 
   "SupplierCodes_Supplier": { path: "aisles/{{id}}/racks", type: "Racks"  },
   "SubcategoryWithExtra_Category": { path: "categories/{{id}}/subcategories/extra", type: "Subcategories"},

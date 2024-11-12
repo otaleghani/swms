@@ -52,13 +52,11 @@ export function syncShelfWithExtra({
   const handleRelevantForeignKeyChange = (data: ServerSentEventData) => {
     if (data.type !== "Item") return;
     if (data.after.shelf !== element.shelf.id && data.before.shelf !== element.shelf.id) return;
-    if (data.before.shelf === data.after.shelf) return;
+    //if (data.before.shelf === data.after.shelf) return;
     streamer.postMessage({type: "ShelfWithExtra", id: element.shelf.id, request: "update"});
   }
 
   const handleForeignKeyChange = (data: ServerSentEventData) => {
-    if (data.before.id === data.after.id) return;
-
     if (data.type === "Zone" && 
         data.after.id === element.shelf.zone) {
       setSyncState("update");

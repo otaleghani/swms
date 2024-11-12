@@ -8,25 +8,28 @@ import retrieveByForeignId from "@/app/lib/requests/generics/retrieveByForeignId
 
 // Local components
 import { ScrollArea } from "@/app/ui/components/scroll-area";
-import FilterRacks from "@/app/ui/patterns/filter/data/FilterRacks";
+import FilterShelfs from "@/app/ui/patterns/filter/data/FilterShelfs";
 import PaginationPattern from "@/app/ui/patterns/pagination/PaginationPattern";
-import ListRacksWithExtraClient from "./ListRacksWithExtraClient";
+import ListShelfsWithExtraClient from "./ListShelfsWithExtraClient";
+
 
 // Types and interfaces
 import { Locale } from "@/lib/dictionaries";
 import { Zones } from "@/app/lib/types/data/zones";
-import { Aisle, Aisles, AislesWithExtra } from "@/app/lib/types/data/aisles";
-import { Racks, RacksWithExtra } from "@/app/lib/types/data/racks";
+import { Aisle, Aisles } from "@/app/lib/types/data/aisles";
+import { Rack, Racks, RacksWithExtra } from "@/app/lib/types/data/racks";
 import { SearchParams } from "@/app/lib/types/pageParams";
+import { Shelf, Shelfs, ShelfsWithExtra } from "@/app/lib/types/data/shelfs";
 
 type Props =
   | {
       hideFilters: {
+        racks?: boolean;
         aisles?: boolean;
         zones?: boolean;
         search?: boolean;
       };
-      searchParams?: SearchParams["racks"];
+      searchParams?: SearchParams["shelfs"];
       locale: Locale;
       type: "complete";
       forceLayout: "list" | "dynamic";
@@ -36,35 +39,36 @@ type Props =
         zones?: boolean;
         search?: boolean;
         aisles?: boolean;
+        racks?: boolean;
       };
-      searchParams?: SearchParams["racks"];
+      searchParams?: SearchParams["shelfs"];
       locale: Locale;
-      type: "aisle";
-      aisle: Aisle;
+      type: "rack";
+      rack: Rack;
       forceLayout: "list" | "dynamic";
   };
 
-export default async function ListRacksWithExtra(props: Props) {
+export default async function ListShelfsWithExtra(props: Props) {
   const { searchParams, locale, type, hideFilters, forceLayout } = props;
-  let currentAisle;
+  let currentRack;
 
   // Here decides if what data we need to handle
   let pList;
-  if (type === "aisle") {
-    const { aisle } = props;
-    currentAisle = aisle;
+  if (type === "rack") {
+    const { rack } = props;
+    currentRack = rack;
 
     pList = retrieveByForeignId({
-      request: "RacksWithExtra",
-      foreign: "Aisle",
-      id: aisle.id as string,
+      request: "ShelfsWithExtra",
+      foreign: "Rack",
+      id: rack.id as string,
       page: searchParams?.pagination?.page,
       perPage: searchParams?.pagination?.perPage,
       filters: JSON.stringify(searchParams?.filters),
     });
   } else {
     pList = retrieve({
-      request: "RacksWithExtra",
+      request: "ShelfsWithExtra",
       page: searchParams?.pagination?.page,
       perPage: searchParams?.pagination?.perPage,
       filters: JSON.stringify(searchParams?.filters),
@@ -74,8 +78,11 @@ export default async function ListRacksWithExtra(props: Props) {
   const pZones = retrieve({ request: "Zones", paginationOff: "true" });
   const pAisles = retrieve({ request: "Aisles", paginationOff: "true" });
   const pRacks = retrieve({ request: "Racks", paginationOff: "true" });
+  const pShelfs = retrieve({ request: "Shelfs", paginationOff: "true" });
 
-  const [list, dict, zones, aisles, racks] = await Promise.all([pList, pDict, pZones, pAisles, pRacks])
+  const [list, dict, zones, aisles, racks, shelfs] = 
+    await Promise.all([pList, pDict, pZones, pAisles, pRacks, pShelfs])
+
 
   return (
     <>
@@ -88,14 +95,14 @@ export default async function ListRacksWithExtra(props: Props) {
             : "xl:grid-cols-3"
         }`}>
           {type === "complete" && (
-            <ListRacksWithExtraClient 
+            <ListShelfsWithExtraClient 
               type={type}
               pagination={searchParams?.pagination}
               filters={searchParams?.filters}
-              racksWithExtra={list.data as RacksWithExtra}
-              dictDialogEdit={dict.rack.dialogs.edit}
-              dictDialogReplace={dict.rack.dialogs.replace}
-              dictCard={dict.rack.card}
+              shelfsWithExtra={list.data as ShelfsWithExtra}
+              dictDialogEdit={dict.shelf.dialogs.edit}
+              dictDialogReplace={dict.shelf.dialogs.replace}
+              dictCard={dict.shelf.card}
               dictNotFound={dict.misc.notFound}
               fields={{
                 name: { dict: dict.form.fields.name },
@@ -114,20 +121,25 @@ export default async function ListRacksWithExtra(props: Props) {
                   dict: dict.form.fields.racks,
                   list: racks.data as Racks,
                   name: "Rack",
+                },
+                shelf: { 
+                  dict: dict.form.fields.shelfs,
+                  list: shelfs.data as Shelfs,
+                  name: "Shelf",
                 },
               }}
             />
           )}
-          {type === "aisle" && (
-            <ListRacksWithExtraClient 
+          {type === "rack" && (
+            <ListShelfsWithExtraClient 
               type={type}
-              aisle={currentAisle as Aisle}
+              rack={currentRack as Rack}
               pagination={searchParams?.pagination}
               filters={searchParams?.filters}
-              racksWithExtra={list.data as RacksWithExtra}
-              dictDialogEdit={dict.rack.dialogs.edit}
-              dictDialogReplace={dict.rack.dialogs.replace}
-              dictCard={dict.rack.card}
+              shelfsWithExtra={list.data as ShelfsWithExtra}
+              dictDialogEdit={dict.shelf.dialogs.edit}
+              dictDialogReplace={dict.shelf.dialogs.replace}
+              dictCard={dict.shelf.card}
               dictNotFound={dict.misc.notFound}
               fields={{
                 name: { dict: dict.form.fields.name },
@@ -146,6 +158,11 @@ export default async function ListRacksWithExtra(props: Props) {
                   dict: dict.form.fields.racks,
                   list: racks.data as Racks,
                   name: "Rack",
+                },
+                shelf: { 
+                  dict: dict.form.fields.shelfs,
+                  list: shelfs.data as Shelfs,
+                  name: "Shelf",
                 },
               }}
             />
@@ -153,7 +170,7 @@ export default async function ListRacksWithExtra(props: Props) {
         </div>
       </ScrollArea>
       <div className="flex items-center justify-end border-t xl:h-[57px]">
-        <FilterRacks
+        <FilterShelfs
           dict={dict.filters}
           fields={{
             zones: {
@@ -163,6 +180,10 @@ export default async function ListRacksWithExtra(props: Props) {
             aisles: {
               list: aisles.data as Aisles,
               dict: dict.form.fields.aisles
+            },
+            racks: {
+              list: racks.data as Racks,
+              dict: dict.form.fields.racks
             },
             search: {
               dict: dict.form.fields.search
