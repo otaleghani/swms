@@ -132,7 +132,7 @@ func getShelfWithExtraById(db *database.Database) http.HandlerFunc {
         },
       )
     }
-		SuccessResponse{Data: rows[0]}.r200(w, r)
+		SuccessResponse{Data: data[0]}.r200(w, r)
 	}
 }
 
@@ -387,7 +387,7 @@ func getShelfsWithExtra(db *database.Database) http.HandlerFunc {
       Shelf database.Shelf `json:"shelf"`
       Items_count int `json:"itemsCount"`
     }
-    for i := 0; i < len(shelfs); i++ {
+    for i := 0; i < len(filteredRows); i++ {
       items, err := db.SelectItems("Shelf_id = ?", filteredRows[i].Id)
 		  if err != nil {
 		  	ErrorResponse{Message: err.Error()}.r500(w, r)

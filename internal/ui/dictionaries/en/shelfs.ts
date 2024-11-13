@@ -2,7 +2,7 @@ import { DictShelf } from "@/app/lib/types/dictionary/data/shelf";
 
 export const dictionaryShelfs: DictShelf = {
   header: {
-    title: "Zones",
+    title: "Shelfs",
     breadcrumbs: {
       home: "Home",
       zone: "Zones",

@@ -72,9 +72,22 @@ export default function PositionSelectField({
   let listRacks = fields.rack?.select.list;
   let listShelfs = fields.shelf?.select.list;
 
-  const [filteredAisles, setFilteredAisles] = useState(fields.aisle?.select.list);
-  const [filteredRacks, setFilteredRacks] = useState(fields.rack?.select.list);
-  const [filteredShelfs, setFilteredShelfs] = useState(fields.shelf?.select.list);
+  const [filteredAisles, setFilteredAisles] = useState(listAisles);
+  const [filteredRacks, setFilteredRacks] = useState(listRacks);
+  const [filteredShelfs, setFilteredShelfs] = useState(listShelfs);
+
+
+  useEffect(() => {
+    if (fields.zone && fields.zone.defaultValue && listAisles) {
+      filterList(listAisles, "zone", selectedZone.id, setFilteredAisles);
+    }
+    if (fields.aisle && fields.aisle.defaultValue && listRacks) {
+      filterList(listRacks, "aisle", selectedAisle.id, setFilteredRacks);
+    }
+    if (fields.rack && fields.rack.defaultValue && listShelfs) {
+      filterList(listShelfs, "rack", selectedRack.id, setFilteredShelfs);
+    }
+  }, [])
   
   useEffect(() => {
     if (listAisles) {

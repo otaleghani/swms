@@ -5,14 +5,14 @@ import { createFormAction } from "@/app/lib/actions/create/createFormAction";
 import { decodeSearchParams } from "@/app/lib/searchParams";
 
 // Components
-import HeaderRackCollection from "@/app/ui/modules/racks/headers/HeaderRackCollection";
-import ListRacksWithExtra from "@/app/ui/modules/racks/lists/ListRacksWithExtra";
+import HeaderShelfCollection from "@/app/ui/modules/shelfs/headers/HeaderShelfCollection";
+import ListShelfsWithExtra from "@/app/ui/modules/shelfs/lists/ListShelfsWithExtra";
 
 // Types and interfaces
 import { Locale } from "@/lib/dictionaries";
 import { DefaultPageProps } from "@/app/lib/types/pageParams";
 
-export default async function RacksPage({
+export default async function ShelfsPage({
   params,
   searchParams,
 }: DefaultPageProps) {
@@ -24,8 +24,8 @@ export default async function RacksPage({
 
   return (
     <>
-      <HeaderRackCollection locale={params.lang as Locale} />
-      <ListRacksWithExtra 
+      <HeaderShelfCollection locale={params.lang as Locale} />
+      <ListShelfsWithExtra 
         hideFilters={{}}
         searchParams={currentSearchParams.racks}
         locale={params.lang as Locale}

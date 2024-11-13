@@ -139,7 +139,7 @@ func Serve(path, port string) {
 	mux.HandleFunc("GET /api/v1/shelfs/{$}", getShelfs(&dbConn))
 	mux.HandleFunc("POST /api/v1/shelfs/{$}", postShelfs(&dbConn))
 	mux.HandleFunc("GET /api/v1/shelfs/{id}", getShelfById(&dbConn))
-	mux.HandleFunc("GET /api/v1/shelfs/{id}/extra", getRackWithExtraById(&dbConn))
+	mux.HandleFunc("GET /api/v1/shelfs/{id}/extra", getShelfWithExtraById(&dbConn))
 	mux.HandleFunc("PUT /api/v1/shelfs/{id}", putShelf(&dbConn))
 	mux.HandleFunc("DELETE /api/v1/shelfs/{id}", deleteShelf(&dbConn))
 	mux.HandleFunc("GET /api/v1/racks/{id}/shelfs/extra", getShelfsByRackWithExtra(&dbConn))
