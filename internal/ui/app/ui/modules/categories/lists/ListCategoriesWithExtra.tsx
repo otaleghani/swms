@@ -34,7 +34,6 @@ export default async function ListCategoriesWithExtra({
     paginationOff: "true",
   });
 
-
   return (
     <>
       <ScrollArea
@@ -55,6 +54,7 @@ export default async function ListCategoriesWithExtra({
             dictDialogReplace={dict.category.dialogs.replace}
             dictDialogEdit={dict.category.dialogs.edit}
             dictCard={dict.category.card}
+            dictNotFound={dict.misc.notFound}
             fields={{
               name: { dict: dict.form.fields.name },
               description: { dict: dict.form.fields.description },
@@ -66,10 +66,9 @@ export default async function ListCategoriesWithExtra({
               },
             }}
           />
-          {list.data === null && <>{dict.misc.notFound}</>}
         </div>
       </ScrollArea>
-      <div className="flex items-center justify-end border-t xl:h-[57px]">
+      <div className="p-4 flex items-center justify-end border-t xl:h-[57px]">
         <FilterCategories
           dict={dict.filters}
           fields={{
@@ -82,6 +81,7 @@ export default async function ListCategoriesWithExtra({
           forceLayout="dynamic"
           totalPages={list.totalPages as number}
           type="categories"
+          hideLayoutSelector
         />
       </div>
     </>

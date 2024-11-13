@@ -29,7 +29,7 @@ func getSubcategories(db *database.Database) http.HandlerFunc {
 
     // Filters
     queryFilters := r.URL.Query().Get("filters")
-    filteredRows := rows
+    filteredRows := deleteNilValue(rows)
     if queryFilters != "" {
 		  var filters SubcategoriesFilter
 		  err = json.Unmarshal([]byte(queryFilters), &filters)
@@ -47,7 +47,7 @@ func getSubcategories(db *database.Database) http.HandlerFunc {
     // Pagination
     queryPaginationOff := r.URL.Query().Get("paginationOff")
     if queryPaginationOff == "true" {
-		  SuccessResponse{Data: rows}.r200(w, r)
+		  SuccessResponse{Data: filteredRows}.r200(w, r)
       return
     }
     queryPage := r.URL.Query().Get("page")
@@ -83,7 +83,7 @@ func getSubcategoriesWithExtra(db *database.Database) http.HandlerFunc {
 
     // Filter
     queryFilters := r.URL.Query().Get("filters")
-    filteredRows := rows
+    filteredRows := deleteNilValue(rows)
     if queryFilters != "" {
 		  var filters SubcategoriesFilter
 		  err = json.Unmarshal([]byte(queryFilters), &filters)
@@ -164,7 +164,7 @@ func getSubcategoriesWithExtraByCategory(db *database.Database) http.HandlerFunc
 
     // Filter
     queryFilters := r.URL.Query().Get("filters")
-    filteredRows := rows
+    filteredRows := deleteNilValue(rows)
     if queryFilters != "" {
 		  var filters SubcategoriesFilter
 		  err = json.Unmarshal([]byte(queryFilters), &filters)
@@ -299,7 +299,7 @@ func getSubcategoriesByCategory(db *database.Database) http.HandlerFunc {
 
     // Filters
     queryFilters := r.URL.Query().Get("filters")
-    filteredRows := rows
+    filteredRows := deleteNilValue(rows)
     if queryFilters != "" {
 		  var filters SubcategoriesFilter
 		  err = json.Unmarshal([]byte(queryFilters), &filters)
@@ -317,7 +317,7 @@ func getSubcategoriesByCategory(db *database.Database) http.HandlerFunc {
     // Pagination
     queryPaginationOff := r.URL.Query().Get("paginationOff")
     if queryPaginationOff == "true" {
-		  SuccessResponse{Data: rows}.r200(w, r)
+		  SuccessResponse{Data: filteredRows}.r200(w, r)
       return
     }
     queryPage := r.URL.Query().Get("page")

@@ -3,9 +3,8 @@ import { GeistSans } from 'geist/font/sans';
 import "@/app/globals.css";
 import { getDictionary, Locale } from "@/lib/dictionaries";
 import { ThemeProvider } from "@/app/[lang]/theme";
-import Navbar from "@/app/ui/navbar";
 import { Toaster } from "../ui/components/toaster";
-import { SidebarProvider, SidebarTrigger } from "../ui/components/sidebar";
+import { SidebarProvider } from "../ui/components/sidebar";
 import { DefaultSidebar } from "../ui/modules/sidebar/DefaultSidebar";
 import getCurrentUser from "../lib/requests/currentUser";
 
@@ -13,7 +12,6 @@ export const metadata: Metadata = {
   title: "swms",
   description: "anvedi oh",
 };
-// <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
 export const viewport: Viewport = {
   initialScale: 1.0,

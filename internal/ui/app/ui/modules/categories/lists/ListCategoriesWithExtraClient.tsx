@@ -25,6 +25,7 @@ interface Props {
   dictDialogEdit: DictDialog;
   dictDialogReplace: DictDialog;
   dictCard: DictLabelList<"items" | "subcategories">;
+  dictNotFound: string;
   fields: {
     name: InputFieldProps;
     description: InputFieldProps;
@@ -41,6 +42,7 @@ export default function ListCategoriesWithExtraClient({
   dictDialogEdit,
   dictDialogReplace,
   dictCard,
+  dictNotFound,
   fields,
 }: Props) {
   const [currentCategoriesWithExtra, setCurrentCategoriesWithExtra] =
@@ -69,6 +71,7 @@ export default function ListCategoriesWithExtraClient({
             fields={fields}
           />
         ))}
+      {!currentCategoriesWithExtra && <>{dictNotFound}</>}
     </>
   );
 }

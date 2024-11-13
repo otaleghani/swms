@@ -26,6 +26,7 @@ interface Props {
   dictDialogEdit: DictDialog;
   dictDialogReplace: DictDialog;
   dictCard: DictLabelList<"aisles" | "items">;
+  dictNotFound: string;
   fields: {
     name: InputFieldProps;
     button: DictFormButton;
@@ -41,6 +42,7 @@ export default function ListZonesWithExtraClient({
   dictDialogEdit,
   dictDialogReplace,
   dictCard,
+  dictNotFound,
   fields,
 }: Props) {
   const [currentZonesWithExtra, setCurrentZonesWithExtra] =
@@ -69,6 +71,7 @@ export default function ListZonesWithExtraClient({
             fields={fields}
           />
         ))}
+      {!currentZonesWithExtra && <>{dictNotFound}</>}
     </>
   );
 }

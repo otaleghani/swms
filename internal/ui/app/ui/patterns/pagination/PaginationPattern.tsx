@@ -20,6 +20,8 @@ interface PaginationPatternProps {
   totalPages: number;
   type: keyof SearchParams;
   forceLayout: "list" | "dynamic"
+  hideLayoutSelector?: boolean;
+  hidePageSizeSelector?: boolean;
 }
 
 function getPage(
@@ -39,7 +41,9 @@ function getPage(
 export default function PaginationPattern({ 
   totalPages,
   type,
-  forceLayout
+  forceLayout,
+  hideLayoutSelector,
+  hidePageSizeSelector,
 }: PaginationPatternProps) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -62,8 +66,12 @@ export default function PaginationPattern({
 
       {forceLayout !== "list" && (
         <>
-          <LayoutSelector type={type} />
-          <PageSizeSelector type={type} />
+          {!hideLayoutSelector && (
+            <LayoutSelector type={type} />
+          )}
+          {!hidePageSizeSelector && (
+            <PageSizeSelector type={type} />
+          )}
         </>
       )}
       <Pagination className="flex items-center">

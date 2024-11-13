@@ -28,7 +28,7 @@ func getCategories(db *database.Database) http.HandlerFunc {
 
     // Filters
     queryFilters := r.URL.Query().Get("filters")
-    filteredRows := rows
+    filteredRows := deleteNilValue(rows)
     if queryFilters != "" {
 		  var filters CategoriesFilters
 		  err = json.Unmarshal([]byte(queryFilters), &filters)
@@ -43,7 +43,7 @@ func getCategories(db *database.Database) http.HandlerFunc {
     // Pagination
     queryPaginationOff := r.URL.Query().Get("paginationOff")
     if queryPaginationOff == "true" {
-		  SuccessResponse{Data: rows}.r200(w, r)
+		  SuccessResponse{Data: filteredRows}.r200(w, r)
       return
     }
     queryPage := r.URL.Query().Get("page")
@@ -54,6 +54,7 @@ func getCategories(db *database.Database) http.HandlerFunc {
 			ErrorResponse{Message: err.Error()}.r500(w, r)
 			return
 		}
+
 		SuccessResponse{
       Data: resultedItems,
       Page: page,
@@ -176,7 +177,7 @@ func getCategoriesWithExtra(db *database.Database) http.HandlerFunc {
 
     // Filter
     queryFilters := r.URL.Query().Get("filters")
-    filteredRows := rows
+    filteredRows := deleteNilValue(rows)
 
     if queryFilters != "" {
 		  var filters CategoriesFilters

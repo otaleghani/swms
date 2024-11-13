@@ -54,6 +54,7 @@ export default async function ListZonesWithExtra({
             dictDialogReplace={dict.zone.dialogs.replace}
             dictDialogEdit={dict.zone.dialogs.edit}
             dictCard={dict.zone.card}
+            dictNotFound={dict.misc.notFound}
             fields={{
               name: { dict: dict.form.fields.name },
               button: dict.form.buttons.submit,
@@ -64,7 +65,6 @@ export default async function ListZonesWithExtra({
               },
             }}
           />
-          {list.data === null && <>{dict.misc.notFound}</>}
         </div>
       </ScrollArea>
       <div className="flex items-center justify-end border-t xl:h-[57px]">
