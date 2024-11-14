@@ -28,7 +28,7 @@ func getSuppliers(db *database.Database) http.HandlerFunc {
 
     // Filter
     queryFilters := r.URL.Query().Get("filters")
-    filteredRows := rows
+    filteredRows := deleteNilValue(rows)
     if queryFilters != "" {
 		  var filters SuppliersFilters
 		  err = json.Unmarshal([]byte(queryFilters), &filters)
@@ -47,7 +47,7 @@ func getSuppliers(db *database.Database) http.HandlerFunc {
     if queryPaginationOff == "true" {
       // if paginationOff is set to "true", returns the data
       // without pagination
-		  SuccessResponse{Data: rows}.r200(w, r)
+		  SuccessResponse{Data: filteredRows}.r200(w, r)
       return
     }
     queryPage := r.URL.Query().Get("page")
@@ -181,7 +181,7 @@ func getSuppliersWithExtra(db *database.Database) http.HandlerFunc {
 
     // Filter
     queryFilters := r.URL.Query().Get("filters")
-    filteredRows := suppliers
+    filteredRows := deleteNilValue(suppliers)
     if queryFilters != "" {
 		  var filters ZonesFilters
 		  err = json.Unmarshal([]byte(queryFilters), &filters)
@@ -196,7 +196,7 @@ func getSuppliersWithExtra(db *database.Database) http.HandlerFunc {
     // Construct suppliers with extra
     var data []struct {
       Supplier database.Supplier `json:"supplier"`
-      Codes_count int `json:"codes_count"`
+      Codes_count int `json:"codesCount"`
     }
     for i := 0; i < len(filteredRows); i++ {
       // select suppliercodes based on the supplier, count them
@@ -207,7 +207,7 @@ func getSuppliersWithExtra(db *database.Database) http.HandlerFunc {
       }
       data = append(data, struct{
         Supplier database.Supplier `json:"supplier"`
-        Codes_count int `json:"codes_count"`
+        Codes_count int `json:"codesCount"`
       }{
         Supplier: filteredRows[i],
         Codes_count: len(codes),
@@ -223,7 +223,7 @@ func getSuppliersWithExtra(db *database.Database) http.HandlerFunc {
     queryPage := r.URL.Query().Get("page")
     queryPerPage := r.URL.Query().Get("perPage")
     resultedItems, page, perPage, totalItems, totalPages, err := 
-      paginateItems(queryPage, queryPerPage, filteredRows)
+      paginateItems(queryPage, queryPerPage, data)
 		if err != nil {
 			ErrorResponse{Message: err.Error()}.r500(w, r)
 			return
@@ -301,9 +301,13 @@ func getSupplierByIdWithExtra(db *database.Database) http.HandlerFunc {
       ErrorResponse{Message: err.Error()}.r500(w, r)
       return
     }
+    if len(suppliers) == 0 {
+      ErrorResponse{Message: "Not found"}.r404(w, r)
+      return
+    }
     var data []struct {
       Supplier database.Supplier `json:"supplier"`
-      Codes_count int `json:"codes_count"`
+      Codes_count int `json:"codesCount"`
     }
     for i := 0; i < len(suppliers); i++ {
       // select suppliercodes based on the supplier, count them
@@ -314,12 +318,12 @@ func getSupplierByIdWithExtra(db *database.Database) http.HandlerFunc {
       }
       data = append(data, struct{
         Supplier database.Supplier `json:"supplier"`
-        Codes_count int `json:"codes_count"`
+        Codes_count int `json:"codesCount"`
       }{
         Supplier: suppliers[i],
         Codes_count: len(codes),
       })
     }
-    SuccessResponse{Data: data}.r200(w, r)
+    SuccessResponse{Data: data[0]}.r200(w, r)
   }
 }

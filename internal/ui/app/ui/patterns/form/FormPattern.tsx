@@ -73,7 +73,7 @@ export default function FormPattern<K extends keyof FormPropsMap>({
           <FormFields.Login 
             fields={self.fields as LoginFormFieldsProps}
             errorMessages={state.errorMessages as {
-              [T in keyof FormFieldsPropsMap["Replace"]]: string[]}}
+              [T in keyof FormFieldsPropsMap["Login"]]: string[]}}
             result={state.result}
           />
         )}

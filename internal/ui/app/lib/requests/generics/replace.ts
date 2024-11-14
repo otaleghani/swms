@@ -16,7 +16,6 @@ import {
   TypeMap,
   TypeMapFilterSingles
 } from "../../types/requests";
-import { retrieve } from "./retrieve";
 import { retrieveById } from "./retrieveById";
 
 type ReplaceMapOptions = {
@@ -57,7 +56,7 @@ const options: ReplaceMapOptions = {
     type: "Shelf" 
   },
   "Supplier": { 
-    path: "shelfs/{{replaced}}/replace-with/{{replacer}}", 
+    path: "suppliers/{{replaced}}/replace-with/{{replacer}}", 
     type: "Supplier" 
   },
 }

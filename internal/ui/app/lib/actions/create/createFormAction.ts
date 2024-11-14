@@ -13,7 +13,6 @@ export async function createFormAction<K extends keyof FormMap>(
   let locale = formData.get("locale");
   let type = formData.get("type");
 
-
   formData.forEach((value, key) => {
     if (key in result) {
       const currentValue = (result as any)[key];

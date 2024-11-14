@@ -3,6 +3,8 @@ import TagsSelectFields from "@/app/ui/modules/tags/TagsSelectField";
 
 /** Types and interfaces */
 import { FormFieldsPropsWithDictCompleteMap } from "@/app/lib/types/form/fields";
+import SelectFieldPattern from "../select/SelectFieldPattern";
+import SelectSupplierField from "@/app/ui/modules/suppliers/select/SelectSupplierField";
 
 export const ReplaceFormFields = ({
   fields,
@@ -138,6 +140,22 @@ export const ReplaceFormFields = ({
                   errorMessages: errorMessages.subcategory,
                   type: "itemThatReplaces"
                 },
+              }}
+            />
+          </div>
+      )}
+
+      { result?.type === "Supplier" && 
+        fields.supplier && (
+          <div>
+            <input type="hidden" name="itemToDelete" value={fields.id} />
+            <SelectSupplierField 
+              fields={{
+                supplier: {
+                  select: fields.supplier,
+                  errorMessages: errorMessages.supplier,
+                  type: "itemThatReplaces"
+                }
               }}
             />
           </div>

@@ -2,7 +2,7 @@ import { DictSupplier } from "@/app/lib/types/dictionary/data/supplier";
 
 export const dictionarySuppliers: DictSupplier = {
   header: {
-    title: "Subcategories",
+    title: "Suppliers",
     breadcrumbs: {
       home: "Home",
       supplier: "Suppliers",
@@ -10,10 +10,10 @@ export const dictionarySuppliers: DictSupplier = {
   },
   dialogs: {
     add: {
-      title: "Edit supplier",
-      description: "Edit this supplier with new data",
+      title: "Add supplier",
+      description: "Use this form to add a new supplier",
       trigger: {
-        label: "Edit supplier",
+        label: "Add new supplier",
       },
       clear: "Clear",
     },

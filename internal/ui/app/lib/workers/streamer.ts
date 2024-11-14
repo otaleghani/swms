@@ -74,7 +74,7 @@ interface WorkerResponse {
   request: "create" | "replace" | "delete" | "error" | "refresh"
 }
 
-type AcceptedTypes = "Zone" | "ZoneWithExtra" | "Aisle" | "AisleWithExtra"|  "Rack" | "RackWithExtra" | "Shelf" | "ShelfWithExtra" | "Category" | "CategoryWithExtra" | "Subcategory" | "SubcategoryWithExtra" | "Supplier" | "SupplierCode" | "Item" | "ItemImage" | "Transaction" | "Variant" | "Ticket" | "TicketType" | "TicketState" | "Product" | "ProductImage" | "Client" | "User";
+type AcceptedTypes = "Zone" | "ZoneWithExtra" | "Aisle" | "AisleWithExtra"|  "Rack" | "RackWithExtra" | "Shelf" | "ShelfWithExtra" | "Category" | "CategoryWithExtra" | "Subcategory" | "SubcategoryWithExtra" | "Supplier" | "SupplierWithExtra" | "SupplierCode" | "Item" | "ItemImage" | "Transaction" | "Variant" | "Ticket" | "TicketType" | "TicketState" | "Product" | "ProductImage" | "Client" | "User";
 
 type ClientRetrieveMapOptions = {
   [K in AcceptedTypes]: string;
@@ -95,6 +95,7 @@ const optionsElement: ClientRetrieveMapOptions = {
   "CategoryWithExtra": "categories/{{id}}/extra",
   "SubcategoryWithExtra": "subcategories/{{id}}/extra",
   "Supplier": "suppliers/{{id}}",
+  "SupplierWithExtra": "suppliers/{{id}}/extra",
   "SupplierCode": "supplier-codes/{{id}}",
   "Item": "items/{{id}}",
   "ItemImage": "item-images/{{id}}",
@@ -169,6 +170,7 @@ const optionsList: ClientRetrieveMapOptions = {
   "Subcategory": "subcategories/",
   "SubcategoryWithExtra": "subcategories/extra",
   "Supplier": "suppliers/",
+  "SupplierWithExtra": "suppliers/extra",
   "SupplierCode": "supplier-codes/",
   "Item": "items/",
   "ItemImage": "item-images/",

@@ -242,7 +242,7 @@ func Serve(path, port string) {
 	log.Fatal(srv.ListenAndServe())
 }
 
-func handleTest(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
-	w.Write([]byte("sandro"))
-}
+//func handleTest(w http.ResponseWriter, r *http.Request) {
+//	w.Header().Set("Content-Type", "application/json")
+//	w.Write([]byte("sandro"))
+//}

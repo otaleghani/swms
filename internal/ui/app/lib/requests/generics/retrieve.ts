@@ -32,7 +32,7 @@ const options: RetrieveMapOptions = {
   "Subcategories":          { path: "subcategories/",       type: "Subcategories" },
   "SubcategoriesWithExtra":          { path: "subcategories/extra",       type: "Subcategories" },
   "Suppliers":              { path: "suppliers/",           type: "Suppliers" },
-  "SuppliersWithExtra":     { path: "suppliers/extra/",     type: "Suppliers" },
+  "SuppliersWithExtra":     { path: "suppliers/extra",     type: "Suppliers" },
   "SupplierCodes":          { path: "supplier-codes/",      type: "SupplierCodes" },
   "SupplierCodesWithExtra": { path: "supplier-codes/extra", type: "SupplierCodes" },
   "ItemWithSupplierCodes":  { path: "items/supplier-codes", type: "SupplierCodes" },

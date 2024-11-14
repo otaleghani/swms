@@ -505,6 +505,7 @@ export type ReplaceFormFieldsProps = {
     K extends "shelf" ? FieldsPropsMap[K] | null :
     K extends "category" ? FieldsPropsMap[K] | null :
     K extends "subcategory" ? FieldsPropsMap[K] | null :
+    K extends "supplier" ? FieldsPropsMap[K] | null :
     K extends "id" ? FieldsPropsMap[K] :
     K extends "button" ? FieldsPropsMap[K] :
     null;

@@ -9,7 +9,7 @@ export type Suppliers = Supplier[];
 
 export type SupplierWithExtra = {
   supplier: Supplier;
-  codesCount: number;
+  codesCount: number
 }
 export type SuppliersWithExtra = SupplierWithExtra[];
 
@@ -20,6 +20,11 @@ export const defaultSupplierFormState: SupplierFormState = {
   errorMessages: {
     name: [],
     description: [],
+  },
+  result: {
+    id: "",
+    name: "",
+    description: "",
   }
 }
 
