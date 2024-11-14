@@ -19,12 +19,6 @@ export default async function ZonesPage({
 }: DefaultPageProps) {
   const currentSearchParams = decodeSearchParams(searchParams.q);
 
-  const zonesWithExtra = await retrieve({
-    request: "ZonesWithExtra",
-    page: currentSearchParams.zones?.pagination?.page,
-    perPage: currentSearchParams.zones?.pagination?.perPage,
-    filters: JSON.stringify(currentSearchParams.zones?.filters),
-  });
 
   const replace = replaceFormAction;
   const update = updateFormAction;
@@ -34,7 +28,6 @@ export default async function ZonesPage({
     <>
       <HeaderZoneCollection locale={params.lang as Locale} />
       <ListZonesWithExtra
-        list={zonesWithExtra}
         locale={params.lang as Locale}
         searchParams={currentSearchParams.zones}
       />

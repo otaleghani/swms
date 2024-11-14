@@ -71,7 +71,7 @@ export default function ListCategoriesWithExtraClient({
             fields={fields}
           />
         ))}
-      {!currentCategoriesWithExtra && <>{dictNotFound}</>}
+      {!currentCategoriesWithExtra && <><div className="p-4">{dictNotFound}</div></>}
     </>
   );
 }

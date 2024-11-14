@@ -13,10 +13,6 @@ export default async function CategoriesPage({
   searchParams,
 }: DefaultPageProps) {
   const currentSearchParams = decodeSearchParams(searchParams.q);
-  const categoriesWithExtra = await retrieve({
-    request: "CategoriesWithExtra",
-    paginationOff: "true"
-  });
 
   const replace = replaceFormAction;
   const update = updateFormAction;
@@ -31,7 +27,6 @@ export default async function CategoriesPage({
       <ListCategoriesWithExtra 
         searchParams={currentSearchParams.categories}
         locale={params.lang as Locale}
-        list={categoriesWithExtra}
       />
     </>
   )

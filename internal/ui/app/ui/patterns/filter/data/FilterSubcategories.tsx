@@ -15,9 +15,6 @@ import SheetWrapper from "@/app/ui/wrappers/sheets/SheetWrapper";
 import { FilterSheetTrigger, FilterSheetHeader } from "../FilterSheetTrigger";
 import ForeignKeyFilter from "../ForeignKeyFilter";
 
-// Next components
-import Link from "next/link";
-
 // Filters
 import { useFilterParams } from "../hooks/useFilter";
 import { useFilterSearch } from "../hooks/useFilterSearch";
@@ -34,9 +31,13 @@ interface Props {
     };
   };
   dict: DictFilters;
+  hide: {
+    category?: boolean;
+    search?: boolean;
+  }
 };
 
-const SheetPatternBody = ({fields, dict}: Props) => {
+const SheetPatternBody = ({fields, dict, hide}: Props) => {
   const { params, setParams, link } = useFilterParams();
 
   const { category, setCategory } = useFilterCategories(
@@ -47,31 +48,35 @@ const SheetPatternBody = ({fields, dict}: Props) => {
   );
 
   const { searchTerm, setSearchTerm, handleInput } = 
-    useFilterSearch(params, "aisles", setParams);
+    useFilterSearch(params, "subcategories", setParams);
 
   return (
     <>
       <FilterSheetHeader dict={dict} />
       <div className="mb-4 grid gap-2">
-        <div>
-          <Label>{fields.categories.dict.select.label}</Label>
-          <ForeignKeyFilter<"Zone"> 
-            name="Zone"
-            list={fields.categories.list}
-            dict={fields.categories.dict}
-            element={category}
-            setElement={setCategory}
-          />
-        </div> 
-        <div>
-          <Label>{fields.search.dict.label}</Label>
-          <Input 
-            type="text"
-            placeholder="Your search.."
-            onChange={handleInput}
-            value={searchTerm}
-          />
-        </div>
+        {!hide.category && (
+          <div>
+            <Label>{fields.categories.dict.select.label}</Label>
+            <ForeignKeyFilter<"Zone"> 
+              name="Zone"
+              list={fields.categories.list}
+              dict={fields.categories.dict}
+              element={category}
+              setElement={setCategory}
+            />
+          </div> 
+        )}
+        {!hide.category && (
+          <div>
+            <Label>{fields.search.dict.label}</Label>
+            <Input 
+              type="text"
+              placeholder="Your search.."
+              onChange={handleInput}
+              value={searchTerm}
+            />
+          </div>
+        )}
       </div>
 
       <div className="flex gap-2">
@@ -92,6 +97,7 @@ const SheetPatternBody = ({fields, dict}: Props) => {
 export default function FilterSubcategories({
   fields,
   dict,
+  hide,
 }: Props) {
   const { params, setParams, link } = useFilterParams();
 
@@ -99,7 +105,7 @@ export default function FilterSubcategories({
     return (<FilterSheetTrigger dict={dict} params={params.subcategories} />)
   }
   const SheetBody = () => {
-    return (<SheetPatternBody fields={fields} dict={dict}/>)
+    return (<SheetPatternBody fields={fields} dict={dict} hide={hide}/>)
   }
   return (
     <>

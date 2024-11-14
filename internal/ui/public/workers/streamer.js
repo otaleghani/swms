@@ -199,7 +199,7 @@ const optionsListByForeign = {
     //"Shelfs_Aisle":           { path: "aisles/{{id}}/racks", type: "Racks"  },
     //"Shelfs_Zone":            { path: "aisles/{{id}}/racks", type: "Racks"  },
     "SupplierCodes_Supplier": { path: "aisles/{{id}}/racks", type: "Racks" },
-    "SubcategoryWithExtra_Category": { path: "categories/{{id}}/subcategories/extra", type: "Subcategories" },
+    "SubcategoriesWithExtra_Category": { path: "categories/{{id}}/subcategories/extra", type: "Subcategories" },
 };
 const clientListByForeignRetrive = async ({ page, perPage, filters, paginationOff, type, foreignId, jwt, request, }) => {
     const apiPath = BACKEND_ENDPOINT + "/api/v1/";

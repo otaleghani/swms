@@ -21,6 +21,7 @@ import { InputFieldProps, SelectFieldProps, } from "@/app/lib/types/form/fields"
 import { DictDialog, DictLabelList } from "@/app/lib/types/dictionary/misc";
 import { DictFormButton } from "@/app/lib/types/dictionary/form";
 import { Eye } from "lucide-react";
+import { handleStringNilValue } from "@/app/lib/utils";
 
 interface CategoryWithExtraCardProps {
   item: CategoryWithExtra;
@@ -99,7 +100,9 @@ export default function CardCategoryWithExtra({
             {categoryWithExtra.category.name}
           </span>
         </CardTitle>
-        <CardDescription>{categoryWithExtra.category.description}</CardDescription>
+        <CardDescription>
+          {handleStringNilValue(categoryWithExtra.category.description)}
+        </CardDescription>
       </div>
     );
   };

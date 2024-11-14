@@ -18,33 +18,49 @@ import { DictFormButton } from "@/app/lib/types/dictionary/form";
 import { InputFieldProps, SelectFieldProps } from "@/app/lib/types/form/fields";
 import { SubcategoryFiltersParams } from "@/app/lib/types/query/data";
 import { PaginationParams } from "@/app/lib/types/pageParams";
+import { Category } from "@/app/lib/types/data/categories";
+import { syncPaginatedSubcategoriesByCategoryWithExtra } from "@/app/lib/synchronizers/extra/subcategories/listByCategory";
 
-interface Props {
-  filters?: SubcategoryFiltersParams;
-  pagination?: PaginationParams;
-  subcategoriesWithExtra: SubcategoryWithExtra[];
-  dictDialogEdit: DictDialog;
-  dictDialogReplace: DictDialog;
-  dictCard: DictLabelList<"items">;
-  fields: {
-    name: InputFieldProps;
-    description: InputFieldProps;
-    button: DictFormButton;
-    category: SelectFieldProps<"Category">;
-    subcategory: SelectFieldProps<"Subcategory">;
-  };
-}
+type Props = 
+  | {
+    type: "complete";
+    filters?: SubcategoryFiltersParams;
+    pagination?: PaginationParams;
+    subcategoriesWithExtra: SubcategoryWithExtra[];
+    dictDialogEdit: DictDialog;
+    dictDialogReplace: DictDialog;
+    dictCard: DictLabelList<"items">;
+    dictNotFound: string;
+    fields: {
+      name: InputFieldProps;
+      description: InputFieldProps;
+      button: DictFormButton;
+      category: SelectFieldProps<"Category">;
+      subcategory: SelectFieldProps<"Subcategory">;
+    };
+  } | {
+    type: "category";
+    category: Category;
+    filters?: SubcategoryFiltersParams;
+    pagination?: PaginationParams;
+    subcategoriesWithExtra: SubcategoryWithExtra[];
+    dictDialogEdit: DictDialog;
+    dictDialogReplace: DictDialog;
+    dictCard: DictLabelList<"items">;
+    dictNotFound: string;
+    fields: {
+      name: InputFieldProps;
+      description: InputFieldProps;
+      button: DictFormButton;
+      category: SelectFieldProps<"Category">;
+      subcategory: SelectFieldProps<"Subcategory">;
+    };
+  }
 
 // Client function to handle changes on list client side
-export default function ListSubcategoriesWithExtraClient({
-  pagination,
-  filters,
-  subcategoriesWithExtra,
-  dictDialogEdit,
-  dictDialogReplace,
-  dictCard,
-  fields,
-}: Props) {
+export default function ListSubcategoriesWithExtraClient(props: Props) {
+  const { type, pagination, filters, subcategoriesWithExtra, dictDialogEdit, dictDialogReplace, dictCard, dictNotFound, fields } = props;
+
   const [categories, setCategories] = useState(fields.category.list);
   const [subcategories, setSubcategories] = useState(fields.subcategory.list);
   const [currentSubcategoriesWithExtra, setCurrentSubcategoriesWithExtra] =
@@ -64,13 +80,27 @@ export default function ListSubcategoriesWithExtraClient({
       type: "Subcategory"
     });
 
-    syncPaginatedSubcategoriesWithExtra({
-      filters: filters,
-      pagination: pagination,
-      streamer: streamer as Worker,
-      list: currentSubcategoriesWithExtra,
-      setList: setCurrentSubcategoriesWithExtra,
-    });
+    if (type === "complete") {
+      syncPaginatedSubcategoriesWithExtra({
+        filters: filters,
+        pagination: pagination,
+        streamer: streamer as Worker,
+        list: currentSubcategoriesWithExtra,
+        setList: setCurrentSubcategoriesWithExtra,
+      });
+    }
+
+    if (type === "category") {
+      const { category } = props;
+      syncPaginatedSubcategoriesByCategoryWithExtra({
+        category: category.id as string,
+        filters: filters,
+        pagination: pagination,
+        streamer: streamer as Worker,
+        list: currentSubcategoriesWithExtra,
+        setList: setCurrentSubcategoriesWithExtra,
+      });
+    }
   }, []);
 
   return (
@@ -96,6 +126,7 @@ export default function ListSubcategoriesWithExtraClient({
             }}
           />
         ))}
+      {!currentSubcategoriesWithExtra&& <><div className="p-4">{dictNotFound}</div></>}
     </>
   );
 }

@@ -76,7 +76,7 @@ const options: MapOptions = {
   //"Shelfs_Aisle":           { path: "aisles/{{id}}/racks", type: "Racks"  },
   //"Shelfs_Zone":            { path: "aisles/{{id}}/racks", type: "Racks"  },
   
-  "SubcategoryWithExtra_Category": { path: "category/{{id}}/subcategories/extra", type: "Subcategories"},
+  "SubcategoryWithExtra_Category": { path: "categories/{{id}}/subcategories/extra", type: "Subcategories"},
 
   //"SupplierCodes_Supplier": { path: "aisles/{{id}}/racks", type: "Racks"  },
   "ItemWithSupplierCodes_Supplier": { 

@@ -41,7 +41,7 @@ func getAisles(db *database.Database) http.HandlerFunc {
 		  }
       if filters.Zone != "" {
         filteredRows, err = FilterByField(
-          filteredRows, "Zone", filters.Zone)
+          filteredRows, "Zone_id", filters.Zone)
       }
       if filters.Search != "" {
         filteredRows, err = FilterBySearch(

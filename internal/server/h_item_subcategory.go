@@ -36,7 +36,7 @@ func getSubcategories(db *database.Database) http.HandlerFunc {
 		  if err == nil {
         if filters.Category != "" {
           filteredRows, err = FilterBySearch(
-            filteredRows, "Category", filters.Category)
+            filteredRows, "Category_id", filters.Category)
         }
         if filters.Search != "" {
           filteredRows, err = FilterBySearch(
@@ -90,7 +90,7 @@ func getSubcategoriesWithExtra(db *database.Database) http.HandlerFunc {
 		  if err == nil {
         if filters.Category != "" {
           filteredRows, err = FilterBySearch(
-            filteredRows, "Category", filters.Category)
+            filteredRows, "Category_id", filters.Category)
         }
         if filters.Search != "" {
           filteredRows, err = FilterBySearch(
@@ -171,7 +171,7 @@ func getSubcategoriesWithExtraByCategory(db *database.Database) http.HandlerFunc
 		  if err == nil {
         if filters.Category != "" {
           filteredRows, err = FilterBySearch(
-            filteredRows, "Category", filters.Category)
+            filteredRows, "Category_id", filters.Category)
         }
         if filters.Search != "" {
           filteredRows, err = FilterBySearch(
@@ -303,16 +303,18 @@ func getSubcategoriesByCategory(db *database.Database) http.HandlerFunc {
     if queryFilters != "" {
 		  var filters SubcategoriesFilter
 		  err = json.Unmarshal([]byte(queryFilters), &filters)
-		  if err == nil {
-        if filters.Category != "" {
-          filteredRows, err = FilterBySearch(
-            filteredRows, "Category", filters.Category)
-        }
-        if filters.Search != "" {
-          filteredRows, err = FilterBySearch(
-            filteredRows, "Name", filters.Search)
-        }
-		  }
+		  if err != nil {
+		  	ErrorResponse{Message: err.Error()}.r400(w, r)
+		  	return
+      }
+      if filters.Category != "" {
+        filteredRows, err = FilterBySearch(
+          filteredRows, "Category_id", filters.Category)
+      }
+      if filters.Search != "" {
+        filteredRows, err = FilterBySearch(
+          filteredRows, "Name", filters.Search)
+      }
     }
     // Pagination
     queryPaginationOff := r.URL.Query().Get("paginationOff")

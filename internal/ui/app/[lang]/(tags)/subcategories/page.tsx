@@ -18,10 +18,6 @@ export default async function CategoriesPage({
   searchParams,
 }: DefaultPageProps) {
   const currentSearchParams = decodeSearchParams(searchParams.q);
-  const subcategoriesWithExtra = await retrieve({
-    request: "SubcategoriesWithExtra",
-    paginationOff: "true"
-  });
 
   const replace = replaceFormAction;
   const update = updateFormAction;
@@ -34,9 +30,11 @@ export default async function CategoriesPage({
       />
 
       <ListSubcategoriesWithExtra 
-        searchParams={currentSearchParams.categories}
+        searchParams={currentSearchParams.subcategories}
         locale={params.lang as Locale}
-        list={subcategoriesWithExtra}
+        hideFilters={{}}
+        forceLayout="list"
+        type="complete"
       />
     </>
   )

@@ -20,18 +20,22 @@ import { Response } from "@/app/lib/types/misc";
 interface Props {
   searchParams?: SearchParams["categories"];
   locale: Locale;
-  list: Response<CategoriesWithExtra>;
 }
 
 export default async function ListCategoriesWithExtra({
   searchParams,
   locale,
-  list,
 }: Props) {
   const dict = await getDictionary(locale);
   const categories = await retrieve({
     request: "Categories",
-    paginationOff: "true",
+    paginationOff: "true"
+  });
+  const categoriesWithExtra = await retrieve({
+    request: "CategoriesWithExtra",
+    page: searchParams?.pagination?.page,
+    perPage: searchParams?.pagination?.perPage,
+    filters: JSON.stringify(searchParams?.filters),
   });
 
   return (
@@ -50,7 +54,7 @@ export default async function ListCategoriesWithExtra({
           <ListCategoriesWithExtraClient
             filters={searchParams?.filters}
             pagination={searchParams?.pagination}
-            categoriesWithExtra={list.data as CategoriesWithExtra}
+            categoriesWithExtra={categoriesWithExtra.data as CategoriesWithExtra}
             dictDialogReplace={dict.category.dialogs.replace}
             dictDialogEdit={dict.category.dialogs.edit}
             dictCard={dict.category.card}
@@ -79,7 +83,7 @@ export default async function ListCategoriesWithExtra({
         />
         <PaginationPattern
           forceLayout="dynamic"
-          totalPages={list.totalPages as number}
+          totalPages={categoriesWithExtra.totalPages as number}
           type="categories"
           hideLayoutSelector
         />

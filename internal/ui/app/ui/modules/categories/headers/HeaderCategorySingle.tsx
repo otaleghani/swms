@@ -62,6 +62,7 @@ export default async function HeaderCategorySingle({
             },
             button: dict.form.buttons.add
           }}
+          relatedCategory={category.id}
         />
       </div>
     );

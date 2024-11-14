@@ -11,9 +11,6 @@ import { Input } from "@/app/ui/components/input";
 import { Label } from "@/app/ui/components/label";
 import { FilterSheetTrigger, FilterSheetHeader } from "../FilterSheetTrigger";
 
-// Next components
-import Link from "next/link";
-
 // Filters
 import { useFilterParams } from "../hooks/useFilter";
 import { useFilterSearch } from "../hooks/useFilterSearch";

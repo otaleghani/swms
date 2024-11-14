@@ -20,18 +20,23 @@ import { Response } from "@/app/lib/types/misc";
 interface Props {
   searchParams?: SearchParams["zones"];
   locale: Locale;
-  list: Response<ZonesWithExtra>;
 }
 
 export default async function ListZonesWithExtra({
   searchParams,
   locale,
-  list,
 }: Props) {
   const dict = await getDictionary(locale);
   const zones = await retrieve({
     request: "Zones",
     paginationOff: "true",
+  });
+
+  const list = await retrieve({
+    request: "ZonesWithExtra",
+    page: searchParams?.pagination?.page,
+    perPage: searchParams?.pagination?.perPage,
+    filters: JSON.stringify(searchParams?.filters),
   });
 
   return (

@@ -46,7 +46,7 @@ export function syncCategoryWithExtra({
   const handleRelevantForeignKeyChange = (data: ServerSentEventData) => {
     if (data.type !== "Subcategory" && data.type !== "Item") return;
     if (data.after.category !== element.category.id && data.before.category !== element.category.id) return;
-    if (data.before.category === data.after.category) return;
+    //if (data.before.category === data.after.category) return;
     streamer.postMessage({type: "CategoryWithExtra", id: element.category.id, request: "update"});
   }
 

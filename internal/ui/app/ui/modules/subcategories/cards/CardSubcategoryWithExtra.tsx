@@ -23,6 +23,7 @@ import { DictFormButton } from "@/app/lib/types/dictionary/form";
 import { Eye } from "lucide-react";
 import LabelCategory from "../../labels/LabelCategory";
 import { Category } from "@/app/lib/types/data/categories";
+import { handleStringNilValue } from "@/app/lib/utils";
 
 interface SubcagegoryWithExtraCardProps {
   item: SubcategoryWithExtra;
@@ -36,6 +37,7 @@ interface SubcagegoryWithExtraCardProps {
     category: SelectFieldProps<"Category">;
     subcategory: SelectFieldProps<"Subcategory">;
   };
+  type?: "default" | "alternative"
 }
 
 export default function CardSubcategoryWithExtra({
@@ -44,6 +46,7 @@ export default function CardSubcategoryWithExtra({
   dictDialogEdit,
   dictDialogReplace,
   fields,
+  type = "default",
 }: SubcagegoryWithExtraCardProps) {
   const [category, setCategory] = useState(
     fields.category.list.find(
@@ -104,15 +107,17 @@ export default function CardSubcategoryWithExtra({
           <div className="text-gray-500 text-sm xl:text-right">{dictCard.labels.items}</div>
           <div className="font-semibold text-xl xl:text-right">{subcategoryWithExtra.itemsCount}</div>
         </div>
-        <div className="py-2">
-          <div className="text-gray-500 text-sm xl:text-right">Category</div>
-          <div className="font-semibold text-xl xl:text-right">
-            <LabelCategory 
-              category={category}
-              setCategory={setCategory}
-            />
+        {type !== "default" && (
+          <div className="py-2">
+            <div className="text-gray-500 text-sm xl:text-right">Category</div>
+            <div className="font-semibold text-xl xl:text-right">
+              <LabelCategory 
+                category={category}
+                setCategory={setCategory}
+              />
+            </div>
           </div>
-        </div>
+        )}
       </div>
     );
  };
@@ -125,7 +130,9 @@ export default function CardSubcategoryWithExtra({
             {subcategoryWithExtra.subcategory.name}
           </span>
         </CardTitle>
-        <CardDescription>{subcategoryWithExtra.subcategory.category}</CardDescription>
+        <CardDescription>
+          {handleStringNilValue(subcategoryWithExtra.subcategory.description)}
+        </CardDescription>
       </div>
     );
   };

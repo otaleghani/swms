@@ -136,7 +136,6 @@ export default async function ListAislesWithExtra(props: Props) {
               }}
             />
           )}
-          {list.data === null && <>{dict.misc.notFound}</>}
         </div>
       </ScrollArea>
       <div className="flex items-center justify-end border-t xl:h-[57px]">
