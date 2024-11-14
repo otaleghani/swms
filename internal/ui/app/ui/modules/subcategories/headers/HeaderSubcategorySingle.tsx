@@ -36,7 +36,7 @@ export default async function HeaderSubcategorySingle({
   const HeaderWrapperLeft = () => {
     return (
       <BreadcrumbsPattern 
-        itemsList={[ {url: "/subcategories", label: dict.category.header.title} ]}
+        itemsList={[ {url: "/subcategories", label: dict.subcategory.header.title} ]}
         currentItem={subcategory.name}
       />
   )}

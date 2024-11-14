@@ -29,7 +29,7 @@ type Props =
     subcategoriesWithExtra: SubcategoryWithExtra[];
     dictDialogEdit: DictDialog;
     dictDialogReplace: DictDialog;
-    dictCard: DictLabelList<"items">;
+    dictCard: DictLabelList<"items" | "category">;
     dictNotFound: string;
     fields: {
       name: InputFieldProps;
@@ -46,7 +46,7 @@ type Props =
     subcategoriesWithExtra: SubcategoryWithExtra[];
     dictDialogEdit: DictDialog;
     dictDialogReplace: DictDialog;
-    dictCard: DictLabelList<"items">;
+    dictCard: DictLabelList<"items" | "category">;
     dictNotFound: string;
     fields: {
       name: InputFieldProps;
@@ -108,6 +108,7 @@ export default function ListSubcategoriesWithExtraClient(props: Props) {
       {currentSubcategoriesWithExtra &&
         currentSubcategoriesWithExtra.map((item: SubcategoryWithExtra) => (
           <CardSubcategoryWithExtra
+            type={type === "category" ? "alternative" : "default"}
             key={item.subcategory.id}
             item={item}
             dictDialogEdit={dictDialogEdit}

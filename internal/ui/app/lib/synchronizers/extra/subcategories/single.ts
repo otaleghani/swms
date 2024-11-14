@@ -41,27 +41,29 @@ export function syncSubcategoryWithExtra({
   const handleRelatedSubcategoryChange = (data: ServerSentEventData) => {
     if (data.type !== "Subcategory" || data.id !== element.subcategory.id) return;
     if (data.action === "replace" || data.action === "remove") return;
-    streamer.postMessage({type: "SubcategoryWithExtra", id: element.subcategory.id, request: "update"});
+    setSyncState("update");
+    element = {...element, subcategory: data.after};
+    setElement(element);
+    delaySyncStateToNone(setSyncState);
   }
 
   const handleRelevantForeignKeyChange = (data: ServerSentEventData) => {
-    if (data.type !== "Item" && data.type !== "category") return;
+    if (data.type !== "Item") return;
     if (data.after.subcategory !== element.subcategory.id && data.before.subcategory !== element.subcategory.id) return;
-    if (data.before.subcategory === data.after.subcategory) return;
+    //if (data.before.subcategory === data.after.subcategory) return;
     streamer.postMessage({type: "SubcategoryWithExtra", id: element.subcategory.id, request: "update"});
   }
 
   const handleForeignKeyChange = (data: ServerSentEventData) => {
+    if (data.type !== "Category") return;
     if (data.before.id === data.after.id) return;
-
-    if (data.type === "Category" && 
-        data.after.id === element.subcategory.category) {
-      setSyncState("update");
-      element = {...element, subcategory: {
-        ...element.subcategory, category: data.after.id
-      }}
-      delaySyncStateToNone(setSyncState);
-    }
+    if (data.before.id !== element.subcategory.id) return;
+    setSyncState("update");
+    element = {...element, subcategory: {
+      ...element.subcategory, category: data.after.id
+    }}
+    setElement(element)
+    delaySyncStateToNone(setSyncState);
   }
 
   const handler = (message: MessageEvent<WorkerMessage>) => {

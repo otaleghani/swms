@@ -27,7 +27,7 @@ import { handleStringNilValue } from "@/app/lib/utils";
 
 interface SubcagegoryWithExtraCardProps {
   item: SubcategoryWithExtra;
-  dictCard: DictLabelList<"items">;
+  dictCard: DictLabelList<"items" | "category">;
   dictDialogEdit: DictDialog;
   dictDialogReplace: DictDialog;
   fields: {
@@ -73,7 +73,7 @@ export default function CardSubcategoryWithExtra({
   useEffect(() => {
     setCategory(
       fields.category.list.find(
-        (category) => category.id === item.subcategory.category
+        (category) => category.id === subcategoryWithExtra.subcategory.category
       ) as Category
     )
   }, [subcategoryWithExtra]);
@@ -107,9 +107,9 @@ export default function CardSubcategoryWithExtra({
           <div className="text-gray-500 text-sm xl:text-right">{dictCard.labels.items}</div>
           <div className="font-semibold text-xl xl:text-right">{subcategoryWithExtra.itemsCount}</div>
         </div>
-        {type !== "default" && (
+        {type === "default" && (
           <div className="py-2">
-            <div className="text-gray-500 text-sm xl:text-right">Category</div>
+            <div className="text-gray-500 text-sm xl:text-right">{dictCard.labels.category}</div>
             <div className="font-semibold text-xl xl:text-right">
               <LabelCategory 
                 category={category}

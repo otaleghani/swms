@@ -10,7 +10,7 @@ export const dictionarySubcategories: DictSubcategory = {
     }
   },
   card: {
-    labels: {items: "Items"},
+    labels: {items: "Items", category: "Category"},
   },
   dialogs: {
     add: {

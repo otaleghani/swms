@@ -6,6 +6,6 @@ import {
 
 export interface DictSubcategory {
   header: DictPageHeader<"home" | "category" | "subcategory">
-  card: DictLabelList<"items">;
+  card: DictLabelList<"items" | "category">;
   dialogs: DictDefaultDialogs;
 }

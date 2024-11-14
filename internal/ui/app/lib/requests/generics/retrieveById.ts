@@ -32,7 +32,7 @@ const options: RetrieveByIdMapOptions = {
   "Category":       { path: "categories/{{id}}",    type: "Category" },
   "CategoryWithExtra":       { path: "categories/{{id}}/extra",    type: "Category" },
   "Subcategory":    { path: "subcategories/{{id}}", type: "Subcategory" },
-  "SubcategoryWithExtra":    { path: "subcategory/{{id}}/extra", type: "Subcategory" },
+  "SubcategoryWithExtra":    { path: "subcategories/{{id}}/extra", type: "Subcategory" },
   "Supplier": { 
     path: "suppliers/{{id}}",       
     type: "SupplierWithExtra" 
