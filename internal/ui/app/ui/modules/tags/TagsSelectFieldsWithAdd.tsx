@@ -90,6 +90,7 @@ export default function TagsSelectFieldsWithAdd({
                   refreshItemList: refreshCategoryList,
                 }
               }}
+              showButton
             />
           </div>
         )}
@@ -112,6 +113,7 @@ export default function TagsSelectFieldsWithAdd({
                   refreshItemList: refreshSubcategoryList,
                 }
               }}
+              showButton
             />
           </div>
         )}

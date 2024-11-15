@@ -73,6 +73,7 @@ export default async function FormAddItem({
                 },
                 type: "Zone",
               },
+              showButton: true,
             }
           },
 
@@ -107,6 +108,7 @@ export default async function FormAddItem({
                 },
                 type: "Aisle",
               },
+              showButton: true,
             }
           },
 
@@ -146,6 +148,7 @@ export default async function FormAddItem({
                 },
                 type: "Rack",
               },
+              showButton: true,
             }
           },
 
@@ -190,6 +193,7 @@ export default async function FormAddItem({
                 },
                 type: "Shelf",
               },
+              showButton: true,
             }
           },
 
@@ -220,6 +224,7 @@ export default async function FormAddItem({
                 },
                 type: "Category",
               },
+              showButton: true,
             }
           },
 
@@ -255,6 +260,7 @@ export default async function FormAddItem({
                 },
                 type: "Subcategory",
               },
+              showButton: true,
             }
           },
 

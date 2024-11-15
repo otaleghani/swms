@@ -139,37 +139,24 @@ export default function PositionSelectFieldWithAdd({
       <div>
         {fields.zone && listZone && (
           <div className="flex gap-4 items-end">
-            <SelectFieldWithAddPattern<"Zone"> 
-              addDialog={{
-                ...fields.zone.formDialog,
-              }}
-              selectField={{
-                ...fields.zone.select,
-              }}
+            <SelectFieldPattern<"Zone"> 
+              name="Zone"
               element={selectedZone}
               setElement={setSelectedZone}
+              list={listZone}
               errorMessages={fields.zone.errorMessages}
+              dict={fields.zone.select.dict}
             />
-            {
-            // <SelectFieldPattern<"Zone"> 
-            //   name="Zone"
-            //   element={selectedZone}
-            //   setElement={setSelectedZone}
-            //   list={listZone}
-            //   errorMessages={fields.zone.errorMessages}
-            //   dict={fields.zone.select.dict}
-            // />
-            // <DialogFormPattern<"Zone"> 
-            //   self={fields.zone.formDialog.self}
-            //   formPattern={{
-            //     ...fields.zone.formDialog.formPattern,
-            //     form: {
-            //       ...fields.zone.formDialog.formPattern.form,
-            //       refreshItemList: refreshZoneList,
-            //     }
-            //   }}
-            // />
-            }
+            <DialogFormPattern<"Zone"> 
+              self={fields.zone.formDialog.self}
+              formPattern={{
+                ...fields.zone.formDialog.formPattern,
+                form: {
+                  ...fields.zone.formDialog.formPattern.form,
+                  refreshItemList: refreshZoneList,
+                }
+              }}
+            />
           </div>
         )}
         {fields.aisle && filteredAisles && (selectedZone != emptyZone) && (
@@ -213,6 +200,7 @@ export default function PositionSelectFieldWithAdd({
                   refreshItemList: refreshRackList,
                 }
               }}
+              showButton
             />
           </div>
         )}
@@ -235,6 +223,7 @@ export default function PositionSelectFieldWithAdd({
                   refreshItemList: refreshShelfList,
                 }
               }}
+              showButton
             />
           </div>
         )}
