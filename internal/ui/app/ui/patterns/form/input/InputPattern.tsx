@@ -13,6 +13,7 @@ import { DictCheckboxField, DictInputField } from "@/app/lib/types/dictionary/fo
 import { InputPatternNumberWithButtons } from "./InputPatternTransaction";
 import { Checkbox } from "@/app/ui/components/checkbox";
 import { isInputFieldDict } from "./misc";
+import { defaultSubcategoryFormState } from "@/app/lib/types/data/subcategories";
 
 interface InputPatternProps {
   field: 
@@ -101,12 +102,13 @@ export default function InputPattern({
         );
       case "width":
       case "length":
+      case "height":
       case "weight":
       case "length":
         return (
           <Input
             type="number"
-            defaultValue={defaultValue}
+            defaultValue={defaultValue === "0" ? "" : defaultValue}
             name={field}
             id={`${field}-${inputId}`}
             placeholder={isInputFieldDict(dict) ? dict.placeholder : ""}
@@ -117,7 +119,7 @@ export default function InputPattern({
         return (
           <Input
             type="number"
-            defaultValue={defaultValue}
+            defaultValue={defaultValue === "0" ? "" : defaultValue}
             name={field}
             id={`${field}-${inputId}`}
             placeholder={isInputFieldDict(dict) ? dict.placeholder : ""}

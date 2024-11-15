@@ -123,11 +123,11 @@ export const ItemCompleteFormFields = ({
         />
         <InputPattern 
           field="height"
-          dict={fields.heigth.dict}
+          dict={fields.height.dict}
           defaultValue={String(result?.heigth)}
           className=""
           label={true}
-          errorMessages={errorMessages.heigth as string[]}
+          errorMessages={errorMessages.height as string[]}
         />
         <InputPattern 
           field="weight"

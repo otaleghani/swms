@@ -47,6 +47,7 @@ export interface DictFormFields {
   weight:         DictInputField;
   length:         DictInputField;
 
+  images:       DictInputField;
   quantity:       DictInputField;
   identifier:     DictInputField;
   codes:          DictInputField;
@@ -73,6 +74,7 @@ export interface DictFormFields {
   users:          DictSelectField;
 
   isBusiness:     DictCheckboxField;
+  isArchived:     DictCheckboxField;
 
   openDate:       DictDatePickerField;
   closeDate:      DictDatePickerField;

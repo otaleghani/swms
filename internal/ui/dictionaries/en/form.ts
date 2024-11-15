@@ -30,6 +30,7 @@ export const dictionaryForm: DictForms = {
     }
   },
   fields: {
+
     password  : {
       label: "Password",
       placeholder: "Enter a strong password",
@@ -85,6 +86,18 @@ export const dictionaryForm: DictForms = {
         min: `The name cannot be shorter than ${VALIDATION_SETTINGS.shortString.minLength} characters`,
         type: "The type of the name is not acceptable.",
         valid: "The name input is not valid.",
+      },
+    },
+
+    images: {
+      label: "Images",
+      placeholder: "Add images",
+      validation: {
+        empty: "The field cannot be empty",
+        max: "",
+        min: "",
+        type: "The type of this image is not acceptable.",
+        valid: "The images input is not valid.",
       },
     },
 
@@ -438,6 +451,14 @@ export const dictionaryForm: DictForms = {
 
     isBusiness: {
       label: "Business",
+      isChecked: false,
+      validation: {
+        required: "Check this checkbox to continue",
+      }
+    },
+
+    isArchived: {
+      label: "Archived",
       isChecked: false,
       validation: {
         required: "Check this checkbox to continue",

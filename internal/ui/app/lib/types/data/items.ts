@@ -45,6 +45,56 @@ export const defaultItemFormState: ItemFormState = {
   }
 }
 
+export type ItemCompleteFormState = FormState<"ItemComplete">
+export const defaultItemCompleteFormState: ItemCompleteFormState = {
+  error: false,
+  message: "",
+  errorMessages: {
+    name: [],
+    description: [],
+    isArchived: [],
+    zoneWithAdd: [],
+    aisleWithAdd: [],
+    rackWithAdd: [],
+    shelfWithAdd: [],
+    categoryWithAdd: [],
+    subcategoryWithAdd: [],
+    images: [],
+    identifier: [],
+    quantity: [],
+    length: [],
+    width: [],
+    height: [],
+    weight: [],
+    variantsJSON: [],
+    codesJSON: [],
+  },
+  result: {
+    id: "",
+    name: "",
+    description: "",
+    isArchived: false,
+    zone: "",
+    aisle: "",
+    rack: "",
+    shelf: "",
+    category: "",
+    subcategory: "",
+    identifier: "",
+    quantity: 0,
+    length: 0,
+    width: 0,
+    height: 0,
+    weight: 0,
+    images: [],
+    isDefaultVariant: true,
+    item: "",
+    encodedImages: [],
+    variantsJSON: "",
+    codesJSON: "",
+  }
+}
+
 export type ItemWithDefaultVariantAndImages = Item & Variant & {
   images: File[];
   encodedImages: string[];

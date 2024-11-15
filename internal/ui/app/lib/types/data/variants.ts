@@ -8,7 +8,7 @@ export type Variant = {
   identifier: string;
   length?: number;
   width?: number;
-  heigth?: number;
+  height?: number;
   weight?: number;
   isDefaultVariant: boolean;
   item: string;
@@ -23,7 +23,7 @@ export const emptyVariant: Variant = {
   identifier: "",
   length: 0,
   width: 0,
-  heigth: 0,
+  height: 0,
   weight: 0,
   isDefaultVariant: false,
   item: "",
@@ -40,7 +40,7 @@ export const defaultVariantFormState: VariantFormState = {
     identifier: [],
     length: [],
     width: [],
-    heigth: [],
+    height: [],
     weight: [],
 
     //item: [],

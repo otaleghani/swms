@@ -100,7 +100,7 @@ export type FieldsPropsMap = {
   quantity: InputFieldProps;
   length: InputFieldProps;
   width: InputFieldProps;
-  heigth: InputFieldProps;
+  height: InputFieldProps;
   weight: InputFieldProps;
 
   // Careful about this. I don't know if like this is okay.
@@ -175,7 +175,7 @@ export const fieldsDefaultProps: FieldsPropsNullMap = {
   quantity: null,
   length: null,
   width: null,
-  heigth: null,
+  height: null,
   weight: null,
   images: null,
   zone: null,
@@ -324,7 +324,7 @@ export type ItemCompleteFormFieldsProps = {
     K extends "quantity" ? FieldsPropsMap[K] :
     K extends "length" ? FieldsPropsMap[K] :
     K extends "width" ? FieldsPropsMap[K] :
-    K extends "heigth" ? FieldsPropsMap[K] :
+    K extends "height" ? FieldsPropsMap[K] :
     K extends "weight" ? FieldsPropsMap[K] :
     K extends "variantsJSON" ? FieldsPropsMap[K] :
     K extends "codesJSON" ? FieldsPropsMap[K] :
@@ -341,7 +341,7 @@ export type VariantFormFieldsProps = {
     K extends "quantity" ? FieldsPropsMap[K] :
     K extends "length" ? FieldsPropsMap[K] :
     K extends "width" ? FieldsPropsMap[K] :
-    K extends "heigth" ? FieldsPropsMap[K] :
+    K extends "height" ? FieldsPropsMap[K] :
     K extends "weight" ? FieldsPropsMap[K] : // How do we handle JSON of SupplierCode?
     K extends "button" ? FieldsPropsMap[K] :
     null;
@@ -567,7 +567,7 @@ export type FormFieldsPropsMap = {
     null;
 };
 
-interface DictItemsForm {
+export interface DictItemsForm {
   sections: {
     basics: string;
     defaultVariant: string;
@@ -577,7 +577,7 @@ interface DictItemsForm {
   };
 }
 
-interface DictVariantsForm {
+export interface DictVariantsForm {
   sections: {
     basics: string;
     codes: string;

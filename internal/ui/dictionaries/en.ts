@@ -12,6 +12,7 @@ import { dictionaryToasts } from "./en/toasts"
 import { dictionaryFilters } from "./en/filters"
 import { dictionaryPages } from "./en/pages"
 import { dictionarySidebar } from "./en/sidebar"
+import { dictionaryItems } from "./en/items"
 
 export const dictionary: Dictionary = {
   zone: dictionaryZones,
@@ -22,6 +23,7 @@ export const dictionary: Dictionary = {
   subcategory: dictionarySubcategories,
   supplier: dictionarySuppliers,
   supplierCode: dictionarySupplierCodes,
+  item: dictionaryItems,
 
   form: dictionaryForm,
   toasts: dictionaryToasts,
