@@ -39,7 +39,7 @@ export async function validateZone(
   //  );
   //}
   if (state.result.id && 
-      !await checkExisting("Aisle", state.result.id)) {
+      !await checkExisting("Zone", state.result.id)) {
     state.error = true;
     state.message = dict.form.messages.errors.client;
     return state;
