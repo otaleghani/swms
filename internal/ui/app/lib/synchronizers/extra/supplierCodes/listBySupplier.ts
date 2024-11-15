@@ -1,4 +1,4 @@
-import { SubcategoryWithExtra } from "@/app/lib/types/data/subcategories";
+import { SupplierCodes, SupplierCode } from "@/app/lib/types/data/supplierCodes";
 import { Dispatch, SetStateAction } from "react";
 import { 
   isServerSentMessage, 
@@ -7,28 +7,28 @@ import {
   FetchResultMessage,
 } from "../../utils";
 import { ServerSentEventData } from "@/app/api/stream/route";
-import { SubcategoryFiltersParams } from "../../../types/query/data";
+import { SupplierCodeFiltersParams } from "../../../types/query/data";
 import { PaginationParams } from "../../../types/pageParams";
 
-export type SyncPaginatedSubcategorysByCategoryWithExtra = {
-  category: string,
+export type SyncPaginatedSupplierCodesBySupplier= {
+  supplier: string,
   pagination?: PaginationParams;
-  filters?: SubcategoryFiltersParams;
+  filters?: SupplierCodeFiltersParams;
   streamer: Worker,
-  list: SubcategoryWithExtra[],
-  setList: Dispatch<SetStateAction<SubcategoryWithExtra[]>>,
+  list: SupplierCodes,
+  setList: Dispatch<SetStateAction<SupplierCodes>>,
 }
 
-export function syncPaginatedSubcategoriesByCategoryWithExtra({
-  category,
+export function syncPaginatedSupplierCodesBySupplier({
+  supplier,
   pagination,
   filters,
   streamer,
   list,
   setList
-}: SyncPaginatedSubcategorysByCategoryWithExtra) {
+}: SyncPaginatedSupplierCodesBySupplier) {
   const handleFetchResultMessage = (data: FetchResultMessage) => {
-    if (data.type !== "SubcategoriesWithExtra_Category") return;
+    if (data.type !== "SupplierCodes_Supplier") return;
     switch (data.request) {
       case "error":
         console.error("Something went wrong with client-side fetching");
@@ -41,10 +41,10 @@ export function syncPaginatedSubcategoriesByCategoryWithExtra({
   };
 
     const handleServerSentMessage = (data: ServerSentEventData) => {
-    if (data.type !== "Subcategory") return;
+    if (data.type !== "SupplierCode") return;
     streamer.postMessage({
-      type: "SubcategoriesWithExtra_Category", 
-      foreignId: category,
+      type: "SupplierCodes_Supplier", 
+      foreignId: supplier,
       page: pagination?.page,
       perPage: pagination?.perPage,
       filters: JSON.stringify(filters),

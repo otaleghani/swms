@@ -164,6 +164,7 @@ func Serve(path, port string) {
 	mux.HandleFunc("POST /api/v1/suppliers/{id}/replace-with/{rep}", deleteSupplierSub(&dbConn))
 	mux.HandleFunc("PUT /api/v1/suppliers/{id}", putSupplier(&dbConn))
 	mux.HandleFunc("DELETE /api/v1/suppliers/{id}", deleteSupplier(&dbConn))
+	mux.HandleFunc("GET /api/v1/suppliers/{id}/supplier-codes", getSupplierCodesBySupplier(&dbConn))
 
 	mux.HandleFunc("GET /api/v1/supplier-codes/{$}", getSupplierCodes(&dbConn))
 	mux.HandleFunc("GET /api/v1/supplier-codes/extra", getSupplierCodesWithExtra(&dbConn))

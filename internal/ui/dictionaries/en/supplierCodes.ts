@@ -35,5 +35,11 @@ export const dictionarySupplierCodes: DictSupplierCode = {
       clear: "Clear",
     },
   },
-  
+  card: {
+    labels: {
+      supplier: "Supplier",
+      item: "Item",
+      variant: "Variant",
+    }
+  }
 }

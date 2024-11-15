@@ -22,6 +22,7 @@ import { InputFieldProps, SelectFieldProps, } from "@/app/lib/types/form/fields"
 import { DictDialog, DictLabelList } from "@/app/lib/types/dictionary/misc";
 import { DictFormButton } from "@/app/lib/types/dictionary/form";
 import { Eye } from "lucide-react";
+import { handleStringNilValue } from "@/app/lib/utils";
 
 interface SupplierWithExtraCardProps {
   item: SupplierWithExtra;
@@ -96,7 +97,9 @@ export default function CardSupplierWithExtra({
             {supplierWithExtra.supplier.name}
           </span>
         </CardTitle>
-        <CardDescription>{supplierWithExtra.supplier.id}</CardDescription>
+        <CardDescription>{
+          handleStringNilValue(supplierWithExtra.supplier.description)}
+        </CardDescription>
       </>
     );
   };

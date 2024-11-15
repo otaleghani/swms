@@ -14,5 +14,10 @@ export const defaultReplaceFormState: ReplaceFormState = {
     subcategory: [],
     id: [],
     supplier: [],
+  },
+  result: {
+    itemToDelete: "",
+    itemThatReplaces: "",
+    type: "",
   }
 }

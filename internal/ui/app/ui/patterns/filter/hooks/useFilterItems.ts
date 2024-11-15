@@ -4,7 +4,8 @@ import { useState, useEffect, Dispatch, SetStateAction } from "react";
 import { deepMerge } from "@/app/lib/searchParams";
 
 type PossibleParams = keyof Pick<SearchParams, 
-  "transactions"
+  "transactions" |
+  "supplierCodes"
 >;
 
 /** Manages the creation of a compatible URL for filtering data. */

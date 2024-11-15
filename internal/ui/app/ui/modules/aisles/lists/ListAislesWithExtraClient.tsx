@@ -65,6 +65,7 @@ export default function ListAislesWithExtraClient(props: Props) {
   const [currentAisles, setCurrentAisles] = useState(fields.aisle.list);
   const [currentAislesWithExtra, setCurrentAislesWithExtra] = 
     useState(aislesWithExtra);
+  console.log(currentAislesWithExtra)
 
   useEffect(() => {
     synchronizeList<"Zone">({

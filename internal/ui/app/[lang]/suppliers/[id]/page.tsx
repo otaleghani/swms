@@ -15,6 +15,7 @@ import { getDictionary, Locale } from "@/lib/dictionaries";
 //import ListAislesWithExtra from "@/app/ui/modules/aisles/lists/ListAislesWithExtra";
 import HeroSupplierSingle from "@/app/ui/modules/suppliers/HeroSupplierSingle";
 import { notFound } from "next/navigation";
+import ListSupplierCodes from "@/app/ui/modules/supplierCodes/lists/ListSupplierCodes";
 
 export default async function SuppliersIdPage({
   params,
@@ -40,15 +41,22 @@ export default async function SuppliersIdPage({
         supplier={supplier.data as Supplier}
         locale={params.lang as Locale}
       />
-      <div className="grid xl:grid-cols-2">
+      <div className="">
         <div className="flex flex-col border-r xl:h-[calc(100vh_-_57px)]">
           <HeroSupplierSingle 
             item={supplierWithExtra.data as SupplierWithExtra}
             dictCard={dict.supplier.card}
             dictToast={dict.toasts.fetching}
           />
+          <ListSupplierCodes 
+            hideFilters={{supplier: true}}
+            searchParams={currentSearchParams.supplierCodes}
+            locale={params.lang as Locale}
+            type={"supplier"}
+            supplier={supplier.data as Supplier}
+            forceLayout={"list"}
+          />
         </div>
-        <div className="xl:block hidden">sus</div>
       </div>
     </>
   )

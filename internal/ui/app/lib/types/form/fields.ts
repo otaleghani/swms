@@ -36,7 +36,7 @@ export type SelectableItem = keyof Omit<
   | "RacksBulk"
   | "ShelfsBulk"
   | "ProductImage"
-  | "SupplierCode"
+  //| "SupplierCode"
   | "ItemComplete"
   | "ItemCompleteFormFieldsProps"
   | "Operation"
@@ -428,7 +428,7 @@ export type SupplierFormFieldsProps = {
 export type SupplierCodeFormFieldsProps = {
   [K in keyof FieldsPropsMap]: 
     K extends "code" ? FieldsPropsMap[K] :
-    K extends "supplierWithAdd" ? FieldsPropsMap[K] :
+    //K extends "supplierWithAdd" ? FieldsPropsMap[K] :
     K extends "supplier" ? FieldsPropsMap[K] :
     K extends "item" ? FieldsPropsMap[K] :
     K extends "variant" ? FieldsPropsMap[K] :
@@ -492,6 +492,7 @@ export type UserFormFieldsProps = {
 // prettier-ignore
 export type DeleteFormFieldsProps = {
   [K in keyof FieldsPropsMap]:
+
     K extends "button" ? FieldsPropsMap[K] :
     null;
 };

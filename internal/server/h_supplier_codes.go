@@ -12,6 +12,8 @@ import (
 type SupplierCodesFilters struct {
   Search string `json:"search,omitempty"`
   Supplier string `json:"supplier,omitempty"`
+  Item string `json:"item,omitempty"`
+  Variant string `json:"variant,omitempty"`
 }
 
 func getSupplierCodes(db *database.Database) http.HandlerFunc {
@@ -242,6 +244,73 @@ func getSupplierCodesWithExtra(db *database.Database) http.HandlerFunc {
   }
 }
 
+func getSupplierCodesBySupplier(db *database.Database) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
+		if err := checkAccessToken(token, db); err != nil {
+			ErrorResponse{Message: err.Error()}.r401(w, r)
+			return
+		}
+		path := r.PathValue("id")
+    list, err := db.SelectSupplierCodes("Supplier_id = ?", path)
+		if err != nil {
+			ErrorResponse{Message: err.Error()}.r500(w, r)
+			return
+		}
+
+    // Filters
+    queryFilters := r.URL.Query().Get("filters")
+    filteredRows := deleteNilValue(list)
+
+    if queryFilters != "" {
+		  var filters SupplierCodesFilters
+		  err = json.Unmarshal([]byte(queryFilters), &filters)
+      // If the filters are valid, filter the content, else skip.
+		  if err == nil {
+        // Checks if every field is not an empty string and filters.
+        if filters.Search != "" {
+          filteredRows, err = FilterBySearch(
+            filteredRows, "Name", filters.Search)
+        }
+        // We omit supplier cause we already are in the filtered page
+        if filters.Item != "" {
+          filteredRows, err = FilterByField(
+            filteredRows, "Item_id", filters.Item)
+        }
+        if filters.Variant != "" {
+          filteredRows, err = FilterByField(
+            filteredRows, "Variant_id", filters.Variant)
+        }
+		  }
+    }
+
+    // Pagination
+    queryPaginationOff := r.URL.Query().Get("paginationOff")
+    if queryPaginationOff == "true" {
+		  SuccessResponse{Data: filteredRows}.r200(w, r)
+      return
+    }
+
+    queryPage := r.URL.Query().Get("page")
+    queryPerPage := r.URL.Query().Get("perPage")
+    resultedItems, page, perPage, totalItems, totalPages, err := 
+      paginateItems(queryPage, queryPerPage, filteredRows)
+
+		if err != nil {
+			ErrorResponse{Message: err.Error()}.r500(w, r)
+			return
+		}
+
+		SuccessResponse{
+      Data: resultedItems,
+      Page: page,
+      PerPage: perPage,
+      TotalItems: totalItems,
+      TotalPages: totalPages,
+    }.r200(w, r)
+  }
+}
+
 type SupplierCodesWithVariant struct {
   Variant database.Variant `json:"variant"`
   Codes []database.SupplierCode `json:"codes"`
@@ -251,6 +320,7 @@ type SupplierCodesWithItem struct {
   Item database.Item `json:"item"`
   Variants []SupplierCodesWithVariant `json:"variants"`
 }
+
 
 func getSupplierCodesBySupplierWithItem(db *database.Database) http.HandlerFunc {
   return func(w http.ResponseWriter, r *http.Request) {

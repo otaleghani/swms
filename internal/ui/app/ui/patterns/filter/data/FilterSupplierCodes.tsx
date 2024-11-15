@@ -22,6 +22,10 @@ import Link from "next/link";
 import { useFilterParams } from "../hooks/useFilter";
 import { useFilterSearch } from "../hooks/useFilterSearch";
 import { useFilterSuppliers } from "../hooks/useFilterSuppliers";
+import { Items } from "@/app/lib/types/data/items";
+import { Variants } from "@/app/lib/types/data/variants";
+import { useFilterItems } from "../hooks/useFilterItems";
+import { useFilterVariants } from "../hooks/useFilterVariants";
 
 interface Props {
   fields: {
@@ -29,45 +33,96 @@ interface Props {
       list: Suppliers;
       dict: DictSelectField;
     };
+    items: {
+      list: Items;
+      dict: DictSelectField;
+    };
+    variants: {
+      list: Variants;
+      dict: DictSelectField;
+    };
     search: {
       dict: DictInputField;
     };
   };
+  hide: {
+    supplier?: boolean;
+    item?: boolean;
+    variant?: boolean;
+    search?: boolean;
+  }
   dict: DictFilters;
 };
 
-const SheetPatternBody = ({fields, dict}: Props) => {
+const SheetPatternBody = ({fields, dict, hide}: Props) => {
   const { params, setParams, link } = useFilterParams();
 
   const { supplier, setSupplier } = 
     useFilterSuppliers(params, fields.suppliers.list, "supplierCodes", setParams);
 
+  const { item, setItem } = 
+    useFilterItems(params, fields.items.list, "supplierCodes", setParams);
+
+  const { variant, setVariant } = 
+    useFilterVariants(params, fields.variants.list, "supplierCodes", setParams);
+
   const { searchTerm, setSearchTerm, handleInput } = 
-    useFilterSearch(params, "aisles", setParams);
+    useFilterSearch(params, "supplierCodes", setParams);
 
   return (
     <>
       <FilterSheetHeader dict={dict} />
       <div className="mb-4 grid gap-2">
-        <div>
-          <Label>{fields.suppliers.dict.select.label}</Label>
-          <ForeignKeyFilter<"Supplier"> 
-            name="Supplier"
-            list={fields.suppliers.list}
-            dict={fields.suppliers.dict}
-            element={supplier}
-            setElement={setSupplier}
-          />
-        </div> 
-        <div>
-          <Label>{fields.search.dict.label}</Label>
-          <Input 
-            type="text"
-            placeholder="Your search.."
-            onChange={handleInput}
-            value={searchTerm}
-          />
-        </div>
+        {!hide.supplier && (
+          <div>
+            <Label>{fields.suppliers.dict.select.label}</Label>
+            <ForeignKeyFilter<"Supplier"> 
+              name="Supplier"
+              list={fields.suppliers.list}
+              dict={fields.suppliers.dict}
+              element={supplier}
+              setElement={setSupplier}
+            />
+          </div> 
+        )}
+
+        {!hide.item && (
+          <div>
+            <Label>{fields.items.dict.select.label}</Label>
+            <ForeignKeyFilter<"Item"> 
+              name="Item"
+              list={fields.items.list}
+              dict={fields.items.dict}
+              element={item}
+              setElement={setItem}
+            />
+          </div> 
+        )}
+
+        {!hide.variant && (
+          <div>
+            <Label>{fields.variants.dict.select.label}</Label>
+            <ForeignKeyFilter<"Variant"> 
+              name="Variant"
+              list={fields.variants.list}
+              dict={fields.variants.dict}
+              element={variant}
+              setElement={setVariant}
+            />
+          </div> 
+        )}
+
+        {!hide.search && (
+          <div>
+            <Label>{fields.search.dict.label}</Label>
+            <Input 
+              type="text"
+              placeholder="Your search.."
+              onChange={handleInput}
+              value={searchTerm}
+            />
+          </div>
+        )}
       </div>
 
       <div className="flex gap-2">
@@ -88,6 +143,7 @@ const SheetPatternBody = ({fields, dict}: Props) => {
 export default function FilterSuppliers({
   fields,
   dict,
+  hide
 }: Props) {
   const { params, setParams, link } = useFilterParams();
 
@@ -95,7 +151,7 @@ export default function FilterSuppliers({
     return (<FilterSheetTrigger dict={dict} params={params.supplierCodes} />)
   }
   const SheetBody = () => {
-    return (<SheetPatternBody fields={fields} dict={dict}/>)
+    return (<SheetPatternBody fields={fields} dict={dict} hide={hide}/>)
   }
   return (
     <>

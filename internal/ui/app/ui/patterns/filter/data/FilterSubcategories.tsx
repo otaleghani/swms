@@ -66,7 +66,7 @@ const SheetPatternBody = ({fields, dict, hide}: Props) => {
             />
           </div> 
         )}
-        {!hide.category && (
+        {!hide.search && (
           <div>
             <Label>{fields.search.dict.label}</Label>
             <Input 

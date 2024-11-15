@@ -130,6 +130,8 @@ export type SupplierCodeFiltersParams = {
   [K in keyof FiltersParams]:
     K extends "search" ? FiltersParams[K] :
     K extends "supplier" ? FiltersParams[K] :
+    K extends "item" ? FiltersParams[K] :
+    K extends "variant" ? FiltersParams[K] :
     undefined;
 };
 

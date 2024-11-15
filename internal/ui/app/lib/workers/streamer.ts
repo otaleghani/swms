@@ -258,7 +258,7 @@ const optionsListByForeign = {
   //"Shelfs_Aisle":           { path: "aisles/{{id}}/racks", type: "Racks"  },
   //"Shelfs_Zone":            { path: "aisles/{{id}}/racks", type: "Racks"  },
 
-  "SupplierCodes_Supplier": { path: "aisles/{{id}}/racks", type: "Racks"  },
+  "SupplierCodes_Supplier": { path: "supplier/{{id}}/supplier-codes", type: "Racks"  },
   "SubcategoriesWithExtra_Category": { path: "categories/{{id}}/subcategories/extra", type: "Subcategories"},
 }
 
