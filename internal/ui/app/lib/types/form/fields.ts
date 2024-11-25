@@ -52,7 +52,8 @@ export type SelectableItem = keyof Omit<
   | "RackWithExtra"
   | "ShelfWithExtra"
   | "SupplierWithExtra"
-  | "SupplierCodeWithExtra" >
+  | "SupplierCodeWithExtra" 
+  | "SupplierCode" >
 
 /**
  * Usually used by the component that is rendering

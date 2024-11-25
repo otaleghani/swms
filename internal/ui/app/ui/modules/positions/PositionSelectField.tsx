@@ -96,6 +96,7 @@ export default function PositionSelectField({
         filterList(listAisles, "zone", selectedZone.id, setFilteredAisles);
       }
     }
+    if (selectedZone.name == "") { setSelectedZone(emptyZone); }
   }, [selectedZone])
 
   useEffect(() => {
@@ -105,6 +106,7 @@ export default function PositionSelectField({
         filterList(listRacks, "aisle", selectedAisle.id, setFilteredRacks);
       }
     }
+    if (selectedAisle.name == "") { setSelectedAisle(emptyAisle); }
   }, [selectedAisle])
 
   useEffect(() => {
@@ -114,13 +116,14 @@ export default function PositionSelectField({
         filterList(listShelfs, "rack", selectedRack.id, setFilteredShelfs);
       }
     }
+    if (selectedRack.name == "") { setSelectedRack(emptyRack); }
   }, [selectedRack])
 
   return (
     <div>
       <div>
         {fields.zone && listZones && (
-          <div className="flex gap-4 items-end">
+          <div className="flex gap-2 items-end">
             <SelectFieldPattern<"Zone"> 
               name="Zone"
               element={selectedZone}
@@ -135,7 +138,7 @@ export default function PositionSelectField({
           </div>
         )}
         {fields.aisle && filteredAisles && (selectedZone != emptyZone) && (
-          <div className="flex gap-4 items-end">
+          <div className="flex gap-2 items-end">
             <SelectFieldPattern<"Aisle"> 
               name="Aisle"
               element={selectedAisle}
@@ -150,7 +153,7 @@ export default function PositionSelectField({
           </div>
         )}
         {fields.rack && filteredRacks && (selectedAisle != emptyAisle) && (
-          <div className="flex gap-4 items-end">
+          <div className="flex gap-2 items-end">
             <SelectFieldPattern<"Rack"> 
               name="Rack"
               element={selectedRack}
@@ -165,7 +168,7 @@ export default function PositionSelectField({
           </div>
         )}
         {fields.shelf && filteredShelfs && (selectedRack != emptyRack) && (
-          <div className="flex gap-4 items-end">
+          <div className="flex gap-2 items-end">
             <SelectFieldPattern<"Shelf"> 
               name="Shelf"
               element={selectedShelf}

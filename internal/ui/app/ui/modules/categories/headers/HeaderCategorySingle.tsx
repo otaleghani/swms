@@ -51,7 +51,7 @@ export default async function HeaderCategorySingle({
         />
 
         <DialogSubcategoryCreate
-          dict={dict.aisle.dialogs.addBulk}
+          dict={dict.subcategory.dialogs.add}
           fields={{
             name: {dict: dict.form.fields.name},
             description: {dict: dict.form.fields.description},

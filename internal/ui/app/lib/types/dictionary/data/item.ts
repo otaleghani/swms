@@ -1,7 +1,7 @@
 import { DictItemsForm } from "../../form/fields";
+import { DictPageHeader } from "../misc";
 
 export interface DictItem {
-  editTitle: string;
-  createTitle: string;
+  header: DictPageHeader<"home" | "item" | "add">;
   form: DictItemsForm;
 }

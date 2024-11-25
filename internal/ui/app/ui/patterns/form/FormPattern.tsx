@@ -39,6 +39,7 @@ import {
   ReplaceFormFieldsProps,
   LoginFormFieldsProps,
   RegisterFormFieldsProps,
+  DictItemsForm,
 } from "@/app/lib/types/form/fields";
 
 export default function FormPattern<K extends keyof FormPropsMap>({
@@ -48,13 +49,19 @@ export default function FormPattern<K extends keyof FormPropsMap>({
   showButton,
 }: FormPropsMap[K] & { showButton?: boolean }) {
   const { locale } = useLocale();
-  let values = form.initialState.result as any;
   const [state, action, isPending] = useActionState(
     form.formAction,
     form.initialState,
   );
 
   useEffect(() => {
+    /** 
+    * @todo Find a way to stop the complete re-render of this element in 
+    * DialogFormPattern.
+    *
+    * This issue was resolved, so this piece of the code should be
+    * deleted before the first release.
+    * */
     if (!state.error && state.result && state.message) {
       if (form.notifyFormSent) {
         form.notifyFormSent(false);
@@ -66,10 +73,14 @@ export default function FormPattern<K extends keyof FormPropsMap>({
   }, [state])
 
   return (
-    <form id={form.formName} action={action}>
+    <form 
+      id={form.formName} 
+      action={action}
+      name={form.formName}
+    >
       <div className="grid gap-2 py-4">
 
-        {type === "Login" && values && (
+        {type === "Login" && (
           <FormFields.Login 
             fields={self.fields as LoginFormFieldsProps}
             errorMessages={state.errorMessages as {
@@ -78,7 +89,7 @@ export default function FormPattern<K extends keyof FormPropsMap>({
           />
         )}
 
-        {type === "Register" && values && (
+        {type === "Register" && (
           <FormFields.Register 
             fields={self.fields as RegisterFormFieldsProps}
             errorMessages={state.errorMessages as {
@@ -87,7 +98,7 @@ export default function FormPattern<K extends keyof FormPropsMap>({
           />
         )}
 
-        {type === "Replace" && values && (
+        {type === "Replace" && (
           <FormFields.Replace
             fields={self.fields as ReplaceFormFieldsProps}
             errorMessages={state.errorMessages as {
@@ -96,10 +107,10 @@ export default function FormPattern<K extends keyof FormPropsMap>({
           />
         )}
 
-        { type === "Delete" && values && (
+        { type === "Delete" && (
           <>
-            <input type="hidden" name="id" value={values.id} />
-            <input type="hidden" name="type" value={values.type} />
+            <input type="hidden" name="id" value={state.result?.id} />
+            <input type="hidden" name="type" value={state.result?.type} />
           </>
         )}
 
@@ -266,6 +277,7 @@ export default function FormPattern<K extends keyof FormPropsMap>({
             errorMessages={state.errorMessages as {
               [T in keyof FormFieldsPropsMap["ItemComplete"]]: string[]}}
             result={state.result}
+            dict={self.dict as DictItemsForm}
           />
         )}
         { type === "Variant" && (

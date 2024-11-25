@@ -32,7 +32,7 @@ export default async function FormAddItem({
       [pZones, pAisles, pRacks, pShelfs, pCategories, pSubcategories, pDict]);
 
   return (
-    <>
+    <div className="xl:px-[25%]">
       <FormAddItemClient 
         dict={dict.item.form}
         fields={{
@@ -68,7 +68,9 @@ export default async function FormAddItem({
                 },
                 form: {
                   formName: "AddNewZone",
-                  initialState: defaultZoneFormState,
+                  initialState: {
+                    ...defaultZoneFormState,
+                  },
                   formAction: createFormAction,
                 },
                 type: "Zone",
@@ -80,7 +82,7 @@ export default async function FormAddItem({
           aisleWithAdd: {
             selectField: {
               list: aisles.data as Aisles,
-              dict: dict.form.fields.zones,
+              dict: dict.form.fields.aisles,
               name: "Aisle",
             },
             addDialog: {
@@ -269,6 +271,6 @@ export default async function FormAddItem({
           button: dict.form.buttons.add,
         }}
       />
-    </>
+    </div>
   )
 }

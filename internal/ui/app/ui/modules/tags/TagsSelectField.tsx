@@ -64,13 +64,14 @@ export default function TagsSelectFields({
         filterList(listSubcategory, "category", selectedCategory.id, setFilteredSubcategory);
       }
     }
+    if (selectedCategory.name == "") { setSelectedCategory(emptyCategory); }
   }, [selectedCategory])
 
   return (
     <div>
       <div>
         {fields.category && listCategory && (
-          <div className="flex gap-4 items-end">
+          <div className="flex gap-2 items-end">
             <SelectFieldPattern<"Category"> 
               name="Category"
               element={selectedCategory}
@@ -89,7 +90,7 @@ export default function TagsSelectFields({
           </div>
         )}
         {fields.subcategory && filteredSubcategory && (selectedCategory != emptyCategory) && (
-          <div className="flex gap-4 items-end">
+          <div className="flex gap-2 items-end">
             <SelectFieldPattern<"Subcategory"> 
               name="Subcategory"
               element={selectedSubcategory}

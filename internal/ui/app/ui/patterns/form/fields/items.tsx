@@ -5,6 +5,7 @@ import InputPattern from "../input/InputPattern";
 
 /** Types and interfaces */
 import { FormFieldsPropsWithDictCompleteMap } from "@/app/lib/types/form/fields";
+import { emptyZone } from "@/app/lib/types/data/zones";
 
 export const ItemCompleteFormFields = ({
   fields,
@@ -26,7 +27,7 @@ export const ItemCompleteFormFields = ({
   let defaultZone = result?.zone ? 
     fields.zoneWithAdd.selectField.list.find(
       item => item.id === result.zone
-    ) : undefined;
+    ) : emptyZone;
 
   let defaultAisle = result?.aisle ? 
     fields.aisleWithAdd.selectField.list.find(
@@ -124,7 +125,7 @@ export const ItemCompleteFormFields = ({
         <InputPattern 
           field="height"
           dict={fields.height.dict}
-          defaultValue={String(result?.heigth)}
+          defaultValue={String(result?.height)}
           className=""
           label={true}
           errorMessages={errorMessages.height as string[]}
@@ -175,12 +176,11 @@ export const ItemCompleteFormFields = ({
     </div>
 
     <div className="mb-4 bg-white rounded p-5">
-      <h3 className="font-semibold pb-2">{dict?.sections.position}</h3>
+      <h3 className="font-semibold pb-2">{dict?.sections.images}</h3>
       <div className="xl:grid-cols-1 gap-2">
         <InputPattern 
           field="images"
           dict={fields.images.dict}
-          //defaultValue={String(result?.weight)}
           className=""
           label={true}
           errorMessages={errorMessages.images as string[]}

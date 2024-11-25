@@ -1,14 +1,21 @@
 import { DictItem } from "@/app/lib/types/dictionary/data/item";
+import { Breadcrumb } from "@/app/ui/components/breadcrumb";
 
 export const dictionaryItems: DictItem = {
-  editTitle: "Edit item",
-  createTitle: "Add new item",
+  header: {
+    title: "Items",
+    breadcrumbs: {
+      home: "Home",
+      item: "Items",
+      add: "New item",
+    },
+  },
   form: {
     sections: {
       basics: "Basics",
       defaultVariant: "Default variant",
       position: "Position",
-      images: "Position",
+      images: "Images",
       variants: "Position",
     }
   }

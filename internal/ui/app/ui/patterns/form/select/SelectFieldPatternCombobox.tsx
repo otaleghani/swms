@@ -48,7 +48,7 @@ export function SelectFieldPatternCombobox<T extends SelectableItem>({
             variant="outline"
             role="combobox"
             aria-expanded={open}
-            className="w-full justify-between"
+            className="w-full justify-between h-10"
           >
             {element.name != ''
               ? list.find((item: any) => (item.name + item.id) === (element.name as string + element.id))?.name

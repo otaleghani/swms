@@ -12,6 +12,8 @@ import { SelectFieldProps } from "@/app/lib/types/form/fields";
 import DialogFormPattern, { DialogFormPatternProps } from "../../patterns/dialog/DialogFormPattern";
 
 import { filterList, addNewItemToList } from "../../patterns/form/select/action";
+import streamer from "@/app/lib/workers";
+import { synchronizeList } from "@/app/lib/synchronizers/lists";
 
 export interface TagsSelectFieldsWithAddProps {
   fields: {
@@ -44,20 +46,34 @@ export default function TagsSelectFieldsWithAdd({
     emptySubcategory
   );
 
+  const [openCategoryDialog, setOpenCategoryDialog] = useState(false);
+  const [openSubcategoryDialog, setOpenSubcategoryDialog] = useState(false);
+
   const [listCategory, setListCategory] = useState(fields.category?.select.list);
   const [listSubcategory, setListSubcategory] = useState(fields.subcategory?.select.list);
 
   const [filteredSubcategory, setFilteredSubcategory] = useState(fields.subcategory?.select.list);
 
-  const refreshCategoryList = (item: Category) => {
-    addNewItemToList(item, listCategory, setListCategory);
-    setSelectedCategory(item);
-  };
-
-  const refreshSubcategoryList = (item: Subcategory) => {
-    addNewItemToList(item, listSubcategory, setListSubcategory);
-    setSelectedSubcategory(item);
-  };
+  useEffect(() => {
+    if (listCategory) {
+      synchronizeList<"Category">({
+        streamer: streamer as Worker,
+        list: listCategory,
+        setList: setListCategory as React.Dispatch<React.SetStateAction<Category[]>>,
+        type: "Category",
+        setSelected: setSelectedCategory,
+      });
+    }
+    if (listSubcategory) {
+      synchronizeList<"Subcategory">({
+        streamer: streamer as Worker,
+        list: listSubcategory,
+        setList: setListSubcategory as React.Dispatch<React.SetStateAction<Subcategory[]>>,
+        type: "Subcategory",
+        setSelected: setSelectedSubcategory,
+      });
+    }
+  }, [])
 
   useEffect(() => {
     if (listSubcategory) {
@@ -66,13 +82,14 @@ export default function TagsSelectFieldsWithAdd({
         filterList(listSubcategory, "category", selectedCategory.id, setFilteredSubcategory);
       }
     }
+    if (selectedCategory.name == "") { setSelectedCategory(emptyCategory); }
   }, [selectedCategory])
 
   return (
     <div>
       <div>
         {fields.category && listCategory && (
-          <div className="flex gap-4 items-end">
+          <div className="flex gap-2 items-end">
             <SelectFieldPattern<"Category"> 
               name="Category"
               element={selectedCategory}
@@ -82,12 +99,14 @@ export default function TagsSelectFieldsWithAdd({
               dict={fields.category.select.dict}
             />
             <DialogFormPattern<"Category"> 
+              open={openCategoryDialog}
+              setOpen={setOpenCategoryDialog}
               self={fields.category.formDialog.self}
               formPattern={{
                 ...fields.category.formDialog.formPattern,
                 form: {
                   ...fields.category.formDialog.formPattern.form,
-                  refreshItemList: refreshCategoryList,
+                  //refreshItemList: refreshCategoryList,
                 }
               }}
               showButton
@@ -95,7 +114,7 @@ export default function TagsSelectFieldsWithAdd({
           </div>
         )}
         {fields.subcategory && filteredSubcategory && (selectedCategory != emptyCategory) && (
-          <div className="flex gap-4 items-end">
+          <div className="flex gap-2 items-end">
             <SelectFieldPattern<"Subcategory"> 
               name="Subcategory"
               element={selectedSubcategory}
@@ -105,12 +124,14 @@ export default function TagsSelectFieldsWithAdd({
               dict={fields.subcategory.select.dict}
             />
             <DialogFormPattern<"Subcategory"> 
+              open={openSubcategoryDialog}
+              setOpen={setOpenSubcategoryDialog}
               self={fields.subcategory.formDialog.self}
               formPattern={{
                 ...fields.subcategory.formDialog.formPattern,
                 form: {
                   ...fields.subcategory.formDialog.formPattern.form,
-                  refreshItemList: refreshSubcategoryList,
+                  //refreshItemList: refreshSubcategoryList,
                 }
               }}
               showButton

@@ -1,5 +1,8 @@
 "use client"
 
+import { synchronizeList } from "@/app/lib/synchronizers/lists";
+import streamer from "@/app/lib/workers";
+
 /** React hooks */
 import { useState, useEffect } from "react";
 
@@ -16,7 +19,11 @@ import { SelectFieldProps } from "@/app/lib/types/form/fields";
 
 /** Actions */
 import { addNewItemToList, filterList } from "../../patterns/form/select/action";
-import SelectFieldWithAddPattern from "../../patterns/form/select/SelectFieldWithAddPattern";
+import DialogZoneCreate from "../zones/dialogs/DialogZoneCreate";
+import DialogAisleCreate from "../aisles/dialogs/DialogAisleCreate";
+import DialogRackCreate from "../racks/dialogs/DialogRackCreate";
+import DialogShelfCreate from "../shelfs/dialogs/DialogShelfCreate";
+//import SelectFieldWithAddPattern from "../../patterns/form/select/SelectFieldWithAddPattern";
 
 interface PositionSelectFieldWithAddProps {
   fields: {
@@ -71,11 +78,16 @@ export default function PositionSelectFieldWithAdd({
       emptyShelf
   );
 
+  const [openZoneDialog, setOpenZoneDialog] = useState(false);
+  const [openAisleDialog, setOpenAisleDialog] = useState(false);
+  const [openRackDialog, setOpenRackDialog] = useState(false);
+  const [openShelfDialog, setOpenShelfDialog] = useState(false);
+
   // ATTENTION: 
   // In the newer version we are using a normal variable instead of useState,
   // so that we could work with the syncher. Here we have to find a way to
   // do the same with the "with add" variants.
-  const [listZone, setListZone] = useState(fields.zone?.select.list);
+  const [listZones, setListZone] = useState(fields.zone?.select.list);
   const [listAisles, setListAisles] = useState(fields.aisle?.select.list);
   const [listRacks, setListRacks] = useState(fields.rack?.select.list);
   const [listShelfs, setListShelfs] = useState(fields.shelf?.select.list);
@@ -84,28 +96,44 @@ export default function PositionSelectFieldWithAdd({
   const [filteredRacks, setFilteredRacks] = useState(fields.rack?.select.list);
   const [filteredShelfs, setFilteredShelfs] = useState(fields.shelf?.select.list);
 
-  const refreshZoneList = (item: Zone) => {
-    addNewItemToList(item, listZone, setListZone);
-    setSelectedZone(item);
-  };
-
-  const refreshAisleList = (item: Aisle) => {
-    addNewItemToList(item, listAisles, setListAisles);
-    filterList(listAisles, "zone", selectedZone.id, setFilteredAisles);
-    setSelectedAisle(item);
-  }
-
-  const refreshRackList = (item: Rack) => {
-    addNewItemToList(item, listRacks, setListRacks);
-    filterList(listRacks, "aisle", selectedAisle.id, setFilteredRacks);
-    setSelectedRack(item);
-  }
-
-  const refreshShelfList = (item: Shelf) => {
-    addNewItemToList(item, listShelfs, setListShelfs);
-    filterList(listShelfs, "rack", selectedRack.id, setFilteredShelfs);
-    setSelectedShelf(item);
-  }
+  useEffect(() => {
+    if (listZones) {
+      synchronizeList<"Zone">({
+        streamer: streamer as Worker,
+        list: listZones,
+        setList: setListZone as React.Dispatch<React.SetStateAction<Zone[]>>,
+        type: "Zone",
+        setSelected: setSelectedZone,
+      });
+    }
+    if (listAisles) {
+      synchronizeList<"Aisle">({
+        streamer: streamer as Worker,
+        list: listAisles,
+        setList: setListZone as React.Dispatch<React.SetStateAction<Aisle[]>>,
+        type: "Aisle",
+        setSelected: setSelectedAisle,
+      });
+    }
+    if (listRacks) {
+      synchronizeList<"Rack">({
+        streamer: streamer as Worker,
+        list: listRacks,
+        setList: setListZone as React.Dispatch<React.SetStateAction<Rack[]>>,
+        type: "Rack",
+        setSelected: setSelectedRack,
+      });
+    }
+    if (listShelfs) {
+      synchronizeList<"Shelf">({
+        streamer: streamer as Worker,
+        list: listShelfs,
+        setList: setListShelfs as React.Dispatch<React.SetStateAction<Shelf[]>>,
+        type: "Shelf",
+        setSelected: setSelectedShelf,
+      });
+    }
+  }, []);
 
   useEffect(() => {
     if (listAisles) {
@@ -114,6 +142,8 @@ export default function PositionSelectFieldWithAdd({
         filterList(listAisles, "zone", selectedZone.id, setFilteredAisles);
       }
     }
+    if (selectedZone.name == "") { setSelectedZone(emptyZone); }
+    setOpenZoneDialog(false);
   }, [selectedZone])
 
   useEffect(() => {
@@ -123,6 +153,8 @@ export default function PositionSelectFieldWithAdd({
         filterList(listRacks, "aisle", selectedAisle.id, setFilteredRacks);
       }
     }
+    if (selectedAisle.name == "") { setSelectedAisle(emptyAisle); }
+    setOpenAisleDialog(false);
   }, [selectedAisle])
 
   useEffect(() => {
@@ -132,35 +164,36 @@ export default function PositionSelectFieldWithAdd({
         filterList(listShelfs, "rack", selectedRack.id, setFilteredShelfs);
       }
     }
+    if (selectedRack.name == "") { setSelectedRack(emptyRack); }
+    setOpenRackDialog(false);
   }, [selectedRack])
 
   return (
     <div>
       <div>
-        {fields.zone && listZone && (
-          <div className="flex gap-4 items-end">
+      
+        {fields.zone && listZones && (
+          <div className="flex gap-2 items-end">
             <SelectFieldPattern<"Zone"> 
               name="Zone"
               element={selectedZone}
               setElement={setSelectedZone}
-              list={listZone}
+              list={listZones}
               errorMessages={fields.zone.errorMessages}
               dict={fields.zone.select.dict}
             />
-            <DialogFormPattern<"Zone"> 
-              self={fields.zone.formDialog.self}
-              formPattern={{
-                ...fields.zone.formDialog.formPattern,
-                form: {
-                  ...fields.zone.formDialog.formPattern.form,
-                  refreshItemList: refreshZoneList,
-                }
+            <DialogZoneCreate 
+              open={openZoneDialog}
+              setOpen={setOpenZoneDialog}
+              dict={fields.zone.formDialog.self.dict}
+              fields={{
+                ...fields.zone.formDialog.formPattern.self.fields
               }}
             />
           </div>
         )}
         {fields.aisle && filteredAisles && (selectedZone != emptyZone) && (
-          <div className="flex gap-4 items-end">
+          <div className="flex gap-2 items-end">
             <SelectFieldPattern<"Aisle"> 
               name="Aisle"
               element={selectedAisle}
@@ -169,20 +202,18 @@ export default function PositionSelectFieldWithAdd({
               errorMessages={fields.aisle.errorMessages}
               dict={fields.aisle.select.dict}
             />
-            <DialogFormPattern<"Aisle"> 
-              self={fields.aisle.formDialog.self}
-              formPattern={{
-                ...fields.aisle.formDialog.formPattern,
-                form: {
-                  ...fields.aisle.formDialog.formPattern.form,
-                  refreshItemList: refreshAisleList,
-                }
+            <DialogAisleCreate
+              open={openAisleDialog}
+              setOpen={setOpenAisleDialog}
+              dict={fields.aisle.formDialog.self.dict}
+              fields={{
+                ...fields.aisle.formDialog.formPattern.self.fields
               }}
             />
           </div>
         )}
         {fields.rack && filteredRacks && (selectedAisle != emptyAisle) && (
-          <div className="flex gap-4 items-end">
+          <div className="flex gap-2 items-end">
             <SelectFieldPattern<"Rack"> 
               name="Rack"
               element={selectedRack}
@@ -191,21 +222,18 @@ export default function PositionSelectFieldWithAdd({
               errorMessages={fields.rack.errorMessages}
               dict={fields.rack.select.dict}
             />
-            <DialogFormPattern<"Rack"> 
-              self={fields.rack.formDialog.self}
-              formPattern={{
-                ...fields.rack.formDialog.formPattern,
-                form: {
-                  ...fields.rack.formDialog.formPattern.form,
-                  refreshItemList: refreshRackList,
-                }
+            <DialogRackCreate
+              open={openRackDialog}
+              setOpen={setOpenRackDialog}
+              dict={fields.rack.formDialog.self.dict}
+              fields={{
+                ...fields.rack.formDialog.formPattern.self.fields
               }}
-              showButton
             />
           </div>
         )}
         {fields.shelf && filteredShelfs && (selectedRack != emptyRack) && (
-          <div className="flex gap-4 items-end">
+          <div className="flex gap-2 items-end">
             <SelectFieldPattern<"Shelf"> 
               name="Shelf"
               element={selectedShelf}
@@ -214,16 +242,13 @@ export default function PositionSelectFieldWithAdd({
               errorMessages={fields.shelf.errorMessages}
               dict={fields.shelf.select.dict}
             />
-            <DialogFormPattern<"Shelf"> 
-              self={fields.shelf.formDialog.self}
-              formPattern={{
-                ...fields.shelf.formDialog.formPattern,
-                form: {
-                  ...fields.shelf.formDialog.formPattern.form,
-                  refreshItemList: refreshShelfList,
-                }
+            <DialogShelfCreate
+              open={openShelfDialog}
+              setOpen={setOpenShelfDialog}
+              dict={fields.shelf.formDialog.self.dict}
+              fields={{
+                ...fields.shelf.formDialog.formPattern.self.fields
               }}
-              showButton
             />
           </div>
         )}

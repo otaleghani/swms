@@ -26,6 +26,9 @@ export type SyncList<T extends SelectableItem> = {
   list: FormMap[T][],
   setList: Dispatch<SetStateAction<FormMap[T][]>>,
   type: T,
+
+  /** Used in selects with add to add the new item as the selected one */
+  setSelected?: Dispatch<SetStateAction<FormMap[T]>>,
 }
 
 // This is used to synchronize full lists like selects.
@@ -34,6 +37,7 @@ export function synchronizeList<T extends SelectableItem>({
   list,
   setList,
   type,
+  setSelected
 }: SyncList<T>) {
   const handleServerSentMessage = (data: ServerSentEventData) => {
     if (!list || data.type !== type) return;
@@ -57,6 +61,12 @@ export function synchronizeList<T extends SelectableItem>({
         data.after.id = data.id;
         list = [...list, data.after];
         setList(list);
+
+        // Testing out new updater
+        if (setSelected) {
+          setSelected(data.after);
+        }
+
         break;
       case "createInBulk": 
         streamer.postMessage({

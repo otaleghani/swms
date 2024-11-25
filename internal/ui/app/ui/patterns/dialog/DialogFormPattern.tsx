@@ -1,7 +1,7 @@
 "use client";
 
 /** React hooks */
-import { useState } from "react";
+import { Dispatch, memo, SetStateAction, useCallback, useState } from "react";
 
 /** Third party components */
 import { EditIcon, PlusIcon, TrashIcon } from "lucide-react";
@@ -27,14 +27,17 @@ export interface DialogFormPatternProps<T extends keyof FormPropsMap> {
   }
   formPattern: FormPropsMap[T];
   showButton?: boolean;
+  open: boolean;
+  setOpen: Dispatch<SetStateAction<boolean>>;
 }
 
 export default function DialogFormPattern<T extends keyof FormPropsMap>({
   self,
   formPattern,
   showButton,
+  open,
+  setOpen
 }: DialogFormPatternProps<T>) {
-  const [open, setOpen] = useState(false);
 
   const DialogFormPatternBody = () => {
     return (
@@ -61,6 +64,8 @@ export default function DialogFormPattern<T extends keyof FormPropsMap>({
         <>
           <DialogTrigger asChild>
             <Button
+              type="submit"
+              form={formPattern.form.formName}
               size="sm"
             >{self.dict.trigger.label}</Button>
           </DialogTrigger>
@@ -74,7 +79,7 @@ export default function DialogFormPattern<T extends keyof FormPropsMap>({
             <Button 
               size="sm"
               variant="outline"
-              className="aspect-square p-0"
+              className="aspect-square p-0 h-10 w-10"
             ><PlusIcon className="w-4 h-4"/></Button>
           </DialogTrigger>
         </>
@@ -87,7 +92,7 @@ export default function DialogFormPattern<T extends keyof FormPropsMap>({
             <Button 
               size="sm"
               variant="outline"
-              className="aspect-square p-0"
+              className="aspect-square p-0 h-10 w-10"
             ><EditIcon className="w-4 h-4"/></Button>
           </DialogTrigger>
         </>
@@ -100,7 +105,7 @@ export default function DialogFormPattern<T extends keyof FormPropsMap>({
             <Button 
               size="sm"
               variant="outline"
-              className="aspect-square p-0"
+              className="aspect-square p-0 h-10 w-10"
             ><TrashIcon className="w-4 h-4"/></Button>
           </DialogTrigger>
         </>
