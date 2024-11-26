@@ -13,11 +13,11 @@ import (
 
 func getMedia(db *database.Database) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-	  token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
-    if err := checkAccessToken(token, db); err != nil {
-      ErrorResponse{Message: err.Error()}.r401(w, r)
-      return
-    }
+	  //token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
+    //if err := checkAccessToken(token, db); err != nil {
+    //  ErrorResponse{Message: err.Error()}.r401(w, r)
+    //  return
+    //}
     filePath := "." + r.URL.Path
     if _, err := os.Stat(filePath); os.IsNotExist(err) {
 			ErrorResponse{Message: "Not found"}.r404(w, r)
@@ -28,7 +28,7 @@ func getMedia(db *database.Database) http.HandlerFunc {
 }
 
 type BodyRequestPostMedia struct {
-  Blob string `json:"blob"`
+  Blob string `json:"encodedImages"`
   Item_id string `json:"item"`
   // Extention string `json:"extension"`
   // Images: []database.Item_image;

@@ -71,11 +71,11 @@ export const VariantsFormFields = ({
           />
           <InputPattern 
             field="height"
-            dict={fields.heigth.dict}
-            defaultValue={String(result?.heigth)}
+            dict={fields.height.dict}
+            defaultValue={String(result?.height)}
             className=""
             label={true}
-            errorMessages={errorMessages.heigth as string[]}
+            errorMessages={errorMessages.height as string[]}
           />
           <InputPattern 
             field="weight"

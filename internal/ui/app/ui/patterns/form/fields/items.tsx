@@ -1,3 +1,4 @@
+"use client"
 /** Local components */
 import TagsSelectFieldsWithAdd from "@/app/ui/modules/tags/TagsSelectFieldsWithAdd";
 import PositionSelectFieldWithAdd from "@/app/ui/modules/positions/PositionSelectFieldWithAdd";
@@ -188,6 +189,22 @@ export const ItemCompleteFormFields = ({
       </div>
     </div>
 
+    {
+      // Here I need to add the variants data, so I'll need to handle
+      // the useStates of the variantsJSON and the codesJSON here.
+    }
+
+    {
+      //<div className="mb-4 p-5 w-full">
+      //  <h3 className="font-semibold pb-2">{dict?.sections.images}</h3>
+      //  <div className="xl:grid-cols-1 gap-2">
+      //    <SheetAddVariant />
+      //    here the list of the variants...
+      //    With the different codes or a counter for the codes?
+      //  </div>
+      //</div>
+    }
+
     <input 
       type="hidden" 
       name="variants" 
@@ -196,6 +213,6 @@ export const ItemCompleteFormFields = ({
       type="hidden" 
       name="codes" 
       value={fields.codesJSON.data} />
-    <input type="hidden" name="type" value="Item" />
+    <input type="hidden" name="type" value="ItemComplete" />
   </>
 )}

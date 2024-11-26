@@ -158,21 +158,6 @@ export async function validateItemComplete(
     return state;
   }
 
-  //if (state.result.id) {
-  //  state = await validateExisting(
-  //    "Item", 
-  //    state, 
-  //    state.result.id, 
-  //    locale
-  //  );
-  //}
-
-  if (!state.result) {
-    state.error = true;
-    state.message = dict.form.messages.errors.empty_after;
-    return state;
-  }
-
   (state.errorMessages.name = validateString(
     state.result.name as string, 
     dict.form.fields.name.validation, 
@@ -196,7 +181,7 @@ export async function validateItemComplete(
       required: true,
     })).length != 0 && (state.error = true);
 
-    if (await checkExisting("Zone", state.result.zone)) {
+    if (!await checkExisting("Zone", state.result.zone)) {
       state.errorMessages.zoneWithAdd.push(
         dict.form.fields.zones.validation.not_found);
       state.error = true;
@@ -210,7 +195,7 @@ export async function validateItemComplete(
       required: true,
     })).length != 0 && (state.error = true);
 
-    if (await checkExisting("Aisle", state.result.aisle)) {
+    if (!await checkExisting("Aisle", state.result.aisle)) {
       state.errorMessages.aisleWithAdd.push(
         dict.form.fields.aisles.validation.not_found);
       state.error = true;
@@ -224,7 +209,7 @@ export async function validateItemComplete(
       required: true,
     })).length != 0 && (state.error = true);
 
-    if (await checkExisting("Rack", state.result.rack)) {
+    if (!await checkExisting("Rack", state.result.rack)) {
       state.errorMessages.rackWithAdd.push(
         dict.form.fields.racks.validation.not_found);
       state.error = true;
@@ -238,7 +223,7 @@ export async function validateItemComplete(
       required: true,
     })).length != 0 && (state.error = true);
 
-    if (await checkExisting("Shelf", state.result.shelf)) {
+    if (!await checkExisting("Shelf", state.result.shelf)) {
       state.errorMessages.shelfWithAdd.push(
         dict.form.fields.shelfs.validation.not_found);
       state.error = true;
@@ -252,7 +237,7 @@ export async function validateItemComplete(
       required: true,
     })).length != 0 && (state.error = true);
 
-    if (await checkExisting("Category", state.result.category)) {
+    if (!await checkExisting("Category", state.result.category)) {
       state.errorMessages.categoryWithAdd.push(
         dict.form.fields.categories.validation.not_found);
       state.error = true;
@@ -266,7 +251,7 @@ export async function validateItemComplete(
       required: true,
     })).length != 0 && (state.error = true);
 
-    if (await checkExisting("Subcategory", state.result.subcategory)) {
+    if (!await checkExisting("Subcategory", state.result.subcategory)) {
       state.errorMessages.subcategoryWithAdd.push(
         dict.form.fields.subcategories.validation.not_found);
       state.error = true;
@@ -274,6 +259,7 @@ export async function validateItemComplete(
   }
 
   if (state.result.images) {
+
     const { errors, images } = await validateImages(state.result.images)
     if (errors.length != 0) {
       state.errorMessages.images = errors;
@@ -317,9 +303,9 @@ export async function validateItemComplete(
     )).length != 0 && (state.error = true);
   }
 
-  if (state.result.heigth) {
-    (state.errorMessages.heigth = validateNumber(
-      String(state.result.heigth), 
+  if (state.result.height) {
+    (state.errorMessages.height = validateNumber(
+      String(state.result.height), 
       dict.form.fields.height.validation, 
       VALIDATION_SETTINGS.bigUnsignedNumber.minLength,
       VALIDATION_SETTINGS.bigUnsignedNumber.maxLength,

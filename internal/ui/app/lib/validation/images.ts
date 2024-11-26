@@ -16,7 +16,7 @@ export default async function validateImages(images: File[]) {
         fit: 'contain',
       })
       .jpeg({ 
-        mozjpeg: true,
+        mozjpeg: false,
         quality: 50,
       })
       .toBuffer();

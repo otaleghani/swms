@@ -3,7 +3,7 @@ package database
 type Item_image struct {
   Id string `json:"id"`
   Uri string `json:"uri"`
-  Item_id string `json:"item_id"`
+  Item_id string `json:"item"`
   // Variant_id string `json:"variant_id"`
 }
 

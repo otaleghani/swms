@@ -4,7 +4,6 @@
 import {
   Sheet,
   SheetContent,
-  SheetTrigger,
 } from "@/app/ui/components/sheet"
 
 interface SheetWrapperProps {

@@ -76,7 +76,7 @@ export type Item = {
   id?: string;
   name: string;
   description: string;
-  archive: boolean;
+  isArchive: boolean;
   zone: string;
   aisle: string;
   rack: string;

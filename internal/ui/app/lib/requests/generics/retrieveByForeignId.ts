@@ -35,6 +35,8 @@ type ForeignTypeMap = {
     // K extends "SupplierCodes" ? "Supplier" :
     K extends "ItemWithSupplierCodes" ? "Supplier" :
 
+    K extends "Items" ? "Zone" | "Aisle" | "Rack" | "Shelf" | "Category" | "Subcategory" :
+
     K extends "SupplierCodes" ? "Supplier" :
     never;
 }
@@ -85,6 +87,14 @@ const options: MapOptions = {
     path: "supplier/{{id}}/codes",
     type: "SupplierCodes"
   },
+
+  "Items_Zone": { path: "zones/{{id}}/items", type: "Items" },
+  "Items_Aisle": { path: "aisles/{{id}}/items", type: "Items" },
+  "Items_Rack": { path: "racks/{{id}}/items", type: "Items" },
+  "Items_Shelf": { path: "shelfs/{{id}}/items", type: "Items" },
+  "Items_Category": { path: "categories/{{id}}/items", type: "Items" },
+  "Items_Subcategory": { path: "subcategories/{{id}}/items", type: "Items" },
+
   "SupplierCodes_Supplier": { path: "suppliers/{{id}}/supplier-codes", type: "SupplierCodes"},
 
 }

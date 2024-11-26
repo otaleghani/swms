@@ -8,6 +8,7 @@ import { fieldsDefaultProps } from "@/app/lib/types/form/fields";
 import { Zones } from "@/app/lib/types/data/zones";
 import { defaultZoneFormState } from "@/app/lib/types/data/zones";
 import { emptyZone } from "@/app/lib/types/data/zones";
+import SheetAddVariant from "@/app/ui/modules/variants/SheetAddVariant";
 
 export default async function PageTest() {
   const dict = await getDictionary("en");
@@ -56,6 +57,7 @@ export default async function PageTest() {
 
             }}
         />
+        <SheetAddVariant />
     </>
   )
 }

@@ -27,8 +27,8 @@ export interface DialogFormPatternProps<T extends keyof FormPropsMap> {
   }
   formPattern: FormPropsMap[T];
   showButton?: boolean;
-  open: boolean;
-  setOpen: Dispatch<SetStateAction<boolean>>;
+  open?: boolean;
+  setOpen?: Dispatch<SetStateAction<boolean>>;
 }
 
 export default function DialogFormPattern<T extends keyof FormPropsMap>({
@@ -64,8 +64,8 @@ export default function DialogFormPattern<T extends keyof FormPropsMap>({
         <>
           <DialogTrigger asChild>
             <Button
-              type="submit"
-              form={formPattern.form.formName}
+              //type="submit"
+              //form={formPattern.form.formName}
               size="sm"
             >{self.dict.trigger.label}</Button>
           </DialogTrigger>
@@ -118,8 +118,8 @@ export default function DialogFormPattern<T extends keyof FormPropsMap>({
       <DialogWrapper 
         Body={DialogFormPatternBody}
         Trigger={DialogFormPatternTrigger}
-        open={open}
-        setOpen={setOpen}
+        open={open as boolean}
+        setOpen={setOpen as Dispatch<SetStateAction<boolean>>}
         dict={self.dict}
       />
     </>
