@@ -10,7 +10,6 @@ export const RackFormFields = ({
   result,
   errorMessages
 }: FormFieldsPropsWithDictCompleteMap["Rack"]) => { 
-
   let defaultZone = result?.zone ? 
     fields.zone.list.find(i => i.id === result.zone) : undefined;
   let defaultAisle = result?.aisle ? 

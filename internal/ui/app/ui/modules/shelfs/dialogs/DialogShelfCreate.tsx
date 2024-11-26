@@ -15,6 +15,7 @@ import { InputFieldProps, SelectFieldProps } from "@/app/lib/types/form/fields";
 import { fieldsDefaultProps } from "@/app/lib/types/form/fields";
 import { defaultShelfFormState } from "@/app/lib/types/data/shelfs";
 import { Dispatch, SetStateAction, useMemo } from "react";
+import { Rack } from "@/app/lib/types/data/racks";
 
 interface Props {
   dict: DictDialog;
@@ -27,13 +28,15 @@ interface Props {
   },
   open: boolean,
   setOpen: Dispatch<SetStateAction<boolean>>,
+  defaultRack: Rack
 }
 
 export default function DialogShelfCreate({
   fields,
   dict,
   open,
-  setOpen
+  setOpen,
+  defaultRack
 }: Props) {
 
   return (
@@ -61,7 +64,16 @@ export default function DialogShelfCreate({
           form: {
             formName: "NewAddShelfSus",
             formAction: createFormAction,
-            initialState: defaultShelfFormState,
+            initialState: {
+              ...defaultShelfFormState,
+              result: {
+                id: "",
+                name: "",
+                zone: defaultRack.zone ? defaultRack.zone : "",
+                aisle: defaultRack.aisle ? defaultRack.aisle : "",
+                rack: defaultRack.id ? defaultRack.id : "",
+              }
+            }
           }
         }}
       />

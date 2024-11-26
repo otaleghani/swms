@@ -18,12 +18,11 @@ import { Shelf, emptyShelf } from "@/app/lib/types/data/shelfs";
 import { SelectFieldProps } from "@/app/lib/types/form/fields";
 
 /** Actions */
-import { addNewItemToList, filterList } from "../../patterns/form/select/action";
+import { filterList } from "../../patterns/form/select/action";
 import DialogZoneCreate from "../zones/dialogs/DialogZoneCreate";
 import DialogAisleCreate from "../aisles/dialogs/DialogAisleCreate";
 import DialogRackCreate from "../racks/dialogs/DialogRackCreate";
 import DialogShelfCreate from "../shelfs/dialogs/DialogShelfCreate";
-//import SelectFieldWithAddPattern from "../../patterns/form/select/SelectFieldWithAddPattern";
 
 interface PositionSelectFieldWithAddProps {
   fields: {
@@ -83,7 +82,7 @@ export default function PositionSelectFieldWithAdd({
   const [openRackDialog, setOpenRackDialog] = useState(false);
   const [openShelfDialog, setOpenShelfDialog] = useState(false);
 
-  // ATTENTION: 
+  // ATTENTION: | Solved
   // In the newer version we are using a normal variable instead of useState,
   // so that we could work with the syncher. Here we have to find a way to
   // do the same with the "with add" variants.
@@ -110,7 +109,7 @@ export default function PositionSelectFieldWithAdd({
       synchronizeList<"Aisle">({
         streamer: streamer as Worker,
         list: listAisles,
-        setList: setListZone as React.Dispatch<React.SetStateAction<Aisle[]>>,
+        setList: setListAisles as React.Dispatch<React.SetStateAction<Aisle[]>>,
         type: "Aisle",
         setSelected: setSelectedAisle,
       });
@@ -119,7 +118,7 @@ export default function PositionSelectFieldWithAdd({
       synchronizeList<"Rack">({
         streamer: streamer as Worker,
         list: listRacks,
-        setList: setListZone as React.Dispatch<React.SetStateAction<Rack[]>>,
+        setList: setListRacks as React.Dispatch<React.SetStateAction<Rack[]>>,
         type: "Rack",
         setSelected: setSelectedRack,
       });
@@ -168,6 +167,24 @@ export default function PositionSelectFieldWithAdd({
     setOpenRackDialog(false);
   }, [selectedRack])
 
+  useEffect(() => {
+    setOpenShelfDialog(false);
+  }, [selectedShelf])
+
+  /** 
+  * Here we need to add another useEffect to update the filteredList again
+  * after we update the source list whenever a new item was added.
+  * */
+  useEffect(() => {
+    filterList(listAisles, "zone", selectedZone.id, setFilteredAisles);
+  }, [listAisles])
+  useEffect(() => {
+    filterList(listRacks, "aisle", selectedAisle.id, setFilteredRacks);
+  }, [listRacks])
+  useEffect(() => {
+    filterList(listShelfs, "rack", selectedRack.id, setFilteredShelfs);
+  }, [listShelfs])
+
   return (
     <div>
       <div>
@@ -209,6 +226,7 @@ export default function PositionSelectFieldWithAdd({
               fields={{
                 ...fields.aisle.formDialog.formPattern.self.fields
               }}
+              defaultZone={selectedZone}
             />
           </div>
         )}
@@ -229,6 +247,7 @@ export default function PositionSelectFieldWithAdd({
               fields={{
                 ...fields.rack.formDialog.formPattern.self.fields
               }}
+              defaultAisle={selectedAisle}
             />
           </div>
         )}
@@ -249,6 +268,7 @@ export default function PositionSelectFieldWithAdd({
               fields={{
                 ...fields.shelf.formDialog.formPattern.self.fields
               }}
+              defaultRack={selectedRack}
             />
           </div>
         )}

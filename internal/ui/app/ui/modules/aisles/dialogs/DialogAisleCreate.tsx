@@ -15,6 +15,7 @@ import { InputFieldProps, SelectFieldProps } from "@/app/lib/types/form/fields";
 import { fieldsDefaultProps } from "@/app/lib/types/form/fields";
 import { defaultAisleFormState } from "@/app/lib/types/data/aisles";
 import { Dispatch, SetStateAction, useMemo } from "react";
+import { Zone } from "@/app/lib/types/data/zones";
 
 interface Props {
   dict: DictDialog;
@@ -25,13 +26,15 @@ interface Props {
   },
   open: boolean,
   setOpen: Dispatch<SetStateAction<boolean>>,
+  defaultZone: Zone
 }
 
 export default function DialogAisleCreate({
   fields,
   dict,
   open,
-  setOpen
+  setOpen,
+  defaultZone,
 }: Props) {
 
   return (
@@ -57,7 +60,14 @@ export default function DialogAisleCreate({
           form: {
             formName: "NewAddAisleSus",
             formAction: createFormAction,
-            initialState: defaultAisleFormState,
+            initialState: {
+              ...defaultAisleFormState,
+              result: {
+                id: "",
+                name: "",
+                zone: defaultZone.id ? defaultZone.id : "",
+              }
+            }
           }
         }}
       />

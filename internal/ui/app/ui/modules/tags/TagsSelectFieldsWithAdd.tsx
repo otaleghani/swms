@@ -7,11 +7,11 @@ import { useState, useEffect } from "react";
 import SelectFieldPattern from "../../patterns/form/select/SelectFieldPattern";
 
 import { Category, emptyCategory } from "@/app/lib/types/data/categories";
-import { Subcategory, emptySubcategory } from "@/app/lib/types/data/subcategories";
+import { Subcategory, defaultSubcategoryFormState, emptySubcategory } from "@/app/lib/types/data/subcategories";
 import { SelectFieldProps } from "@/app/lib/types/form/fields";
 import DialogFormPattern, { DialogFormPatternProps } from "../../patterns/dialog/DialogFormPattern";
 
-import { filterList, addNewItemToList } from "../../patterns/form/select/action";
+import { filterList } from "../../patterns/form/select/action";
 import streamer from "@/app/lib/workers";
 import { synchronizeList } from "@/app/lib/synchronizers/lists";
 
@@ -83,7 +83,16 @@ export default function TagsSelectFieldsWithAdd({
       }
     }
     if (selectedCategory.name == "") { setSelectedCategory(emptyCategory); }
-  }, [selectedCategory])
+    setOpenCategoryDialog(false);
+  }, [selectedCategory]);
+
+  useEffect(() => {
+    setOpenSubcategoryDialog(false);
+  }, [selectedSubcategory])
+
+  useEffect(() => {
+    filterList(listSubcategory, "category", selectedCategory.id, setFilteredSubcategory);
+  }, [listSubcategory])
 
   return (
     <div>
@@ -106,7 +115,9 @@ export default function TagsSelectFieldsWithAdd({
                 ...fields.category.formDialog.formPattern,
                 form: {
                   ...fields.category.formDialog.formPattern.form,
-                  //refreshItemList: refreshCategoryList,
+                  initialState: {
+                    ...fields.category.formDialog.formPattern.form.initialState
+                  }
                 }
               }}
               showButton
@@ -131,7 +142,15 @@ export default function TagsSelectFieldsWithAdd({
                 ...fields.subcategory.formDialog.formPattern,
                 form: {
                   ...fields.subcategory.formDialog.formPattern.form,
-                  //refreshItemList: refreshSubcategoryList,
+                  initialState: {
+                    ...defaultSubcategoryFormState,
+                    result: {
+                      id: "",
+                      name: "",
+                      description: "",
+                      category: selectedCategory.id ? selectedCategory.id : "",
+                    }
+                  }
                 }
               }}
               showButton

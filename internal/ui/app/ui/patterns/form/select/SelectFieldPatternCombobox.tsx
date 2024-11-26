@@ -70,14 +70,16 @@ export function SelectFieldPatternCombobox<T extends SelectableItem>({
                     setElement(currentValue === element.name as string + element.id
                     ? { id: "", name: "" } as any
                     : {
-                        id: 
-                          list.find(
-                            (item: any) => item.name + item.id === currentValue
-                        )?.id, 
-                        name: 
-                          list.find(
-                            (item: any) => item.name + item.id === currentValue
-                        )?.name,
+                      ...list.find(
+                        (item: any) => item.name + item.id === currentValue),
+                        //id: 
+                        //  list.find(
+                        //    (item: any) => item.name + item.id === currentValue
+                        //)?.id, 
+                        //name: 
+                        //  list.find(
+                        //    (item: any) => item.name + item.id === currentValue
+                        //)?.name,
                     } as any)
                     setOpen(false)
                   }}

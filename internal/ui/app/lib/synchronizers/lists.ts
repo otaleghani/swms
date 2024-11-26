@@ -64,6 +64,9 @@ export function synchronizeList<T extends SelectableItem>({
 
         // Testing out new updater
         if (setSelected) {
+          //console.log("firedSelected: ", data.type)
+          //console.log(data.after)
+          //console.log(list)
           setSelected(data.after);
         }
 

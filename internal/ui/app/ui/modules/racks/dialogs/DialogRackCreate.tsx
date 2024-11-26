@@ -15,6 +15,7 @@ import { InputFieldProps, SelectFieldProps } from "@/app/lib/types/form/fields";
 import { fieldsDefaultProps } from "@/app/lib/types/form/fields";
 import { defaultRackFormState } from "@/app/lib/types/data/racks";
 import { Dispatch, SetStateAction, useMemo } from "react";
+import { Aisle } from "@/app/lib/types/data/aisles";
 
 interface Props {
   dict: DictDialog;
@@ -26,13 +27,15 @@ interface Props {
   },
   open: boolean,
   setOpen: Dispatch<SetStateAction<boolean>>,
+  defaultAisle: Aisle
 }
 
 export default function DialogRackCreate({
   fields,
   dict,
   open,
-  setOpen
+  setOpen,
+  defaultAisle
 }: Props) {
 
   return (
@@ -59,7 +62,15 @@ export default function DialogRackCreate({
           form: {
             formName: "NewAddRackSus",
             formAction: createFormAction,
-            initialState: defaultRackFormState,
+            initialState: {
+              ...defaultRackFormState,
+              result: {
+                id: "",
+                name: "",
+                zone: defaultAisle.zone ? defaultAisle.zone : "",
+                aisle: defaultAisle.id ? defaultAisle.id : "",
+              }
+            }
           }
         }}
       />
