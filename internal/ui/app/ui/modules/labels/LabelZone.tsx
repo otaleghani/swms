@@ -2,6 +2,7 @@ import { synchronizeElement } from "@/app/lib/synchronizers/element";
 import { SyncState } from "@/app/lib/synchronizers/utils";
 import { Zone } from "@/app/lib/types/data/zones"
 import streamer from "@/app/lib/workers";
+import { Badge } from "../../components/badge";
 import { useState, useEffect, Dispatch, SetStateAction} from "react";
 
 interface Props {
@@ -33,6 +34,6 @@ export default function LabelZone({
         syncState === "update" ? "animate-update" :
         ""
       }
-    >{zone?.name}</a>
+    ><Badge>{zone?.name}</Badge></a>
   )
 }

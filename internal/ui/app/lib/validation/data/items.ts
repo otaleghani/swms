@@ -158,6 +158,7 @@ export async function validateItemComplete(
     return state;
   }
 
+
   (state.errorMessages.name = validateString(
     state.result.name as string, 
     dict.form.fields.name.validation, 
@@ -259,7 +260,6 @@ export async function validateItemComplete(
   }
 
   if (state.result.images) {
-
     const { errors, images } = await validateImages(state.result.images)
     if (errors.length != 0) {
       state.errorMessages.images = errors;

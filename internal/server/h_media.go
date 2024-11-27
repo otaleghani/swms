@@ -28,7 +28,8 @@ func getMedia(db *database.Database) http.HandlerFunc {
 }
 
 type BodyRequestPostMedia struct {
-  Blob string `json:"encodedImages"`
+  // Made Blob an array of strings
+  Blob []string `json:"encodedImages"`
   Item_id string `json:"item"`
   // Extention string `json:"extension"`
   // Images: []database.Item_image;
@@ -50,35 +51,37 @@ func postItemImage(db *database.Database) http.HandlerFunc {
 			return
     }
 
-    var data = database.Item_image{
-     Id: uuid.NewString(),
-      Item_id: req_data.Item_id,
-      // Variant_id: req_data.Variant_id,
+
+
+    for _, v := range req_data.Blob {
+      var data = database.Item_image{
+        Id: uuid.NewString(),
+        Item_id: req_data.Item_id,
+      }
+  	  decodedBlob, err := base64.StdEncoding.DecodeString(v)
+	    if err != nil {
+		  	ErrorResponse{Message: err.Error()}.r500(w, r)
+	    	return
+	    }
+      fileName := "media/" + data.Id + ".jpg"
+      file, err := os.Create(fileName)
+      if err != nil {
+		  	ErrorResponse{Message: err.Error()}.r500(w, r)
+		  	return
+      }
+      defer file.Close()
+      _, err = file.Write(decodedBlob)
+      if err != nil {
+		  	ErrorResponse{Message: err.Error()}.r500(w, r)
+		  	return
+      }
+		  err = db.Insert(data)
+		  if err != nil {
+		  	ErrorResponse{Message: err.Error()}.r500(w, r)
+		  	return
+		  }
     }
 
-  	decodedBlob, err := base64.StdEncoding.DecodeString(req_data.Blob)
-	  if err != nil {
-			ErrorResponse{Message: err.Error()}.r500(w, r)
-	  	return
-	  }
-    fileName := "media/" + data.Id + ".jpg"
-    file, err := os.Create(fileName)
-    if err != nil {
-			ErrorResponse{Message: err.Error()}.r500(w, r)
-			return
-    }
-    defer file.Close()
-    _, err = file.Write(decodedBlob)
-    if err != nil {
-			ErrorResponse{Message: err.Error()}.r500(w, r)
-			return
-    }
-
-		err = db.Insert(data)
-		if err != nil {
-			ErrorResponse{Message: err.Error()}.r500(w, r)
-			return
-		}
 		SuccessResponse{Message: "Row added"}.r201(w, r)
   }
 }

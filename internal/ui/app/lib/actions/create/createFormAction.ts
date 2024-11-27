@@ -13,10 +13,17 @@ export async function createFormAction<K extends keyof FormMap>(
   let locale = formData.get("locale");
   let type = formData.get("type");
 
+
   formData.forEach((value, key) => {
     if (key in result) {
       const currentValue = (result as any)[key];
-      if (typeof currentValue === "number") {
+      if (typeof currentValue === "object") {
+        if (!result.hasOwnProperty(key)) {
+          (result as any)[key] = [value]
+        } else {
+          (result as any)[key].push(value)
+        }
+      } else if (typeof currentValue === "number") {
         (result as any)[key] = Number(value);
       } else if (typeof currentValue === "boolean") {
         (result as any)[key] = value === "true" || value === "on";

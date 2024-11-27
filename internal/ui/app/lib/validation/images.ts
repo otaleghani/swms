@@ -13,7 +13,8 @@ export default async function validateImages(images: File[]) {
       const buffer = Buffer.from(await images[i].arrayBuffer());
       const optBuffer = await sharp(buffer)
       .resize(1500, 1500, {
-        fit: 'contain',
+        fit: "inside",
+        background: {r:255, b:255, g:255},
       })
       .jpeg({ 
         mozjpeg: false,

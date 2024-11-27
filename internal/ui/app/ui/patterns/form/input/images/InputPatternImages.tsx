@@ -127,10 +127,11 @@ export default function InputImages({
         name="images" 
         accept="image/png, image/jpeg, image/jpg"
         className="hidden"
-        multiple />
+        multiple 
+      />
       <div className="mt-3 grid grid-cols-[repeat(auto-fill,minmax(6rem,1fr))] gap-2">
         {previewImages.map((image) => (
-          <div>
+          <div key={image.id}>
             <div key={image.id} className="relative aspect-square w-24">
               <img 
                 key={image.id} 

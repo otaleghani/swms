@@ -24,7 +24,7 @@ import { DictDialog } from "@/app/lib/types/dictionary/misc";
 import { DictFormButton } from "@/app/lib/types/dictionary/form";
 import { replaceFormAction } from "@/app/lib/actions/replace/replaceFormAction";
 import { defaultReplaceFormState } from "@/app/lib/types/data/replacer";
-import { synchronizeElement } from "@/app/lib/synchronizers/genericSync";
+import { synchronizeElement } from "@/app/lib/synchronizers/element";
 
 interface ZoneCardProps {
   item: Zone, 
