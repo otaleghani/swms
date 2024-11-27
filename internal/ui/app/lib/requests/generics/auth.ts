@@ -18,6 +18,7 @@ export async function login(payload: LoginRequestBody) {
 };
 
 export async function register(payload: RegisterRequestBody) {
+  console.log("fired register")
   const response = await fetchData<undefined>({
     path: "users/",
     method: "POST",

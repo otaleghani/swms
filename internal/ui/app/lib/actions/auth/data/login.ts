@@ -10,7 +10,6 @@ export async function authLogin(
   locale: string,
 ) {
   const response = await login(state.result as LoginRequestBody);
-  console.log(response)
 
   const stateValidation = await validateLoginResponse(
     response,

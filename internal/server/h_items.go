@@ -285,6 +285,120 @@ func getItemsByKeyWithExtra(db *database.Database, key ItemKeyFilter) http.Handl
 			return
 		}
 
+    // Here its creating itemComplete
+    var data []ItemComplete
+    for i := 0; i < len(resultedItems); i++ {
+      variants, err := db.SelectVariants("Item_id = ?", resultedItems[i].Id)
+      if err != nil {
+		  	ErrorResponse{Message: err.Error()}.r500(w, r)
+		  	return
+      }
+      category, err := db.SelectCategoryById(resultedItems[i].Category_id)
+      if err != nil {
+		  	ErrorResponse{Message: err.Error()}.r500(w, r)
+		  	return
+      }
+      subcategory, err := db.SelectSubcategoryById(resultedItems[i].Subcategory_id)
+      if err != nil {
+		  	ErrorResponse{Message: err.Error()}.r500(w, r)
+		  	return
+      }
+      images, err := db.SelectItemImagesByItemId(resultedItems[i].Id)
+      if err != nil {
+		  	ErrorResponse{Message: err.Error()}.r500(w, r)
+		  	return
+      }
+
+      data = append(data, ItemComplete{
+        Item: resultedItems[i],
+        Variants: variants,
+        Images: images,
+        Category: category,
+        Subcategory: subcategory,
+      })
+    }
+
+		SuccessResponse{
+      Data: data,
+      Page: page,
+      PerPage: perPage,
+      TotalItems: totalItems,
+      TotalPages: totalPages,
+    }.r200(w, r)
+  }
+}
+
+// This version returns just the items
+func getItemsByKey(db *database.Database, key ItemKeyFilter) http.HandlerFunc {
+  return func(w http.ResponseWriter, r *http.Request) {
+    token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
+    if err := checkAccessToken(token, db); err != nil {
+      ErrorResponse{Message: err.Error()}.r401(w, r)
+      return
+    }
+
+    path := r.PathValue("id")
+    condition := string(key) + " = ?"
+    rows, err := db.SelectItems(condition, path)
+    //rows, err := db.SelectItems("Zone_id = ?", path)
+    if err != nil {
+      ErrorResponse{Message: err.Error()}.r500(w, r)
+    }
+
+    // Filters data
+    queryFilters := r.URL.Query().Get("filters")
+    filteredRows := rows
+    if queryFilters != "" {
+		  var filters ItemsFilters
+		  err = json.Unmarshal([]byte(queryFilters), &filters)
+		  if err == nil {
+        if filters.IsArchived != "" {
+          filteredRows, err = FilterByBool(
+            filteredRows, "IsArchived", filters.IsArchived)
+        }
+        if filters.Zone != "" {
+          filteredRows, err = FilterByField(
+            filteredRows, "Zone", filters.Zone)
+        }
+        if filters.Aisle != "" {
+          filteredRows, err = FilterByField(
+            filteredRows, "Aisle", filters.Aisle)
+        }
+        if filters.Rack != "" {
+          filteredRows, err = FilterByField(
+            filteredRows, "Rack", filters.Rack)
+        }
+        if filters.Shelf != "" {
+          filteredRows, err = FilterByField(
+            filteredRows, "Shelf", filters.Shelf)
+        }
+        if filters.Category != "" {
+          filteredRows, err = FilterByField(
+            filteredRows, "Category", filters.Category)
+        }
+        if filters.Subcategory != "" {
+          filteredRows, err = FilterByField(
+            filteredRows, "Subcategory", filters.Subcategory)
+        }
+        if filters.Search != "" {
+          filteredRows, err = FilterBySearch(
+            filteredRows, "Name", filters.Search)
+        }
+		  }
+    }
+
+    // paginationOff is not even checked because this would be called only
+    // in paginated situations
+    queryPage := r.URL.Query().Get("page")
+    queryPerPage := r.URL.Query().Get("perPage")
+    resultedItems, page, perPage, totalItems, totalPages, err := 
+      paginateItems(queryPage, queryPerPage, filteredRows)
+		if err != nil {
+			ErrorResponse{Message: err.Error()}.r500(w, r)
+			return
+		}
+
+    // Here its creating itemComplete
     var data []ItemComplete
     for i := 0; i < len(resultedItems); i++ {
       variants, err := db.SelectVariants("Item_id = ?", resultedItems[i].Id)

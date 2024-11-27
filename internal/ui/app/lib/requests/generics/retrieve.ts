@@ -47,6 +47,7 @@ const options: RetrieveMapOptions = {
   "ProductImages":          { path: "product-images/",      type: "ProductImage" },
   "Clients":                { path: "clients/",             type: "Clients" },
   "Users":                  { path: "users/",               type: "Users" },
+  "Units":                  { path: "units/",               type: "Units" },
 };
 
 interface RetrieveData<T extends keyof RetrieveMapOptions> {

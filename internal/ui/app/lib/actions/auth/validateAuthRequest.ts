@@ -11,7 +11,6 @@ export async function validateAuthRequest<K extends keyof AuthTypes>(
   locale: string,
 ) {
   let result;
-
   switch (type) {
     case "Login":
       result = await authLogin(state as FormState<"Login">, locale);
@@ -19,6 +18,7 @@ export async function validateAuthRequest<K extends keyof AuthTypes>(
 
     case "Register":
       result = await authRegister(state as FormState<"Register">, locale);
+      //console.log("got here")
       break;
 
     default:

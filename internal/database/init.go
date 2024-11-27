@@ -28,8 +28,13 @@ func Init(path string) (Database, error) {
     return Database{}, err    
   }
   db := Database{Sorm:sorm}
+
   // Create different tables
   err = db.Sorm.CreateTable(Metadata{})
+  if err != nil {
+    return Database{}, err
+  }
+  err = db.Sorm.CreateTable(Unit{})
   if err != nil {
     return Database{}, err
   }
@@ -135,6 +140,34 @@ func Init(path string) (Database, error) {
   err = db.Insert(baseSettings)
   if err != nil {
     return Database{}, err
+  }
+
+  // Add default units
+  baseUnits := []Unit{
+    {Id: "si_mm", Type: "length"},
+    {Id: "si_m", Type: "length"},
+    {Id: "si_km", Type: "length"},
+
+    {Id: "us_thou", Type: "length"},
+    {Id: "us_inch", Type: "length"},
+    {Id: "us_foot", Type: "length"},
+    {Id: "us_yard", Type: "length"},
+
+    {Id: "si_mg", Type: "weight"},
+    {Id: "si_g", Type: "weight"},
+    {Id: "si_kg", Type: "weight"},
+    {Id: "si_t", Type: "weight"},
+
+    {Id: "us_oz", Type: "weight"},
+    {Id: "us_lb", Type: "weight"},
+    {Id: "us_ton", Type: "weight"},
+  }
+
+  for _, v := range baseUnits {
+    err = db.Insert(v)
+    if err != nil {
+      return Database{}, err
+    }
   }
 
   return db, nil

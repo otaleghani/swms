@@ -2,9 +2,7 @@ package server
 
 import (
 	"encoding/json"
-	// "fmt"
 	"net/http"
-	// "time"
 
 	"github.com/google/uuid"
 	"github.com/otaleghani/swms/internal/database"

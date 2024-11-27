@@ -6,11 +6,18 @@ type Variant struct {
   Description string `json:"description"`
   Quantity int64 `json:"quantity"`
   Identifier string `json:"identifier"`
+
   Length float64 `json:"length"`
   Width float64 `json:"width"`
   Height float64 `json:"heigth"`
+  Weight float64 `json:"weight"`
   DefaultVariant bool `json:"defaultVariant"`
-  Item_id string `json:"item_id"`
+  Item_id string `json:"item"`
+
+  Unit_Length_id string `json:"lengthUnit"`
+  Unit_Width_id string `json:"widthUnit"`
+  Unit_Height_id string `json:"heightUnit"`
+  Unit_Weight_id string `json:"weightUnit"`
 }
 
 func (db *Database) SelectVariants(condition string, args ...interface{}) ([]Variant, error) {

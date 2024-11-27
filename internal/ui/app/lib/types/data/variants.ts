@@ -12,6 +12,11 @@ export type Variant = {
   weight?: number;
   isDefaultVariant: boolean;
   item: string;
+
+  lengthUnit?: string;
+  widthUnit?: string;
+  heightUnit?: string;
+  weightUnit?: string;
 }
 export type Variants = Variant[];
 

@@ -1,7 +1,10 @@
 package database
+
 import (
-  "errors"
-  "golang.org/x/crypto/bcrypt"
+	"errors"
+	//"fmt"
+
+	"golang.org/x/crypto/bcrypt"
 )
 
 type User struct {
@@ -37,6 +40,13 @@ func (db *Database) InsertUser(user User) error {
     return err
   }
   user.Password = string(hash)
+
+  //err = bcrypt.CompareHashAndPassword(
+  //  []byte(user.Password), 
+  //  []byte(user.Password))
+  //if err != nil {
+  //  fmt.Println(err)
+  //}
 
   err = db.Sorm.InsertInto(user)
   if err != nil {

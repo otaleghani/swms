@@ -50,7 +50,6 @@ export async function authFormAction<K extends keyof AuthTypes>(
 
   if (!requestValidation.error && requestValidation.misc) {
     // Everything went a-okay, setting the access token
-    //requestValidation
     cookies().set({
       name: "access",
       value: requestValidation.misc.accessToken,
