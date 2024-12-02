@@ -14,6 +14,15 @@ type User struct {
   Password string `json:"-"`
 }
 
+// This struct is used to handle incoming POST requests for new users
+type NewUser struct {
+  Id string `json:"id"`
+  Name string `json:"name"`
+  Surname string `json:"surname"`
+  Email string `json:"email"`
+  Password string `json:"password"`
+}
+
 func (db *Database) SelectUser(condition string, args ...interface{}) ([]User, error) {
   list := []User{}
   err := db.Sorm.Select(&list, condition, args...)
@@ -38,7 +47,6 @@ func (db *Database) InsertUser(user User) error {
   if err != nil {
     return err
   }
-  oldPassoword := user.Password
   user.Password = string(hash)
 
   //err = bcrypt.CompareHashAndPassword(

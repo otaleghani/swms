@@ -7,7 +7,6 @@ import { LoginRequestBody, LoginResponseBody, RegisterRequestBody } from "../../
 import fetchData from "../fetch";
 
 export async function login(payload: LoginRequestBody) {
-  console.log(payload)
   const response = await fetchData<LoginResponseBody>({
     path: "login/",
     method: "POST",

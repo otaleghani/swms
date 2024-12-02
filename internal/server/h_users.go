@@ -34,7 +34,7 @@ func getUsers(db *database.Database) http.HandlerFunc {
 
 func postUsers(db *database.Database) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		var data database.User
+		var data database.NewUser
 		err := json.NewDecoder(r.Body).Decode(&data)
 		if err != nil {
 			ErrorResponse{Message: err.Error()}.r400(w, r)
@@ -50,7 +50,9 @@ func postUsers(db *database.Database) http.HandlerFunc {
 			return
 		}
 		data.Id = uuid.NewString()
-		err = db.InsertUser(data)
+
+    var dataToInser = database.User(data)
+		err = db.InsertUser(dataToInser)
 		if err != nil {
 			ErrorResponse{Message: err.Error()}.r500(w, r)
 			return

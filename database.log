@@ -1,0 +1,1611 @@
+2024/12/02 15:08:07 sorm.LOG:       sql.Open at path test.db
+2024/12/02 15:08:07 sorm.LOG:       foreign keys activated
+2024/12/02 15:08:07 sorm.LOG:       CREATE TABLE IF NOT EXISTS Metadata (Secret TEXT);
+2024/12/02 15:08:07 sorm.LOG:       CREATE TABLE IF NOT EXISTS Unit (Id TEXT PRIMARY KEY, Type TEXT);
+2024/12/02 15:08:07 sorm.LOG:       CREATE TABLE IF NOT EXISTS User (Id TEXT PRIMARY KEY, Name TEXT, Surname TEXT, Email TEXT, Password TEXT);
+2024/12/02 15:08:07 sorm.LOG:       CREATE TABLE IF NOT EXISTS Zone (Id TEXT PRIMARY KEY, Name TEXT);
+2024/12/02 15:08:07 sorm.LOG:       CREATE TABLE IF NOT EXISTS Aisle (Id TEXT PRIMARY KEY, Name TEXT, Zone_id TEXT DEFAULT 'nil', FOREIGN KEY (Zone_id) REFERENCES Zone(Id) ON UPDATE CASCADE ON DELETE SET DEFAULT);
+2024/12/02 15:08:07 sorm.LOG:       CREATE TABLE IF NOT EXISTS Rack (Id TEXT PRIMARY KEY, Name TEXT, Zone_id TEXT DEFAULT 'nil', Aisle_id TEXT DEFAULT 'nil', FOREIGN KEY (Zone_id) REFERENCES Zone(Id) ON UPDATE CASCADE ON DELETE SET DEFAULT, FOREIGN KEY (Aisle_id) REFERENCES Aisle(Id) ON UPDATE CASCADE ON DELETE SET DEFAULT);
+2024/12/02 15:08:07 sorm.LOG:       CREATE TABLE IF NOT EXISTS Shelf (Id TEXT PRIMARY KEY, Name TEXT, Zone_id TEXT DEFAULT 'nil', Aisle_id TEXT DEFAULT 'nil', Rack_id TEXT DEFAULT 'nil', FOREIGN KEY (Zone_id) REFERENCES Zone(Id) ON UPDATE CASCADE ON DELETE SET DEFAULT, FOREIGN KEY (Aisle_id) REFERENCES Aisle(Id) ON UPDATE CASCADE ON DELETE SET DEFAULT, FOREIGN KEY (Rack_id) REFERENCES Rack(Id) ON UPDATE CASCADE ON DELETE SET DEFAULT);
+2024/12/02 15:08:07 sorm.LOG:       CREATE TABLE IF NOT EXISTS Position (Id TEXT PRIMARY KEY, Name TEXT, Zone_id TEXT DEFAULT 'nil', Aisle_id TEXT DEFAULT 'nil', Rack_id TEXT DEFAULT 'nil', Shelf_id TEXT DEFAULT 'nil', FOREIGN KEY (Zone_id) REFERENCES Zone(Id) ON UPDATE CASCADE ON DELETE SET DEFAULT, FOREIGN KEY (Aisle_id) REFERENCES Aisle(Id) ON UPDATE CASCADE ON DELETE SET DEFAULT, FOREIGN KEY (Rack_id) REFERENCES Rack(Id) ON UPDATE CASCADE ON DELETE SET DEFAULT, FOREIGN KEY (Shelf_id) REFERENCES Shelf(Id) ON UPDATE CASCADE ON DELETE SET DEFAULT);
+2024/12/02 15:08:07 sorm.LOG:       CREATE TABLE IF NOT EXISTS Category (Id TEXT PRIMARY KEY, Name TEXT, Description TEXT);
+2024/12/02 15:08:07 sorm.LOG:       CREATE TABLE IF NOT EXISTS Subcategory (Id TEXT PRIMARY KEY, Name TEXT, Description TEXT, Category_id TEXT DEFAULT 'nil', FOREIGN KEY (Category_id) REFERENCES Category(Id) ON UPDATE CASCADE ON DELETE SET DEFAULT);
+2024/12/02 15:08:07 sorm.LOG:       CREATE TABLE IF NOT EXISTS Item (Id TEXT PRIMARY KEY, Name TEXT, Description TEXT, IsArchive BOOLEAN, Zone_id TEXT DEFAULT 'nil', Aisle_id TEXT DEFAULT 'nil', Rack_id TEXT DEFAULT 'nil', Shelf_id TEXT DEFAULT 'nil', Category_id TEXT DEFAULT 'nil', Subcategory_id TEXT DEFAULT 'nil', FOREIGN KEY (Zone_id) REFERENCES Zone(Id) ON UPDATE CASCADE ON DELETE SET DEFAULT, FOREIGN KEY (Aisle_id) REFERENCES Aisle(Id) ON UPDATE CASCADE ON DELETE SET DEFAULT, FOREIGN KEY (Rack_id) REFERENCES Rack(Id) ON UPDATE CASCADE ON DELETE SET DEFAULT, FOREIGN KEY (Shelf_id) REFERENCES Shelf(Id) ON UPDATE CASCADE ON DELETE SET DEFAULT, FOREIGN KEY (Category_id) REFERENCES Category(Id) ON UPDATE CASCADE ON DELETE SET DEFAULT, FOREIGN KEY (Subcategory_id) REFERENCES Subcategory(Id) ON UPDATE CASCADE ON DELETE SET DEFAULT);
+2024/12/02 15:08:07 sorm.LOG:       CREATE TABLE IF NOT EXISTS Variant (Id TEXT PRIMARY KEY, Name TEXT, Description TEXT, Quantity INTEGER, Identifier TEXT, Length REAL, Width REAL, Height REAL, Weight REAL, DefaultVariant BOOLEAN, Item_id TEXT DEFAULT 'nil', Unit_Length_id TEXT DEFAULT 'nil', Unit_Width_id TEXT DEFAULT 'nil', Unit_Height_id TEXT DEFAULT 'nil', Unit_Weight_id TEXT DEFAULT 'nil', FOREIGN KEY (Item_id) REFERENCES Item(Id) ON UPDATE CASCADE ON DELETE SET DEFAULT, FOREIGN KEY (Unit_Length_id) REFERENCES Unit(Id) ON UPDATE CASCADE ON DELETE SET DEFAULT, FOREIGN KEY (Unit_Width_id) REFERENCES Unit(Id) ON UPDATE CASCADE ON DELETE SET DEFAULT, FOREIGN KEY (Unit_Height_id) REFERENCES Unit(Id) ON UPDATE CASCADE ON DELETE SET DEFAULT, FOREIGN KEY (Unit_Weight_id) REFERENCES Unit(Id) ON UPDATE CASCADE ON DELETE SET DEFAULT);
+2024/12/02 15:08:07 sorm.LOG:       CREATE TABLE IF NOT EXISTS Item_image (Id TEXT PRIMARY KEY, Uri TEXT, Item_id TEXT DEFAULT 'nil', FOREIGN KEY (Item_id) REFERENCES Item(Id) ON UPDATE CASCADE ON DELETE SET DEFAULT);
+2024/12/02 15:08:07 sorm.LOG:       CREATE TABLE IF NOT EXISTS RefreshToken (Id TEXT PRIMARY KEY, Token TEXT, Revoked BOOLEAN);
+2024/12/02 15:08:07 sorm.LOG:       CREATE TABLE IF NOT EXISTS Supplier (Id TEXT PRIMARY KEY, Name TEXT, Description TEXT);
+2024/12/02 15:08:07 sorm.LOG:       CREATE TABLE IF NOT EXISTS SupplierCode (Id TEXT PRIMARY KEY, Code TEXT, Supplier_id TEXT DEFAULT 'nil', Item_id TEXT DEFAULT 'nil', Variant_id TEXT DEFAULT 'nil', FOREIGN KEY (Supplier_id) REFERENCES Supplier(Id) ON UPDATE CASCADE ON DELETE SET DEFAULT, FOREIGN KEY (Item_id) REFERENCES Item(Id) ON UPDATE CASCADE ON DELETE SET DEFAULT, FOREIGN KEY (Variant_id) REFERENCES Variant(Id) ON UPDATE CASCADE ON DELETE SET DEFAULT);
+2024/12/02 15:08:07 sorm.LOG:       CREATE TABLE IF NOT EXISTS Operation (Id TEXT PRIMARY KEY, Date TEXT, Quantity INTEGER, User_id TEXT DEFAULT 'nil', Item_id TEXT DEFAULT 'nil', Variant_id TEXT DEFAULT 'nil', FOREIGN KEY (User_id) REFERENCES User(Id) ON UPDATE CASCADE ON DELETE SET DEFAULT, FOREIGN KEY (Item_id) REFERENCES Item(Id) ON UPDATE CASCADE ON DELETE SET DEFAULT, FOREIGN KEY (Variant_id) REFERENCES Variant(Id) ON UPDATE CASCADE ON DELETE SET DEFAULT);
+2024/12/02 15:08:07 sorm.LOG:       CREATE TABLE IF NOT EXISTS Product (Id TEXT PRIMARY KEY, Name TEXT, Description TEXT);
+2024/12/02 15:08:07 sorm.LOG:       CREATE TABLE IF NOT EXISTS ProductImage (Id TEXT PRIMARY KEY, Url TEXT, Product_id TEXT DEFAULT 'nil', FOREIGN KEY (Product_id) REFERENCES Product(Id) ON UPDATE CASCADE ON DELETE SET DEFAULT);
+2024/12/02 15:08:07 sorm.LOG:       CREATE TABLE IF NOT EXISTS Client (Id TEXT PRIMARY KEY, Name TEXT, Surname TEXT, IsBusiness BOOLEAN);
+2024/12/02 15:08:07 sorm.LOG:       CREATE TABLE IF NOT EXISTS TicketState (Id TEXT PRIMARY KEY, Name TEXT, Description TEXT);
+2024/12/02 15:08:07 sorm.LOG:       CREATE TABLE IF NOT EXISTS TicketType (Id TEXT PRIMARY KEY, Name TEXT, Description TEXT);
+2024/12/02 15:08:07 sorm.LOG:       CREATE TABLE IF NOT EXISTS Ticket (Id TEXT PRIMARY KEY, Name TEXT, Description TEXT, Open TEXT, Close TEXT, Client_id TEXT DEFAULT 'nil', Product_id TEXT DEFAULT 'nil', TicketType_id TEXT DEFAULT 'nil', TicketState_id TEXT DEFAULT 'nil', FOREIGN KEY (Client_id) REFERENCES Client(Id) ON UPDATE CASCADE ON DELETE SET DEFAULT, FOREIGN KEY (Product_id) REFERENCES Product(Id) ON UPDATE CASCADE ON DELETE SET DEFAULT, FOREIGN KEY (TicketType_id) REFERENCES TicketType(Id) ON UPDATE CASCADE ON DELETE SET DEFAULT, FOREIGN KEY (TicketState_id) REFERENCES TicketState(Id) ON UPDATE CASCADE ON DELETE SET DEFAULT);
+2024/12/02 15:08:07 sorm.LOG:       CREATE TABLE IF NOT EXISTS Settings (Id TEXT PRIMARY KEY, Unit_weight TEXT, Unit_length TEXT, Wizard BOOLEAN);
+2024/12/02 15:08:07 sorm.LOG:       Inserting into Settings
+2024/12/02 15:08:07 [32msorm.SUCCESS:[0m   Items inserted
+2024/12/02 15:08:07 sorm.LOG:       Inserting into Unit
+2024/12/02 15:08:07 [32msorm.SUCCESS:[0m   Items inserted
+2024/12/02 15:08:07 sorm.LOG:       Inserting into Unit
+2024/12/02 15:08:07 [32msorm.SUCCESS:[0m   Items inserted
+2024/12/02 15:08:07 sorm.LOG:       Inserting into Unit
+2024/12/02 15:08:07 [32msorm.SUCCESS:[0m   Items inserted
+2024/12/02 15:08:07 sorm.LOG:       Inserting into Unit
+2024/12/02 15:08:07 [32msorm.SUCCESS:[0m   Items inserted
+2024/12/02 15:08:07 sorm.LOG:       Inserting into Unit
+2024/12/02 15:08:07 [32msorm.SUCCESS:[0m   Items inserted
+2024/12/02 15:08:07 sorm.LOG:       Inserting into Unit
+2024/12/02 15:08:07 [32msorm.SUCCESS:[0m   Items inserted
+2024/12/02 15:08:07 sorm.LOG:       Inserting into Unit
+2024/12/02 15:08:07 [32msorm.SUCCESS:[0m   Items inserted
+2024/12/02 15:08:07 sorm.LOG:       Inserting into Unit
+2024/12/02 15:08:07 [32msorm.SUCCESS:[0m   Items inserted
+2024/12/02 15:08:07 sorm.LOG:       Inserting into Unit
+2024/12/02 15:08:07 [32msorm.SUCCESS:[0m   Items inserted
+2024/12/02 15:08:07 sorm.LOG:       Inserting into Unit
+2024/12/02 15:08:07 [32msorm.SUCCESS:[0m   Items inserted
+2024/12/02 15:08:07 sorm.LOG:       Inserting into Unit
+2024/12/02 15:08:07 [32msorm.SUCCESS:[0m   Items inserted
+2024/12/02 15:08:07 sorm.LOG:       Inserting into Unit
+2024/12/02 15:08:07 [32msorm.SUCCESS:[0m   Items inserted
+2024/12/02 15:08:07 sorm.LOG:       Inserting into Unit
+2024/12/02 15:08:07 [32msorm.SUCCESS:[0m   Items inserted
+2024/12/02 15:08:07 sorm.LOG:       Inserting into Unit
+2024/12/02 15:08:07 [32msorm.SUCCESS:[0m   Items inserted
+2024/12/02 15:08:07 sorm.LOG:       Inserting into Metadata
+2024/12/02 15:08:07 [32msorm.SUCCESS:[0m   Items inserted
+2024/12/02 15:08:19 [35msorm.NOTICE:[0m    Selecting from User with condition Email = ?
+2024/12/02 15:08:19 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:08:19 sorm.LOG:       Inserting into User
+2024/12/02 15:08:19 [32msorm.SUCCESS:[0m   Items inserted
+2024/12/02 15:08:21 [35msorm.NOTICE:[0m    Selecting from User with condition 
+2024/12/02 15:08:21 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:08:21 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:08:21 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:08:21 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:08:21 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:08:21 sorm.LOG:       Inserting into RefreshToken
+2024/12/02 15:08:21 [32msorm.SUCCESS:[0m   Items inserted
+2024/12/02 15:08:22 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:08:22 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:08:22 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:08:22 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:08:22 [35msorm.NOTICE:[0m    Selecting from User with condition Email = ?
+2024/12/02 15:08:22 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:08:22 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:08:22 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:08:22 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:08:22 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:08:22 [35msorm.NOTICE:[0m    Selecting from User with condition Email = ?
+2024/12/02 15:08:22 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:42:53 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:42:53 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:42:53 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:42:53 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:42:53 [35msorm.NOTICE:[0m    Selecting from User with condition Email = ?
+2024/12/02 15:42:53 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:43:42 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:43:42 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:43:42 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:43:42 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:43:42 [35msorm.NOTICE:[0m    Selecting from User with condition Email = ?
+2024/12/02 15:43:42 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:43:49 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:43:49 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:43:49 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:43:49 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:43:49 [35msorm.NOTICE:[0m    Selecting from User with condition Email = ?
+2024/12/02 15:43:49 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:02 [35msorm.NOTICE:[0m    Selecting from User with condition 
+2024/12/02 15:44:02 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:02 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:44:02 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:02 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:44:02 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:02 sorm.LOG:       Inserting into RefreshToken
+2024/12/02 15:44:02 [32msorm.SUCCESS:[0m   Items inserted
+2024/12/02 15:44:02 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:44:02 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:02 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:44:02 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:02 [35msorm.NOTICE:[0m    Selecting from User with condition Email = ?
+2024/12/02 15:44:02 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:02 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:44:02 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:02 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:44:02 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:02 [35msorm.NOTICE:[0m    Selecting from User with condition Email = ?
+2024/12/02 15:44:02 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:09 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:44:09 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:09 [35msorm.NOTICE:[0m    Selecting from Item with condition 
+2024/12/02 15:44:09 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:09 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:44:09 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:09 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:44:09 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:44:09 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:09 [35msorm.NOTICE:[0m    Selecting from Category with condition 
+2024/12/02 15:44:09 [35msorm.NOTICE:[0m    Selecting from Shelf with condition 
+2024/12/02 15:44:09 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:44:09 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:44:09 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:09 [35msorm.NOTICE:[0m    Selecting from Rack with condition 
+2024/12/02 15:44:09 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:09 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:44:09 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:44:09 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:09 [35msorm.NOTICE:[0m    Selecting from Item_image with condition 
+2024/12/02 15:44:09 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:09 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:09 [35msorm.NOTICE:[0m    Selecting from Zone with condition 
+2024/12/02 15:44:09 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:09 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:09 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:09 [35msorm.NOTICE:[0m    Selecting from Aisle with condition 
+2024/12/02 15:44:09 [35msorm.NOTICE:[0m    Selecting from Subcategory with condition 
+2024/12/02 15:44:09 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:09 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:09 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:30 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:44:30 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:30 [35msorm.NOTICE:[0m    Selecting from Item with condition 
+2024/12/02 15:44:30 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:44:30 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:30 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:44:30 [35msorm.NOTICE:[0m    Selecting from Rack with condition 
+2024/12/02 15:44:30 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:30 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:44:30 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:30 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:44:30 [35msorm.NOTICE:[0m    Selecting from Category with condition 
+2024/12/02 15:44:30 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:30 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:44:30 [35msorm.NOTICE:[0m    Selecting from Subcategory with condition 
+2024/12/02 15:44:30 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:30 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:30 [35msorm.NOTICE:[0m    Selecting from Aisle with condition 
+2024/12/02 15:44:30 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:30 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:44:30 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:44:30 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:30 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:30 [35msorm.NOTICE:[0m    Selecting from Zone with condition 
+2024/12/02 15:44:30 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:30 [35msorm.NOTICE:[0m    Selecting from Item_image with condition 
+2024/12/02 15:44:30 [35msorm.NOTICE:[0m    Selecting from Shelf with condition 
+2024/12/02 15:44:30 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:30 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:30 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:30 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:30 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:32 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:44:32 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:32 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:44:32 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:32 [35msorm.NOTICE:[0m    Selecting from User with condition Email = ?
+2024/12/02 15:44:32 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:32 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:44:32 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:32 [35msorm.NOTICE:[0m    Selecting from Zone with condition 
+2024/12/02 15:44:32 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:32 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:44:32 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:32 [35msorm.NOTICE:[0m    Selecting from Aisle with condition 
+2024/12/02 15:44:32 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:32 GET, /api/v1/aisles/, 127.0.0.1:32850, 200
+2024/12/02 15:44:32 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:44:32 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:32 [35msorm.NOTICE:[0m    Selecting from Rack with condition 
+2024/12/02 15:44:32 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:32 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:32 [35msorm.NOTICE:[0m    Selecting from Shelf with condition 
+2024/12/02 15:44:32 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:44:32 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:32 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:32 [35msorm.NOTICE:[0m    Selecting from Category with condition 
+2024/12/02 15:44:32 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:32 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:44:32 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:32 [35msorm.NOTICE:[0m    Selecting from Subcategory with condition 
+2024/12/02 15:44:32 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:44 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:44:44 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:44 [35msorm.NOTICE:[0m    Selecting from Zone with condition 
+2024/12/02 15:44:44 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:44 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:44:44 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:44 [35msorm.NOTICE:[0m    Selecting from Zone with condition 
+2024/12/02 15:44:44 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:47 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:44:47 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:47 [35msorm.NOTICE:[0m    Selecting from Aisle with condition 
+2024/12/02 15:44:47 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:47 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:47 [35msorm.NOTICE:[0m    Selecting from Zone with condition 
+2024/12/02 15:44:47 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:47 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:44:47 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:47 [35msorm.NOTICE:[0m    Selecting from Aisle with condition 
+2024/12/02 15:44:47 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:49 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:44:49 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:49 [35msorm.NOTICE:[0m    Selecting from Rack with condition 
+2024/12/02 15:44:49 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:44:49 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:49 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:49 [35msorm.NOTICE:[0m    Selecting from Zone with condition 
+2024/12/02 15:44:49 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:44:49 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:49 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:44:49 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:49 [35msorm.NOTICE:[0m    Selecting from Aisle with condition 
+2024/12/02 15:44:49 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:49 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:49 [35msorm.NOTICE:[0m    Selecting from Rack with condition 
+2024/12/02 15:44:49 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:50 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:44:50 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:50 [35msorm.NOTICE:[0m    Selecting from Zone with condition 
+2024/12/02 15:44:50 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:50 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:44:50 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:50 [35msorm.NOTICE:[0m    Selecting from Zone with condition 
+2024/12/02 15:44:50 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:52 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:44:52 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:52 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:44:52 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:52 [35msorm.NOTICE:[0m    Selecting from User with condition Email = ?
+2024/12/02 15:44:52 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:52 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:44:52 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:52 [35msorm.NOTICE:[0m    Selecting from Zone with condition 
+2024/12/02 15:44:52 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:52 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:44:52 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:52 [35msorm.NOTICE:[0m    Selecting from Zone with condition 
+2024/12/02 15:44:52 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:53 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:44:53 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:53 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:44:53 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:53 [35msorm.NOTICE:[0m    Selecting from User with condition Email = ?
+2024/12/02 15:44:53 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:53 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:44:53 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:53 [35msorm.NOTICE:[0m    Selecting from Zone with condition 
+2024/12/02 15:44:53 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:53 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:44:53 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:53 [35msorm.NOTICE:[0m    Selecting from Zone with condition 
+2024/12/02 15:44:53 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:55 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:44:55 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:55 [35msorm.NOTICE:[0m    Selecting from Rack with condition 
+2024/12/02 15:44:55 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:44:55 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:55 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:55 [35msorm.NOTICE:[0m    Selecting from Zone with condition 
+2024/12/02 15:44:55 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:55 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:44:55 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:44:55 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:55 [35msorm.NOTICE:[0m    Selecting from Rack with condition 
+2024/12/02 15:44:55 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:55 [35msorm.NOTICE:[0m    Selecting from Aisle with condition 
+2024/12/02 15:44:55 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:57 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:44:57 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:57 [35msorm.NOTICE:[0m    Selecting from Zone with condition 
+2024/12/02 15:44:57 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:44:57 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:57 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:57 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:44:57 [35msorm.NOTICE:[0m    Selecting from Aisle with condition 
+2024/12/02 15:44:57 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:57 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:57 [35msorm.NOTICE:[0m    Selecting from Rack with condition 
+2024/12/02 15:44:57 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:57 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:44:57 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:57 [35msorm.NOTICE:[0m    Selecting from Shelf with condition 
+2024/12/02 15:44:57 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:57 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:44:57 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:44:57 [35msorm.NOTICE:[0m    Selecting from Shelf with condition 
+2024/12/02 15:44:57 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:45:03 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:45:03 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:45:03 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:45:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:45:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:45:03 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:45:03 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:45:03 [35msorm.NOTICE:[0m    Selecting from Shelf with condition 
+2024/12/02 15:45:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:45:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:45:03 [35msorm.NOTICE:[0m    Selecting from Item_image with condition 
+2024/12/02 15:45:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:45:03 [35msorm.NOTICE:[0m    Selecting from Zone with condition 
+2024/12/02 15:45:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:45:03 GET, /api/v1/zones/, 127.0.0.1:36414, 200
+2024/12/02 15:45:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:45:03 [35msorm.NOTICE:[0m    Selecting from Category with condition 
+2024/12/02 15:45:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:45:03 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:45:03 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:45:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:45:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:45:03 [35msorm.NOTICE:[0m    Selecting from Aisle with condition 
+2024/12/02 15:45:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:45:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:45:03 [35msorm.NOTICE:[0m    Selecting from Subcategory with condition 
+2024/12/02 15:45:03 [35msorm.NOTICE:[0m    Selecting from Item with condition 
+2024/12/02 15:45:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:45:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:45:03 [35msorm.NOTICE:[0m    Selecting from Rack with condition 
+2024/12/02 15:45:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:55:20 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:55:20 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:55:20 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:55:20 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:55:20 [35msorm.NOTICE:[0m    Selecting from User with condition Email = ?
+2024/12/02 15:55:20 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:55:20 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:55:20 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:55:20 [35msorm.NOTICE:[0m    Selecting from Item with condition 
+2024/12/02 15:55:20 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:55:20 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:55:20 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:55:20 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:55:20 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:55:20 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:55:20 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:55:20 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:55:20 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:55:20 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:55:20 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:55:20 [35msorm.NOTICE:[0m    Selecting from Rack with condition 
+2024/12/02 15:55:20 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:55:20 [35msorm.NOTICE:[0m    Selecting from Zone with condition 
+2024/12/02 15:55:20 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:55:20 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:55:20 [35msorm.NOTICE:[0m    Selecting from Shelf with condition 
+2024/12/02 15:55:20 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:55:20 [35msorm.NOTICE:[0m    Selecting from Item_image with condition 
+2024/12/02 15:55:20 [35msorm.NOTICE:[0m    Selecting from Subcategory with condition 
+2024/12/02 15:55:20 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 15:55:20 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:55:20 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:55:20 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:55:20 [35msorm.NOTICE:[0m    Selecting from Category with condition 
+2024/12/02 15:55:20 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:55:20 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 15:55:20 [35msorm.NOTICE:[0m    Selecting from Aisle with condition 
+2024/12/02 15:55:20 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:10:15 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:10:15 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:10:15 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:10:15 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:10:15 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:10:15 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:10:15 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:10:15 [35msorm.NOTICE:[0m    Selecting from Subcategory with condition 
+2024/12/02 16:10:15 [35msorm.NOTICE:[0m    Selecting from Zone with condition 
+2024/12/02 16:10:15 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:10:15 [35msorm.NOTICE:[0m    Selecting from Shelf with condition 
+2024/12/02 16:10:15 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:10:15 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:10:15 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:10:15 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:10:15 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:10:15 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:10:15 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:10:15 [35msorm.NOTICE:[0m    Selecting from Aisle with condition 
+2024/12/02 16:10:15 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:10:15 GET, /api/v1/aisles/, 127.0.0.1:54890, 200
+2024/12/02 16:10:15 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:10:15 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:10:15 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:10:15 [35msorm.NOTICE:[0m    Selecting from User with condition Email = ?
+2024/12/02 16:10:15 [35msorm.NOTICE:[0m    Selecting from Category with condition 
+2024/12/02 16:10:15 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:10:15 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:10:15 [35msorm.NOTICE:[0m    Selecting from Item with condition 
+2024/12/02 16:10:15 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:10:15 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:10:15 [35msorm.NOTICE:[0m    Selecting from Item_image with condition 
+2024/12/02 16:10:15 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:10:15 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:10:15 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:12:03 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:12:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:12:03 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:12:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:12:03 [35msorm.NOTICE:[0m    Selecting from User with condition Email = ?
+2024/12/02 16:12:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:12:03 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:12:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:12:03 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:12:03 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:12:03 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:12:03 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:12:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:12:03 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:12:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:12:03 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:12:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:12:03 [35msorm.NOTICE:[0m    Selecting from Shelf with condition 
+2024/12/02 16:12:03 [35msorm.NOTICE:[0m    Selecting from Rack with condition 
+2024/12/02 16:12:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:12:03 [35msorm.NOTICE:[0m    Selecting from Item_image with condition 
+2024/12/02 16:12:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:12:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:12:03 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:12:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:12:03 [35msorm.NOTICE:[0m    Selecting from Zone with condition 
+2024/12/02 16:12:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:12:03 [35msorm.NOTICE:[0m    Selecting from Category with condition 
+2024/12/02 16:12:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:12:03 [35msorm.NOTICE:[0m    Selecting from Item with condition 
+2024/12/02 16:12:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:12:03 [35msorm.NOTICE:[0m    Selecting from Aisle with condition 
+2024/12/02 16:12:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:12:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:12:03 [35msorm.NOTICE:[0m    Selecting from Subcategory with condition 
+2024/12/02 16:12:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:12:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:12:10 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:12:10 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:12:10 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:12:10 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:12:10 [35msorm.NOTICE:[0m    Selecting from User with condition Email = ?
+2024/12/02 16:12:10 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:12:10 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:12:10 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:12:10 [35msorm.NOTICE:[0m    Selecting from Item with condition 
+2024/12/02 16:12:10 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:12:10 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:12:10 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:12:10 [35msorm.NOTICE:[0m    Selecting from Rack with condition 
+2024/12/02 16:12:10 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:12:10 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:12:10 [35msorm.NOTICE:[0m    Selecting from Zone with condition 
+2024/12/02 16:12:10 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:12:10 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:12:10 [35msorm.NOTICE:[0m    Selecting from Subcategory with condition 
+2024/12/02 16:12:10 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:12:10 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:12:10 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:12:10 [35msorm.NOTICE:[0m    Selecting from Item_image with condition 
+2024/12/02 16:12:10 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:12:10 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:12:10 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:12:10 [35msorm.NOTICE:[0m    Selecting from Shelf with condition 
+2024/12/02 16:12:10 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:12:10 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:12:10 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:12:10 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:12:10 [35msorm.NOTICE:[0m    Selecting from Category with condition 
+2024/12/02 16:12:10 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:12:10 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:12:10 [35msorm.NOTICE:[0m    Selecting from Aisle with condition 
+2024/12/02 16:12:10 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:12:53 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:12:53 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:12:53 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:12:53 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:12:53 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:12:53 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:12:53 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:12:53 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:12:53 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:12:53 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:12:53 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:12:53 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:12:53 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:12:53 [35msorm.NOTICE:[0m    Selecting from Rack with condition 
+2024/12/02 16:12:53 [35msorm.NOTICE:[0m    Selecting from Category with condition 
+2024/12/02 16:12:53 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:12:53 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:12:53 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:12:53 [35msorm.NOTICE:[0m    Selecting from Item_image with condition 
+2024/12/02 16:12:53 [35msorm.NOTICE:[0m    Selecting from Subcategory with condition 
+2024/12/02 16:12:53 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:12:53 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:12:53 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:12:53 [35msorm.NOTICE:[0m    Selecting from Aisle with condition 
+2024/12/02 16:12:53 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:12:53 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:12:53 [35msorm.NOTICE:[0m    Selecting from Shelf with condition 
+2024/12/02 16:12:53 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:12:53 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:12:53 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:12:53 [35msorm.NOTICE:[0m    Selecting from Item with condition 
+2024/12/02 16:12:53 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:12:53 [35msorm.NOTICE:[0m    Selecting from Zone with condition 
+2024/12/02 16:12:53 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:12:53 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:12:53 [35msorm.NOTICE:[0m    Selecting from User with condition Email = ?
+2024/12/02 16:12:53 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:13:14 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:13:14 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:13:14 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:13:14 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:13:14 [35msorm.NOTICE:[0m    Selecting from User with condition Email = ?
+2024/12/02 16:13:14 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:13:14 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:13:14 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:13:14 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:13:14 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:13:14 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:13:14 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:13:14 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:13:14 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:13:14 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:13:14 [35msorm.NOTICE:[0m    Selecting from Zone with condition 
+2024/12/02 16:13:14 [35msorm.NOTICE:[0m    Selecting from Item_image with condition 
+2024/12/02 16:13:14 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:13:14 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:13:14 [35msorm.NOTICE:[0m    Selecting from Shelf with condition 
+2024/12/02 16:13:14 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:13:14 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:13:14 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:13:14 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:13:14 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:13:14 [35msorm.NOTICE:[0m    Selecting from Subcategory with condition 
+2024/12/02 16:13:14 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:13:14 [35msorm.NOTICE:[0m    Selecting from Rack with condition 
+2024/12/02 16:13:14 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:13:14 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:13:14 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:13:14 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:13:14 [35msorm.NOTICE:[0m    Selecting from Aisle with condition 
+2024/12/02 16:13:14 [35msorm.NOTICE:[0m    Selecting from Item with condition 
+2024/12/02 16:13:14 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:13:14 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:13:17 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:13:17 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:13:17 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:13:17 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:13:17 [35msorm.NOTICE:[0m    Selecting from User with condition Email = ?
+2024/12/02 16:13:17 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:13:17 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:13:17 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:13:17 [35msorm.NOTICE:[0m    Selecting from Item with condition 
+2024/12/02 16:13:17 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:13:17 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:13:17 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:13:17 [35msorm.NOTICE:[0m    Selecting from Zone with condition 
+2024/12/02 16:13:17 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:13:17 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:13:17 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:13:17 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:13:17 [35msorm.NOTICE:[0m    Selecting from Aisle with condition 
+2024/12/02 16:13:17 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:13:17 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:13:17 [35msorm.NOTICE:[0m    Selecting from Rack with condition 
+2024/12/02 16:13:17 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:13:17 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:13:17 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:13:17 [35msorm.NOTICE:[0m    Selecting from Shelf with condition 
+2024/12/02 16:13:17 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:13:17 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:13:17 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:13:17 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:13:17 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:13:17 [35msorm.NOTICE:[0m    Selecting from Subcategory with condition 
+2024/12/02 16:13:17 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:13:17 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:13:17 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:13:17 [35msorm.NOTICE:[0m    Selecting from Category with condition 
+2024/12/02 16:13:17 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:13:17 [35msorm.NOTICE:[0m    Selecting from Item_image with condition 
+2024/12/02 16:13:17 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:13:30 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:13:30 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:13:30 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:13:30 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:13:30 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:13:30 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:13:30 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:13:30 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:13:30 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:13:30 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:13:30 [35msorm.NOTICE:[0m    Selecting from Item with condition 
+2024/12/02 16:13:30 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:13:30 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:13:30 [35msorm.NOTICE:[0m    Selecting from Subcategory with condition 
+2024/12/02 16:13:30 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:13:30 [35msorm.NOTICE:[0m    Selecting from Item_image with condition 
+2024/12/02 16:13:30 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:13:30 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:13:30 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:13:30 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:13:30 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:13:30 [35msorm.NOTICE:[0m    Selecting from User with condition Email = ?
+2024/12/02 16:13:30 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:13:30 [35msorm.NOTICE:[0m    Selecting from Zone with condition 
+2024/12/02 16:13:30 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:13:30 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:13:30 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:13:30 [35msorm.NOTICE:[0m    Selecting from Category with condition 
+2024/12/02 16:13:30 [35msorm.NOTICE:[0m    Selecting from Aisle with condition 
+2024/12/02 16:13:30 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:13:30 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:13:30 [35msorm.NOTICE:[0m    Selecting from Rack with condition 
+2024/12/02 16:13:30 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:13:30 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:13:30 [35msorm.NOTICE:[0m    Selecting from Shelf with condition 
+2024/12/02 16:13:30 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:14:02 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:14:02 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:14:02 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:14:02 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:14:02 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:14:02 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:14:02 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:14:02 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:14:02 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:14:02 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:14:02 [35msorm.NOTICE:[0m    Selecting from Shelf with condition 
+2024/12/02 16:14:02 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:14:02 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:14:02 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:14:02 [35msorm.NOTICE:[0m    Selecting from Category with condition 
+2024/12/02 16:14:02 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:14:02 [35msorm.NOTICE:[0m    Selecting from Subcategory with condition 
+2024/12/02 16:14:02 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:14:02 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:14:02 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:14:02 [35msorm.NOTICE:[0m    Selecting from Aisle with condition 
+2024/12/02 16:14:02 [35msorm.NOTICE:[0m    Selecting from Item with condition 
+2024/12/02 16:14:02 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:14:02 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:14:02 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:14:02 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:14:02 [35msorm.NOTICE:[0m    Selecting from Zone with condition 
+2024/12/02 16:14:02 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:14:02 [35msorm.NOTICE:[0m    Selecting from Rack with condition 
+2024/12/02 16:14:02 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:14:02 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:14:02 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:14:02 [35msorm.NOTICE:[0m    Selecting from Item_image with condition 
+2024/12/02 16:14:02 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:14:02 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:14:14 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:14:14 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:14:14 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:14:14 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:14:14 [35msorm.NOTICE:[0m    Selecting from User with condition Email = ?
+2024/12/02 16:14:14 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:14:14 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:14:14 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:14:14 [35msorm.NOTICE:[0m    Selecting from Item with condition 
+2024/12/02 16:14:14 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:14:14 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:14:14 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:14:14 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:14:14 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:14:14 [35msorm.NOTICE:[0m    Selecting from Shelf with condition 
+2024/12/02 16:14:14 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:14:14 [35msorm.NOTICE:[0m    Selecting from Zone with condition 
+2024/12/02 16:14:14 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:14:14 [35msorm.NOTICE:[0m    Selecting from Subcategory with condition 
+2024/12/02 16:14:14 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:14:14 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:14:14 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:14:14 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:14:14 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:14:14 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:14:14 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:14:14 [35msorm.NOTICE:[0m    Selecting from Rack with condition 
+2024/12/02 16:14:14 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:14:14 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:14:14 [35msorm.NOTICE:[0m    Selecting from Category with condition 
+2024/12/02 16:14:14 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:14:14 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:14:14 [35msorm.NOTICE:[0m    Selecting from Item_image with condition 
+2024/12/02 16:14:14 [35msorm.NOTICE:[0m    Selecting from Aisle with condition 
+2024/12/02 16:14:14 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:14:14 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:14:56 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:14:56 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:14:56 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:14:56 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:14:56 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:14:56 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:14:56 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:14:56 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:14:56 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:14:56 [35msorm.NOTICE:[0m    Selecting from Shelf with condition 
+2024/12/02 16:14:56 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:14:56 [35msorm.NOTICE:[0m    Selecting from Item_image with condition 
+2024/12/02 16:14:56 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:14:56 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:14:56 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:14:56 [35msorm.NOTICE:[0m    Selecting from Rack with condition 
+2024/12/02 16:14:56 [35msorm.NOTICE:[0m    Selecting from Subcategory with condition 
+2024/12/02 16:14:56 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:14:56 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:14:56 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:14:56 [35msorm.NOTICE:[0m    Selecting from Zone with condition 
+2024/12/02 16:14:56 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:14:56 [35msorm.NOTICE:[0m    Selecting from Category with condition 
+2024/12/02 16:14:56 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:14:56 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:14:56 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:14:56 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:14:56 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:14:56 [35msorm.NOTICE:[0m    Selecting from Item with condition 
+2024/12/02 16:14:56 [35msorm.NOTICE:[0m    Selecting from User with condition Email = ?
+2024/12/02 16:14:56 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:14:56 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:14:56 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:14:56 [35msorm.NOTICE:[0m    Selecting from Aisle with condition 
+2024/12/02 16:14:56 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:15:16 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:15:16 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:15:16 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:15:16 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:15:16 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:15:16 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:15:16 [35msorm.NOTICE:[0m    Selecting from Item with condition 
+2024/12/02 16:15:16 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:15:16 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:15:16 [35msorm.NOTICE:[0m    Selecting from User with condition Email = ?
+2024/12/02 16:15:16 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:15:16 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:15:16 [35msorm.NOTICE:[0m    Selecting from Category with condition 
+2024/12/02 16:15:16 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:15:16 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:15:16 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:15:16 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:15:16 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:15:16 [35msorm.NOTICE:[0m    Selecting from Zone with condition 
+2024/12/02 16:15:16 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:15:16 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:15:16 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:15:16 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:15:16 [35msorm.NOTICE:[0m    Selecting from Subcategory with condition 
+2024/12/02 16:15:16 [35msorm.NOTICE:[0m    Selecting from Rack with condition 
+2024/12/02 16:15:16 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:15:16 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:15:16 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:15:16 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:15:16 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:15:16 [35msorm.NOTICE:[0m    Selecting from Shelf with condition 
+2024/12/02 16:15:16 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:15:16 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:15:16 [35msorm.NOTICE:[0m    Selecting from Aisle with condition 
+2024/12/02 16:15:16 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:15:16 [35msorm.NOTICE:[0m    Selecting from Item_image with condition 
+2024/12/02 16:15:16 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:15:39 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:15:39 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:15:39 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:15:39 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:15:39 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:15:39 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:15:39 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:15:39 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:15:39 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:15:39 [35msorm.NOTICE:[0m    Selecting from User with condition Email = ?
+2024/12/02 16:15:39 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:15:39 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:15:39 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:15:39 [35msorm.NOTICE:[0m    Selecting from Subcategory with condition 
+2024/12/02 16:15:39 [35msorm.NOTICE:[0m    Selecting from Aisle with condition 
+2024/12/02 16:15:39 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:15:39 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:15:39 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:15:39 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:15:39 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:15:39 [35msorm.NOTICE:[0m    Selecting from Item with condition 
+2024/12/02 16:15:39 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:15:39 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:15:39 [35msorm.NOTICE:[0m    Selecting from Item_image with condition 
+2024/12/02 16:15:39 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:15:39 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:15:39 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:15:39 [35msorm.NOTICE:[0m    Selecting from Shelf with condition 
+2024/12/02 16:15:39 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:15:39 [35msorm.NOTICE:[0m    Selecting from Category with condition 
+2024/12/02 16:15:39 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:15:39 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:15:39 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:15:39 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:15:39 [35msorm.NOTICE:[0m    Selecting from Zone with condition 
+2024/12/02 16:15:39 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:15:58 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:15:58 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:15:58 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:15:58 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:15:58 [35msorm.NOTICE:[0m    Selecting from User with condition Email = ?
+2024/12/02 16:15:58 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:15:58 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:15:58 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:15:58 [35msorm.NOTICE:[0m    Selecting from Item with condition 
+2024/12/02 16:15:58 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:15:58 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:15:58 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:15:58 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:15:58 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:15:58 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:15:58 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:15:58 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:15:58 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:15:58 [35msorm.NOTICE:[0m    Selecting from Zone with condition 
+2024/12/02 16:15:58 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:15:58 [35msorm.NOTICE:[0m    Selecting from Aisle with condition 
+2024/12/02 16:15:58 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:15:58 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:15:58 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:15:58 [35msorm.NOTICE:[0m    Selecting from Category with condition 
+2024/12/02 16:15:58 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:15:58 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:15:58 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:15:58 [35msorm.NOTICE:[0m    Selecting from Subcategory with condition 
+2024/12/02 16:15:58 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:15:58 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:15:58 [35msorm.NOTICE:[0m    Selecting from Rack with condition 
+2024/12/02 16:15:58 [35msorm.NOTICE:[0m    Selecting from Item_image with condition 
+2024/12/02 16:15:58 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:15:58 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:16:03 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:16:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:16:03 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:16:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:16:03 [35msorm.NOTICE:[0m    Selecting from User with condition Email = ?
+2024/12/02 16:16:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:16:03 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:16:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:16:03 [35msorm.NOTICE:[0m    Selecting from Item with condition 
+2024/12/02 16:16:03 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:16:03 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:16:03 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:16:03 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:16:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:16:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:16:03 [35msorm.NOTICE:[0m    Selecting from Category with condition 
+2024/12/02 16:16:03 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:16:03 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:16:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:16:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:16:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:16:03 [35msorm.NOTICE:[0m    Selecting from Shelf with condition 
+2024/12/02 16:16:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:16:03 [35msorm.NOTICE:[0m    Selecting from Subcategory with condition 
+2024/12/02 16:16:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:16:03 [35msorm.NOTICE:[0m    Selecting from Item_image with condition 
+2024/12/02 16:16:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:16:03 [35msorm.NOTICE:[0m    Selecting from Rack with condition 
+2024/12/02 16:16:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:16:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:16:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:16:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:16:03 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:16:03 [35msorm.NOTICE:[0m    Selecting from Aisle with condition 
+2024/12/02 16:16:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:16:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:16:03 [35msorm.NOTICE:[0m    Selecting from Zone with condition 
+2024/12/02 16:16:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:16:09 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:16:09 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:16:09 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:16:09 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:16:09 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:16:09 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:16:09 [35msorm.NOTICE:[0m    Selecting from Aisle with condition 
+2024/12/02 16:16:09 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:16:09 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:16:09 [35msorm.NOTICE:[0m    Selecting from Item with condition 
+2024/12/02 16:16:09 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:16:09 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:16:09 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:16:09 [35msorm.NOTICE:[0m    Selecting from Category with condition 
+2024/12/02 16:16:09 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:16:09 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:16:09 [35msorm.NOTICE:[0m    Selecting from Subcategory with condition 
+2024/12/02 16:16:09 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:16:09 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:16:09 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:16:09 [35msorm.NOTICE:[0m    Selecting from Item_image with condition 
+2024/12/02 16:16:09 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:16:09 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:16:09 [35msorm.NOTICE:[0m    Selecting from Zone with condition 
+2024/12/02 16:16:09 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:16:09 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:16:09 [35msorm.NOTICE:[0m    Selecting from Shelf with condition 
+2024/12/02 16:16:09 [35msorm.NOTICE:[0m    Selecting from Rack with condition 
+2024/12/02 16:16:09 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:16:09 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:16:09 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:16:09 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:16:09 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:16:09 [35msorm.NOTICE:[0m    Selecting from User with condition Email = ?
+2024/12/02 16:16:09 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:19:12 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:19:12 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:19:12 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:19:12 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:19:12 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:19:12 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:19:12 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:19:12 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:19:12 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:19:12 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:19:12 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:19:12 [35msorm.NOTICE:[0m    Selecting from Aisle with condition 
+2024/12/02 16:19:12 [35msorm.NOTICE:[0m    Selecting from Shelf with condition 
+2024/12/02 16:19:12 [35msorm.NOTICE:[0m    Selecting from Zone with condition 
+2024/12/02 16:19:12 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:19:12 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:19:12 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:19:12 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:19:12 [35msorm.NOTICE:[0m    Selecting from User with condition Email = ?
+2024/12/02 16:19:12 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:19:12 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:19:12 [35msorm.NOTICE:[0m    Selecting from Rack with condition 
+2024/12/02 16:19:12 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:19:12 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:19:12 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:19:12 [35msorm.NOTICE:[0m    Selecting from Item with condition 
+2024/12/02 16:19:12 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:19:12 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:19:12 [35msorm.NOTICE:[0m    Selecting from Category with condition 
+2024/12/02 16:19:12 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:19:12 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:19:12 [35msorm.NOTICE:[0m    Selecting from Subcategory with condition 
+2024/12/02 16:19:12 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:19:12 [35msorm.NOTICE:[0m    Selecting from Item_image with condition 
+2024/12/02 16:19:12 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:19:12 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:19:21 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:19:21 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:19:21 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:19:21 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:19:21 [35msorm.NOTICE:[0m    Selecting from User with condition Email = ?
+2024/12/02 16:19:21 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:19:21 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:19:21 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:19:21 [35msorm.NOTICE:[0m    Selecting from Item with condition 
+2024/12/02 16:19:21 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:19:21 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:19:21 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:19:21 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:19:21 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:19:21 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:19:21 [35msorm.NOTICE:[0m    Selecting from Shelf with condition 
+2024/12/02 16:19:21 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:19:21 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:19:21 [35msorm.NOTICE:[0m    Selecting from Rack with condition 
+2024/12/02 16:19:21 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:19:21 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:19:21 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:19:21 [35msorm.NOTICE:[0m    Selecting from Zone with condition 
+2024/12/02 16:19:21 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:19:21 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:19:21 [35msorm.NOTICE:[0m    Selecting from Category with condition 
+2024/12/02 16:19:21 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:19:21 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:19:21 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:19:21 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:19:21 [35msorm.NOTICE:[0m    Selecting from Aisle with condition 
+2024/12/02 16:19:21 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:19:21 [35msorm.NOTICE:[0m    Selecting from Subcategory with condition 
+2024/12/02 16:19:21 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:19:21 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:19:21 [35msorm.NOTICE:[0m    Selecting from Item_image with condition 
+2024/12/02 16:19:21 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:19:35 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:19:35 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:19:35 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:19:35 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:19:35 [35msorm.NOTICE:[0m    Selecting from User with condition Email = ?
+2024/12/02 16:19:35 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:19:35 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:19:35 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:19:35 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:19:35 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:19:35 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:19:35 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:19:35 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:19:35 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:19:35 [35msorm.NOTICE:[0m    Selecting from Aisle with condition 
+2024/12/02 16:19:35 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:19:35 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:19:35 [35msorm.NOTICE:[0m    Selecting from Item with condition 
+2024/12/02 16:19:35 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:19:35 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:19:35 [35msorm.NOTICE:[0m    Selecting from Category with condition 
+2024/12/02 16:19:35 [35msorm.NOTICE:[0m    Selecting from Rack with condition 
+2024/12/02 16:19:35 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:19:35 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:19:35 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:19:35 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:19:35 [35msorm.NOTICE:[0m    Selecting from Item_image with condition 
+2024/12/02 16:19:35 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:19:35 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:19:35 [35msorm.NOTICE:[0m    Selecting from Subcategory with condition 
+2024/12/02 16:19:35 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:19:35 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:19:35 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:19:35 [35msorm.NOTICE:[0m    Selecting from Shelf with condition 
+2024/12/02 16:19:35 [35msorm.NOTICE:[0m    Selecting from Zone with condition 
+2024/12/02 16:19:35 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:19:35 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:19:51 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:19:51 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:19:51 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:19:51 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:19:51 [35msorm.NOTICE:[0m    Selecting from User with condition Email = ?
+2024/12/02 16:19:51 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:19:51 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:19:51 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:19:51 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:19:51 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:19:51 [35msorm.NOTICE:[0m    Selecting from Zone with condition 
+2024/12/02 16:19:51 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:19:51 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:19:51 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:19:51 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:19:51 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:19:51 [35msorm.NOTICE:[0m    Selecting from Rack with condition 
+2024/12/02 16:19:51 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:19:51 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:19:51 [35msorm.NOTICE:[0m    Selecting from Shelf with condition 
+2024/12/02 16:19:51 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:19:51 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:19:51 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:19:51 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:19:51 [35msorm.NOTICE:[0m    Selecting from Item_image with condition 
+2024/12/02 16:19:51 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:19:51 [35msorm.NOTICE:[0m    Selecting from Subcategory with condition 
+2024/12/02 16:19:51 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:19:51 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:19:51 [35msorm.NOTICE:[0m    Selecting from Item with condition 
+2024/12/02 16:19:51 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:19:51 [35msorm.NOTICE:[0m    Selecting from Category with condition 
+2024/12/02 16:19:51 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:19:51 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:19:51 [35msorm.NOTICE:[0m    Selecting from Aisle with condition 
+2024/12/02 16:19:51 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:20:00 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:20:00 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:20:00 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:20:00 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:20:00 [35msorm.NOTICE:[0m    Selecting from User with condition Email = ?
+2024/12/02 16:20:00 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:20:00 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:20:00 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:20:00 [35msorm.NOTICE:[0m    Selecting from Item with condition 
+2024/12/02 16:20:00 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:20:00 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:20:00 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:20:00 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:20:00 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:20:00 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:20:00 [35msorm.NOTICE:[0m    Selecting from Subcategory with condition 
+2024/12/02 16:20:00 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:20:00 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:20:00 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:20:00 [35msorm.NOTICE:[0m    Selecting from Category with condition 
+2024/12/02 16:20:00 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:20:00 [35msorm.NOTICE:[0m    Selecting from Item_image with condition 
+2024/12/02 16:20:00 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:20:00 [35msorm.NOTICE:[0m    Selecting from Zone with condition 
+2024/12/02 16:20:00 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:20:00 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:20:00 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:20:00 [35msorm.NOTICE:[0m    Selecting from Shelf with condition 
+2024/12/02 16:20:00 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:20:00 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:20:00 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:20:00 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:20:00 [35msorm.NOTICE:[0m    Selecting from Aisle with condition 
+2024/12/02 16:20:00 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:20:00 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:20:00 [35msorm.NOTICE:[0m    Selecting from Rack with condition 
+2024/12/02 16:20:00 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:22:04 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:22:04 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:22:04 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:22:04 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:22:04 [35msorm.NOTICE:[0m    Selecting from User with condition Email = ?
+2024/12/02 16:22:04 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:22:04 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:22:04 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:22:04 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:22:04 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:22:04 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:22:04 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:22:04 [35msorm.NOTICE:[0m    Selecting from Aisle with condition 
+2024/12/02 16:22:04 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:22:04 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:22:04 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:22:04 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:22:04 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:22:04 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:22:04 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:22:04 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:22:04 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:22:04 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:22:04 [35msorm.NOTICE:[0m    Selecting from Shelf with condition 
+2024/12/02 16:22:04 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:22:04 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:22:04 [35msorm.NOTICE:[0m    Selecting from Category with condition 
+2024/12/02 16:22:04 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:22:04 [35msorm.NOTICE:[0m    Selecting from Subcategory with condition 
+2024/12/02 16:22:04 [35msorm.NOTICE:[0m    Selecting from Rack with condition 
+2024/12/02 16:22:04 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:22:04 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:22:04 [35msorm.NOTICE:[0m    Selecting from Item_image with condition 
+2024/12/02 16:22:04 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:22:24 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:22:24 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:22:24 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:22:24 [35msorm.NOTICE:[0m    Selecting from Zone with condition 
+2024/12/02 16:22:24 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:22:24 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:22:24 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:22:24 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:22:24 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:22:24 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:22:24 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:22:24 [35msorm.NOTICE:[0m    Selecting from Item with condition 
+2024/12/02 16:22:24 [35msorm.NOTICE:[0m    Selecting from Subcategory with condition 
+2024/12/02 16:22:24 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:22:24 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:22:24 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:22:24 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:22:24 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:22:24 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:22:24 [35msorm.NOTICE:[0m    Selecting from Category with condition 
+2024/12/02 16:22:24 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:22:24 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:22:24 [35msorm.NOTICE:[0m    Selecting from User with condition Email = ?
+2024/12/02 16:22:24 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:22:24 [35msorm.NOTICE:[0m    Selecting from Shelf with condition 
+2024/12/02 16:22:24 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:22:24 [35msorm.NOTICE:[0m    Selecting from Item_image with condition 
+2024/12/02 16:22:24 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:22:24 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:22:24 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:22:24 [35msorm.NOTICE:[0m    Selecting from Rack with condition 
+2024/12/02 16:22:24 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:22:24 [35msorm.NOTICE:[0m    Selecting from Aisle with condition 
+2024/12/02 16:22:24 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:22:39 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:22:39 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:22:39 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:22:39 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:22:39 [35msorm.NOTICE:[0m    Selecting from User with condition Email = ?
+2024/12/02 16:22:39 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:22:39 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:22:39 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:22:39 [35msorm.NOTICE:[0m    Selecting from Item with condition 
+2024/12/02 16:22:39 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:22:39 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:22:39 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:22:39 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:22:39 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:22:39 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:22:39 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:22:39 [35msorm.NOTICE:[0m    Selecting from Shelf with condition 
+2024/12/02 16:22:39 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:22:39 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:22:39 [35msorm.NOTICE:[0m    Selecting from Aisle with condition 
+2024/12/02 16:22:39 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:22:39 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:22:39 [35msorm.NOTICE:[0m    Selecting from Category with condition 
+2024/12/02 16:22:39 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:22:39 [35msorm.NOTICE:[0m    Selecting from Rack with condition 
+2024/12/02 16:22:39 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:22:39 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:22:39 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:22:39 [35msorm.NOTICE:[0m    Selecting from Item_image with condition 
+2024/12/02 16:22:39 [35msorm.NOTICE:[0m    Selecting from Zone with condition 
+2024/12/02 16:22:39 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:22:39 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:22:39 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:22:39 [35msorm.NOTICE:[0m    Selecting from Subcategory with condition 
+2024/12/02 16:22:39 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:22:49 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:22:49 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:22:49 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:22:49 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:22:49 [35msorm.NOTICE:[0m    Selecting from User with condition Email = ?
+2024/12/02 16:22:49 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:22:49 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:22:49 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:22:49 [35msorm.NOTICE:[0m    Selecting from Item with condition 
+2024/12/02 16:22:49 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:22:49 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:22:49 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:22:49 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:22:49 [35msorm.NOTICE:[0m    Selecting from Zone with condition 
+2024/12/02 16:22:49 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:22:49 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:22:49 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:22:49 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:22:49 [35msorm.NOTICE:[0m    Selecting from Item_image with condition 
+2024/12/02 16:22:49 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:22:49 [35msorm.NOTICE:[0m    Selecting from Aisle with condition 
+2024/12/02 16:22:49 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:22:49 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:22:49 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:22:49 [35msorm.NOTICE:[0m    Selecting from Category with condition 
+2024/12/02 16:22:49 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:22:49 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:22:49 [35msorm.NOTICE:[0m    Selecting from Rack with condition 
+2024/12/02 16:22:49 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:22:49 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:22:49 [35msorm.NOTICE:[0m    Selecting from Shelf with condition 
+2024/12/02 16:22:49 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:22:49 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:22:49 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:22:49 [35msorm.NOTICE:[0m    Selecting from Subcategory with condition 
+2024/12/02 16:22:49 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:23:20 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:23:20 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:23:20 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:23:20 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:23:20 [35msorm.NOTICE:[0m    Selecting from User with condition Email = ?
+2024/12/02 16:23:20 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:23:20 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:23:20 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:23:20 [35msorm.NOTICE:[0m    Selecting from Item with condition 
+2024/12/02 16:23:20 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:23:20 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:23:20 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:23:20 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:23:20 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:23:20 [35msorm.NOTICE:[0m    Selecting from Zone with condition 
+2024/12/02 16:23:20 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:23:20 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:23:20 [35msorm.NOTICE:[0m    Selecting from Subcategory with condition 
+2024/12/02 16:23:20 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:23:20 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:23:20 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:23:20 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:23:20 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:23:20 [35msorm.NOTICE:[0m    Selecting from Rack with condition 
+2024/12/02 16:23:20 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:23:20 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:23:20 [35msorm.NOTICE:[0m    Selecting from Aisle with condition 
+2024/12/02 16:23:20 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:23:20 GET, /api/v1/aisles/, 127.0.0.1:55808, 200
+2024/12/02 16:23:20 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:23:20 [35msorm.NOTICE:[0m    Selecting from Category with condition 
+2024/12/02 16:23:20 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:23:20 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:23:20 [35msorm.NOTICE:[0m    Selecting from Shelf with condition 
+2024/12/02 16:23:20 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:23:20 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:23:20 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:23:20 [35msorm.NOTICE:[0m    Selecting from Item_image with condition 
+2024/12/02 16:23:20 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:24:16 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:24:16 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:24:16 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:24:16 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:24:16 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:24:16 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:24:16 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:24:16 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:24:16 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:24:16 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:24:16 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:24:16 [35msorm.NOTICE:[0m    Selecting from Aisle with condition 
+2024/12/02 16:24:16 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:24:16 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:24:16 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:24:16 [35msorm.NOTICE:[0m    Selecting from Rack with condition 
+2024/12/02 16:24:16 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:24:16 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:24:16 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:24:16 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:24:16 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:24:16 [35msorm.NOTICE:[0m    Selecting from Item_image with condition 
+2024/12/02 16:24:16 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:24:16 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:24:16 [35msorm.NOTICE:[0m    Selecting from Zone with condition 
+2024/12/02 16:24:16 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:24:16 [35msorm.NOTICE:[0m    Selecting from Category with condition 
+2024/12/02 16:24:16 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:24:16 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:24:16 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:24:16 [35msorm.NOTICE:[0m    Selecting from Subcategory with condition 
+2024/12/02 16:24:16 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:24:16 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:24:16 [35msorm.NOTICE:[0m    Selecting from Item with condition 
+2024/12/02 16:24:16 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:24:43 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:24:43 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:24:43 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:24:43 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:24:43 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:24:43 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:24:43 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:24:43 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:24:43 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:24:43 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:24:43 [35msorm.NOTICE:[0m    Selecting from Aisle with condition 
+2024/12/02 16:24:43 [35msorm.NOTICE:[0m    Selecting from Category with condition 
+2024/12/02 16:24:43 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:24:43 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:24:43 [35msorm.NOTICE:[0m    Selecting from Rack with condition 
+2024/12/02 16:24:43 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:24:43 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:24:43 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:24:43 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:24:43 [35msorm.NOTICE:[0m    Selecting from Item with condition 
+2024/12/02 16:24:43 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:24:43 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:24:43 [35msorm.NOTICE:[0m    Selecting from Item_image with condition 
+2024/12/02 16:24:43 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:24:43 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:24:43 [35msorm.NOTICE:[0m    Selecting from Zone with condition 
+2024/12/02 16:24:43 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:24:43 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:24:43 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:24:43 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:24:43 [35msorm.NOTICE:[0m    Selecting from Shelf with condition 
+2024/12/02 16:24:43 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:24:43 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:24:43 [35msorm.NOTICE:[0m    Selecting from Subcategory with condition 
+2024/12/02 16:24:43 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:25:01 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:25:01 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:25:01 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:25:01 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:25:01 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:25:01 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:25:01 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:25:01 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:25:01 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:25:01 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:25:01 [35msorm.NOTICE:[0m    Selecting from User with condition Email = ?
+2024/12/02 16:25:01 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:25:01 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:25:01 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:25:01 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:25:01 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:25:01 [35msorm.NOTICE:[0m    Selecting from Shelf with condition 
+2024/12/02 16:25:01 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:25:01 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:25:01 [35msorm.NOTICE:[0m    Selecting from Category with condition 
+2024/12/02 16:25:01 [35msorm.NOTICE:[0m    Selecting from Item_image with condition 
+2024/12/02 16:25:01 [35msorm.NOTICE:[0m    Selecting from Subcategory with condition 
+2024/12/02 16:25:01 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:25:01 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:25:01 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:25:01 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:25:01 [35msorm.NOTICE:[0m    Selecting from Rack with condition 
+2024/12/02 16:25:01 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:25:01 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:25:01 [35msorm.NOTICE:[0m    Selecting from Zone with condition 
+2024/12/02 16:25:01 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:25:01 [35msorm.NOTICE:[0m    Selecting from Item with condition 
+2024/12/02 16:25:01 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:25:01 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:25:01 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:25:03 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:25:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:25:03 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:25:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:25:03 [35msorm.NOTICE:[0m    Selecting from User with condition Email = ?
+2024/12/02 16:25:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:25:03 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:25:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:25:03 [35msorm.NOTICE:[0m    Selecting from Item with condition 
+2024/12/02 16:25:03 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:25:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:25:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:25:03 [35msorm.NOTICE:[0m    Selecting from Zone with condition 
+2024/12/02 16:25:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:25:03 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:25:03 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:25:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:25:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:25:03 [35msorm.NOTICE:[0m    Selecting from Rack with condition 
+2024/12/02 16:25:03 [35msorm.NOTICE:[0m    Selecting from Aisle with condition 
+2024/12/02 16:25:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:25:03 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:25:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:25:03 [35msorm.NOTICE:[0m    Selecting from Shelf with condition 
+2024/12/02 16:25:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:25:03 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:25:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:25:03 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:25:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:25:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:25:03 [35msorm.NOTICE:[0m    Selecting from Category with condition 
+2024/12/02 16:25:03 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:25:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:25:03 [35msorm.NOTICE:[0m    Selecting from Item_image with condition 
+2024/12/02 16:25:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:25:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:25:03 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:25:38 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:25:38 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:25:38 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:25:38 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:25:38 [35msorm.NOTICE:[0m    Selecting from User with condition Email = ?
+2024/12/02 16:25:38 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:25:38 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:25:38 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:25:38 [35msorm.NOTICE:[0m    Selecting from Item with condition 
+2024/12/02 16:25:38 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:25:38 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:25:38 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:25:38 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:25:38 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:25:38 [35msorm.NOTICE:[0m    Selecting from Zone with condition 
+2024/12/02 16:25:38 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:25:38 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:25:38 [35msorm.NOTICE:[0m    Selecting from Item_image with condition 
+2024/12/02 16:25:38 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:25:38 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:25:38 [35msorm.NOTICE:[0m    Selecting from Category with condition 
+2024/12/02 16:25:38 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:25:38 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:25:38 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:25:38 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:25:38 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:25:38 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:25:38 GET, /api/v1/items/, 127.0.0.1:33154, 200
+2024/12/02 16:25:38 [35msorm.NOTICE:[0m    Selecting from Subcategory with condition 
+2024/12/02 16:25:38 [35msorm.NOTICE:[0m    Selecting from Aisle with condition 
+2024/12/02 16:25:38 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:25:38 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:25:38 [35msorm.NOTICE:[0m    Selecting from Shelf with condition 
+2024/12/02 16:25:38 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:25:38 [35msorm.NOTICE:[0m    Selecting from Rack with condition 
+2024/12/02 16:25:38 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:25:38 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:28:37 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:28:37 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:28:37 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:28:37 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:28:37 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:28:37 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:28:37 [35msorm.NOTICE:[0m    Selecting from User with condition Email = ?
+2024/12/02 16:28:37 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:28:37 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:28:37 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:28:37 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:28:37 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:28:37 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:28:37 [35msorm.NOTICE:[0m    Selecting from Rack with condition 
+2024/12/02 16:28:37 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:28:37 [35msorm.NOTICE:[0m    Selecting from Category with condition 
+2024/12/02 16:28:37 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:28:37 [35msorm.NOTICE:[0m    Selecting from Aisle with condition 
+2024/12/02 16:28:37 [35msorm.NOTICE:[0m    Selecting from Zone with condition 
+2024/12/02 16:28:37 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:28:37 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:28:37 [35msorm.NOTICE:[0m    Selecting from Item with condition 
+2024/12/02 16:28:37 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:28:37 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:28:37 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:28:37 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:28:37 [35msorm.NOTICE:[0m    Selecting from Item_image with condition 
+2024/12/02 16:28:37 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:28:37 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:28:37 [35msorm.NOTICE:[0m    Selecting from Shelf with condition 
+2024/12/02 16:28:37 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:28:37 [35msorm.NOTICE:[0m    Selecting from Subcategory with condition 
+2024/12/02 16:28:37 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:29:24 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:29:24 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:29:24 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:29:24 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:29:24 [35msorm.NOTICE:[0m    Selecting from User with condition Email = ?
+2024/12/02 16:29:24 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:29:24 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:29:24 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:29:24 [35msorm.NOTICE:[0m    Selecting from Item with condition 
+2024/12/02 16:29:24 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:29:24 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:29:24 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:29:24 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:29:24 [35msorm.NOTICE:[0m    Selecting from Aisle with condition 
+2024/12/02 16:29:24 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:29:24 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:29:24 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:29:24 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:29:24 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:29:24 [35msorm.NOTICE:[0m    Selecting from Rack with condition 
+2024/12/02 16:29:24 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:29:24 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:29:24 [35msorm.NOTICE:[0m    Selecting from Category with condition 
+2024/12/02 16:29:24 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:29:24 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:29:24 [35msorm.NOTICE:[0m    Selecting from Shelf with condition 
+2024/12/02 16:29:24 [35msorm.NOTICE:[0m    Selecting from Item_image with condition 
+2024/12/02 16:29:24 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:29:24 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:29:24 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:29:24 [35msorm.NOTICE:[0m    Selecting from Subcategory with condition 
+2024/12/02 16:29:24 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:29:24 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:29:24 [35msorm.NOTICE:[0m    Selecting from Zone with condition 
+2024/12/02 16:29:24 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:29:28 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:29:28 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:29:28 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:29:28 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:29:28 [35msorm.NOTICE:[0m    Selecting from User with condition Email = ?
+2024/12/02 16:29:28 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:29:28 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:29:28 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:29:28 [35msorm.NOTICE:[0m    Selecting from Item with condition 
+2024/12/02 16:29:28 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:29:28 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:29:28 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:29:28 [35msorm.NOTICE:[0m    Selecting from Zone with condition 
+2024/12/02 16:29:28 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:29:28 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:29:28 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:29:28 [35msorm.NOTICE:[0m    Selecting from Aisle with condition 
+2024/12/02 16:29:28 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:29:28 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:29:28 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:29:28 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:29:28 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:29:28 [35msorm.NOTICE:[0m    Selecting from Shelf with condition 
+2024/12/02 16:29:28 [35msorm.NOTICE:[0m    Selecting from Rack with condition 
+2024/12/02 16:29:28 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:29:28 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:29:28 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:29:28 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:29:28 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:29:28 [35msorm.NOTICE:[0m    Selecting from Subcategory with condition 
+2024/12/02 16:29:28 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:29:28 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:29:28 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:29:28 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:29:28 [35msorm.NOTICE:[0m    Selecting from Category with condition 
+2024/12/02 16:29:28 [35msorm.NOTICE:[0m    Selecting from Item_image with condition 
+2024/12/02 16:29:28 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:29:28 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:29:43 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:29:43 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:29:43 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:29:43 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:29:43 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:29:43 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:29:43 [35msorm.NOTICE:[0m    Selecting from Zone with condition 
+2024/12/02 16:29:43 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:29:43 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:29:43 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:29:43 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:29:43 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:29:43 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:29:43 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:29:43 [35msorm.NOTICE:[0m    Selecting from Item_image with condition 
+2024/12/02 16:29:43 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:29:43 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:29:43 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:29:43 [35msorm.NOTICE:[0m    Selecting from Category with condition 
+2024/12/02 16:29:43 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:29:43 [35msorm.NOTICE:[0m    Selecting from Subcategory with condition 
+2024/12/02 16:29:43 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:29:43 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:29:43 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:29:43 [35msorm.NOTICE:[0m    Selecting from Aisle with condition 
+2024/12/02 16:29:43 [35msorm.NOTICE:[0m    Selecting from Rack with condition 
+2024/12/02 16:29:43 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:29:43 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:29:43 [35msorm.NOTICE:[0m    Selecting from Shelf with condition 
+2024/12/02 16:29:43 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:29:43 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:29:43 [35msorm.NOTICE:[0m    Selecting from Metadata with condition 
+2024/12/02 16:29:43 [32msorm.SUCCESS:[0m   Items selected and returned
+2024/12/02 16:29:43 [35msorm.NOTICE:[0m    Selecting from User with condition Email = ?
+2024/12/02 16:29:43 [32msorm.SUCCESS:[0m   Items selected and returned
