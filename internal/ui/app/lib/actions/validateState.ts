@@ -41,10 +41,8 @@ export async function validateState<K extends keyof FormMap>(
   locale: string,
 ) {
   let stateValidation;
-  console.log(type)
 
   switch (type) {
-
     case "Login":
       stateValidation = await validateLogin(
         state as FormState<"Login">, 
@@ -250,11 +248,9 @@ export async function validateState<K extends keyof FormMap>(
 
     default: 
       stateValidation = state;
-      console.log("validateState")
       state.error = true;
       state.message = "Oh-oh. This one is a doozy. Open an issue on github with the steps to replicate this message. Thank you!"
   }
-
 
   return stateValidation;
 }

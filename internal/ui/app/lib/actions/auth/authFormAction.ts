@@ -31,6 +31,8 @@ export async function authFormAction<K extends keyof AuthTypes>(
     }
   });
   state.result = result;
+  state.error = false;
+  state.message = "";
 
   const stateValidation = await validateState<K>(
     state, 

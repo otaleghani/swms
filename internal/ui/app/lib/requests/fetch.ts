@@ -22,7 +22,7 @@ export default async function fetchData<Entity>(
   const { path, method = "GET", tag, payload, headers } = attributes;
   const jwt = cookies().get("access")?.value;
 
-  if (!jwt && path != "login/") {
+  if (!jwt && (path != "login/" && path != "users/")) {
     return {
       code: 401,
       message: "Not authorized",

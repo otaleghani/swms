@@ -2,7 +2,6 @@ package database
 
 import (
 	"errors"
-	//"fmt"
 
 	"golang.org/x/crypto/bcrypt"
 )
@@ -39,13 +38,14 @@ func (db *Database) InsertUser(user User) error {
   if err != nil {
     return err
   }
+  oldPassoword := user.Password
   user.Password = string(hash)
 
   //err = bcrypt.CompareHashAndPassword(
-  //  []byte(user.Password), 
-  //  []byte(user.Password))
+  //  []byte(user.Password),
+  //  []byte(oldPassoword))
   //if err != nil {
-  //  fmt.Println(err)
+  //  return err
   //}
 
   err = db.Sorm.InsertInto(user)
@@ -61,7 +61,7 @@ func (db *Database) CheckUser(email, password string) error {
   if err != nil {
     return err
   }
-  
+
   for _, user := range(list) {
     if user.Email == email {
       err = bcrypt.CompareHashAndPassword(

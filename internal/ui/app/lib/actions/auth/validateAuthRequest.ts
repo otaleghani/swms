@@ -18,7 +18,6 @@ export async function validateAuthRequest<K extends keyof AuthTypes>(
 
     case "Register":
       result = await authRegister(state as FormState<"Register">, locale);
-      //console.log("got here")
       break;
 
     default:

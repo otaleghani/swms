@@ -7,6 +7,7 @@ import { LoginRequestBody, LoginResponseBody, RegisterRequestBody } from "../../
 import fetchData from "../fetch";
 
 export async function login(payload: LoginRequestBody) {
+  console.log(payload)
   const response = await fetchData<LoginResponseBody>({
     path: "login/",
     method: "POST",
@@ -18,7 +19,6 @@ export async function login(payload: LoginRequestBody) {
 };
 
 export async function register(payload: RegisterRequestBody) {
-  console.log("fired register")
   const response = await fetchData<undefined>({
     path: "users/",
     method: "POST",
