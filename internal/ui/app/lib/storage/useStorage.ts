@@ -18,7 +18,11 @@ export const useStorageUser = () => {
     user = getLocalStorage<User>(LOCAL_STORAGE_USER);
 
     if (user) {
-      retrieve({ request: "Units" }).then(result => {
+      fetchData<"User">({
+        path: "users/current/",
+        method: "GET",
+        tag: ""
+      }).then(result => {
         setLocalStorage(LOCAL_STORAGE_USER, result.data);
       });
     }
@@ -33,13 +37,9 @@ export const useStorageUnits = () => {
   useEffect(() => {
     units = getLocalStorage<Unit[]>(LOCAL_STORAGE_UNITS);
 
-    if (units) {
-      fetchData<"User">({
-        path: "users/current/",
-        method: "GET",
-        tag: ""
-      }).then(result => {
-        setLocalStorage(LOCAL_STORAGE_USER, result.data);
+    if (units == undefined) {
+      retrieve({ request: "Units" }).then(result => {
+        setLocalStorage(LOCAL_STORAGE_UNITS, result.data);
       });
     }
   }, []);

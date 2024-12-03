@@ -41,6 +41,7 @@ import {
   RegisterFormFieldsProps,
   DictItemsForm,
 } from "@/app/lib/types/form/fields";
+import { useStorageUnits, useStorageUser } from "@/app/lib/storage/useStorage";
 
 export default function FormPattern<K extends keyof FormPropsMap>({
   self,
@@ -54,6 +55,11 @@ export default function FormPattern<K extends keyof FormPropsMap>({
     form.initialState,
   );
   const [result, setResult] = useState(form.initialState.result)
+
+  const {units} = useStorageUnits();
+  const {user} = useStorageUser();
+  console.log(units)
+  console.log(user)
 
   useEffect(() => {
     /** 
