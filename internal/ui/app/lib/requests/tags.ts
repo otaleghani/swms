@@ -27,10 +27,16 @@ export const revalidateTags: Record<keyof TypeMap, string> = {
 
   // Tag
   "Category": "categories",
+  "CategoryWithExtra": "categories",
   "Categories": "categories",
+  "CategoriesWithExtra": "categories",
 
   "Subcategory": "subcategories",
+  "SubcategoryWithExtra": "subcategories",
   "Subcategories": "subcategories",
+  "SubcategoriesWithExtra": "subcategories",
+
+  "Units": "units",
 
   // Supplier
   "Supplier": "suppliers",

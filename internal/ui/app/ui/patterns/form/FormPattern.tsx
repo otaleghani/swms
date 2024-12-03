@@ -2,7 +2,7 @@
 
 /** React hooks */
 import { useLocale } from "@/app/lib/hooks/useLocale";
-import { useActionState, useEffect } from "react";
+import { useActionState, useEffect, useState } from "react";
 
 /** Local components */
 import SubmitFormButtonPattern from "@/app/ui/patterns/form/buttons/SubmitFormButtonPattern";
@@ -53,6 +53,7 @@ export default function FormPattern<K extends keyof FormPropsMap>({
     form.formAction,
     form.initialState,
   );
+  const [result, setResult] = useState(form.initialState.result)
 
   useEffect(() => {
     /** 
@@ -273,10 +274,11 @@ export default function FormPattern<K extends keyof FormPropsMap>({
 
         { type === "ItemComplete" && (
           <FormFields.ItemComplete
+            result={result as any}
+            setResult={setResult as any}
             fields={self.fields as ItemCompleteFormFieldsProps}
             errorMessages={state.errorMessages as {
               [T in keyof FormFieldsPropsMap["ItemComplete"]]: string[]}}
-            result={state.result}
             dict={self.dict as DictItemsForm}
           />
         )}

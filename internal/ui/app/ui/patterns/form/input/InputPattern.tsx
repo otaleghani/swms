@@ -1,5 +1,5 @@
 /** React hooks */
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 /** Local components */
 import { Label } from "@/app/ui/components/label";
@@ -13,7 +13,6 @@ import { DictCheckboxField, DictInputField } from "@/app/lib/types/dictionary/fo
 import { InputPatternNumberWithButtons } from "./InputPatternTransaction";
 import { Checkbox } from "@/app/ui/components/checkbox";
 import { isInputFieldDict } from "./misc";
-import { defaultSubcategoryFormState } from "@/app/lib/types/data/subcategories";
 
 interface InputPatternProps {
   field: 
@@ -37,6 +36,7 @@ interface InputPatternProps {
   defaultValue?: string;
   className?: string;
   label?: boolean;
+  setResult?: any;
 }
 
 export default function InputPattern({
@@ -45,13 +45,41 @@ export default function InputPattern({
   errorMessages,
   defaultValue,
   label,
-  dict
+  dict,
+  setResult
 }: InputPatternProps) {
   let inputId = "";
   useEffect(() => {
     inputId = `${Math.random().toString(36).substring(2, 9)}`;
   }, []);
 
+  const [data, setData] = useState(defaultValue ? defaultValue : "");
+
+  /** 
+  * Handles the input change. 
+  *
+  * Before we were handling the input change by using defaultValue and without using a useState.
+  * This created a wierd problem where whenever a server action would trigger (e.g. a dialog form submission)
+  * the input would be resetted. Now we handle the data inside of the input with a useState that starts
+  * with the defaultValue or gets created as an empty string. You can then pass a new function called 
+  * "setResult" that sets a new useState in the parent, holding the state of the form even during a rerender.
+  *
+  * Actually the re-render was just triggered because I had a function component in a const...
+  * */
+  const handleChange = (e: any) => {
+    setData(e.target.value)
+    const { name, value } = e.target;
+    if (setResult) {
+      setResult((prevData: any) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    }
+  };
+
+  /** 
+  * This kind of pattern triggers a new render everytime something happenes, even on every keystroke.
+  * */
   const InputPatternField = () => {
     switch (field) {
       case "password":
@@ -72,8 +100,10 @@ export default function InputPattern({
             name={field}
             id={`${field}-${inputId}`}
             placeholder={isInputFieldDict(dict) ? dict.placeholder : ""}
-            defaultValue={defaultValue}
+            //defaultValue={defaultValue}
             suppressHydrationWarning
+            onChange={handleChange}
+            value={data}
           />
         );
       case "name":
@@ -86,8 +116,10 @@ export default function InputPattern({
             name={field}
             id={`${field}-${inputId}`}
             placeholder={isInputFieldDict(dict) ? dict.placeholder : ""}
-            defaultValue={defaultValue}
+            //defaultValue={defaultValue}
             suppressHydrationWarning
+            onChange={handleChange}
+            value={data}
           />
         );
       case "description":
@@ -98,13 +130,14 @@ export default function InputPattern({
             id={`${field}-${inputId}`}
             placeholder={isInputFieldDict(dict) ? dict.placeholder : ""}
             suppressHydrationWarning
+            onChange={handleChange}
           />
         );
+
       case "width":
       case "length":
       case "height":
       case "weight":
-      case "length":
         return (
           <Input
             type="number"
@@ -113,6 +146,7 @@ export default function InputPattern({
             id={`${field}-${inputId}`}
             placeholder={isInputFieldDict(dict) ? dict.placeholder : ""}
             suppressHydrationWarning
+            onChange={handleChange}
           />
         );
       case "quantity":
@@ -125,6 +159,7 @@ export default function InputPattern({
             placeholder={isInputFieldDict(dict) ? dict.placeholder : ""}
             step="1"
             suppressHydrationWarning
+            onChange={handleChange}
           />
         );
       case "quantityWithButtons":
@@ -156,7 +191,95 @@ export default function InputPattern({
       {label && field != "isBusiness" && (
         <Label htmlFor={`${field}-${inputId}`}>{dict.label}</Label>
       )}
-      <InputPatternField />
+
+      {field == "password" && (
+        <Input
+          type="password"
+          name={field}
+          id={`${field}-${inputId}`}
+          placeholder={isInputFieldDict(dict) ? dict.placeholder : ""}
+          defaultValue={defaultValue}
+          suppressHydrationWarning
+        />
+      )}
+
+      {field == "email" && (
+        <Input
+          type="email"
+          name={field}
+          id={`${field}-${inputId}`}
+          placeholder={isInputFieldDict(dict) ? dict.placeholder : ""}
+          suppressHydrationWarning
+          onChange={handleChange}
+          value={data}
+        />
+      )}
+
+      {(field == "name" || field == "surname" || field == "identifier" || field == "code") && (
+        <Input
+          type="text"
+          name={field}
+          id={`${field}-${inputId}`}
+          placeholder={isInputFieldDict(dict) ? dict.placeholder : ""}
+          suppressHydrationWarning
+          onChange={handleChange}
+          value={data}
+        />
+      )}
+
+      {field == "description" && (
+        <Textarea
+          defaultValue={defaultValue}
+          name={field}
+          id={`${field}-${inputId}`}
+          placeholder={isInputFieldDict(dict) ? dict.placeholder : ""}
+          suppressHydrationWarning
+          onChange={handleChange}
+        />
+      )}
+
+      {(field == "width" || field == "length" || field == "height" || field == "weight") && (
+        <Input
+          type="number"
+          defaultValue={defaultValue === "0" ? "" : defaultValue}
+          name={field}
+          id={`${field}-${inputId}`}
+          placeholder={isInputFieldDict(dict) ? dict.placeholder : ""}
+          suppressHydrationWarning
+          onChange={handleChange}
+        />
+      )}
+      
+      {field == "quantity" && (
+        <Input
+          type="number"
+          defaultValue={defaultValue === "0" ? "" : defaultValue}
+          name={field}
+          id={`${field}-${inputId}`}
+          placeholder={isInputFieldDict(dict) ? dict.placeholder : ""}
+          step="1"
+          suppressHydrationWarning
+          onChange={handleChange}
+        />
+      )}
+
+      {field == "quantityWithButtons" && (
+        <InputPatternNumberWithButtons 
+          defaultValue={Number(defaultValue)}
+          name="quantity"
+          id={`${field}-${inputId}`}
+        />
+      )}
+
+      {field == "images" && ( <InputPatternImages dict={dict} /> )}
+
+      {field == "isBusiness" && (
+        <div className="flex items-center space-x-2">
+          <Checkbox id={`${field}-${inputId}`} />
+          <Label htmlFor={`${field}-${inputId}`}>{dict.label}</Label>
+        </div>
+      )}
+
       <FormFieldErrorsPattern 
         errorMessages={errorMessages}
         id={`${field}-${inputId}-errors`}

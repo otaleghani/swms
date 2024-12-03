@@ -10,7 +10,7 @@ import { DictDialog } from "@/app/lib/types/dictionary/misc";
 
 // Default values
 import { defaultVariantFormState } from "@/app/lib/types/data/variants";
-import { fieldsDefaultProps, InputFieldProps, SelectFieldProps } from "@/app/lib/types/form/fields";
+import { fieldsDefaultProps, InputFieldProps } from "@/app/lib/types/form/fields";
 import { DictFormButton } from "@/app/lib/types/dictionary/form";
 
 interface Props {

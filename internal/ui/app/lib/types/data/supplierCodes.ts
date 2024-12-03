@@ -35,6 +35,6 @@ export const defaultSupplierCodeFormState: SupplierCodeFormState = {
     item: [],
     variant: [],
     supplier: [],
-    supplierWithAdd: [],
+    //supplierWithAdd: [],
   }
 }

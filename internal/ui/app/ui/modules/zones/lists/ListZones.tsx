@@ -66,6 +66,7 @@ export default async function ListZones({
           }}
         />
         <PaginationPattern 
+          forceLayout="list"
           totalPages={zones.totalPages as number} 
           type="zones"
         />

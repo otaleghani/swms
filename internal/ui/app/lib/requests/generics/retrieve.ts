@@ -94,5 +94,7 @@ export async function retrieve<T extends keyof RetrieveMapOptions>({
     redirect("/login?error=true");
   }
 
+  console.log("retrieved: " + option.type)
+
   return response;
 }

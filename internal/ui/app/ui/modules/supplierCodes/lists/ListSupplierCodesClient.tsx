@@ -87,12 +87,12 @@ export default function ListSupplierCodesClient(props: Props) {
     });
 
     if (type === "complete") {
-      synchronizeList<"SupplierCode">({
-        streamer: streamer as Worker,
-        list: currentCodes,
-        setList: setCurrentCodes,
-        type: "SupplierCode",
-      });
+      //synchronizeList<"SupplierCode">({
+      //  streamer: streamer as Worker,
+      //  list: currentCodes,
+      //  setList: setCurrentCodes,
+      //  type: "SupplierCode",
+      //});
     };
 
     if (type === "supplier") {

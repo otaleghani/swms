@@ -41,56 +41,6 @@ export default function FormAddItemClient({
   dict,
   fields,
 }: Props) {
-  //const [zones, setZones] = useState(fields.zoneWithAdd.selectField.list)
-  //const [aisles, setAisles] = useState(fields.aisleWithAdd.selectField.list)
-  //const [racks, setRacks] = useState(fields.rackWithAdd.selectField.list)
-  //const [shelfs, setShelfs] = useState(fields.shelfWithAdd.selectField.list)
-  //const [categories, setCategories] = useState(fields.categoryWithAdd.selectField.list)
-  //const [subcategories, setSubcategories] = useState(fields.subcategoryWithAdd.selectField.list)
-
-  //useEffect(() => {
-  //  synchronizeList<"Zone">({
-  //    streamer: streamer as Worker,
-  //    list: zones,
-  //    setList: setZones,
-  //    type: "Zone",
-  //  });
-
-  //  synchronizeList<"Aisle">({
-  //    streamer: streamer as Worker,
-  //    list: aisles,
-  //    setList: setAisles,
-  //    type: "Aisle",
-  //  });
-
-  //  synchronizeList<"Rack">({
-  //    streamer: streamer as Worker,
-  //    list: racks,
-  //    setList: setRacks,
-  //    type: "Rack",
-  //  });
-
-  //  synchronizeList<"Shelf">({
-  //    streamer: streamer as Worker,
-  //    list: shelfs,
-  //    setList: setShelfs,
-  //    type: "Shelf",
-  //  });
-
-  //  synchronizeList<"Category">({
-  //    streamer: streamer as Worker,
-  //    list: categories,
-  //    setList: setCategories,
-  //    type: "Category",
-  //  });
-
-  //  synchronizeList<"Subcategory">({
-  //    streamer: streamer as Worker,
-  //    list: subcategories,
-  //    setList: setSubcategories,
-  //    type: "Subcategory",
-  //  });
-  //}, []);
 
   return (
     <>

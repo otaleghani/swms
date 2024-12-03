@@ -27,7 +27,9 @@ type ValidTypes = keyof Omit<TypeMapFilterSingles,
   "RackWithExtra" |
   "ShelfWithExtra" |
   "SupplierWithExtra" |
-  "SupplierCodeWithExtra" >
+  "SupplierCodeWithExtra" |
+  "CategoryWithExtra" |
+  "SubcategoryWithExtra">
 
 export type SyncElement<T extends ValidTypes> = {
   streamer:  Worker,

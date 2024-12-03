@@ -89,9 +89,9 @@ export async function validateVariant(
     )).length != 0 && (state.error = true);
   }
 
-  if (state.result.heigth) {
-    (state.errorMessages.heigth = validateNumber(
-      String(state.result.heigth), 
+  if (state.result.height) {
+    (state.errorMessages.height = validateNumber(
+      String(state.result.height), 
       dict.form.fields.height.validation, 
       VALIDATION_SETTINGS.bigUnsignedNumber.minLength,
       VALIDATION_SETTINGS.bigUnsignedNumber.maxLength,

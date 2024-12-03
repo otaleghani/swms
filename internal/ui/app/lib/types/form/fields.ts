@@ -493,7 +493,6 @@ export type UserFormFieldsProps = {
 // prettier-ignore
 export type DeleteFormFieldsProps = {
   [K in keyof FieldsPropsMap]:
-
     K extends "button" ? FieldsPropsMap[K] :
     null;
 };
@@ -606,6 +605,7 @@ export type FormFieldsPropsWithDictMap = {
 export type FormFieldsPropsWithDictCompleteMap = {
   [K in keyof FormMap]: FormFieldsPropsWithDictMap[K] & {
     result?: FormMap[K];
+    setResult?: React.Dispatch<React.SetStateAction<FormMap[K]>>;
     errorMessages: {
       //[T in keyof FormMap[K]]: string[];
       [T in keyof FormFieldsPropsMap[K] as 

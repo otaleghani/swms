@@ -10,6 +10,7 @@ import InputPattern from "../input/InputPattern"
 import { FormFieldsPropsWithDictCompleteMap } from "@/app/lib/types/form/fields"
 import { Supplier } from "@/app/lib/types/data/suppliers";
 import SelectFieldWithAddPattern from "../select/SelectFieldWithAddPattern";
+import SelectFieldPattern from "../select/SelectFieldPattern";
 
 export const SupplierCodeFormFields = ({
   fields,
@@ -18,7 +19,7 @@ export const SupplierCodeFormFields = ({
 }: FormFieldsPropsWithDictCompleteMap["SupplierCode"] ) => { 
   const [element, setElement] = useState(
     result?.supplier ? 
-      fields.supplierWithAdd.selectField.list.find(
+      fields.supplier.list.find(
         e => e.id === result.supplier) as Supplier : 
       { id: "", name: "" } as Supplier)
   return (
@@ -31,12 +32,13 @@ export const SupplierCodeFormFields = ({
       label={true}
       errorMessages={errorMessages.code as string[]}
     />
-    <SelectFieldWithAddPattern<"Supplier"> 
-      selectField={fields.supplierWithAdd.selectField}
-      addDialog={fields.supplierWithAdd.addDialog}
+    <SelectFieldPattern<"Supplier"> 
+      name="Supplier"
+      list={fields.supplier.list}
+      dict={fields.supplier.dict}
       element={element}
       setElement={setElement}
-      errorMessages={errorMessages.supplierWithAdd}
+      errorMessages={errorMessages.supplier}
     />
       <input type="hidden" name="type" value="SupplierCodes" />
   </>

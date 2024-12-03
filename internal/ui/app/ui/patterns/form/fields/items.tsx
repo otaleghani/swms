@@ -7,14 +7,17 @@ import InputPattern from "../input/InputPattern";
 /** Types and interfaces */
 import { FormFieldsPropsWithDictCompleteMap } from "@/app/lib/types/form/fields";
 import { emptyZone } from "@/app/lib/types/data/zones";
+import { useEffect } from "react";
 
 export const ItemCompleteFormFields = ({
   fields,
   result,
   errorMessages,
   dict,
+  setResult,
 }: FormFieldsPropsWithDictCompleteMap["ItemComplete"]
 ) => { 
+
   let defaultCategory = result?.category ? 
     fields.categoryWithAdd.selectField.list.find(
       item => item.id === result.category
@@ -57,6 +60,7 @@ export const ItemCompleteFormFields = ({
           className=""
           label={true}
           errorMessages={errorMessages.name}
+          //setResult={setResult}
         />
         <InputPattern 
           field="description"
@@ -65,6 +69,7 @@ export const ItemCompleteFormFields = ({
           className=""
           label={true}
           errorMessages={errorMessages.description as string[]}
+          //setResult={setResult}
         />
         <TagsSelectFieldsWithAdd 
           fields={{
