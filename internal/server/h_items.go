@@ -46,27 +46,27 @@ func getItems(db *database.Database) http.HandlerFunc {
         }
         if filters.Zone != "" {
           filteredRows, err = FilterByField(
-            filteredRows, "Zone", filters.Zone)
+            filteredRows, "Zone_id", filters.Zone)
         }
         if filters.Aisle != "" {
           filteredRows, err = FilterByField(
-            filteredRows, "Aisle", filters.Aisle)
+            filteredRows, "Aisle_id", filters.Aisle)
         }
         if filters.Rack != "" {
           filteredRows, err = FilterByField(
-            filteredRows, "Rack", filters.Rack)
+            filteredRows, "Rack_id", filters.Rack)
         }
         if filters.Shelf != "" {
           filteredRows, err = FilterByField(
-            filteredRows, "Shelf", filters.Shelf)
+            filteredRows, "Shelf_id", filters.Shelf)
         }
         if filters.Category != "" {
           filteredRows, err = FilterByField(
-            filteredRows, "Category", filters.Category)
+            filteredRows, "Category_id", filters.Category)
         }
         if filters.Subcategory != "" {
           filteredRows, err = FilterByField(
-            filteredRows, "Subcategory", filters.Subcategory)
+            filteredRows, "Subcategory_id", filters.Subcategory)
         }
         if filters.Search != "" {
           filteredRows, err = FilterBySearch(

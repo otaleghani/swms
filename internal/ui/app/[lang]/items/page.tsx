@@ -17,6 +17,8 @@ export default async function ItemsPage({
   const update = updateFormAction;
   const create = createFormAction;
 
+  console.log(currentSearchParams.items)
+
   return (
     <>
       <HeaderItemCollection 
