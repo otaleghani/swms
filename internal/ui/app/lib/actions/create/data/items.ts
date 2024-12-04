@@ -24,7 +24,9 @@ export async function createItem<K extends keyof FormMap>(
 }
 
 /** Reworked version of the ItemComplete function that does not
-* add variants and codes, making it easier to work with. */
+* add variants and codes, making it easier to work with. 
+* Actually I added back the default variant, because that thing is needed.
+* */
 export async function createItemComplete<K extends keyof FormMap> (
   state: FormState<K>,
   locale: string
@@ -38,15 +40,26 @@ export async function createItemComplete<K extends keyof FormMap> (
   }
   const itemUUID = rItem.data.uuid;
 
+  const variantRB: Variant = completeData;
+  variantRB.item = itemUUID;
+  console.log(variantRB)
+  let rVariant = await create("Variant", variantRB);
+  stateValidation = await validateResponse(rVariant, state, locale);
+  if (stateValidation.error === true || rVariant.data?.uuid === undefined) {
+    remove("Item", itemUUID);
+    return stateValidation;
+  }
+  const variantUUID = rVariant.data.uuid;
+
   const imagesRB: ItemImagesPostBody = {
     item: itemUUID,
-    //images: completeData.images,
     encodedImages: completeData.encodedImages,
   }
   let rImages = await create("ItemImagesPostBody", imagesRB);
   stateValidation = await validateResponse(rImages, state, locale);
   if (stateValidation.error === true) {
     remove("Item", itemUUID);
+    remove("Variant", variantUUID);
     return stateValidation
   }
 

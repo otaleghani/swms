@@ -2,18 +2,19 @@ package server
 
 import (
 	"net/http"
-	"strings"
+	//"strings"
 
 	"github.com/otaleghani/swms/internal/database"
 )
 
 func getUnits(db *database.Database) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
-		if err := checkAccessToken(token, db); err != nil {
-			ErrorResponse{Message: err.Error()}.r401(w, r)
-			return
-		}
+    // We don't really care about the auth, we can just respond with the values
+		//token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
+		//if err := checkAccessToken(token, db); err != nil {
+		//	ErrorResponse{Message: err.Error()}.r401(w, r)
+		//	return
+		//}
 		rows, err := db.SelectUnits("")
 		if err != nil {
 			ErrorResponse{Message: err.Error()}.r500(w, r)

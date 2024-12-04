@@ -41,6 +41,7 @@ export type Dictionary = {
   toasts: DictToasts;
   filters: DictFilters;
   misc: DictMisc;
+  //units: DictUnits
   
   sidebar: DictSidebar;
 }

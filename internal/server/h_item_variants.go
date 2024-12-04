@@ -55,6 +55,24 @@ func postVariants(db *database.Database) http.HandlerFunc {
 			ErrorResponse{Message: err.Error()}.r400(w, r)
 			return
 		}
+
+    // Get units ratio and calculates the result in the value
+    unitLength, err := db.SelectUnitById(data.Unit_Length_id)
+    if err != nil {
+			ErrorResponse{Message: err.Error()}.r400(w, r)
+			return
+    }
+    unitWeight, err := db.SelectUnitById(data.Unit_Weight_id)
+    if err != nil {
+			ErrorResponse{Message: err.Error()}.r400(w, r)
+			return
+    }
+    data.Width = data.Width * unitLength.Ratio
+    data.Height = data.Height * unitLength.Ratio
+    data.Length = data.Length * unitLength.Ratio
+    data.Weight = data.Weight * unitWeight.Ratio
+
+
 		data.Id = uuid.NewString()
 		err = db.Insert(data)
 		if err != nil {

@@ -13,12 +13,19 @@ import { DictSidebar } from "@/app/lib/types/dictionary/sidebar"
 import SidebarInventory from "./SidebarInvetory"
 import SidebarTicket from "./SidebarTickets"
 import Link from "next/link"
+import fetchData from "@/app/lib/requests/fetch"
+import { emptyUser, User } from "@/app/lib/types/data/users"
  
 interface Props {
   dict: DictSidebar
 }
 
-export function DefaultSidebar({dict}: Props) {
+export async function DefaultSidebar({dict}: Props) {
+  const user = await fetchData<User>({
+    path: "users/current/",
+    method: "GET",
+    tag: ""
+  })
 
   return (
     <Sidebar>
@@ -59,12 +66,7 @@ export function DefaultSidebar({dict}: Props) {
       <SidebarFooter>
         <DefaultSidebarFooter
           content={dict.footer}
-          user={{
-            email: "o.taleghani@gmail.com",
-            name: "Oliviero",
-            surname: "Taleghani",
-            //avatar: ""
-          }}
+          user={user.data ? user.data : emptyUser}
         />
       </SidebarFooter>
     </Sidebar>

@@ -131,36 +131,30 @@ func Init(path string) (Database, error) {
   if err != nil {
     return Database{}, err
   }
-  baseSettings := Settings{
-    Id: "base",
-    Unit_weight: "kg",
-    Unit_length: "cm",
-    Wizard: true,
-  }
-  err = db.Insert(baseSettings)
-  if err != nil {
-    return Database{}, err
-  }
 
   // Add default units
   baseUnits := []Unit{
-    {Id: "si_mm", Type: "length"},
-    {Id: "si_m", Type: "length"},
-    {Id: "si_km", Type: "length"},
+    // Metric System
+    {Id: "mm", Type: "length", Ratio: 1, UnitSystem: MetricSystem},
+    {Id: "m", Type: "length", Ratio: 1000, UnitSystem: MetricSystem},         // 1 m = 1,000 mm
+    {Id: "km", Type: "length", Ratio: 1000000, UnitSystem: MetricSystem},     // 1 km = 1,000,000 mm
+    
+    // Imperial System
+    {Id: "thou", Type: "length", Ratio: 0.0254, UnitSystem: ImperialSystem},  // 1 thou = 0.0254 mm
+    {Id: "inch", Type: "length", Ratio: 25.4, UnitSystem: ImperialSystem},    // 1 inch = 25.4 mm
+    {Id: "foot", Type: "length", Ratio: 304.8, UnitSystem: ImperialSystem},   // 1 foot = 304.8 mm
+    {Id: "yard", Type: "length", Ratio: 914.4, UnitSystem: ImperialSystem},   // 1 yard = 914.4 mm
 
-    {Id: "us_thou", Type: "length"},
-    {Id: "us_inch", Type: "length"},
-    {Id: "us_foot", Type: "length"},
-    {Id: "us_yard", Type: "length"},
-
-    {Id: "si_mg", Type: "weight"},
-    {Id: "si_g", Type: "weight"},
-    {Id: "si_kg", Type: "weight"},
-    {Id: "si_t", Type: "weight"},
-
-    {Id: "us_oz", Type: "weight"},
-    {Id: "us_lb", Type: "weight"},
-    {Id: "us_ton", Type: "weight"},
+    // Metric System
+    {Id: "mg", Type: "weight", Ratio: 0.001, UnitSystem: MetricSystem},       // 1 mg = 0.001 g
+    {Id: "g", Type: "weight", Ratio: 1, UnitSystem: MetricSystem},
+    {Id: "kg", Type: "weight", Ratio: 1000, UnitSystem: MetricSystem},        // 1 kg = 1,000 g
+    {Id: "t", Type: "weight", Ratio: 1000000, UnitSystem: MetricSystem},      // 1 t = 1,000,000 g
+    
+    // Imperial System
+    {Id: "oz", Type: "weight", Ratio: 28.3495, UnitSystem: ImperialSystem},   // 1 oz = 28.3495 g
+    {Id: "lb", Type: "weight", Ratio: 453.592, UnitSystem: ImperialSystem},   // 1 lb = 453.592 g
+    {Id: "ton", Type: "weight", Ratio: 907185, UnitSystem: ImperialSystem},   // 1 ton = 907,185 g
   }
 
   for _, v := range baseUnits {
@@ -168,6 +162,18 @@ func Init(path string) (Database, error) {
     if err != nil {
       return Database{}, err
     }
+  }
+
+  baseSettings := Settings{
+    Id: "base",
+    UnitSystem: MetricSystem,
+    Unit_Length_id: "g",
+    Unit_Weight_id: "mm",
+    Wizard: true,
+  }
+  err = db.Insert(baseSettings)
+  if err != nil {
+    return Database{}, err
   }
 
   return db, nil
