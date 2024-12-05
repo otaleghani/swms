@@ -5,7 +5,8 @@ import { deepMerge } from "@/app/lib/searchParams";
 
 type PossibleParams = keyof Pick<SearchParams, 
   "transactions" |
-  "supplierCodes"
+  "supplierCodes" |
+  "variants"
 >;
 
 /** Manages the creation of a compatible URL for filtering data. */

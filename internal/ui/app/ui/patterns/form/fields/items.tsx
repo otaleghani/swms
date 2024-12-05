@@ -53,7 +53,7 @@ export const ItemCompleteFormFields = ({
 
   return (
   <>
-    <div className="mb-4 rounded p-5">
+    <div className="mb-4 rounded ">
       <h3 className="font-semibold pb-2">{dict?.sections.basics}</h3>
       <div className="xl:grid-cols-4 gap-2">
         <InputPattern 
@@ -93,7 +93,7 @@ export const ItemCompleteFormFields = ({
       </div>
     </div>
 
-    <div className="mb-4 rounded p-5">
+    <div className="mb-4 rounded ">
       <h3 className="font-semibold pb-2">{dict?.sections.defaultVariant}</h3>
       <div className="xl:grid-cols-2 gap-2">
         <InputPattern 
@@ -171,7 +171,7 @@ export const ItemCompleteFormFields = ({
       </div>
     </div>
 
-    <div className="mb-4 rounded p-5">
+    <div className="mb-4 rounded ">
       <h3 className="font-semibold pb-2">{dict?.sections.position}</h3>
       <div className="xl:grid-cols-1 gap-2">
         <PositionSelectFieldWithAdd 
@@ -205,7 +205,7 @@ export const ItemCompleteFormFields = ({
       </div>
     </div>
 
-    <div className="mb-4 rounded p-5">
+    <div className="mb-4 rounded ">
       <h3 className="font-semibold pb-2">{dict?.sections.images}</h3>
       <div className="xl:grid-cols-1 gap-2">
         <InputPattern 
@@ -224,7 +224,7 @@ export const ItemCompleteFormFields = ({
     }
 
     {
-      //<div className="mb-4 p-5 w-full">
+      //<div className="mb-4  w-full">
       //  <h3 className="font-semibold pb-2">{dict?.sections.images}</h3>
       //  <div className="xl:grid-cols-1 gap-2">
       //    <SheetAddVariant />

@@ -21,6 +21,7 @@ export interface FiltersParams {
   ticketType?: string;
   ticketState?: string;
   user?: string;
+  description?: string;
 };
 
 export type Filters = {
@@ -37,6 +38,7 @@ export type Filters = {
   supplierCodes: SupplierCodeFiltersParams;
   tickets: TicketFiltersParams;
   transactions: TransactionFiltersParams;
+  variants: VariantFiltersParams;
 };
 
 // prettier-ignore
@@ -157,5 +159,13 @@ export type TransactionFiltersParams = {
     K extends "variant" ? FiltersParams[K] :
     K extends "ticket" ? FiltersParams[K] :
     K extends "date" ? FiltersParams[K] :
+    undefined;
+};
+
+// prettier-ignore
+export type VariantFiltersParams = {
+  [K in keyof FiltersParams]: 
+    K extends "search" ? FiltersParams[K] :
+    K extends "item" ? FiltersParams[K] :
     undefined;
 };

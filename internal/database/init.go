@@ -167,8 +167,8 @@ func Init(path string) (Database, error) {
   baseSettings := Settings{
     Id: "base",
     UnitSystem: MetricSystem,
-    Unit_Length_id: "g",
-    Unit_Weight_id: "mm",
+    Unit_Length_id: "mm",
+    Unit_Weight_id: "g",
     Wizard: true,
   }
   err = db.Insert(baseSettings)

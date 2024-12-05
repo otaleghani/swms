@@ -37,8 +37,7 @@ export default async function FormAddItem({
       [pZones, pAisles, pRacks, pShelfs, pCategories, pSubcategories, pUnits, pSettings, pDict]);
       
   return (
-    <div className="xl:px-[25%]">
-
+    <div className="xl:px-[25%] p-4">
       <FormPattern<"ItemComplete"> 
         showButton
         self={{

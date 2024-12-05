@@ -30,6 +30,16 @@ func (db *Database) SelectUnits(condition string, args...interface{}) ([]Unit, e
 
 func (db *Database) SelectUnitById(id string) (Unit, error) {
   list := []Unit{}
+  if id == "" {
+    settings, err := db.SelectSettings()
+    if err != nil {
+      return Unit{}, err
+    }
+    err = db.Sorm.Select(&list, "Id = ?", settings.Unit_Length_id)
+    if err != nil {
+      return Unit{}, err
+    }
+  }
   err := db.Sorm.Select(&list, "Id = ?", id)
   if err != nil {
     return Unit{}, err
