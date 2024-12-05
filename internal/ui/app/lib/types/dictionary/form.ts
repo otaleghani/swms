@@ -73,6 +73,9 @@ export interface DictFormFields {
 
   users:          DictSelectField;
 
+  lengthUnit:     DictSelectField;
+  weightUnit:     DictSelectField;
+
   isBusiness:     DictCheckboxField;
   isArchived:     DictCheckboxField;
 

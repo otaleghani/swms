@@ -13,9 +13,12 @@ import {
   TypeMapFilterLists,
 } from "../../types/requests";
 import { redirect } from "next/navigation";
+import { Settings } from "../../types/settings";
 
 type RetrieveMapOptions = {
   [K in keyof TypeMapFilterLists]: RequestOptions;
+} & {
+  Settings: RequestOptions;
 }
 
 const options: RetrieveMapOptions = {
@@ -48,6 +51,7 @@ const options: RetrieveMapOptions = {
   "Clients":                { path: "clients/",             type: "Clients" },
   "Users":                  { path: "users/",               type: "Users" },
   "Units":                  { path: "units/",               type: "Units" },
+  "Settings":               { path: "settings/",            type: "Units" },
 };
 
 interface RetrieveData<T extends keyof RetrieveMapOptions> {
@@ -93,8 +97,6 @@ export async function retrieve<T extends keyof RetrieveMapOptions>({
   if (response.code === 401) {
     redirect("/login?error=true");
   }
-
-  console.log("retrieved: " + option.type)
 
   return response;
 }

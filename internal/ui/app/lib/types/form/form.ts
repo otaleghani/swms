@@ -23,6 +23,7 @@ import { Operation } from "../data/operations";
 import { User } from "../data/users";
 import { Variant } from "../data/variants";
 import { LoginRequestBody, RegisterRequestBody } from "../../types/data/auth";
+import { Unit } from "../data/units";
 
 // Lists all the possible forms
 // maps every request body  
@@ -71,6 +72,8 @@ export interface FormMap {
     itemThatReplaces: string;
     type: string;
   }
+
+  Unit: Unit;
 }
 
 export interface FormState<X extends keyof FormMap> {

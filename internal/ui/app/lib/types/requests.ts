@@ -98,6 +98,7 @@ import {
 } from "./data/variants";
 import { Client, Clients } from "./data/clients";
 import { Unit } from "./data/units";
+import { Settings } from "./settings";
 
 /** Maps every type that can be the body of the return of Response<Entity>
   */
@@ -184,6 +185,7 @@ export type TypeMap = {
   Users: Users;
 
   Units: Unit[];
+  Settings: Settings
 }
 export type ValidType<K extends string> = K extends keyof TypeMap ? K : never;
 

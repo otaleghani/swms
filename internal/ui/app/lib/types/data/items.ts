@@ -68,6 +68,8 @@ export const defaultItemCompleteFormState: ItemCompleteFormState = {
     weight: [],
     variantsJSON: [],
     codesJSON: [],
+    lengthUnit: [],
+    weightUnit: [],
   },
   result: {
     id: "",
@@ -92,6 +94,8 @@ export const defaultItemCompleteFormState: ItemCompleteFormState = {
     encodedImages: [],
     variantsJSON: "",
     codesJSON: "",
+    weightUnit: "",
+    lengthUnit: "",
   }
 }
 

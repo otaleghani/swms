@@ -449,6 +449,38 @@ export const dictionaryForm: DictForms = {
       }
     },
 
+    weightUnit: {
+      select: {
+        label: "Unit",
+        combobox: {
+          select: "Select",
+          search: "Search",
+          empty: "Nothing found...",
+        },
+      },
+      validation: {
+        not_found: "The selected unit was not found.",
+        empty: "This unit cannot be empty",
+        valid: "The format of this unit was not valid, refresh the page and try again.",
+      }
+    },
+
+    lengthUnit: {
+      select: {
+        label: "Unit",
+        combobox: {
+          select: "Select",
+          search: "Search",
+          empty: "Nothing found...",
+        },
+      },
+      validation: {
+        not_found: "The selected unit was not found.",
+        empty: "This unit cannot be empty",
+        valid: "The format of this unit was not valid, refresh the page and try again.",
+      }
+    },
+
     isBusiness: {
       label: "Business",
       isChecked: false,

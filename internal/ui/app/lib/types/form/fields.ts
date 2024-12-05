@@ -1,3 +1,4 @@
+import { Unit } from "../data/units";
 import {
   DictCheckboxField,
   DictDatePickerField,
@@ -156,6 +157,9 @@ export type FieldsPropsMap = {
   codesJSON: JSONHiddenFieldProps;
 
   id: string;
+
+  lengthUnit: SelectFieldProps<"Unit">;
+  weightUnit: SelectFieldProps<"Unit">;
 };
 
 /** Creates a const with default fields that I can pass
@@ -213,6 +217,8 @@ export const fieldsDefaultProps: FieldsPropsNullMap = {
   codesJSON: null,
   variantsJSON: null,
   id: null,
+  lengthUnit: null,
+  weightUnit: null,
 };
 
 /** Defines the fields for each type. */
@@ -329,6 +335,8 @@ export type ItemCompleteFormFieldsProps = {
     K extends "weight" ? FieldsPropsMap[K] :
     K extends "variantsJSON" ? FieldsPropsMap[K] :
     K extends "codesJSON" ? FieldsPropsMap[K] :
+    K extends "weightUnit" ? FieldsPropsMap[K] :
+    K extends "lengthUnit" ? FieldsPropsMap[K] :
     K extends "button" ? FieldsPropsMap[K] :
     null;
 };

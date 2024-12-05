@@ -34,15 +34,32 @@ export async function createItemComplete<K extends keyof FormMap> (
   const completeData = state.result as ItemWithDefaultVariantAndImages;
   const data: Item = completeData;
   let rItem = await create("Item", data);
+
   let stateValidation = await validateResponse(rItem, state, locale);
   if (stateValidation.error === true || rItem.data?.uuid === undefined) {
     return stateValidation;
   }
+
   const itemUUID = rItem.data.uuid;
 
-  const variantRB: Variant = completeData;
-  variantRB.item = itemUUID;
-  console.log(variantRB)
+  const variantRB: Variant = {
+    // The default variant takes in the same data as the item 
+    name: completeData.name,
+    description: completeData.description,
+
+    quantity: completeData.quantity,
+    identifier: completeData.identifier,
+    length: completeData.length,
+    width: completeData.width,
+    height: completeData.height,
+    weight: completeData.weight,
+
+    isDefaultVariant: true,
+    item: itemUUID,
+
+    lengthUnit: completeData.lengthUnit,
+    weightUnit: completeData.weightUnit,
+  }
   let rVariant = await create("Variant", variantRB);
   stateValidation = await validateResponse(rVariant, state, locale);
   if (stateValidation.error === true || rVariant.data?.uuid === undefined) {
@@ -50,7 +67,7 @@ export async function createItemComplete<K extends keyof FormMap> (
     return stateValidation;
   }
   const variantUUID = rVariant.data.uuid;
-
+  
   const imagesRB: ItemImagesPostBody = {
     item: itemUUID,
     encodedImages: completeData.encodedImages,

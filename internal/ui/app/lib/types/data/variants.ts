@@ -14,9 +14,9 @@ export type Variant = {
   item: string;
 
   lengthUnit?: string;
-  widthUnit?: string;
-  heightUnit?: string;
   weightUnit?: string;
+  //widthUnit?: string;
+  //heightUnit?: string;
 }
 export type Variants = Variant[];
 

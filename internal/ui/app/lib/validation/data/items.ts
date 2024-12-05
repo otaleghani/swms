@@ -259,7 +259,7 @@ export async function validateItemComplete(
     }
   }
 
-  console.log(state.result.images)
+  //console.log(state.result.images)
   if (state.result.images && state.result.images.length !== 0) {
     const { errors, images } = await validateImages(state.result.images)
     if (errors.length != 0) {

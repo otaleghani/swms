@@ -29,10 +29,13 @@ export default async function FormAddItem({
   const pCategories = retrieve({ request: "Categories", paginationOff: "true" });
   const pSubcategories = retrieve({ request: "Subcategories", paginationOff: "true" });
 
-  const [zones, aisles, racks, shelfs, categories, subcategories, dict] = 
-    await Promise.all(
-      [pZones, pAisles, pRacks, pShelfs, pCategories, pSubcategories, pDict]);
+  const pUnits = retrieve({ request: "Units", paginationOff: "true" });
+  const pSettings = retrieve({ request: "Settings", paginationOff: "true" });
 
+  const [zones, aisles, racks, shelfs, categories, subcategories, units, settings, dict] = 
+    await Promise.all(
+      [pZones, pAisles, pRacks, pShelfs, pCategories, pSubcategories, pUnits, pSettings, pDict]);
+      
   return (
     <div className="xl:px-[25%]">
 
@@ -274,11 +277,52 @@ export default async function FormAddItem({
             variantsJSON: { data: "" },
             codesJSON: { data: "" },
             button: dict.form.buttons.add,
+            weightUnit: {
+              name: "Unit",
+              list: units.data?.filter(unit => unit.type === "weight") ? 
+                units.data.filter(unit => unit.type === "weight") : [],
+              dict: dict.form.fields.weightUnit,
+            },
+            lengthUnit: {
+              name: "Unit",
+              list: units.data?.filter(unit => unit.type === "length") ? 
+                units.data.filter(unit => unit.type === "length") : [],
+              dict: dict.form.fields.lengthUnit,
+            },
           }
         }}
         form={{
           formName: "AddItemComplete",
-          initialState: defaultItemCompleteFormState,
+          initialState: {
+            ...defaultItemCompleteFormState,
+            result: {
+              // Don't know why defaultItemCompleteFormState.result doesn't work here.
+              id: "",
+              name: "",
+              description: "",
+              isArchived: false,
+              zone: "",
+              aisle: "",
+              rack: "",
+              shelf: "",
+              category: "",
+              subcategory: "",
+              identifier: "",
+              quantity: 0,
+              length: 0,
+              width: 0,
+              height: 0,
+              weight: 0,
+              images: [],
+              isDefaultVariant: true,
+              item: "",
+              encodedImages: [],
+              variantsJSON: "",
+              codesJSON: "",
+              lengthUnit: settings.data?.defaultLengthUnit ? settings.data.defaultLengthUnit : "",
+              weightUnit: settings.data?.defaultWeightUnit ? settings.data.defaultWeightUnit : "",
+            }
+          },
           formAction: createFormAction,
         }}
         type="ItemComplete"

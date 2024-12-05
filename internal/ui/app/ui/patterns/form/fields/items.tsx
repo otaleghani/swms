@@ -7,7 +7,10 @@ import InputPattern from "../input/InputPattern";
 /** Types and interfaces */
 import { FormFieldsPropsWithDictCompleteMap } from "@/app/lib/types/form/fields";
 import { emptyZone } from "@/app/lib/types/data/zones";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import SelectFieldPattern from "../select/SelectFieldPattern";
+import { Unit } from "@/app/lib/types/data/units";
+import SelectUnit from "@/app/ui/modules/units/SelectUnit";
 
 export const ItemCompleteFormFields = ({
   fields,
@@ -50,7 +53,7 @@ export const ItemCompleteFormFields = ({
 
   return (
   <>
-    <div className="mb-4 bg-white rounded p-5">
+    <div className="mb-4 rounded p-5">
       <h3 className="font-semibold pb-2">{dict?.sections.basics}</h3>
       <div className="xl:grid-cols-4 gap-2">
         <InputPattern 
@@ -90,7 +93,7 @@ export const ItemCompleteFormFields = ({
       </div>
     </div>
 
-    <div className="mb-4 bg-white rounded p-5">
+    <div className="mb-4 rounded p-5">
       <h3 className="font-semibold pb-2">{dict?.sections.defaultVariant}</h3>
       <div className="xl:grid-cols-2 gap-2">
         <InputPattern 
@@ -112,42 +115,63 @@ export const ItemCompleteFormFields = ({
       </div>
 
       <div className="xl:grid-cols-2 gap-2">
-        <InputPattern 
-          field="width"
-          dict={fields.width.dict}
-          defaultValue={String(result?.width)}
-          className=""
-          label={true}
-          errorMessages={errorMessages.width as string[]}
-        />
-        <InputPattern 
-          field="length"
-          dict={fields.length.dict}
-          defaultValue={String(result?.length)}
-          className=""
-          label={true}
-          errorMessages={errorMessages.length as string[]}
-        />
-        <InputPattern 
-          field="height"
-          dict={fields.height.dict}
-          defaultValue={String(result?.height)}
-          className=""
-          label={true}
-          errorMessages={errorMessages.height as string[]}
-        />
-        <InputPattern 
-          field="weight"
-          dict={fields.weight.dict}
-          defaultValue={String(result?.weight)}
-          className=""
-          label={true}
-          errorMessages={errorMessages.weight as string[]}
-        />
+        <div className="flex gap-2 pt-4">
+          <div className="w-full">
+            <InputPattern 
+              field="width"
+              dict={fields.width.dict}
+              defaultValue={String(result?.width)}
+              className=""
+              label={true}
+              errorMessages={errorMessages.width as string[]}
+            />
+            <InputPattern 
+              field="length"
+              dict={fields.length.dict}
+              defaultValue={String(result?.length)}
+              className=""
+              label={true}
+              errorMessages={errorMessages.length as string[]}
+            />
+            <InputPattern 
+              field="height"
+              dict={fields.height.dict}
+              defaultValue={String(result?.height)}
+              className=""
+              label={true}
+              errorMessages={errorMessages.height as string[]}
+            />
+          </div>
+          <SelectUnit 
+            base={result?.lengthUnit}
+            field="length"
+            list={fields.lengthUnit.list}
+            dict={fields.lengthUnit.dict}
+          />
+        </div>
+
+        <div className="flex gap-2 pt-4">
+          <div className="w-full">
+            <InputPattern 
+              field="weight"
+              dict={fields.weight.dict}
+              defaultValue={String(result?.weight)}
+              className=""
+              label={true}
+              errorMessages={errorMessages.weight as string[]}
+            />
+          </div>
+          <SelectUnit 
+            base={result?.weightUnit}
+            field="weight"
+            list={fields.weightUnit.list}
+            dict={fields.weightUnit.dict}
+          />
+        </div>
       </div>
     </div>
 
-    <div className="mb-4 bg-white rounded p-5">
+    <div className="mb-4 rounded p-5">
       <h3 className="font-semibold pb-2">{dict?.sections.position}</h3>
       <div className="xl:grid-cols-1 gap-2">
         <PositionSelectFieldWithAdd 
@@ -181,7 +205,7 @@ export const ItemCompleteFormFields = ({
       </div>
     </div>
 
-    <div className="mb-4 bg-white rounded p-5">
+    <div className="mb-4 rounded p-5">
       <h3 className="font-semibold pb-2">{dict?.sections.images}</h3>
       <div className="xl:grid-cols-1 gap-2">
         <InputPattern 

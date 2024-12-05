@@ -26,46 +26,41 @@ import {
 import { cn } from "@/lib/utils"
 
 /** Types and interfaces */
-import { Dispatch, SetStateAction } from "react";
 
 /** Local components */
 import { Label } from "@/app/ui/components/label";
-//import { SelectFieldPatternCombobox } from "./SelectFieldPatternCombobox";
 
 /** Types and interfaces */
-//import FormFieldErrorsPattern from "../FormFieldErrorsPattern";
-import { 
-  SelectFieldPatternProps, 
-  SelectableItem 
-} from "@/app/lib/types/form/fields";
 import { Unit } from "@/app/lib/types/data/units";
 
 
 interface Props {
-  field: "weight" | "height" | "lenght" | "width";
+  field: "weight" | "length";
   list: Unit[];
-  element: Unit;
-  setElement: Dispatch<SetStateAction<Unit>>;
   dict: any;
+  base?: string;
 }
 
 export default function SelectUnit({
   field,
   list, 
-  element, 
-  setElement, 
-  dict
+  dict,
+  base
 }: Props) {
+  const [element, setElement] = useState(
+    list.find(unit => unit.id === base) ? list.find(unit => unit.id === base) as Unit : {id: ""} as Unit
+  );
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="w-full">
+    <div className="w-32">
+      <Label>{dict.select.label}</Label>
       <input 
         suppressHydrationWarning
         required
         type="hidden" 
-        id={`unit-${field}`}
-        name={`unit-${field}`}
+        id={`${field}Unit`}
+        name={`${field}Unit`}
         value={element.id} 
       />
 
@@ -109,7 +104,7 @@ export default function SelectUnit({
                       element.id === item.id ? "opacity-100" : "opacity-0"
                     )}
                   />
-                  {item.name}
+                  {item.id}
                 </CommandItem>
               ))}
             </CommandGroup>

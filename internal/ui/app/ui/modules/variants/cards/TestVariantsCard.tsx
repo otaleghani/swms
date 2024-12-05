@@ -14,9 +14,9 @@ export default function TestVariantCard({
   units
 }: Props) {
   useEffect(() => {
+    //console.log(variant)
+    //console.log(unitLenght)
     const unitLenght = units.find(item => item.id === variant.lengthUnit);
-    console.log(variant.height)
-    console.log(unitLenght)
   }, [])
 
   return (
