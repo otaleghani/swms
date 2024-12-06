@@ -39,7 +39,6 @@ export async function createItemComplete<K extends keyof FormMap> (
   if (stateValidation.error === true || rItem.data?.uuid === undefined) {
     return stateValidation;
   }
-
   const itemUUID = rItem.data.uuid;
 
   const variantRB: Variant = {
@@ -68,16 +67,18 @@ export async function createItemComplete<K extends keyof FormMap> (
   }
   const variantUUID = rVariant.data.uuid;
   
-  const imagesRB: ItemImagesPostBody = {
-    item: itemUUID,
-    encodedImages: completeData.encodedImages,
-  }
-  let rImages = await create("ItemImagesPostBody", imagesRB);
-  stateValidation = await validateResponse(rImages, state, locale);
-  if (stateValidation.error === true) {
-    remove("Item", itemUUID);
-    remove("Variant", variantUUID);
-    return stateValidation
+  if (completeData.encodedImages.length > 0) {
+    const imagesRB: ItemImagesPostBody = {
+      item: itemUUID,
+      encodedImages: completeData.encodedImages,
+    }
+    let rImages = await create("ItemImagesPostBody", imagesRB);
+    stateValidation = await validateResponse(rImages, state, locale);
+    if (stateValidation.error === true) {
+      remove("Item", itemUUID);
+      remove("Variant", variantUUID);
+      return stateValidation
+    }
   }
 
   return stateValidation;

@@ -99,8 +99,8 @@ const options: MapOptions = {
 
   "SupplierCodes_Supplier": { path: "suppliers/{{id}}/supplier-codes", type: "SupplierCodes"},
 
-  "Variants_Item": { path: "", type: "Variants" },
-  "SupplierCodes_Item": { path: "", type: "Variants" },
+  "Variants_Item": { path: "items/{{id}}/variants", type: "Variants" },
+  "SupplierCodes_Item": { path: "items/{{id}}/supplier-codes", type: "Variants" },
 }
 
 interface RetrieveData<

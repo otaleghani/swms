@@ -258,8 +258,11 @@ const optionsListByForeign = {
   //"Shelfs_Aisle":           { path: "aisles/{{id}}/racks", type: "Racks"  },
   //"Shelfs_Zone":            { path: "aisles/{{id}}/racks", type: "Racks"  },
 
-  "SupplierCodes_Supplier": { path: "supplier/{{id}}/supplier-codes", type: "Racks"  },
+  "SupplierCodes_Supplier": { path: "supplier/{{id}}/supplier-codes", type: "SupplierCodes"  },
+  "SupplierCodes_Item": { path: "items/{{id}}/supplier-codes", type: "SupplierCodes"  },
+
   "SubcategoriesWithExtra_Category": { path: "categories/{{id}}/subcategories/extra", type: "Subcategories"},
+
 
   "Items_Zone": { path: "zones/{{id}}/items", type: "Items"},
   "Items_Aisle": { path: "aisles/{{id}}/items", type: "Items"},
@@ -267,9 +270,11 @@ const optionsListByForeign = {
   "Items_Shelf": { path: "shelfs/{{id}}/items", type: "Items"},
   "Items_Category": { path: "categories/{{id}}/items", type: "Items"},
   "Items_Subcategory": { path: "subcategories/{{id}}/items", type: "Items"},
+
+  "Variants_Item": { path: "items/{{id}}/variants", type: "Variants"},
 }
 
-type ListByForeignAcceptedType = "AislesWithExtra_Zone" | "RacksWithExtra_Aisle" | "SupplierCodes_Supplier" | "SubcategoriesWithExtra_Category"
+type ListByForeignAcceptedType = "AislesWithExtra_Zone" | "RacksWithExtra_Aisle" | "SupplierCodes_Supplier" | "SubcategoriesWithExtra_Category" | "Items_Zone" | "Items_Aisle" | "Items_Rack" | "Items_Shelf" | "Items_Category" | "Items_Subcategory" | "Variants_Item" | "SupplierCodes_Item"
 
 const clientListByForeignRetrive = async ({
   page,

@@ -11,17 +11,32 @@ import { FormFieldsPropsWithDictCompleteMap } from "@/app/lib/types/form/fields"
 import { Supplier } from "@/app/lib/types/data/suppliers";
 import SelectFieldWithAddPattern from "../select/SelectFieldWithAddPattern";
 import SelectFieldPattern from "../select/SelectFieldPattern";
+import { Item } from "@/app/lib/types/data/items";
+import { Variant } from "@/app/lib/types/data/variants";
 
 export const SupplierCodeFormFields = ({
   fields,
   result,
   errorMessages,
 }: FormFieldsPropsWithDictCompleteMap["SupplierCode"] ) => { 
-  const [element, setElement] = useState(
+  const [supplier, setSupplier] = useState(
     result?.supplier ? 
       fields.supplier.list.find(
         e => e.id === result.supplier) as Supplier : 
       { id: "", name: "" } as Supplier)
+
+  const [item, setItem] = useState(
+    result?.item ? 
+      fields.item.list.find(
+        e => e.id === result.item) as Item : 
+      { id: "", name: "" } as Item)
+
+  const [variant, setVariant] = useState(
+    result?.variant ? 
+      fields.variant.list.find(
+        e => e.id === result.variant) as Variant : 
+      { id: "", name: "" } as Variant)
+
   return (
   <>
     <InputPattern 
@@ -36,10 +51,27 @@ export const SupplierCodeFormFields = ({
       name="Supplier"
       list={fields.supplier.list}
       dict={fields.supplier.dict}
-      element={element}
-      setElement={setElement}
+      element={supplier}
+      setElement={setSupplier}
       errorMessages={errorMessages.supplier}
     />
-      <input type="hidden" name="type" value="SupplierCodes" />
+    <SelectFieldPattern<"Item"> 
+      name="Item"
+      list={fields.item.list}
+      dict={fields.item.dict}
+      element={item}
+      setElement={setItem}
+      errorMessages={errorMessages.item}
+    />
+
+    <SelectFieldPattern<"Variant"> 
+      name="Variant"
+      list={fields.variant.list}
+      dict={fields.variant.dict}
+      element={variant}
+      setElement={setVariant}
+      errorMessages={errorMessages.variant}
+    />
+    <input type="hidden" name="type" value="SupplierCodes" />
   </>
 )}

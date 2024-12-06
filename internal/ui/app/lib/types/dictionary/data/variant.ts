@@ -1,16 +1,6 @@
-import { Variant } from "../../data/variants";
-import { DictDialog } from "../misc"
+import { DictDefaultDialogs, DictLabelList } from "../misc"
 
 export interface DictVariant {
-  form: {
-    edit_title: string;
-    add_title: string;
-  }
-  dialogs: {
-    delete: DictDialog;
-  }
-
-  table: {
-    header: Variant;
-  }
+  card: DictLabelList<"dimensions" | "weight" | "quantity" | "identifier">;
+  dialogs: DictDefaultDialogs;
 }

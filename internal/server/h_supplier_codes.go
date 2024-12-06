@@ -379,6 +379,7 @@ func getSupplierCodesBySupplierWithItem(db *database.Database) http.HandlerFunc 
   }
 }
 
+// Old code to delete
 type CodesWithExtra struct {
   SupplierCode database.SupplierCode `json:"supplier_code"`
   SupplierName string `json:"supplier_name"`
@@ -397,18 +398,11 @@ func getSupplierCodesByItem(db *database.Database) http.HandlerFunc {
 			ErrorResponse{Message: err.Error()}.r500(w, r)
 			return
 		}
-    var data []CodesWithExtra
-    for _, i := range rows {
-      supplier, err := db.SelectSupplierById(i.Supplier_id)
-      if err != nil {
-			  ErrorResponse{Message: err.Error()}.r500(w, r)
-			  return
-      }
-      data = append(data, CodesWithExtra{
-        SupplierCode: i,
-        SupplierName: supplier.Name,
-      })
+    if len(rows) == 0 {
+			ErrorResponse{Message: "No codes found for this item"}.r404(w, r)
+			return
     }
-		SuccessResponse{Data: data}.r200(w, r)
+
+		SuccessResponse{Data: rows}.r200(w, r)
 	}
 }

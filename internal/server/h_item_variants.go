@@ -25,6 +25,66 @@ func getVariants(db *database.Database) http.HandlerFunc {
 	}
 }
 
+type VariantsFilter struct {
+  Search string `json:"search,omitempty"`
+  Item string `json:"item,omitempty"`
+}
+
+func getVariantsByItem(db *database.Database) http.HandlerFunc {
+  return func(w http.ResponseWriter, r *http.Request) {
+		token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
+		if err := checkAccessToken(token, db); err != nil {
+			ErrorResponse{Message: err.Error()}.r401(w, r)
+			return
+		}
+    path := r.PathValue("id")
+    rows, err := db.SelectItemVariants(path)
+    if err != nil {
+      ErrorResponse{Message: err.Error()}.r500(w, r)
+      return
+    }
+
+    queryFilters := r.URL.Query().Get("filters")
+    filteredRows := rows
+    if queryFilters != "" {
+		  var filters VariantsFilter
+		  err = json.Unmarshal([]byte(queryFilters), &filters)
+		  if err == nil {
+        // Here we already are filtering by item
+        //if filters.Item != "" {
+        //  filteredRows, err = FilterByField(
+        //    filteredRows, "Item_id", filters.Item)
+        //}
+        if filters.Search != "" {
+          filteredRows, err = FilterBySearch(
+            filteredRows, "Name", filters.Search)
+        }
+		  }
+    }
+
+    queryPaginationOff := r.URL.Query().Get("paginationOff")
+    if queryPaginationOff == "true" {
+		  SuccessResponse{Data: rows}.r200(w, r)
+      return
+    }
+    queryPage := r.URL.Query().Get("page")
+    queryPerPage := r.URL.Query().Get("perPage")
+    resultedItems, page, perPage, totalItems, totalPages, err := 
+      paginateItems(queryPage, queryPerPage, filteredRows)
+		if err != nil {
+			ErrorResponse{Message: err.Error()}.r500(w, r)
+			return
+		}
+		SuccessResponse{
+      Data: resultedItems,
+      Page: page,
+      PerPage: perPage,
+      TotalItems: totalItems,
+      TotalPages: totalPages,
+    }.r200(w, r)
+  }
+}
+
 func getVariantById(db *database.Database) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
@@ -55,7 +115,6 @@ func postVariants(db *database.Database) http.HandlerFunc {
 			ErrorResponse{Message: err.Error()}.r400(w, r)
 			return
 		}
-    //fmt.Println(data)
 
     // Get units ratio and calculates the result in the value
     unitLength, err := db.SelectUnitById(data.Unit_Length_id)
@@ -79,7 +138,7 @@ func postVariants(db *database.Database) http.HandlerFunc {
 			ErrorResponse{Message: err.Error()}.r500(w, r)
 			return
 		}
-		SuccessResponse{Message: "Row added"}.r201(w, r)
+		SuccessResponse{Message: "Row added", Data: UniqueId{UUID: data.Id}}.r201(w, r)
 	}
 }
 

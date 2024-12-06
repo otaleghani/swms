@@ -307,12 +307,12 @@ export default function FormPattern<K extends keyof FormPropsMap>({
           />
         )}
 
-        { showButton && (
+        { showButton && self.fields && (
           <SubmitFormButtonPattern 
             formName={form.formName}
             isPending={isPending}
             className="mt-4"
-            dict={self.fields?.button}
+            dict={self.fields.button}
           />
         )}
         <input type="hidden" name="locale" value={locale} />

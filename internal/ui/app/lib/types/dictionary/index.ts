@@ -12,6 +12,7 @@ import { DictFilters, DictPageNotFound } from "./misc";
 import { DictPages } from "./pages";
 import { DictSidebar } from "./sidebar";
 import { DictItem } from "./data/item";
+import { DictVariant } from "./data/variant";
 
 /** Every one-off term that do not fit in any cat */
 export interface DictMisc {
@@ -34,6 +35,7 @@ export type Dictionary = {
   supplier: DictSupplier;
   supplierCode: DictSupplierCode;
   item: DictItem;
+  variant: DictVariant;
 
   pages: DictPages;
 
@@ -41,7 +43,5 @@ export type Dictionary = {
   toasts: DictToasts;
   filters: DictFilters;
   misc: DictMisc;
-  //units: DictUnits
-  
   sidebar: DictSidebar;
 }

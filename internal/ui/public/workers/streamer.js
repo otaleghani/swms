@@ -200,7 +200,8 @@ const optionsListByForeign = {
     "ShelfsWithExtra_Rack": { path: "racks/{{id}}/shelfs/extra", type: "ShelfsWithExtra" },
     //"Shelfs_Aisle":           { path: "aisles/{{id}}/racks", type: "Racks"  },
     //"Shelfs_Zone":            { path: "aisles/{{id}}/racks", type: "Racks"  },
-    "SupplierCodes_Supplier": { path: "supplier/{{id}}/supplier-codes", type: "Racks" },
+    "SupplierCodes_Supplier": { path: "supplier/{{id}}/supplier-codes", type: "SupplierCodes" },
+    "SupplierCodes_Item": { path: "items/{{id}}/supplier-codes", type: "SupplierCodes" },
     "SubcategoriesWithExtra_Category": { path: "categories/{{id}}/subcategories/extra", type: "Subcategories" },
     "Items_Zone": { path: "zones/{{id}}/items", type: "Items" },
     "Items_Aisle": { path: "aisles/{{id}}/items", type: "Items" },
@@ -208,6 +209,7 @@ const optionsListByForeign = {
     "Items_Shelf": { path: "shelfs/{{id}}/items", type: "Items" },
     "Items_Category": { path: "categories/{{id}}/items", type: "Items" },
     "Items_Subcategory": { path: "subcategories/{{id}}/items", type: "Items" },
+    "Variants_Item": { path: "items/{{id}}/variants", type: "Variants" },
 };
 const clientListByForeignRetrive = async ({ page, perPage, filters, paginationOff, type, foreignId, jwt, request, }) => {
     const apiPath = BACKEND_ENDPOINT + "/api/v1/";
