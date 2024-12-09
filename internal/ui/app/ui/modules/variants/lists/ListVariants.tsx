@@ -32,7 +32,9 @@ export default async function ListVariants({
   const pUnits = retrieve({ request: "Units", paginationOff: "true" });
   const pItems = retrieve({ request: "Items", paginationOff: "true" });
   const pSuppliers = retrieve({ request: "Suppliers", paginationOff: "true" });
-  const pVariants = retrieveByForeignId({
+  const pVariants = retrieve({ request: "Variants", paginationOff: "true" });
+
+  const pVariantsByItem = retrieveByForeignId({
     request: "Variants",
     foreign: "Item",
     id: item.id as string,
@@ -46,17 +48,19 @@ export default async function ListVariants({
     id: item.id as string,
   });
 
-  const [units, dict, variants, items, suppliers, codes] = 
-    await Promise.all([pUnits, pDict, pVariants, pItems, pSuppliers, pCodes]);
+  const [units, dict, variantsByItem, variants, items, suppliers, codes] = 
+    await Promise.all([pUnits, pDict, pVariantsByItem, pVariants, pItems, pSuppliers, pCodes]);
 
   return (
     <>
-      <ScrollArea scrollHideDelay={10000} className="h-full">
+      <ScrollArea scrollHideDelay={10000} className="xl:h-[calc(100vh_-_114px)]">
         <div className={"grid gap-2 p-4 xl:grid-cols-1"}>
           <ListVariantsClient 
             item={item}
+            items={items.data ? items.data : []}
             pagination={searchParams?.pagination}
             filters={searchParams?.filters}
+            variantsByItem={variantsByItem.data as Variants}
             variants={variants.data as Variants}
             codes={codes.data  as SupplierCodes}
             dictDialogEdit={dict.variant.dialogs.edit}
@@ -96,17 +100,17 @@ export default async function ListVariants({
                   supplier: { 
                     dict: dict.form.fields.suppliers,
                     name: "Supplier",
-                    list: suppliers.data as Suppliers
+                    list: suppliers.data ? suppliers.data : [],
                   },
                   item: { 
                     dict: dict.form.fields.items,
                     name: "Item",
-                    list: [],
+                    list: items.data ? items.data : [],
                   },
                   variant: { 
                     dict: dict.form.fields.variants,
                     name: "Variant",
-                    list: [],
+                    list: variants.data ? variants.data : [],
                   },
                   button: dict.form.buttons.submit,
                 },
@@ -132,7 +136,7 @@ export default async function ListVariants({
                   },
                   button: dict.form.buttons.submit,
                 },
-                dict: dict.supplierCode.dialogs.add,
+                dict: dict.supplierCode.dialogs.delete,
               },
               dialogDelete: {
                 fields: {
@@ -160,7 +164,7 @@ export default async function ListVariants({
         />
         <PaginationPattern 
           forceLayout="list"
-          totalPages={variants.totalPages as number} 
+          totalPages={variantsByItem.totalPages as number} 
           type="aisles"
         />
       </div>

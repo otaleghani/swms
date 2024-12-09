@@ -1,7 +1,7 @@
 "use client";
 
 /** React hooks */
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 /** Local components */
 import InputPattern from "../input/InputPattern"
@@ -19,6 +19,7 @@ export const SupplierCodeFormFields = ({
   result,
   errorMessages,
 }: FormFieldsPropsWithDictCompleteMap["SupplierCode"] ) => { 
+
   const [supplier, setSupplier] = useState(
     result?.supplier ? 
       fields.supplier.list.find(
@@ -36,6 +37,19 @@ export const SupplierCodeFormFields = ({
       fields.variant.list.find(
         e => e.id === result.variant) as Variant : 
       { id: "", name: "" } as Variant)
+
+  const [filteredVariants, setFilteredVariants] = useState(
+    result?.item ?
+      fields.variant.list.filter(variant => variant.item === result.item) : 
+      fields.variant.list
+  );
+
+  useEffect(() => {
+    if (variant.item !== item.id) {
+      setVariant({id: "", name: ""} as Variant);
+      setFilteredVariants(fields.variant.list.filter(variant => variant.item === item.id));
+    }
+  }, [item])
 
   return (
   <>
@@ -64,14 +78,16 @@ export const SupplierCodeFormFields = ({
       errorMessages={errorMessages.item}
     />
 
-    <SelectFieldPattern<"Variant"> 
-      name="Variant"
-      list={fields.variant.list}
-      dict={fields.variant.dict}
-      element={variant}
-      setElement={setVariant}
-      errorMessages={errorMessages.variant}
-    />
-    <input type="hidden" name="type" value="SupplierCodes" />
+    {item.id !== "" && (
+      <SelectFieldPattern<"Variant"> 
+        name="Variant"
+        list={filteredVariants}
+        dict={fields.variant.dict}
+        element={variant}
+        setElement={setVariant}
+        errorMessages={errorMessages.variant}
+      />
+    )}
+    <input type="hidden" name="type" value="SupplierCode" />
   </>
 )}

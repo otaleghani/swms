@@ -9,7 +9,7 @@ type Variant struct {
 
   Length float64 `json:"length"`
   Width float64 `json:"width"`
-  Height float64 `json:"heightt"`
+  Height float64 `json:"height"`
   Weight float64 `json:"weight"`
   DefaultVariant bool `json:"defaultVariant"`
   Item_id string `json:"item"`

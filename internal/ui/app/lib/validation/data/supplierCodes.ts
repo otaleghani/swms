@@ -24,7 +24,7 @@ export async function validateSupplierCode(
     return state;
   }
 
-  if (state.result.id) {
+  if (state.result.id && state.result.id !== "") {
     state = await validateExisting(
       "SupplierCode", 
       state, 
@@ -45,7 +45,6 @@ export async function validateSupplierCode(
     VALIDATION_SETTINGS.mediumString.minLength,
     VALIDATION_SETTINGS.mediumString.maxLength,
   )).length != 0 && (state.error = true);
-
 
   (state.errorMessages.supplier = validateForeignString({
     field: state.result.supplier,

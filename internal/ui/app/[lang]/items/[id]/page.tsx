@@ -4,6 +4,8 @@ import { Locale } from "@/lib/dictionaries";
 import { retrieveById } from "@/app/lib/requests/generics/retrieveById";
 import ListVariants from "@/app/ui/modules/variants/lists/ListVariants";
 import { Item } from "@/app/lib/types/data/items";
+import HeaderItemSingle from "@/app/ui/modules/items/headers/HeaderItemSingle";
+import HeroItemSingle from "@/app/ui/modules/items/heros/HeroItemSingle";
 
 export default async function ItemIdPage({
   params,
@@ -15,14 +17,27 @@ export default async function ItemIdPage({
   const [item] = await Promise.all([pItem]);
 
   return (
-    <div>
-      <ListVariants
-        hideFilters={{ item: true }}
-        searchParams={currentSearchParams.variants}
-        item={item.data as Item}
+    <>
+      <HeaderItemSingle 
         locale={params.lang as Locale}
+        item={item.data as Item}
       />
-      
-    </div>
+      <div className="grid grid-cols-2">
+        <div className="border-r">
+          <HeroItemSingle 
+            item={item.data as Item}
+          />
+        </div>
+        <div>
+          <ListVariants
+            hideFilters={{ item: true }}
+            searchParams={currentSearchParams.variants}
+            item={item.data as Item}
+            locale={params.lang as Locale}
+          />
+        </div>
+        
+      </div>
+    </>
   )
 }

@@ -19,20 +19,23 @@ interface Props {
     button: DictFormButton;
   },
   dict: DictDialog;
+  xSmall?: boolean;
 }
 
 export default function DialogSupplierCodeDelete({
   supplierCode,
   fields,
-  dict
+  dict,
+  xSmall,
 }: Props) {
 
   return (
     <>
       <DialogFormPattern<"Delete"> 
+        xSmall={xSmall}
         showButton
         self={{
-          triggerType: "iconEdit",
+          triggerType: "iconDelete",
           dict: dict,
         }}
         formPattern={{

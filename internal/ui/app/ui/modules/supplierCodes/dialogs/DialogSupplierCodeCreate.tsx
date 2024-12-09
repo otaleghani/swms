@@ -11,9 +11,10 @@ import { InputFieldProps, SelectFieldProps } from "@/app/lib/types/form/fields";
 
 // Default values
 import { fieldsDefaultProps } from "@/app/lib/types/form/fields";
-import { defaultSupplierCodeFormState } from "@/app/lib/types/data/supplierCodes";
+import { defaultSupplierCodeFormState, SupplierCode } from "@/app/lib/types/data/supplierCodes";
 
 interface Props {
+  supplierCode?: SupplierCode;
   dict: DictDialog;
   fields: {
     code: InputFieldProps;
@@ -25,6 +26,7 @@ interface Props {
 }
 
 export default function DialogSupplierCodeCreate({
+  supplierCode,
   fields,
   dict
 }: Props) {
@@ -52,7 +54,14 @@ export default function DialogSupplierCodeCreate({
           form: {
             formName: "SupplierCode",
             formAction: createFormAction,
-            initialState: defaultSupplierCodeFormState,
+            initialState: supplierCode ?
+              { ...defaultSupplierCodeFormState,
+                result: {
+                  ...defaultSupplierCodeFormState.result,
+                  ...supplierCode,
+                }
+              }
+              : defaultSupplierCodeFormState,
           }
         }}
       />

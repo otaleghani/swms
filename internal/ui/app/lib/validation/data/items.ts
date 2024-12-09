@@ -158,7 +158,6 @@ export async function validateItemComplete(
     return state;
   }
 
-
   (state.errorMessages.name = validateString(
     state.result.name as string, 
     dict.form.fields.name.validation, 

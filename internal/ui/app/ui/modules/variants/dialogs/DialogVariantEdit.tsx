@@ -67,6 +67,7 @@ export default function DialogVariantEdit({
               result: {
                 id: variant.id as string,
                 name: variant.name as string,
+                description: variant.description as string,
                 identifier: variant.identifier as string,
                 quantity: variant.quantity as number,
                 length: variant.length as number,

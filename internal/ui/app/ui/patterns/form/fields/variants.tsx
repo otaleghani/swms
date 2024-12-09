@@ -12,7 +12,7 @@ export const VariantsFormFields = ({
 }: FormFieldsPropsWithDictCompleteMap["Variant"]) => { 
   return (
     <>
-      <div className="mb-4 bg-white rounded p-5">
+      <div className="mb-4 bg-white rounded">
         <h3 className="font-semibold pb-2">{dict?.sections.basics}</h3>
         <div className="grid xl:grid-cols-1 gap-2">
           <InputPattern 
@@ -50,7 +50,7 @@ export const VariantsFormFields = ({
         </div>
       </div>
 
-      <div className="mb-4 bg-white rounded p-5">
+      <div className="mb-4 bg-white rounded">
         <h3 className="font-semibold pb-2">{dict?.sections.dimensions}</h3>
         <div className="grid xl:grid-cols-1 gap-2">
           <InputPattern 

@@ -16,7 +16,6 @@ export function middleware(request: NextRequest) {
   }
 
   if (cookies().get("access") === undefined) {
-    console.log(pathname)
     if (!pathname.includes("login") && !pathname.includes("register")) {
       request.nextUrl.pathname = "login"
       const response = NextResponse.redirect(request.nextUrl)

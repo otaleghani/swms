@@ -3,10 +3,10 @@ import { DictSupplierCode } from "@/app/lib/types/dictionary/data/supplierCode";
 export const dictionarySupplierCodes: DictSupplierCode = {
   dialogs: {
     add: {
-      title: "Edit supplier code",
-      description: "Edit this supplier code with new data",
+      title: "Add code",
+      description: "Use this form to add a new supplier code",
       trigger: {
-        label: "Edit supplier code",
+        label: "Add new code",
       },
       clear: "Clear",
     },

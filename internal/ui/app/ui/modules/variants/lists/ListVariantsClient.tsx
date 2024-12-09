@@ -14,7 +14,7 @@ import { VariantFiltersParams } from "@/app/lib/types/query/data";
 import { PaginationParams } from "@/app/lib/types/pageParams";
 import { Variant, Variants } from "@/app/lib/types/data/variants";
 import { syncPaginatedVariantsByItem } from "@/app/lib/synchronizers/extra/variants/listByItem";
-import { Item } from "@/app/lib/types/data/items";
+import { Item, Items } from "@/app/lib/types/data/items";
 import CardVariant from "../cards/VariantCard";
 import { SupplierCodes } from "@/app/lib/types/data/supplierCodes";
 import { syncSupplierCodesByItem } from "@/app/lib/synchronizers/extra/supplierCodes/listByItem";
@@ -22,8 +22,10 @@ import { synchronizeList } from "@/app/lib/synchronizers/lists";
 
 type Props = {
   variants: Variants;
+  variantsByItem: Variants;
   codes: SupplierCodes;
   item: Item
+  items: Items
   filters?: VariantFiltersParams;
   pagination?: PaginationParams;
   dictDialogEdit: DictDialog;
@@ -76,9 +78,11 @@ type Props = {
 }
 
 export default function ListVariantsClient({
+  variantsByItem,
   variants,
   codes,
   item,
+  items,
   filters,
   pagination,
   dictDialogEdit,
@@ -89,11 +93,13 @@ export default function ListVariantsClient({
   supplierCodeCard,
 }: Props) {
 
+  const [currentVariantsByItem, setCurrentVariantsByItem] = useState(variantsByItem);
   const [currentVariants, setCurrentVariants] = useState(variants);
-  const [currentCodes, setCurrentCodes] = useState(codes);
+  const [currentCodes, setCurrentCodes] = useState(codes ? codes : []);
   const [currentSuppliers, setCurrentSuppliers] = useState(
     supplierCodeCard.dialogCreate.fields.supplier.list
   );
+  const [currentItems, setCurrentItems] = useState(items);
 
   useEffect(() => {
     syncPaginatedVariantsByItem({
@@ -101,8 +107,8 @@ export default function ListVariantsClient({
       streamer: streamer as Worker,
       pagination: pagination,
       filters: filters,
-      list: currentVariants,
-      setList: setCurrentVariants
+      list: currentVariantsByItem,
+      setList: setCurrentVariantsByItem
     });
     syncSupplierCodesByItem({
       id: item.id as string,
@@ -116,11 +122,23 @@ export default function ListVariantsClient({
       setList: setCurrentSuppliers,
       type: "Supplier"
     })
+    synchronizeList<"Item">({
+      streamer: streamer as Worker,
+      list: currentItems,
+      setList: setCurrentItems,
+      type: "Item"
+    })
+    synchronizeList<"Variant">({
+      streamer: streamer as Worker,
+      list: currentVariants,
+      setList: setCurrentVariants,
+      type: "Variant"
+    })
   }, [])
 
   return (
     <>
-      {currentVariants && currentVariants.map(
+      {currentVariantsByItem && currentVariantsByItem.map(
         (variant: Variant) => (
           <CardVariant
             key={variant.id}
@@ -140,7 +158,15 @@ export default function ListVariantsClient({
                   supplier: {
                     ...supplierCodeCard.dialogCreate.fields.supplier,
                     list: currentSuppliers
-                  }
+                  },
+                  item: {
+                    ...supplierCodeCard.dialogCreate.fields.item,
+                    list: currentItems,
+                  },
+                  variant: {
+                    ...supplierCodeCard.dialogCreate.fields.variant,
+                    list: variants,
+                  },
                 }
               }
             }}

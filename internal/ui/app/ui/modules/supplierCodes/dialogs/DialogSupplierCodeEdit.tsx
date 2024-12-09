@@ -23,17 +23,20 @@ interface Props {
     button: DictFormButton;
   },
   dict: DictDialog;
+  xSmall?: boolean
 }
 
 export default function DialogSupplierCodeEdit({
   supplierCode,
   fields,
-  dict
+  dict,
+  xSmall
 }: Props) {
 
   return (
     <>
       <DialogFormPattern<"SupplierCode"> 
+        xSmall={xSmall}
         showButton
         self={{
           triggerType: "iconEdit",

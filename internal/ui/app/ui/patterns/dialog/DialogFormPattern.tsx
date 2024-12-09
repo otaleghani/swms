@@ -29,6 +29,7 @@ export interface DialogFormPatternProps<T extends keyof FormPropsMap> {
   showButton?: boolean;
   open?: boolean;
   setOpen?: Dispatch<SetStateAction<boolean>>;
+  xSmall?: boolean;
 }
 
 export default function DialogFormPattern<T extends keyof FormPropsMap>({
@@ -36,7 +37,8 @@ export default function DialogFormPattern<T extends keyof FormPropsMap>({
   formPattern,
   showButton,
   open,
-  setOpen
+  setOpen,
+  xSmall,
 }: DialogFormPatternProps<T>) {
 
   const DialogFormPatternBody = () => {
@@ -79,8 +81,13 @@ export default function DialogFormPattern<T extends keyof FormPropsMap>({
             <Button 
               size="sm"
               variant="outline"
-              className="aspect-square p-0 h-10 w-10"
-            ><PlusIcon className="w-4 h-4"/></Button>
+              className={xSmall ? 
+                "aspect-square p-0 h-8 w-8" : 
+                "aspect-square p-0 h-10 w-10"}
+            >
+            <PlusIcon 
+              className={xSmall ? "w-3.5 h-3.5" : "w-4 h-4"}
+            /></Button>
           </DialogTrigger>
         </>
       )
@@ -92,8 +99,13 @@ export default function DialogFormPattern<T extends keyof FormPropsMap>({
             <Button 
               size="sm"
               variant="outline"
-              className="aspect-square p-0 h-10 w-10"
-            ><EditIcon className="w-4 h-4"/></Button>
+              className={xSmall ? 
+                "aspect-square p-0 h-8 w-8" : 
+                "aspect-square p-0 h-10 w-10"}
+            >
+            <EditIcon 
+              className={xSmall ? "w-3.5 h-3.5" : "w-4 h-4"}
+            /></Button>
           </DialogTrigger>
         </>
       )
@@ -105,8 +117,12 @@ export default function DialogFormPattern<T extends keyof FormPropsMap>({
             <Button 
               size="sm"
               variant="outline"
-              className="aspect-square p-0 h-10 w-10"
-            ><TrashIcon className="w-4 h-4"/></Button>
+              className={xSmall ? 
+                "aspect-square p-0 h-8 w-8" : 
+                "aspect-square p-0 h-10 w-10"}
+            ><TrashIcon 
+              className={xSmall ? "w-3.5 h-3.5" : "w-4 h-4"}
+            /></Button>
           </DialogTrigger>
         </>
       )

@@ -20,16 +20,19 @@ interface Props {
     description: InputFieldProps;
     button: DictFormButton;
   }
+  xSmall?: boolean;
 }
 
 export default function DialogSupplierCreate({
   fields,
-  dict
+  dict,
+  xSmall
 }: Props) {
 
   return (
     <>
       <DialogFormPattern<"Supplier"> 
+        xSmall={xSmall}
         showButton
         self={{
           triggerType: "button",
