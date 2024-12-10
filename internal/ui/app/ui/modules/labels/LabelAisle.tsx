@@ -3,6 +3,7 @@ import { SyncState } from "@/app/lib/synchronizers/utils";
 import { Aisle } from "@/app/lib/types/data/aisles"
 import streamer from "@/app/lib/workers";
 import { useState, useEffect, Dispatch, SetStateAction} from "react";
+import { Badge } from "../../components/badge";
 
 interface Props {
   aisle: Aisle;
@@ -33,6 +34,6 @@ export default function LabelAisle({
         syncState === "update" ? "animate-update" :
         ""
       }
-    >{aisle?.name}</a>
+    ><Badge variant="outline">{aisle?.name}</Badge></a>
   )
 }

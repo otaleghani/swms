@@ -3,6 +3,7 @@ import { SyncState } from "@/app/lib/synchronizers/utils";
 import { Rack } from "@/app/lib/types/data/racks"
 import streamer from "@/app/lib/workers";
 import { useState, useEffect, Dispatch, SetStateAction} from "react";
+import { Badge } from "../../components/badge";
 
 interface Props {
   rack: Rack;
@@ -33,6 +34,6 @@ export default function LabelRack({
         syncState === "update" ? "animate-update" :
         ""
       }
-    >{rack?.name}</a>
+    ><Badge variant="outline">{rack?.name}</Badge></a>
   )
 }

@@ -3,6 +3,7 @@ import { SyncState } from "@/app/lib/synchronizers/utils";
 import { Shelf } from "@/app/lib/types/data/shelfs"
 import streamer from "@/app/lib/workers";
 import { useState, useEffect, Dispatch, SetStateAction} from "react";
+import { Badge } from "../../components/badge";
 
 interface Props {
   shelf: Shelf;
@@ -33,6 +34,6 @@ export default function LabelShelf({
         syncState === "update" ? "animate-update" :
         ""
       }
-    >{shelf?.name}</a>
+    ><Badge variant="outline">{shelf?.name}</Badge></a>
   )
 }

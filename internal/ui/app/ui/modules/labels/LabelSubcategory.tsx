@@ -34,6 +34,6 @@ export default function LabelSubcategory({
         syncState === "update" ? "animate-update" :
         ""
       }
-    ><Badge variant="secondary">{subcategory?.name}</Badge></a>
+    ><Badge variant="outline">{subcategory?.name}</Badge></a>
   )
 }

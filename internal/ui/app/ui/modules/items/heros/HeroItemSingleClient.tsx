@@ -3,17 +3,23 @@
 import { synchronizeElement } from "@/app/lib/synchronizers/element";
 import { synchronizeList } from "@/app/lib/synchronizers/lists";
 import { SyncState } from "@/app/lib/synchronizers/utils";
-import { Aisles } from "@/app/lib/types/data/aisles";
-import { Categories } from "@/app/lib/types/data/categories";
+import { Aisle, Aisles, emptyAisle } from "@/app/lib/types/data/aisles";
+import { Categories, Category, emptyCategory } from "@/app/lib/types/data/categories";
 import { ItemImages } from "@/app/lib/types/data/images";
 import { Item } from "@/app/lib/types/data/items";
-import { Racks } from "@/app/lib/types/data/racks";
-import { Shelfs } from "@/app/lib/types/data/shelfs";
-import { Subcategories } from "@/app/lib/types/data/subcategories";
-import { Zones } from "@/app/lib/types/data/zones";
+import { emptyRack, Rack, Racks } from "@/app/lib/types/data/racks";
+import { emptyShelf, Shelf, Shelfs } from "@/app/lib/types/data/shelfs";
+import { emptySubcategory, Subcategories, Subcategory } from "@/app/lib/types/data/subcategories";
+import { emptyZone, Zone, Zones } from "@/app/lib/types/data/zones";
 import streamer from "@/app/lib/workers";
 import Image from "next/image";
 import { useState, useEffect } from "react"
+import LabelZone from "../../labels/LabelZone";
+import LabelAisle from "../../labels/LabelAisle";
+import LabelRack from "../../labels/LabelRack";
+import LabelShelf from "../../labels/LabelShelf";
+import LabelCategory from "../../labels/LabelCategory";
+import LabelSubcategory from "../../labels/LabelSubcategory";
 
 interface Props {
   zones: Zones;
@@ -92,16 +98,76 @@ export default function HeroItemSingleClient({
       setSyncState: setSyncState,
       type: "Item",
     });
-
-    // Todo: synch images
   }, []);
 
   // Find current zone,
   // find current
+  
+  const [currentZone, setCurrentZone] = useState(
+    currentZones.find(e => e.id === item.zone) ? 
+      currentZones.find(e => e.id === item.zone) as Zone : emptyZone
+  );
+  const [currentAisle, setCurrentAisle] = useState(
+    currentAisles.find(e => e.id === item.aisle) ?
+      currentAisles.find(e => e.id === item.aisle) as Aisle : emptyAisle
+  );
+  const [currentRack, setCurrentRack] = useState(
+    currentRacks.find(e => e.id === item.rack) ?
+      currentRacks.find(e => e.id === item.rack) as Rack : emptyRack
+  );
+  const [currentShelf, setCurrentShelf] = useState(
+    currentShelfs.find(e => e.id === item.shelf) ?
+      currentShelfs.find(e => e.id === item.shelf) as Shelf : emptyShelf
+  );
+  const [currentCategory, setCurrentCategory] = useState(
+    currentCategories.find(e => e.id === item.category) ?
+      currentCategories.find(e => e.id === item.category) as Category : emptyCategory
+  );
+  const [currentSubcategory, setCurrentSubcategory] = useState(
+    currentSubcategories.find(e => e.id === item.subcategory) ?
+      currentSubcategories.find(e => e.id === item.subcategory) as Subcategory : emptySubcategory
+  );
 
-  console.log(itemImages)
   return (
     <div>
+      <div>
+        {currentZone !== emptyZone && (
+          <LabelZone 
+            zone={currentZone}
+            setZone={setCurrentZone}
+          />
+        )}
+        {currentAisle !== emptyAisle && (
+          <LabelAisle 
+            aisle={currentAisle}
+            setAisle={setCurrentAisle}
+          />
+        )}
+        {currentRack !== emptyRack && (
+          <LabelRack 
+            rack={currentRack}
+            setRack={setCurrentRack}
+          />
+        )}
+        {currentShelf !== emptyShelf && (
+          <LabelShelf 
+            shelf={currentShelf}
+            setShelf={setCurrentShelf}
+          />
+        )}
+        {currentCategory !== emptyCategory && (
+          <LabelCategory 
+            category={currentCategory}
+            setCategory={setCurrentCategory}
+          />
+        )}
+        {currentSubcategory !== emptySubcategory && (
+          <LabelSubcategory
+            subcategory={currentSubcategory}
+            setSubcategory={setCurrentSubcategory}
+          />
+        )}
+      </div>
       {itemImages && itemImages.map((image) => (
         <div>
           <Image

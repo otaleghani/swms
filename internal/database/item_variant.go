@@ -4,7 +4,7 @@ type Variant struct {
   Id string `json:"id"`
   Name string `json:"name"`
   Description string `json:"description"`
-  Quantity int64 `json:"quantity"`
+  Quantity int64 `json:"quanity"`
   Identifier string `json:"identifier"`
 
   Length float64 `json:"length"`
