@@ -132,11 +132,10 @@ export default function HeroItemSingleClient({
   );
 
   return (
-    <div>
+    <div className="xl:h-[calc((100vh_-57px)_/_2)]">
       <div className="p-4 border-b">
         <h1 className="font-semibold text-xl">{item.name}</h1>
         <p className="">{item.description}</p>
-
       </div>
     
       <div className="flex items-center p-4 border-b">
@@ -192,9 +191,9 @@ export default function HeroItemSingleClient({
       </div>
 
       <div className="border-b">
-        <div className="w-full font-semibold p-4">Images</div>
-        <ScrollArea className="whitespace-nowrap rounded-md ">
-          <div className="flex gap-2 w-max px-4 mb-2">
+        <div className="font-semibold p-4">Images</div>
+        <ScrollArea className="">
+          <div className="grid grid-cols-5 gap-2 px-4 mb-2 ">
             {itemImages && itemImages.map((image) => (
               <div>
                 <ImageViewer
@@ -204,27 +203,8 @@ export default function HeroItemSingleClient({
               </div>
             ))}
           </div>
-          <ScrollBar orientation="horizontal"/>
         </ScrollArea>
       </div>
-
-      <div className="border-b p-4">
-        <div className="w-full font-semibold">Operations: the card is an example</div>
-
-        <div className="p-2 border-b flex gap-4 items-center">
-          <Image 
-            height={70}
-            width={70}
-            className="w-4 h-4 rounded-full"
-            alt="sus"
-            src="http://localhost:8080/media/2F99ffc3b2-9943-4ea8-99d5-34804bf8a5e1.jpg"
-          />
-          <div>Quantity</div>
-          <div>Item</div>
-          <div>Variant</div>
-        </div>
-      </div>
-
     </div>
   );
 };

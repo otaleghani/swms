@@ -37,7 +37,7 @@ export type Filters = {
   suppliers: SupplierFiltersParams;
   supplierCodes: SupplierCodeFiltersParams;
   tickets: TicketFiltersParams;
-  transactions: TransactionFiltersParams;
+  operations: OperationsFiltersParams;
   variants: VariantFiltersParams;
 };
 
@@ -151,7 +151,7 @@ export type TicketFiltersParams = {
 };
 
 // prettier-ignore
-export type TransactionFiltersParams = {
+export type OperationsFiltersParams = {
   [K in keyof FiltersParams]:
     K extends "search" ? FiltersParams[K] :
     K extends "user" ? FiltersParams[K] :

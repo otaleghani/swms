@@ -47,6 +47,7 @@ func Serve(path, port string) {
 	mux.HandleFunc("GET /api/v1/items/{id}/variants", getVariantsByItem(&dbConn))
 	mux.HandleFunc("GET /api/v1/items/{id}/supplier-codes", getSupplierCodesByItem(&dbConn))
 	mux.HandleFunc("GET /api/v1/items/{id}/images", getItemImageByItem(&dbConn))
+	mux.HandleFunc("GET /api/v1/items/{id}/operations", getOperationsByItem(&dbConn))
 	mux.HandleFunc("POST /api/v1/items/{$}", postItems(&dbConn))
 	mux.HandleFunc("GET /api/v1/items/{id}", getItemById(&dbConn))
 	mux.HandleFunc("PUT /api/v1/items/{id}", putItem(&dbConn))

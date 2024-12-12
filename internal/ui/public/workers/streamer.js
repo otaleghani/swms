@@ -210,6 +210,7 @@ const optionsListByForeign = {
     "Items_Category": { path: "categories/{{id}}/items", type: "Items" },
     "Items_Subcategory": { path: "subcategories/{{id}}/items", type: "Items" },
     "Variants_Item": { path: "items/{{id}}/variants", type: "Variants" },
+    "Operations_Item": { path: "items/{{id}}/operations", type: "Operations" },
 };
 const clientListByForeignRetrive = async ({ page, perPage, filters, paginationOff, type, foreignId, jwt, request, }) => {
     const apiPath = BACKEND_ENDPOINT + "/api/v1/";

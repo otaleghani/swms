@@ -59,92 +59,117 @@ interface Props {
     };
   };
   dict: DictFilters;
+  hide: {
+    users?: boolean;
+    items?: boolean;
+    variants?: boolean;
+    tickets?: boolean;
+    search?: boolean;
+    date?: boolean;
+  }
 };
 
-const SheetPatternBody = ({locale, fields, dict}: Props) => {
+const SheetPatternBody = ({locale, fields, dict, hide}: Props) => {
   const { params, setParams, link } = useFilterParams();
 
   const { searchTerm, setSearchTerm, handleInput } = 
-    useFilterSearch(params, "aisles", setParams);
+    useFilterSearch(params, "operations", setParams);
 
   const { user, setUser } = 
-    useFilterUsers(params, fields.users.list, "transactions", setParams);
+    useFilterUsers(params, fields.users.list, "operations", setParams);
 
   const { item, setItem } = 
-    useFilterItems(params, fields.items.list, "transactions", setParams);
+    useFilterItems(params, fields.items.list, "operations", setParams);
 
   const { variant, setVariant } = 
-    useFilterVariants(params, fields.variants.list, "transactions", setParams);
+    useFilterVariants(params, fields.variants.list, "operations", setParams);
 
   const { ticket, setTicket } = 
-    useFilterTickets(params, fields.tickets.list, "transactions", setParams);
+    useFilterTickets(params, fields.tickets.list, "operations", setParams);
 
   const { date, setDate } = 
-    useFilterDate(params, "transactions", setParams);
+    useFilterDate(params, "operations", setParams);
 
   return (
     <>
       <FilterSheetHeader dict={dict} />
       <div className="mb-4 grid gap-2">
-        <div>
-          <Label>{fields.search.dict.label}</Label>
-          <Input 
-            type="text"
-            placeholder="Your search.."
-            onChange={handleInput}
-            value={searchTerm}
-          />
-        </div>
-        <div>
-          <Label>{fields.users.dict.select.label}</Label>
-          <ForeignKeyFilter<"User"> 
-            name="User"
-            list={fields.users.list}
-            dict={fields.users.dict}
-            element={user}
-            setElement={setUser}
-          />
-        </div> 
-        <div>
-          <Label>{fields.items.dict.select.label}</Label>
-          <ForeignKeyFilter<"Item"> 
-            name="Item"
-            list={fields.items.list}
-            dict={fields.items.dict}
-            element={item}
-            setElement={setItem}
-          />
-        </div> 
-        <div>
-          <Label>{fields.variants.dict.select.label}</Label>
-          <ForeignKeyFilter<"Variant"> 
-            name="Variant"
-            list={fields.variants.list}
-            dict={fields.variants.dict}
-            element={variant}
-            setElement={setVariant}
-          />
-        </div> 
-        <div>
-          <Label>{fields.tickets.dict.select.label}</Label>
-          <ForeignKeyFilter<"Ticket"> 
-            name="Ticket"
-            list={fields.tickets.list}
-            dict={fields.tickets.dict}
-            element={ticket}
-            setElement={setTicket}
-          />
-        </div> 
-        <div>
-          <Label>{fields.date.dict.label}</Label>
-          <DateRangePickerPattern 
-            date={date}
-            setDate={setDate}
-            field="date"
-            dict={fields.date.dict}
-            locale={locale}
-          />
-        </div> 
+        {!hide.search && (
+          <div>
+            <Label>{fields.search.dict.label}</Label>
+            <Input 
+              type="text"
+              placeholder="Your search.."
+              onChange={handleInput}
+              value={searchTerm}
+            />
+          </div>
+        )}
+
+        {!hide.users && (
+          <div>
+            <Label>{fields.users.dict.select.label}</Label>
+            <ForeignKeyFilter<"User"> 
+              name="User"
+              list={fields.users.list}
+              dict={fields.users.dict}
+              element={user}
+              setElement={setUser}
+            />
+          </div> 
+        )}
+
+        {!hide.items && (
+          <div>
+            <Label>{fields.items.dict.select.label}</Label>
+            <ForeignKeyFilter<"Item"> 
+              name="Item"
+              list={fields.items.list}
+              dict={fields.items.dict}
+              element={item}
+              setElement={setItem}
+            />
+          </div> 
+        )}
+
+        {!hide.variants && (
+          <div>
+            <Label>{fields.variants.dict.select.label}</Label>
+            <ForeignKeyFilter<"Variant"> 
+              name="Variant"
+              list={fields.variants.list}
+              dict={fields.variants.dict}
+              element={variant}
+              setElement={setVariant}
+            />
+          </div> 
+        )}
+
+        {!hide.tickets && (
+          <div>
+            <Label>{fields.tickets.dict.select.label}</Label>
+            <ForeignKeyFilter<"Ticket"> 
+              name="Ticket"
+              list={fields.tickets.list}
+              dict={fields.tickets.dict}
+              element={ticket}
+              setElement={setTicket}
+            />
+          </div> 
+        )}
+
+        {!hide.date && (
+          <div>
+            <Label>{fields.date.dict.label}</Label>
+            <DateRangePickerPattern 
+              date={date}
+              setDate={setDate}
+              field="date"
+              dict={fields.date.dict}
+              locale={locale}
+            />
+          </div> 
+        )}
       </div>
 
       <div className="flex gap-2">
@@ -165,18 +190,19 @@ const SheetPatternBody = ({locale, fields, dict}: Props) => {
   )
 }
 
-export default function FilterAisles({
+export default function FilterOpeartions({
   locale,
   fields,
   dict,
+  hide
 }: Props) {
   const { params, setParams, link } = useFilterParams();
 
   const SheetHead = () => {
-    return (<FilterSheetTrigger dict={dict} params={params.transactions}/>)
+    return (<FilterSheetTrigger dict={dict} params={params.operations}/>)
   }
   const SheetBody = () => {
-    return (<SheetPatternBody locale={locale} fields={fields} dict={dict}/>)
+    return (<SheetPatternBody locale={locale} fields={fields} dict={dict} hide={hide} />)
   }
   return (
     <>

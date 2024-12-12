@@ -4,7 +4,7 @@ import { deepMerge } from "@/app/lib/searchParams";
 import { DateRange } from "react-day-picker"
 
 type PossibleParams = keyof Pick<SearchParams, 
-  "transactions"
+  "operations"
   >;
 
 export const useFilterDate = (

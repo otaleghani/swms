@@ -272,9 +272,10 @@ const optionsListByForeign = {
   "Items_Subcategory": { path: "subcategories/{{id}}/items", type: "Items"},
 
   "Variants_Item": { path: "items/{{id}}/variants", type: "Variants"},
+  "Operations_Item": { path: "items/{{id}}/operations", type: "Operations"},
 }
 
-type ListByForeignAcceptedType = "AislesWithExtra_Zone" | "RacksWithExtra_Aisle" | "SupplierCodes_Supplier" | "SubcategoriesWithExtra_Category" | "Items_Zone" | "Items_Aisle" | "Items_Rack" | "Items_Shelf" | "Items_Category" | "Items_Subcategory" | "Variants_Item" | "SupplierCodes_Item"
+type ListByForeignAcceptedType = "AislesWithExtra_Zone" | "RacksWithExtra_Aisle" | "SupplierCodes_Supplier" | "SubcategoriesWithExtra_Category" | "Items_Zone" | "Items_Aisle" | "Items_Rack" | "Items_Shelf" | "Items_Category" | "Items_Subcategory" | "Variants_Item" | "SupplierCodes_Item" | "Operations_Item"
 
 const clientListByForeignRetrive = async ({
   page,

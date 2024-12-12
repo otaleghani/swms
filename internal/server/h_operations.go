@@ -109,6 +109,80 @@ func getOperationById(db *database.Database) http.HandlerFunc {
 	}
 }
 
+func getOperationsByItem(db *database.Database) http.HandlerFunc {
+  return func(w http.ResponseWriter, r *http.Request) {
+		token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
+		if err := checkAccessToken(token, db); err != nil {
+			ErrorResponse{Message: err.Error()}.r401(w, r)
+			return
+		}
+
+		path := r.PathValue("id")
+		rows, err := db.SelectOperations("Item_id = ?", path)
+		if len(rows) == 0 {
+			ErrorResponse{Message: "Not found"}.r404(w, r)
+			return
+		}
+
+    queryFilters := r.URL.Query().Get("filters")
+    filteredRows := rows
+		var filters OperationsFilters
+    if queryFilters != "" {
+		  err = json.Unmarshal([]byte(queryFilters), &filters)
+		  if err != nil {
+		  	ErrorResponse{Message: err.Error()}.r400(w, r)
+		  	return
+		  }
+      if filters.Search != "" {
+        filteredRows, err = FilterBySearch(
+          filteredRows, "Name", filters.Search)
+      }
+      if filters.User != "" {
+        filteredRows, err = FilterByField(
+          filteredRows, "User", filters.User)
+      }
+      if filters.Item != "" {
+        filteredRows, err = FilterByField(
+          filteredRows, "Item", filters.Item)
+      }
+      if filters.Variant != "" {
+        filteredRows, err = FilterByField(
+          filteredRows, "Variant", filters.Variant)
+      }
+      if filters.Ticket != "" {
+        filteredRows, err = FilterByField(
+          filteredRows, "Ticket", filters.Ticket)
+      }
+      if filters.Date.To != "" || filters.Date.From != "" {
+        filteredRows, err = FilterByDataRange(
+          filteredRows, "Date", filters.Date.From, filters.Date.To)
+      }
+    }
+
+    // Pagination
+    queryPagination := r.URL.Query().Get("paginationOff")
+    if queryPagination == "true" {
+		  SuccessResponse{Data: filteredRows}.r200(w, r)
+      return
+    }
+    queryPage := r.URL.Query().Get("page")
+    queryPerPage := r.URL.Query().Get("perPage")
+    resultedItems, page, perPage, totalItems, totalPages, err := 
+      paginateItems(queryPage, queryPerPage, filteredRows)
+		if err != nil {
+			ErrorResponse{Message: err.Error()}.r500(w, r)
+			return
+		}
+		SuccessResponse{
+      Data: resultedItems,
+      Page: page,
+      PerPage: perPage,
+      TotalItems: totalItems,
+      TotalPages: totalPages,
+    }.r200(w, r)
+  }
+}
+
 func postOperation(db *database.Database) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")

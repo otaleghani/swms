@@ -19,9 +19,9 @@ export default function ImageViewer({
       <Dialog>
         <DialogTrigger>
           <Image
-            height={500}
-            width={500}
-            className="!w-96 aspect-square object-cover border rounded"
+            height={300}
+            width={300}
+            className="w-full aspect-square object-cover border rounded"
             alt={imageAlt}
             src={`http://localhost:8080/media/${imageId}.jpg`}
           />

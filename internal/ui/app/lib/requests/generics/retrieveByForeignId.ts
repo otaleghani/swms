@@ -42,6 +42,9 @@ type ForeignTypeMap = {
     K extends "SupplierCodes" ? "Supplier" | "Item" :
 
     K extends "ItemImages" ? "Item" :
+
+    K extends "Operations" ? "Item" :
+
     never;
 }
 
@@ -105,6 +108,8 @@ const options: MapOptions = {
   "SupplierCodes_Item": { path: "items/{{id}}/supplier-codes", type: "Variants" },
   
   "ItemImages_Item": { path: "items/{{id}}/images", type: "ItemImages" },
+
+  "Operations_Item": { path: "items/{{id}}/operations", type: "Operations" },
 }
 
 interface RetrieveData<
